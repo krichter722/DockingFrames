@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,7 +42,7 @@ public class MultiColorBridgeFactory implements ColorBridgeFactory {
     /** the set of factories that will create a child of the MultiColorProvider */
     private Map<String, ColorBridgeFactory> factories =
         new HashMap<String, ColorBridgeFactory>();
-    
+
     /**
      * Sets the factory of a child of the {@link MultiUIBridge} which will
      * be created by this factory.
@@ -50,19 +50,20 @@ public class MultiColorBridgeFactory implements ColorBridgeFactory {
      * @param bridge the child or <code>null</code>
      */
     public void put( String key, ColorBridgeFactory bridge ){
-        if( bridge == null )
+        if( bridge == null ) {
             factories.remove( key );
-        else
+        } else {
             factories.put( key, bridge );
+        }
     }
-    
+
     public MultiColorBridge create( ColorManager manager ) {
         MultiColorBridge bridge = new MultiColorBridge( manager );
-        
+
         for( Map.Entry<String, ColorBridgeFactory> entry : factories.entrySet()){
             bridge.put( entry.getKey(), entry.getValue().create( manager ) );
         }
-        
+
         return bridge;
     }
 }

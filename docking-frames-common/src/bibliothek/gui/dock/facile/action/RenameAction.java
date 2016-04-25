@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -63,13 +63,13 @@ import bibliothek.util.ClientOnly;
  */
 @ClientOnly
 public abstract class RenameAction extends SimpleButtonAction {
-	/** the key uses for the {@link bibliothek.gui.dock.util.IconManager} to get the {@link Icon} of this action */
-	public static final String KEY_ICON = "rename";
-	
-	/** the controller in whose realm this action is used */
-	private DockController controller;
-	
-	/** button that is pressed if the new name should be applied */
+    /** the key uses for the {@link bibliothek.gui.dock.util.IconManager} to get the {@link Icon} of this action */
+    public static final String KEY_ICON = "rename";
+
+    /** the controller in whose realm this action is used */
+    private DockController controller;
+
+    /** button that is pressed if the new name should be applied */
     private JButton okButton = new JButton();
     /** button to cancel the event */
     private JButton cancelButton = new JButton();
@@ -77,122 +77,122 @@ public abstract class RenameAction extends SimpleButtonAction {
     private JTextField titleField = new JTextField();
     /** the menu on which the items will be shown */
     private JPopupMenu menu = new JPopupMenu();
-    
+
     /** the dockable whose title is currently changed */
     private Dockable current;
-        
+
     /** the icon of this action */
     private DockActionIcon icon;
-    
+
     /** text of this action */
     private DockActionText text;
-    
+
     /** automatic tooltip fo this action */
     private DockActionText tooltip;
-    
+
     /** text on the ok button */
     private DockActionText textOk;
-    
+
     /** text on the cancel button */
     private DockActionText textCancel;
-    
+
     private int bound = 0;
-    
+
     /**
      * Constructs a new action
-     * @param controller The controller to which a listener will be added to 
+     * @param controller The controller to which a listener will be added to
      * get the Icon for this action
      */
     public RenameAction( DockController controller ){
-    	this.controller = controller;
-    	
-    	icon = new DockActionIcon( KEY_ICON, this ){
-			protected void changed( Icon oldValue, Icon newValue ){
-				setIcon( newValue );	
-			}
-		};
-        
-		text = new DockActionText( "rename", this ){
-			protected void changed( String oldValue, String newValue ){
-				setText( newValue );	
-			}
-		};
-		tooltip = new DockActionText( "rename.tooltip", this ){
-			protected void changed( String oldValue, String newValue ){
-				setTooltip( newValue );	
-			}
-		};
-        
+        this.controller = controller;
+
+        icon = new DockActionIcon( KEY_ICON, this ){
+            protected void changed( Icon oldValue, Icon newValue ){
+                setIcon( newValue );
+            }
+        };
+
+        text = new DockActionText( "rename", this ){
+            protected void changed( String oldValue, String newValue ){
+                setText( newValue );
+            }
+        };
+        tooltip = new DockActionText( "rename.tooltip", this ){
+            protected void changed( String oldValue, String newValue ){
+                setTooltip( newValue );
+            }
+        };
+
         menu.setLayout( new GridBagLayout() );
         JPanel panel = new JPanel( new GridLayout( 1, 2 ));
         panel.add( okButton );
         panel.add( cancelButton );
-        menu.add( titleField, new GridBagConstraints( 0, 0, 1, 1, 100.0, 1.0, 
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH, 
+        menu.add( titleField, new GridBagConstraints( 0, 0, 1, 1, 100.0, 1.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets( 1, 1, 1, 1 ), 0, 0 ));
-        menu.add( panel, new GridBagConstraints( 1, 0, 1, 1, 1.0, 1.0, 
-                GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, 
+        menu.add( panel, new GridBagConstraints( 1, 0, 1, 1, 1.0, 1.0,
+                GridBagConstraints.CENTER, GridBagConstraints.VERTICAL,
                 new Insets( 1, 1, 1, 1 ), 0, 0 ));
-        
+
         titleField.setColumns( 10 );
-        
+
         textOk = new DockActionText( "rename.ok", this ){
-			protected void changed( String oldValue, String newValue ){
-				okButton.setText( newValue );	
-			}
-		};
-		textCancel = new DockActionText( "rename.cancel", this ){
-			protected void changed( String oldValue, String newValue ){
-				cancelButton.setText( newValue );	
-			}
-		};
-        
+            protected void changed( String oldValue, String newValue ){
+                okButton.setText( newValue );
+            }
+        };
+        textCancel = new DockActionText( "rename.cancel", this ){
+            protected void changed( String oldValue, String newValue ){
+                cancelButton.setText( newValue );
+            }
+        };
+
         menu.addPopupMenuListener( new PopupMenuListener(){
             public void popupMenuCanceled( PopupMenuEvent e ) {
                 current = null;
             }
             public void popupMenuWillBecomeInvisible( PopupMenuEvent e ) {
-            	// do nothing
+                // do nothing
             }
             public void popupMenuWillBecomeVisible( PopupMenuEvent e ) {
-            	// do nothing
+                // do nothing
             }
         });
-        
+
         okButton.addActionListener( new ActionListener(){
             public void actionPerformed( ActionEvent e ){
                 rename();
             }
         });
-        
+
         cancelButton.addActionListener( new ActionListener(){
             public void actionPerformed( ActionEvent e ){
                 menu.setVisible( false );
             }
         });
-        
+
         titleField.addActionListener( new ActionListener(){
             public void actionPerformed( ActionEvent e ){
                 rename();
             }
         });
     }
-    
+
     @Override
     public void action( Dockable dockable ) {
         titleField.setText( "" );
         menu.setSize( menu.getPreferredSize() );
         titleField.setText( dockable.getTitleText() );
-        
+
         Component component = DockUtilities.getShowingComponent( dockable );
-        
+
         if( component != null ){
             current = dockable;
             menu.show( component, 0, 0 );
             titleField.requestFocus();
-        }   
+        }
     }
-    
+
     /**
      * Changes the name of the current Dockable to the text of
      * the {@link #titleField}.
@@ -201,33 +201,33 @@ public abstract class RenameAction extends SimpleButtonAction {
         rename( current, titleField.getText() );
         menu.setVisible( false );
     }
-    
+
     @Override
     protected void bound( Dockable dockable ){
-    	super.bound( dockable );
-    	if( bound == 0 ){
-    		icon.setController( controller );
-    		text.setController( controller );
-    		tooltip.setController( controller );
-    		textOk.setController( controller );
-    		textCancel.setController( controller );
-    	}
-    	bound++;
+        super.bound( dockable );
+        if( bound == 0 ){
+            icon.setController( controller );
+            text.setController( controller );
+            tooltip.setController( controller );
+            textOk.setController( controller );
+            textCancel.setController( controller );
+        }
+        bound++;
     }
-    
+
     @Override
     protected void unbound( Dockable dockable ){
-    	super.unbound( dockable );
-    	bound--;
-    	if( bound == 0 ){
-    		icon.setController( null );
-    		text.setController( null );
-    		tooltip.setController( null );
-    		textOk.setController( null );
-    		textCancel.setController( null );
-    	}
+        super.unbound( dockable );
+        bound--;
+        if( bound == 0 ){
+            icon.setController( null );
+            text.setController( null );
+            tooltip.setController( null );
+            textOk.setController( null );
+            textCancel.setController( null );
+        }
     }
-    
+
     /**
      * Invoked when the action was triggered, and the user tipped in
      * the new title for <code>dockable</code>.
@@ -252,11 +252,11 @@ public abstract class RenameAction extends SimpleButtonAction {
         }
 
         @Override
-        protected void rename( Dockable dock, String text ){ 
+        protected void rename( Dockable dock, String text ){
             ((StackDockStation)dock).setTitleText( text );
         }
     }
-    
+
     /**
      * An implementation of {@link RenameAction} that can handle
      * {@link SplitDockStation SplitDockStations}.
@@ -271,7 +271,7 @@ public abstract class RenameAction extends SimpleButtonAction {
         public RenameSplitDockStation( DockController controller ) {
             super( controller );
         }
-        
+
         @Override
         protected void rename( Dockable dock, String text ){
             ((SplitDockStation)dock).setTitleText( text );
@@ -292,28 +292,28 @@ public abstract class RenameAction extends SimpleButtonAction {
         public RenameFlapDockStation( DockController controller ) {
             super( controller );
         }
-        
+
         @Override
         protected void rename( Dockable dock, String text ){
             ((FlapDockStation)dock).setTitleText( text );
         }
     }
-    
+
     /**
      * An implementation of {@link RenameAction} that can handle
      * {@link DefaultDockable DefaultDockables}.
      * @author Benjamin Sigg
      */
     @ClientOnly
-    public static class RenameDefaultDockable extends RenameAction{   
-    	/**
+    public static class RenameDefaultDockable extends RenameAction{
+        /**
          * Creates a new action
          * @param controller the controller to which a listener will be added
          */
         public RenameDefaultDockable( DockController controller ) {
             super( controller );
         }
-        
+
         @Override
         protected void rename( Dockable dock, String text ){
             ((DefaultDockable)dock).setTitleText( text );

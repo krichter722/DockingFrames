@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -45,10 +45,10 @@ import bibliothek.util.xml.XException;
 public class Setting{
     /** the layouts of the roots */
     private Map<String, DockLayoutComposition> roots = new HashMap<String, DockLayoutComposition>();
-    
+
     /** the list of element that are not visible */
     private List<Invisible> dockables = new ArrayList<Invisible>();
-    
+
     /**
      * Stores the layout of a root.
      * @param root the name of the root
@@ -57,7 +57,7 @@ public class Setting{
     public void putRoot( String root, DockLayoutComposition layout ){
         roots.put( root, layout );
     }
-    
+
     /**
      * Gets the layout of a root.
      * @param root the root
@@ -66,7 +66,7 @@ public class Setting{
     public DockLayoutComposition getRoot( String root ){
         return roots.get( root );
     }
-    
+
     /**
      * Gets the keys of all known roots.
      * @return the keys of the roots
@@ -75,7 +75,7 @@ public class Setting{
         Set<String> keys = roots.keySet();
         return keys.toArray( new String[ keys.size() ] );
     }
-    
+
     /**
      * Stores the location of an invisible element.
      * @param key the key of the element
@@ -91,7 +91,7 @@ public class Setting{
         invisible.layout = layout;
         dockables.add( invisible );
     }
-    
+
     /**
      * Gets the number of stored invisible elements.
      * @return the number of elements
@@ -99,7 +99,7 @@ public class Setting{
     public int getInvisibleCount(){
         return dockables.size();
     }
-    
+
     /**
      * Gets the key of the index'th invisible element.
      * @param index the index of the element
@@ -117,7 +117,7 @@ public class Setting{
     public String getInvisibleRoot( int index ){
         return dockables.get( index ).root;
     }
-    
+
     /**
      * Gets the location of the index'th invisible element.
      * @param index the index of the element
@@ -126,7 +126,7 @@ public class Setting{
     public DockableProperty getInvisibleLocation( int index ){
         return dockables.get( index ).location;
     }
-    
+
     /**
      * Gets the layout of the index'th invisible element.
      * @param index the index of the layout
@@ -135,7 +135,7 @@ public class Setting{
     public DockLayoutComposition getInvisibleLayout( int index ){
         return dockables.get( index ).layout;
     }
-    
+
     /**
      * Using the factories given by <code>situation</code>, this method tries
      * to fill any gaps in the layout.
@@ -156,7 +156,7 @@ public class Setting{
             throw new IllegalArgumentException( ex );
         }
     }
-    
+
     /**
      * Writes the properties of this setting into <code>out</code>.
      * @param situation can be used to write {@link DockLayout}s
@@ -170,18 +170,18 @@ public class Setting{
      */
     public void write( DockSituation situation, PropertyTransformer transformer, boolean entry, DataOutputStream out ) throws IOException{
         Version.write( out, Version.VERSION_1_0_7 );
-        
+
         String[] roots = getRootKeys();
         out.writeInt( roots.length );
         for( String root : roots ){
             out.writeUTF( root );
             situation.writeComposition( getRoot( root ), out );
         }
-        
+
         out.writeInt( getInvisibleCount() );
         for( int i = 0, n = getInvisibleCount(); i<n; i++ ){
             out.writeUTF( getInvisibleKey( i ) );
-            
+
             String root = getInvisibleRoot( i );
             if( root == null ){
                 out.writeBoolean( false );
@@ -190,16 +190,16 @@ public class Setting{
                 out.writeBoolean( true );
                 out.writeUTF( root );
             }
-            
+
             DockableProperty location = getInvisibleLocation( i );
             if( location == null ){
                 out.writeBoolean( false );
             }
             else{
                 out.writeBoolean( true );
-                transformer.write( getInvisibleLocation( i ), out );   
+                transformer.write( getInvisibleLocation( i ), out );
             }
-            
+
             DockLayoutComposition layout = getInvisibleLayout( i );
             if( layout == null ){
                 out.writeBoolean( false );
@@ -210,7 +210,7 @@ public class Setting{
             }
         }
     }
-    
+
     /**
      * Writes the properties of this setting in xml format.
      * @param situation can be used to write {@link DockLayout}s
@@ -230,7 +230,7 @@ public class Setting{
             xroot.addString( "name", root );
             situation.writeCompositionXML( getRoot( root ), xroot );
         }
-        
+
         XElement xchildren = element.addElement( "children" );
         for( int i = 0, n = getInvisibleCount(); i<n; i++ ){
             XElement xchild = xchildren.addElement( "child" );
@@ -239,7 +239,7 @@ public class Setting{
             if( root != null ){
                 xchild.addString( "root", root );
             }
-            
+
             DockableProperty location = getInvisibleLocation( i );
             if( location == null ){
                 xchild.addBoolean( "location", false );
@@ -248,14 +248,14 @@ public class Setting{
                 xchild.addBoolean( "location", true );
                 transformer.writeXML( getInvisibleLocation( i ), xchild.addElement( "location" ) );
             }
-            
+
             DockLayoutComposition layout = getInvisibleLayout( i );
             if( layout != null ){
                 situation.writeCompositionXML( layout, xchild.addElement( "layout" ) );
             }
         }
     }
-    
+
     /**
      * Reads the properties of this setting. Old properties are deleted without
      * further notice.
@@ -271,12 +271,12 @@ public class Setting{
     public void read( DockSituation situation, PropertyTransformer transformer, boolean entry,DataInputStream in ) throws IOException{
         Version version = Version.read( in );
         version.checkCurrent();
-        
+
         boolean version7 = Version.VERSION_1_0_7.compareTo( version ) <= 0;
-        
+
         roots.clear();
         dockables.clear();
-        
+
         int count = in.readInt();
         for( int i = 0; i < count; i++ ){
             String root = in.readUTF();
@@ -285,12 +285,12 @@ public class Setting{
                 putRoot( root, layout );
             }
         }
-        
+
         count = in.readInt();
         for( int i = 0; i < count; i++ ){
             String key = in.readUTF();
             String root = null;
-            
+
             if( version7 ){
                 if( in.readBoolean() ){
                     root = in.readUTF();
@@ -299,7 +299,7 @@ public class Setting{
             else{
                 root = in.readUTF();
             }
-            
+
             DockableProperty location = null;
             if( version7 ){
                 if( in.readBoolean() ){
@@ -309,18 +309,18 @@ public class Setting{
             else{
                 location = transformer.read( in );
             }
-            
+
             DockLayoutComposition layout = null;
             if( version7 ){
                 if( in.readBoolean() ){
                     layout = situation.readComposition( in );
                 }
             }
-            
+
             addInvisible( key, root, layout, location );
         }
     }
-    
+
     /**
      * Reads the properties of this setting. Old properties are deleted without
      * further notice.
@@ -335,7 +335,7 @@ public class Setting{
     public void readXML( DockSituation situation, PropertyTransformer transformer, boolean entry, XElement element ){
         roots.clear();
         dockables.clear();
-        
+
         // roots
         XElement xroots = element.getElement( "roots" );
         if( xroots != null ){
@@ -347,19 +347,19 @@ public class Setting{
                 }
             }
         }
-        
+
         // children
         XElement xchildren = element.getElement( "children" );
         if( xchildren != null ){
             for( XElement xchild : xchildren.getElements( "child" )){
                 String key = xchild.getString( "key" );
                 String root = null;
-                
+
                 XAttribute aroot = xchild.getAttribute( "root" );
                 if( aroot != null ){
                     root = aroot.getString();
                 }
-                
+
                 boolean oldStyle = true;
                 boolean hasLocation = false;
                 XAttribute alocation = xchild.getAttribute( "location" );
@@ -367,10 +367,10 @@ public class Setting{
                     oldStyle = false;
                     hasLocation = alocation.getBoolean();
                 }
-                
+
                 DockableProperty location = null;
                 DockLayoutComposition layout = null;
-                
+
                 if( oldStyle ){
                     location = transformer.readXML( xchild );
                 }
@@ -379,18 +379,18 @@ public class Setting{
                         XElement xlocation = xchild.getElement( "location" );
                         location = transformer.readXML( xlocation );
                     }
-                    
+
                     XElement xlayout = xchild.getElement( "layout" );
                     if( xlayout != null ){
                         layout = situation.readCompositionXML( xlayout );
                     }
                 }
-                
+
                 addInvisible( key, root, layout, location );
-            } 
+            }
         }
     }
-    
+
     /**
      * Describes the location of an invisible element.
      * @author Benjamin Sigg

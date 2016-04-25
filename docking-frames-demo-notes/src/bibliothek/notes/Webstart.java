@@ -23,53 +23,53 @@ public class Webstart implements Demonstration{
      * Entrypoint
      * @param args are ignored
      */
-	public static void main( String[] args ){
-		Core core = new Core( true, null );
-		core.startup();
-	}
+    public static void main( String[] args ){
+        Core core = new Core( true, null );
+        core.startup();
+    }
 
-	public String getHTML(){
-		try{
-			Reader reader = new InputStreamReader( ResourceSet.openStream( "/data/bibliothek/notes/description.txt" ) );
-			StringBuilder builder = new StringBuilder();
-			
-			int read;
-			while( (read = reader.read()) != -1 )
-				builder.append( (char)read );
-			
-			reader.close();
-			return builder.toString();
-		}
-		catch( IOException ex ){
-			ex.printStackTrace();
-			return "";
-		}
-	}
-	
-	public Icon getIcon(){
-		return ResourceSet.APPLICATION_ICONS.get( "application" );
-	}
+    public String getHTML(){
+        try{
+            Reader reader = new InputStreamReader( ResourceSet.openStream( "/data/bibliothek/notes/description.txt" ) );
+            StringBuilder builder = new StringBuilder();
 
-	public BufferedImage getImage(){
-		try{
-			InputStream in = ResourceSet.openStream( "/data/bibliothek/notes/image.png" );
-			BufferedImage image = ImageIO.read( in );
-			in.close();
-			return image;
-		}
-		catch( IOException ex ){
-			ex.printStackTrace();
-			return null;
-		}
-	}
+            int read;
+            while( (read = reader.read()) != -1 )
+                builder.append( (char)read );
 
-	public String getName(){
-		return "Notes";
-	}
+            reader.close();
+            return builder.toString();
+        }
+        catch( IOException ex ){
+            ex.printStackTrace();
+            return "";
+        }
+    }
 
-	public void show( Monitor monitor ){
-		monitor.startup();
-		Core core = new Core( true, monitor );
-		core.startup();
-	}
+    public Icon getIcon(){
+        return ResourceSet.APPLICATION_ICONS.get( "application" );
+    }
+
+    public BufferedImage getImage(){
+        try{
+            InputStream in = ResourceSet.openStream( "/data/bibliothek/notes/image.png" );
+            BufferedImage image = ImageIO.read( in );
+            in.close();
+            return image;
+        }
+        catch( IOException ex ){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getName(){
+        return "Notes";
+    }
+
+    public void show( Monitor monitor ){
+        monitor.startup();
+        Core core = new Core( true, monitor );
+        core.startup();
+    }
 }

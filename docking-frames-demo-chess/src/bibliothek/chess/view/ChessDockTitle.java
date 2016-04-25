@@ -18,35 +18,35 @@ import bibliothek.gui.dock.title.DockTitleVersion;
  * @author Benjamin Sigg
  */
 public class ChessDockTitle extends BasicDockTitle {
-	/**
-	 * A factory creating instances of {@link ChessDockTitle}
-	 */
+    /**
+     * A factory creating instances of {@link ChessDockTitle}
+     */
     public static final DockTitleFactory FACTORY = new DockTitleFactory(){
-    	public void install( DockTitleRequest request ){
-    		Dockable dockable = request.getTarget();
-    		if( !(dockable instanceof ChessFigure )){
-    			ControllerTitleFactory.INSTANCE.install( request );
-    		}
-    	}
-    	
-    	public void uninstall( DockTitleRequest request ){
-    		Dockable dockable = request.getTarget();
-    		if( !(dockable instanceof ChessFigure )){
-    			ControllerTitleFactory.INSTANCE.uninstall( request );
-    		}
-    	}
-    	
-    	public void request( DockTitleRequest request ){ 
-    		Dockable dockable = request.getTarget();
-    		if( dockable instanceof ChessFigure ){
+        public void install( DockTitleRequest request ){
+            Dockable dockable = request.getTarget();
+            if( !(dockable instanceof ChessFigure )){
+                ControllerTitleFactory.INSTANCE.install( request );
+            }
+        }
+
+        public void uninstall( DockTitleRequest request ){
+            Dockable dockable = request.getTarget();
+            if( !(dockable instanceof ChessFigure )){
+                ControllerTitleFactory.INSTANCE.uninstall( request );
+            }
+        }
+
+        public void request( DockTitleRequest request ){
+            Dockable dockable = request.getTarget();
+            if( dockable instanceof ChessFigure ){
                 request.answer( new ChessDockTitle( dockable, request.getVersion() ) );
-    		}
+            }
             else{
                 ControllerTitleFactory.INSTANCE.request( request );
             }
-    	}
+        }
     };
-   
+
     /**
      * Creates a new title.
      * @param dockable the element for which this title is shown
@@ -56,13 +56,13 @@ public class ChessDockTitle extends BasicDockTitle {
         super( dockable, origin );
         updateUIColors();
     }
-    
+
     @Override
     public void updateUI() {
         super.updateUI();
         updateUIColors();
     }
-    
+
     /**
      * Ensures that the colors of this title are set correctly.
      */
@@ -74,7 +74,7 @@ public class ChessDockTitle extends BasicDockTitle {
                 setActiveLeftColor( Color.WHITE );
                 setActiveRightColor( Color.LIGHT_GRAY );
                 setActiveTextColor( Color.BLACK );
-                
+
                 setInactiveLeftColor( Color.LIGHT_GRAY );
                 setInactiveRightColor( Color.GRAY );
                 setInactiveTextColor( Color.DARK_GRAY );
@@ -83,10 +83,10 @@ public class ChessDockTitle extends BasicDockTitle {
                 setActiveLeftColor( Color.DARK_GRAY );
                 setActiveRightColor( Color.BLACK );
                 setActiveTextColor( Color.WHITE );
-                
+
                 setInactiveLeftColor( Color.GRAY );
                 setInactiveRightColor( Color.DARK_GRAY );
-                setInactiveTextColor( Color.LIGHT_GRAY );            
+                setInactiveTextColor( Color.LIGHT_GRAY );
             }
         }
     }

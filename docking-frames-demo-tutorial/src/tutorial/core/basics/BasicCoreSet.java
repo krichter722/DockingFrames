@@ -5,8 +5,8 @@ import tutorial.support.sets.TutorialSet;
 
 @Tutorial(title="Basic", id="BasicsCore")
 public class BasicCoreSet extends TutorialSet{
-	public BasicCoreSet(){
-		super(  HelloWorldExample.class,
+    public BasicCoreSet(){
+        super(  HelloWorldExample.class,
                 StationsExample.class,
                 SplitDockStationExample.class,
                 ThemesExample.class,
@@ -17,5 +17,5 @@ public class BasicCoreSet extends TutorialSet{
                 BorderModifierExample.class,
                 CombinerExample.class,
                 MergerExample.class );
-	}
+    }
 }

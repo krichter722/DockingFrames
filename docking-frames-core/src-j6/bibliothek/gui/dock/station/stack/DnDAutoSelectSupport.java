@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2013 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -48,54 +48,54 @@ import bibliothek.util.container.Tuple;
  */
 @FrameworkOnly
 public class DnDAutoSelectSupport extends TransferHandler implements StackDnDAutoSelectSupport{
-	/** all the components that are {@link #install(StackDockComponent)} on this {@link DnDAutoSelectSupport} */
-	private Map<JComponent, Tuple<StackDockStation, StackDockComponent>> components = new HashMap<JComponent, Tuple<StackDockStation, StackDockComponent>>();
-	
-	@Override
-	public void install( StackDockStation station, StackDockComponent component ){
-		Component comp = component.getComponent();
-		if( comp instanceof JComponent ){
-			JComponent jcomp = (JComponent)comp;
-			jcomp.setTransferHandler( this );
-			components.put( jcomp, Tuple.of( station, component ) );
-		}
-	}
-	
-	@Override
-	public void uninstall(StackDockComponent component){
-		Component comp = component.getComponent();
-		if( comp instanceof JComponent ){
-			JComponent jcomp = (JComponent)comp;
-			jcomp.setTransferHandler( null );
-			components.remove( jcomp );
-		}
-	}
-	
-	@Override
-	public boolean canImport( TransferSupport support ){
-		if( support.isDrop() ){
-			Tuple<StackDockStation, StackDockComponent> tuple = components.get( support.getComponent() );
-			if( tuple != null ){
-				forward( tuple.getA(), tuple.getB(), support );
-			}
-		}
-		return false;
-	}
-	
-	private void forward( StackDockStation station, StackDockComponent component, TransferSupport support ){
-		DropLocation location = support.getDropLocation();
-		Point mouse = location.getDropPoint();
-		int tab = component.getIndexOfTabAt( mouse );
-		if( tab != -1 ){
-			forward( station, component.getDockableAt( tab ), support );
-		}
-	}
-	
-	private void forward( StackDockStation station, Dockable dockable, TransferSupport support ){
-		DockController controller = station.getController();
-		DndAutoSelectStrategy strategy = controller.getProperties().get( StackDockStation.DND_AUTO_SELECT_STRATEGY );
-		if( strategy != null ){
-			strategy.handleRequest( new DefaultDndAutoSelectStrategyRequest( station, dockable, support ) );
-		}
-	}
+    /** all the components that are {@link #install(StackDockComponent)} on this {@link DnDAutoSelectSupport} */
+    private Map<JComponent, Tuple<StackDockStation, StackDockComponent>> components = new HashMap<JComponent, Tuple<StackDockStation, StackDockComponent>>();
+
+    @Override
+    public void install( StackDockStation station, StackDockComponent component ){
+        Component comp = component.getComponent();
+        if( comp instanceof JComponent ){
+            JComponent jcomp = (JComponent)comp;
+            jcomp.setTransferHandler( this );
+            components.put( jcomp, Tuple.of( station, component ) );
+        }
+    }
+
+    @Override
+    public void uninstall(StackDockComponent component){
+        Component comp = component.getComponent();
+        if( comp instanceof JComponent ){
+            JComponent jcomp = (JComponent)comp;
+            jcomp.setTransferHandler( null );
+            components.remove( jcomp );
+        }
+    }
+
+    @Override
+    public boolean canImport( TransferSupport support ){
+        if( support.isDrop() ){
+            Tuple<StackDockStation, StackDockComponent> tuple = components.get( support.getComponent() );
+            if( tuple != null ){
+                forward( tuple.getA(), tuple.getB(), support );
+            }
+        }
+        return false;
+    }
+
+    private void forward( StackDockStation station, StackDockComponent component, TransferSupport support ){
+        DropLocation location = support.getDropLocation();
+        Point mouse = location.getDropPoint();
+        int tab = component.getIndexOfTabAt( mouse );
+        if( tab != -1 ){
+            forward( station, component.getDockableAt( tab ), support );
+        }
+    }
+
+    private void forward( StackDockStation station, Dockable dockable, TransferSupport support ){
+        DockController controller = station.getController();
+        DndAutoSelectStrategy strategy = controller.getProperties().get( StackDockStation.DND_AUTO_SELECT_STRATEGY );
+        if( strategy != null ){
+            strategy.handleRequest( new DefaultDndAutoSelectStrategyRequest( station, dockable, support ) );
+        }
+    }
 }

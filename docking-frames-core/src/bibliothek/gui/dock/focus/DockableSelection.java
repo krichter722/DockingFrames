@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,32 +46,32 @@ public interface DockableSelection {
      * anything
      */
     public boolean hasChoices( DockController controller );
-    
+
     /**
      * Gets the component which represents the selection. The result of this
      * method should always be the same.
      * @return the representation of this selection
      */
     public Component getComponent();
-    
+
     /**
      * Called when a new selection is about to happen.
      * @param controller the controller for which the selection will happen
      */
     public void open( DockController controller );
-    
+
     /**
      * Called when the current selection is no longer needed either because
      * a selection was done or was canceled.
      */
     public void close();
-    
+
     /**
      * Adds a listener that gets informed when the state of this selection changes.
      * @param listener the new listener
      */
     public void addDockableSelectionListener( DockableSelectionListener listener );
-    
+
     /**
      * Removes a listener that gets informed when the state of this selection changes.
      * @param listener the new listener

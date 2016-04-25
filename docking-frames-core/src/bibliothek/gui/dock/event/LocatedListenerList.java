@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,33 +42,33 @@ import bibliothek.gui.dock.util.DockUtilities;
  * @author Benjamin Sigg
  */
 public class LocatedListenerList<L extends LocatedListener> {
-	/** the listener of listeners known to this list */
-	private List<L> listeners = new ArrayList<L>();
+    /** the listener of listeners known to this list */
+    private List<L> listeners = new ArrayList<L>();
 
-	/**
-	 * Adds a listener to the list of listeners.
-	 * @param listener the new listener
-	 */
-	public void addListener( L listener ){
-		listeners.add( listener );
-	}
-	
-	/**
-	 * Removes a list of the list of listeners.
-	 * @param listener the listener to remove
-	 */
-	public void removeListener( L listener ){
-		listeners.remove( listener );
-	}
-	
-	/**
-	 * Gets the number of listeners in this list.
-	 * @return the number of listeners
-	 */
-	public int size(){
-		return listeners.size();
-	}
-	
+    /**
+     * Adds a listener to the list of listeners.
+     * @param listener the new listener
+     */
+    public void addListener( L listener ){
+        listeners.add( listener );
+    }
+
+    /**
+     * Removes a list of the list of listeners.
+     * @param listener the listener to remove
+     */
+    public void removeListener( L listener ){
+        listeners.remove( listener );
+    }
+
+    /**
+     * Gets the number of listeners in this list.
+     * @return the number of listeners
+     */
+    public int size(){
+        return listeners.size();
+    }
+
     /**
      * Creates a list of all {@link LocatedListener}s which are affected
      * by an event which occurs on <code>element</code>. The list is ordered
@@ -80,33 +80,38 @@ public class LocatedListenerList<L extends LocatedListener> {
         List<L> list = new LinkedList<L>();
         for( L listener : listeners ){
             DockElement location = listener.getTreeLocation();
-            if( location == null )
+            if( location == null ) {
                 list.add( listener );
-            else if( element != null && DockUtilities.isAncestor( location, element ))
+            } else if( element != null && DockUtilities.isAncestor( location, element )) {
                 list.add( listener );
+            }
         }
-        
+
         Collections.sort( list, new Comparator<L>(){
             public int compare( L o1, L o2 ) {
                 DockElement a = o1.getTreeLocation();
                 DockElement b = o2.getTreeLocation();
-                
-                if( a == b )
+
+                if( a == b ) {
                     return 0;
-                
-                if( a == null )
+                }
+
+                if( a == null ) {
                     return 1;
-                
-                if( b == null )
+                }
+
+                if( b == null ) {
                     return -1;
-                
-                if( DockUtilities.isAncestor( a, b ))
+                }
+
+                if( DockUtilities.isAncestor( a, b )) {
                     return 1;
-                
+                }
+
                 return -1;
             }
         });
-        
+
         return list;
     }
 }

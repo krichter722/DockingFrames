@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -72,49 +72,51 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
     private D theme;
     /** the theme to which all work is delegated */
     private DockTheme delegate;
-    
+
     /** the factories for colors used in this theme */
     private Map<Path, ColorBridgeFactory> colorBridgeFactories =
         new HashMap<Path, ColorBridgeFactory>();
-    
+
     /** the factories for fonts used in this theme */
     private Map<Path, FontBridgeFactory> fontBridgeFactories =
         new HashMap<Path, FontBridgeFactory>();
-    
+
     /** the settings of all {@link DockController}s */
     private List<Controller> controllers = new ArrayList<Controller>();
-    
+
     /** extensions associated with this theme */
     private DockThemeExtension[] extensions;
-    
+
     /**
-     * Creates a new theme 
+     * Creates a new theme
      * @param delegate the theme to which all work is delegated
      */
     public CDockTheme( D delegate ){
         this( delegate, delegate );
     }
-    
+
     /**
      * Creates a new theme.
      * @param theme the theme which is represented by this {@link CDockTheme}.
      * @param delegate the theme to which all work is delegated
      */
     public CDockTheme( D theme, DockTheme delegate ){
-        if( theme == null )
+        if( theme == null ) {
             throw new IllegalArgumentException( "theme must not be null" );
-        if( delegate == null )
+        }
+        if( delegate == null ) {
             throw new IllegalArgumentException( "delegate must not be null" );
-        
+        }
+
         this.theme = theme;
         this.delegate = delegate;
     }
-    
+
     /**
      * Adds the default {@link FontBridgeFactory}s to this theme.
      * @param control the owner of this theme
      */
-    protected void initDefaultFontBridges( final CControl control ){        
+    protected void initDefaultFontBridges( final CControl control ){
         putFontBridgeFactory( TitleFont.KIND_TITLE_FONT, new FontBridgeFactory(){
             public FontBridge create( FontManager manager ) {
                 TitleFontTransmitter transmitter = new TitleFontTransmitter( manager );
@@ -137,7 +139,7 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
             }
         });
     }
-    
+
     /**
      * Gets the internal representation of this theme.
      * @return the internal representation
@@ -145,7 +147,7 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
     public D intern(){
         return theme;
     }
-    
+
     public Combiner getCombiner( DockStation station ) {
         return delegate.getCombiner( station );
     }
@@ -169,7 +171,7 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
     public DockableSelection getDockableSelection( DockController controller ) {
         return delegate.getDockableSelection( controller );
     }
-    
+
     /**
      * Sets the {@link ColorBridge} which should be used for a certain kind
      * of {@link DockColor}s. The bridges will be installed with priority
@@ -181,15 +183,16 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
         colorBridgeFactories.put( kind, factory );
         for( Controller setting : controllers ){
             ColorManager colors = setting.controller.getColors();
-            
+
             ColorBridge oldBridge = setting.colors.remove( kind );
             ColorBridge newBridge = factory == null ? null : factory.create( colors );
-            
+
             if( newBridge == null ){
                 setting.colors.remove( kind );
-                
-                if( oldBridge != null )
+
+                if( oldBridge != null ) {
                     colors.unpublish( Priority.DEFAULT, kind );
+                }
             }
             else{
                 setting.colors.put( kind, newBridge );
@@ -197,7 +200,7 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
             }
         }
     }
-    
+
     /**
      * Sets the {@link FontBridge} which should be used for a certain kind
      * of {@link DockFont}s. The bridges will be installed with priority
@@ -209,13 +212,13 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
         fontBridgeFactories.put( kind, factory );
         for( Controller setting : controllers ){
             FontManager fonts = setting.controller.getFonts();
-            
+
             FontBridge oldBridge = setting.fonts.remove( kind );
             FontBridge newBridge = factory == null ? null : factory.create( fonts );
-            
+
             if( newBridge == null ){
                 setting.fonts.remove( kind );
-                
+
                 if( oldBridge != null ){
                     fonts.unpublish( Priority.DEFAULT, kind );
                 }
@@ -228,64 +231,64 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
     }
 
     public void install( DockController controller, DockThemeExtension[] extensions ){
-    	if( this.extensions != null ){
-    		throw new IllegalStateException( "theme is already in use" );
-    	}
-    	
-    	this.extensions = extensions;
-    	
-    	for( DockThemeExtension extension : extensions ){
-    		extension.install( controller, this );
-    	}
-    	
+        if( this.extensions != null ){
+            throw new IllegalStateException( "theme is already in use" );
+        }
+
+        this.extensions = extensions;
+
+        for( DockThemeExtension extension : extensions ){
+            extension.install( controller, this );
+        }
+
         delegate.install( controller, extensions );
         install( controller );
-        
+
         for( DockThemeExtension extension : extensions ){
-    		extension.installed( controller, this );
-    	}
+            extension.installed( controller, this );
+        }
     }
-    
+
     /**
      * Installs this theme at <code>controller</code>.
      * @param controller the new owner of this theme
      */
-    protected void install( DockController controller ){    
+    protected void install( DockController controller ){
         Controller settings = new Controller();
         settings.controller = controller;
-        
+
         ColorManager colors = controller.getColors();
         CControl control = controller.getProperties().get( CControl.CCONTROL );
-        
+
         try{
             colors.lockUpdate();
-            
-            ExtensionName<CColorBridgeExtension> name = new ExtensionName<CColorBridgeExtension>( 
-            		CColorBridgeExtension.EXTENSION_NAME, CColorBridgeExtension.class, CColorBridgeExtension.PARAMETER_NAME, this );
+
+            ExtensionName<CColorBridgeExtension> name = new ExtensionName<CColorBridgeExtension>(
+                    CColorBridgeExtension.EXTENSION_NAME, CColorBridgeExtension.class, CColorBridgeExtension.PARAMETER_NAME, this );
             List<CColorBridgeExtension> extensions = controller.getExtensions().load( name );
-            
+
             for( Map.Entry<Path, ColorBridgeFactory> entry : colorBridgeFactories.entrySet() ){
                 ColorBridge bridge = entry.getValue().create( colors );
                 Path key = entry.getKey();
-                
+
                 List<CColorBridgeExtension> filtered = new ArrayList<CColorBridgeExtension>();
                 for( CColorBridgeExtension extension : extensions ){
-                	if( key.equals( extension.getKey() )){
-                		filtered.add( extension );
-                	}
+                    if( key.equals( extension.getKey() )){
+                        filtered.add( extension );
+                    }
                 }
 
                 if( !filtered.isEmpty() ){
-                	CColorBridge[] extending = new CColorBridge[ filtered.size() ];
-                	for( int i = 0; i < extending.length; i++ ){
-                		extending[i] = filtered.get( i ).create( control, colors );
-                	}
-                	bridge = new ExtendedColorBridge( bridge, extending );
+                    CColorBridge[] extending = new CColorBridge[ filtered.size() ];
+                    for( int i = 0; i < extending.length; i++ ){
+                        extending[i] = filtered.get( i ).create( control, colors );
+                    }
+                    bridge = new ExtendedColorBridge( bridge, extending );
                 }
-                
-                colors.publish( 
-                        Priority.DEFAULT, 
-                        entry.getKey(), 
+
+                colors.publish(
+                        Priority.DEFAULT,
+                        entry.getKey(),
                         bridge );
                 settings.colors.put( entry.getKey(), bridge );
             }
@@ -293,7 +296,7 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
         finally{
             colors.unlockUpdate();
         }
-        
+
         FontManager fonts = controller.getFonts();
         try{
             fonts.lockUpdate();
@@ -306,38 +309,38 @@ public class CDockTheme<D extends DockTheme> implements DockTheme {
         finally{
             fonts.unlockUpdate();
         }
-        
+
         controllers.add( settings );
     }
 
     public void uninstall( DockController controller ) {
         delegate.uninstall( controller );
-        
+
         for( int i = 0, n = controllers.size(); i<n; i++ ){
             Controller settings = controllers.get( i );
             if( settings.controller == controller ){
                 controllers.remove( i-- );
                 n--;
-                
+
                 ColorManager colors = controller.getColors();
                 for( ColorBridge bridge : settings.colors.values() ){
                     colors.unpublish( Priority.DEFAULT, bridge );
                 }
-                
+
                 FontManager fonts = controller.getFonts();
                 for( FontBridge bridge : settings.fonts.values() ){
                     fonts.unpublish( Priority.DEFAULT, bridge );
                 }
             }
         }
-        
+
         for( DockThemeExtension extension : extensions ){
-        	extension.uninstall( controller, this );
+            extension.uninstall( controller, this );
         }
-        
+
         this.extensions = null;
     }
-    
+
     /**
      * A structure containing settings for a specific {@link DockController}.
      * @author Benjamin Sigg

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -69,7 +69,7 @@ import bibliothek.util.Todo.Version;
  * <ul>
  *  <li>add or remove a {@link DockableListener}, and fire an event</li>
  *  <li>set the parent and the {@link DockController controller}</li>
- *  <li>set the title and the icon</li> 
+ *  <li>set the title and the icon</li>
  *  <li>store a list of {@link DockAction DockActions}</li>
  * </ul>
  * @author Benjamin Sigg
@@ -79,19 +79,19 @@ public abstract class AbstractDockable implements Dockable {
     private DockStation parent;
     /** the controller used to get information like the {@link DockTheme} */
     private DockController controller;
-    
+
     /** a list of dockableListeners which will be informed when some properties changes */
     private List<DockableListener> dockableListeners = new ArrayList<DockableListener>();
     /** a listener to the hierarchy of the parent */
     private DockHierarchyObserver hierarchyObserver;
     /** a listener for monitoring the location of this dockable */
     private DockableStateListenerManager dockableStateListeners;
-    
+
     /** the list of {@link KeyListener}s of this dockable */
     private List<KeyListener> keyListeners = new ArrayList<KeyListener>();
     /** the listener dispatching events to {@link #keyListeners} */
     private KeyboardListener keyboardListener;
-    
+
     /** the title of this dockable */
     private PropertyValue<String> titleText;
     /** the icon of this dockable */
@@ -100,158 +100,160 @@ public abstract class AbstractDockable implements Dockable {
     private Icon currentTitleIcon;
     /** how to react if a <code>null</code> {@link Icon} is set as title icon */
     private IconHandling titleIconHandling = IconHandling.KEEP_NULL_ICON;
-    
+
     /** the tooltip of this dockable */
     private PropertyValue<String> titleToolTip;
-    
+
     /** the DockTitles which are bound to this dockable */
     private List<DockTitle> titles = new LinkedList<DockTitle>();
-    
+
     private DockableDisplayerHints hints;
-    
+
     /** Informs the client about all the {@link Component}s that are present on this {@link Dockable} */
     private DockComponentRootHandler rootHandler;
-    
+
     /**
-     * A modifiable list of {@link DockAction} which can be triggered and 
+     * A modifiable list of {@link DockAction} which can be triggered and
      * will affect this dockable.
      */
     private DockActionSource source;
-    
+
     /** an unmodifiable list of actions used for this dockable */
     private HierarchyDockActionSource globalSource;
-    
+
     /**
      * Creates a new dockable.
      * @param titleText the key of the title, used to read in {@link DockProperties}
      * @param titleTooltip the key of the tooltip, used to read in {@link DockProperties}
      */
     protected AbstractDockable( PropertyKey<String> titleText, PropertyKey<String> titleTooltip ){
-    	this.titleText = new PropertyValue<String>( titleText ){
-    		@Override
-    		protected void valueChanged( String oldValue, String newValue ){
-    			if( oldValue == null )
-    				oldValue = "";
-    			
-    			if( newValue == null )
-    				newValue = "";
-    			
-    			fireTitleTextChanged( oldValue, newValue );
-    		}
-    	};
-    	
-    	this.titleToolTip = new PropertyValue<String>( titleTooltip ){
-    	    @Override
-    	    protected void valueChanged( String oldValue, String newValue ) {
-    	        fireTitleTooltipChanged( oldValue, newValue );
-    	    }
-    	};
-    	
-    	dockableStateListeners = new DockableStateListenerManager( this );
-    	hierarchyObserver = new DockHierarchyObserver( this );
-    	globalSource = new HierarchyDockActionSource( this );
-    	globalSource.bind();
+        this.titleText = new PropertyValue<String>( titleText ){
+            @Override
+            protected void valueChanged( String oldValue, String newValue ){
+                if( oldValue == null ) {
+                    oldValue = "";
+                }
+
+                if( newValue == null ) {
+                    newValue = "";
+                }
+
+                fireTitleTextChanged( oldValue, newValue );
+            }
+        };
+
+        this.titleToolTip = new PropertyValue<String>( titleTooltip ){
+            @Override
+            protected void valueChanged( String oldValue, String newValue ) {
+                fireTitleTooltipChanged( oldValue, newValue );
+            }
+        };
+
+        dockableStateListeners = new DockableStateListenerManager( this );
+        hierarchyObserver = new DockHierarchyObserver( this );
+        globalSource = new HierarchyDockActionSource( this );
+        globalSource.bind();
     }
-    
+
     /**
      * Gets the {@link DockComponentRootHandler} which is responsible for keeping track of all the {@link Component}s of this
      * dockable.
      * @return the root handler, not <code>null</code>
      */
     protected DockComponentRootHandler getRootHandler(){
-    	if( rootHandler == null ){
-    		rootHandler = createRootHandler();
-    		rootHandler.addRoot( getComponent() );
-    	}
-    	return rootHandler;
+        if( rootHandler == null ){
+            rootHandler = createRootHandler();
+            rootHandler.addRoot( getComponent() );
+        }
+        return rootHandler;
     }
-    
+
     /**
      * Creates the {@link DockComponentRootHandler} which configures the {@link Component}s of this dockable.
      * @return the new handler, not <code>null</code>
      */
     protected abstract DockComponentRootHandler createRootHandler();
-    
+
     /**
      * Creates the {@link DockIcon} which represents this {@link Dockable} or this {@link DockStation}. The
      * icon must call {@link #fireTitleIconChanged(Icon, Icon)} if the icon changes.
      * @return the default icon for this element
      */
     protected abstract DockIcon createTitleIcon();
-    
+
     private DockIcon titleIcon(){
-    	if( titleIcon == null ){
-    		titleIcon = createTitleIcon();
-    		titleIcon.setController( getController() );
-    	}
-    	return titleIcon;
+        if( titleIcon == null ){
+            titleIcon = createTitleIcon();
+            titleIcon.setController( getController() );
+        }
+        return titleIcon;
     }
-    
+
     public void setDockParent( DockStation station ) {
-    	if( this.parent != station ){
-    		parent = station;
-    		hierarchyObserver.update();
-    	}
+        if( this.parent != station ){
+            parent = station;
+            hierarchyObserver.update();
+        }
     }
 
     public DockStation getDockParent() {
         return parent;
     }
-    
+
     public Dockable asDockable() {
         return this;
     }
 
     public void setController( DockController controller ) {
-    	getRootHandler().setController( null );
-    	
-    	if( this.controller != null ){
-    		if( keyboardListener != null ){
-    			this.controller.getKeyboardController().removeListener( keyboardListener );
-    			keyboardListener = null;
-    		}
-    	}
-    	
+        getRootHandler().setController( null );
+
+        if( this.controller != null ){
+            if( keyboardListener != null ){
+                this.controller.getKeyboardController().removeListener( keyboardListener );
+                keyboardListener = null;
+            }
+        }
+
         this.controller = controller;
         titleIcon().setController( controller );
         titleText.setProperties( controller );
         hierarchyObserver.controllerChanged( controller );
-        
+
         if( !keyListeners.isEmpty() ){
-        	registerKeyboardListener();
+            registerKeyboardListener();
         }
-        
+
         getRootHandler().setController( controller );
     }
 
     public DockController getController() {
         return controller;
     }
-    
+
     public void setComponentConfiguration( DockComponentConfiguration configuration ) {
-    	getRootHandler().setConfiguration( configuration );
+        getRootHandler().setConfiguration( configuration );
     }
-    
+
     public DockComponentConfiguration getComponentConfiguration() {
-    	return getRootHandler().getConfiguration();
+        return getRootHandler().getConfiguration();
     }
-    
+
     public boolean isDockableShowing(){
-	    return isDockableVisible();
+        return isDockableVisible();
     }
-    
+
     @Deprecated
     @Todo( compatibility=Compatibility.BREAK_MAJOR, priority=Priority.ENHANCEMENT, target=Version.VERSION_1_1_3, description="remove this method" )
     public boolean isDockableVisible(){
-    	DockController controller = getController();
-    	if( controller == null ){
-    		return false;
-    	}
-    	DockStation parent = getDockParent();
-    	if( parent != null ){
-    		return parent.isVisible( this );
-    	}
-    	return false;
+        DockController controller = getController();
+        if( controller == null ){
+            return false;
+        }
+        DockStation parent = getDockParent();
+        if( parent != null ){
+            return parent.isVisible( this );
+        }
+        return false;
     }
 
     public void addDockableListener( DockableListener listener ) {
@@ -261,155 +263,156 @@ public abstract class AbstractDockable implements Dockable {
     public void removeDockableListener( DockableListener listener ) {
         dockableListeners.remove( listener );
     }
-    
+
     public void addDockHierarchyListener( DockHierarchyListener listener ){
-    	hierarchyObserver.addDockHierarchyListener( listener );
+        hierarchyObserver.addDockHierarchyListener( listener );
     }
-    
+
     public void removeDockHierarchyListener( DockHierarchyListener listener ){
-    	hierarchyObserver.removeDockHierarchyListener( listener );
+        hierarchyObserver.removeDockHierarchyListener( listener );
     }
-    
+
     public void addDockableStateListener( DockableStateListener listener ){
-    	dockableStateListeners.addListener( listener );
+        dockableStateListeners.addListener( listener );
     }
-    
+
     public void removeDockableStateListener( DockableStateListener listener ){
-    	dockableStateListeners.removeListener( listener );
+        dockableStateListeners.removeListener( listener );
     }
-    
+
     /**
      * Gets the manager which is responsible for handling {@link DockableStateListener}s.
      * @return the manager, not <code>null</code>
      */
     protected DockableStateListenerManager getDockableStateListeners(){
-		return dockableStateListeners;
-	}
-    
+        return dockableStateListeners;
+    }
+
     /**
      * Access to the {@link DockableStateListenerManager} which can be used to fire {@link DockableStateEvent}s. This method
      * is intended to be used by subclasses that implement {@link DockStation}.
      * @return the listeners
      */
     protected DockableStateListenerManager getDockElementObserver(){
-		return dockableStateListeners;
-	}
-    
+        return dockableStateListeners;
+    }
+
     public void addMouseInputListener( MouseInputListener listener ) {
         getComponent().addMouseListener( listener );
         getComponent().addMouseMotionListener( listener );
     }
-    
+
     public void removeMouseInputListener( MouseInputListener listener ) {
         getComponent().removeMouseListener( listener );
         getComponent().removeMouseMotionListener( listener );
     }
-    
+
     /**
      * Adds a {@link KeyListener} to this {@link Dockable}. The listener
      * will be informed about any un-consumed {@link KeyEvent} that is
      * related to this {@link Dockable}, e.g. an event that is dispatched
-     * on a {@link DockTitle}. 
+     * on a {@link DockTitle}.
      * @param listener the new listener
      */
     public void addKeyListener( KeyListener listener ){
-    	keyListeners.add( listener );
-    	registerKeyboardListener();
+        keyListeners.add( listener );
+        registerKeyboardListener();
     }
-    
+
     /**
      * Removes <code>listener</code> from this element.
      * @param listener the listener to remove
      */
     public void removeKeyListener( KeyListener listener ){
-    	keyListeners.remove( listener );
-    	if( keyboardListener != null && controller != null ){
-    		controller.getKeyboardController().removeListener( keyboardListener );
-    		keyboardListener = null;
-    	}
+        keyListeners.remove( listener );
+        if( keyboardListener != null && controller != null ){
+            controller.getKeyboardController().removeListener( keyboardListener );
+            keyboardListener = null;
+        }
     }
-    
+
     private KeyListener[] getKeyListeners(){
-    	return keyListeners.toArray( new KeyListener[ keyListeners.size() ] );
+        return keyListeners.toArray( new KeyListener[ keyListeners.size() ] );
     }
-    
+
     private void registerKeyboardListener(){
-    	if( keyboardListener == null && controller != null ){
-    		keyboardListener = new KeyboardListener() {
-				public DockElement getTreeLocation(){
-					return AbstractDockable.this;
-				}
-				
-				public boolean keyTyped( DockElement element, KeyEvent event ){
-					if( element == AbstractDockable.this ){
-						for( KeyListener listener : getKeyListeners() ){
-							listener.keyTyped( event );
-						}
-						return event.isConsumed();
-					}
-					else{
-						return false;
-					}
-				}
-				
-				public boolean keyReleased( DockElement element, KeyEvent event ){
-					if( element == AbstractDockable.this ){
-						for( KeyListener listener : getKeyListeners() ){
-							listener.keyReleased( event );
-						}
-						return event.isConsumed();
-					}
-					else{
-						return false;
-					}
-				}
-				
-				public boolean keyPressed( DockElement element, KeyEvent event ){
-					if( element == AbstractDockable.this ){
-						for( KeyListener listener : getKeyListeners() ){
-							listener.keyPressed( event );
-						}
-						return event.isConsumed();
-					}
-					else{
-						return false;
-					}
-				}
-			};
-			controller.getKeyboardController().addListener( keyboardListener );
-    	}
+        if( keyboardListener == null && controller != null ){
+            keyboardListener = new KeyboardListener() {
+                public DockElement getTreeLocation(){
+                    return AbstractDockable.this;
+                }
+
+                public boolean keyTyped( DockElement element, KeyEvent event ){
+                    if( element == AbstractDockable.this ){
+                        for( KeyListener listener : getKeyListeners() ){
+                            listener.keyTyped( event );
+                        }
+                        return event.isConsumed();
+                    }
+                    else{
+                        return false;
+                    }
+                }
+
+                public boolean keyReleased( DockElement element, KeyEvent event ){
+                    if( element == AbstractDockable.this ){
+                        for( KeyListener listener : getKeyListeners() ){
+                            listener.keyReleased( event );
+                        }
+                        return event.isConsumed();
+                    }
+                    else{
+                        return false;
+                    }
+                }
+
+                public boolean keyPressed( DockElement element, KeyEvent event ){
+                    if( element == AbstractDockable.this ){
+                        for( KeyListener listener : getKeyListeners() ){
+                            listener.keyPressed( event );
+                        }
+                        return event.isConsumed();
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            };
+            controller.getKeyboardController().addListener( keyboardListener );
+        }
     }
-    
+
     public DockElement getElement() {
         return this;
     }
-    
+
     public boolean isUsedAsTitle() {
         return false;
     }
-    
+
     public boolean shouldFocus(){
-    	return true;
+        return true;
     }
-    
+
     public boolean shouldTransfersFocus(){
-	    return false;
+        return false;
     }
 
     public boolean accept( DockStation station ) {
         return true;
     }
-    
+
     public boolean accept( DockStation base, Dockable neighbour ) {
         return true;
     }
 
     public String getTitleText() {
         String text = titleText.getValue();
-        if( text == null )
-        	return "";
-        else
-        	return text;
+        if( text == null ) {
+            return "";
+        } else {
+            return text;
+        }
     }
 
     /**
@@ -419,13 +422,13 @@ public abstract class AbstractDockable implements Dockable {
      * empty string
      */
     public void setTitleText( String titleText ) {
-    	this.titleText.setValue( titleText );
+        this.titleText.setValue( titleText );
     }
-    
+
     public Icon getTitleIcon() {
         return currentTitleIcon;
     }
-    
+
     /**
      * Sets the tooltip that will be shown on any title of this dockable.
      * @param titleToolTip the new tooltip, can be <code>null</code>
@@ -433,16 +436,17 @@ public abstract class AbstractDockable implements Dockable {
     public void setTitleToolTip( String titleToolTip ){
         this.titleToolTip.setValue( titleToolTip );
     }
-    
+
     public String getTitleToolTip() {
         return titleToolTip.getValue();
     }
-    
+
     public Point getPopupLocation( Point click, boolean popupTrigger ) {
-        if( popupTrigger )
+        if( popupTrigger ) {
             return click;
-        else
+        } else {
             return null;
+        }
     }
 
     /**
@@ -453,23 +457,23 @@ public abstract class AbstractDockable implements Dockable {
      * @param titleIconHandling the new bheavior, not <code>null</code>
      */
     public void setTitleIconHandling( IconHandling titleIconHandling ){
-    	if( titleIconHandling == null ){
-    		throw new IllegalArgumentException( "titleIconHandling must not be null" );
-    	}
-		this.titleIconHandling = titleIconHandling;
-	}
-    
+        if( titleIconHandling == null ){
+            throw new IllegalArgumentException( "titleIconHandling must not be null" );
+        }
+        this.titleIconHandling = titleIconHandling;
+    }
+
     /**
      * Tells how a <code>null</code> title icon is handled.
      * @return the behavior
      * @see #setTitleIconHandling(IconHandling)
      */
     public IconHandling getTitleIconHandling(){
-		return titleIconHandling;
-	}
-    
+        return titleIconHandling;
+    }
+
     /**
-     * Sets the icon of this dockable. All dockableListeners are informed about 
+     * Sets the icon of this dockable. All dockableListeners are informed about
      * the change.<br>
      * If <code>titleIcon</code> is <code>null</code>, then the exact behavior of this method
      * depends on the result of {@link #getTitleIconHandling()}. The method may either replace
@@ -477,67 +481,69 @@ public abstract class AbstractDockable implements Dockable {
      * @param titleIcon the new icon, may be <code>null</code>
      */
     public void setTitleIcon( Icon titleIcon ) {
-    	switch( getTitleIconHandling() ){
-    		case KEEP_NULL_ICON:
-    			titleIcon().setValue( titleIcon, true );
-    			break;
-    		case REPLACE_NULL_ICON:
-    			titleIcon().setValue( titleIcon, false );
-    			break;
-    		default:
-    			throw new IllegalStateException( "unknown behavior: " + titleIconHandling );
-    	}
-        
+        switch( getTitleIconHandling() ){
+            case KEEP_NULL_ICON:
+                titleIcon().setValue( titleIcon, true );
+                break;
+            case REPLACE_NULL_ICON:
+                titleIcon().setValue( titleIcon, false );
+                break;
+            default:
+                throw new IllegalStateException( "unknown behavior: " + titleIconHandling );
+        }
+
     }
-    
+
     /**
      * Resets the icon of this {@link Dockable}, the default icon is shown again.
      */
     public void resetTitleIcon(){
-    	titleIcon().setValue( null );
+        titleIcon().setValue( null );
     }
-    
+
     /**
      * The default behavior of this method is to do nothing.
      */
     public void requestDockTitle( DockTitleRequest request ){
-	    // ignore	
+        // ignore
     }
-    
+
     /**
      * The default behavior of this method is to do nothing.
      */
     public void requestDisplayer( DisplayerRequest request ){
-	    // ignore	
+        // ignore
     }
-    
+
     public void bind( DockTitle title ) {
-    	if( titles.contains( title ))
-    		throw new IllegalArgumentException( "Title is already bound" );
-    	titles.add( title );
-    	fireTitleBound( title );
+        if( titles.contains( title )) {
+            throw new IllegalArgumentException( "Title is already bound" );
+        }
+        titles.add( title );
+        fireTitleBound( title );
     }
 
     public void unbind( DockTitle title ) {
-    	if( !titles.contains( title ))
-    		throw new IllegalArgumentException( "Title is unknown" );
-    	titles.remove( title );
-    	fireTitleUnbound( title );
+        if( !titles.contains( title )) {
+            throw new IllegalArgumentException( "Title is unknown" );
+        }
+        titles.remove( title );
+        fireTitleUnbound( title );
     }
-    
+
     public DockTitle[] listBoundTitles(){
-    	return titles.toArray( new DockTitle[ titles.size() ] );
+        return titles.toArray( new DockTitle[ titles.size() ] );
     }
 
     public DockActionSource getLocalActionOffers() {
         return source;
     }
-    
+
     public DockActionSource getGlobalActionOffers(){
-    	return globalSource;
+        return globalSource;
     }
 
-    /** 
+    /**
      * Sets the action-source of this {@link Dockable}. Other elements which
      * used {@link #getGlobalActionOffers()} will be informed about this change.
      * @param source The new source, may be <code>null</code>
@@ -546,7 +552,7 @@ public abstract class AbstractDockable implements Dockable {
         this.source = source;
         globalSource.update();
     }
-    
+
     /**
      * Calls the {@link DockableListener#titleTextChanged(Dockable, String, String) titleTextChanged}
      * method of all registered {@link DockableListener}s.
@@ -554,10 +560,11 @@ public abstract class AbstractDockable implements Dockable {
      * @param newTitle the new title
      */
     protected void fireTitleTextChanged( String oldTitle, String newTitle ){
-        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] ))
+        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] )) {
             listener.titleTextChanged( this, oldTitle, newTitle );
+        }
     }
-    
+
     /**
      * Called the {@link DockableListener#titleToolTipChanged(Dockable, String, String) titleTooltipChanged}
      * method of all registered {@link DockableListener}s.
@@ -565,8 +572,9 @@ public abstract class AbstractDockable implements Dockable {
      * @param newTooltip the new value
      */
     protected void fireTitleTooltipChanged( String oldTooltip, String newTooltip ){
-        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] ))
+        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] )) {
             listener.titleToolTipChanged( this, oldTooltip, newTooltip );
+        }
     }
 
     /**
@@ -576,39 +584,43 @@ public abstract class AbstractDockable implements Dockable {
      * @param newIcon the new icon
      */
     protected void fireTitleIconChanged( Icon oldIcon, Icon newIcon ){
-    	currentTitleIcon = newIcon;
-        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] ))
+        currentTitleIcon = newIcon;
+        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] )) {
             listener.titleIconChanged( this, oldIcon, newIcon );
+        }
     }
-    
+
     /**
      * Informs all dockableListeners that <code>title</code> was bound to this dockable.
      * @param title the title which was bound
      */
     protected void fireTitleBound( DockTitle title ){
-        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] ))
+        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] )) {
             listener.titleBound( this, title );
+        }
     }
-    
+
     /**
      * Informs all dockableListeners that <code>title</code> was unbound from this dockable.
      * @param title the title which was unbound
      */
     protected void fireTitleUnbound( DockTitle title ){
-        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] ))
+        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] )) {
             listener.titleUnbound( this, title );
+        }
     }
-    
+
     /**
      * Informs all {@link DockableListener}s that <code>title</code> is no longer
      * considered to be a good title and should be exchanged.
      * @param title a title, can be <code>null</code>
      */
     protected void fireTitleExchanged( DockTitle title ){
-        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] ))
+        for( DockableListener listener : dockableListeners.toArray( new DockableListener[ dockableListeners.size()] )) {
             listener.titleExchanged( this, title );
+        }
     }
-    
+
     /**
      * Informs all {@link DockableListener}s that all bound titles and the
      * <code>null</code> title are no longer considered good titles and
@@ -616,16 +628,17 @@ public abstract class AbstractDockable implements Dockable {
      */
     protected void fireTitleExchanged(){
         DockTitle[] bound = listBoundTitles();
-        for( DockTitle title : bound )
+        for( DockTitle title : bound ) {
             fireTitleExchanged( title );
-        
+        }
+
         fireTitleExchanged( null );
     }
-    
+
     public void configureDisplayerHints( DockableDisplayerHints hints ) {
         this.hints = hints;
     }
-    
+
     /**
      * Gets the last {@link DockableDisplayerHints} that were given to
      * {@link #configureDisplayerHints(DockableDisplayerHints)}.

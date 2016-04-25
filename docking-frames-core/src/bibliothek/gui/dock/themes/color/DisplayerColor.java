@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -38,10 +38,10 @@ import bibliothek.util.Path;
 public abstract class DisplayerColor extends AbstractDockColor {
     /** the kind of color {@link DisplayerColor} is */
     public static final Path KIND_DISPLAYER_COLOR = KIND_DOCK_COLOR.append( "DisplayerColor" );
-    
+
     /** the element for which the color is needed */
     private DockableDisplayer displayer;
-    
+
     /**
      * Creates a new {@link DisplayerColor}
      * @param id the identifier of the color
@@ -53,7 +53,7 @@ public abstract class DisplayerColor extends AbstractDockColor {
         super( id, kind, backup );
         this.displayer = displayer;
     }
-    
+
     /**
      * Creates a new {@link DisplayerColor}
      * @param id the identifier of the color
@@ -61,9 +61,9 @@ public abstract class DisplayerColor extends AbstractDockColor {
      * @param backup a backup color
      */
     public DisplayerColor( String id, DockableDisplayer displayer, Color backup ){
-       this( id, KIND_DISPLAYER_COLOR, displayer, backup ); 
+       this( id, KIND_DISPLAYER_COLOR, displayer, backup );
     }
-    
+
     /**
      * Gets the element for which this color is used.
      * @return the element

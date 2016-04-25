@@ -9,8 +9,8 @@ public class Main {
      * Starts the application
      * @param args are ignored
      */
-	public static void main( String[] args ){
-		Core core = new Core();
-		core.startup();
-	}
+    public static void main( String[] args ){
+        Core core = new Core();
+        core.startup();
+    }
 }

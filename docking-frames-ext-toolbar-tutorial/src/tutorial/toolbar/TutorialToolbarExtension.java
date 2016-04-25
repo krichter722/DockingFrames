@@ -9,15 +9,15 @@ import tutorial.toolbar.core.CoreToolbarTutorials;
 
 public class TutorialToolbarExtension implements TutorialExtension{
 
-	@Override
-	public Class<?>[] getTutorials( Class<? extends TutorialSet> set ){
-		if( set.isAssignableFrom( CoreSet.class )){
-			return new Class[]{ CoreToolbarTutorials.class };
-		}
-		if( set.isAssignableFrom( CommonSet.class )){
-			return new Class[]{ CommonToolbarTutorials.class };
-		}
-		return null;
-	}
-	
+    @Override
+    public Class<?>[] getTutorials( Class<? extends TutorialSet> set ){
+        if( set.isAssignableFrom( CoreSet.class )){
+            return new Class[]{ CoreToolbarTutorials.class };
+        }
+        if( set.isAssignableFrom( CommonSet.class )){
+            return new Class[]{ CommonToolbarTutorials.class };
+        }
+        return null;
+    }
+
 }

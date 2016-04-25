@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -49,7 +49,7 @@ public interface StationPaint {
      * @param y2 the y-coordinate of the second end of the line
      */
     public void drawInsertionLine( Graphics g, DockStation station, int x1, int y1, int x2, int y2 );
-    
+
     /**
      * Draws a divider between two elements.
      * @param g the graphics context used for painting
@@ -57,7 +57,7 @@ public interface StationPaint {
      * @param bounds the rectangle which marks the whole divider
      */
     public void drawDivider( Graphics g, DockStation station, Rectangle bounds );
-    
+
     /**
      * Paints some markings when a {@link Dockable} is added to a {@link DockStation}.
      * @param g the graphics context used for painting
@@ -66,7 +66,7 @@ public interface StationPaint {
      * @param dockableBounds the bounds that the new child will have
      */
     public void drawInsertion( Graphics g, DockStation station, Rectangle stationBounds, Rectangle dockableBounds );
-    
+
     /**
      * Paints some markings when a {@link Dockable} is removed from a {@link DockStation}.
      * @param g the graphics context used for painting

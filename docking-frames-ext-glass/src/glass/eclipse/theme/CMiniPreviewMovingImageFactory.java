@@ -37,7 +37,7 @@ public class CMiniPreviewMovingImageFactory implements DockableMovingImageFactor
     * @param controller the controller for which the image is made
     * @param dockable the element whose image should be taken
     * @return an image of <code>dockable</code> which is not larger than the
-    * maximum {@link Dimension} that was given to this factory in the 
+    * maximum {@link Dimension} that was given to this factory in the
     * constructor.
     * @see AWTComponentCaptureStrategy
     */

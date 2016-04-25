@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -49,12 +49,12 @@ import bibliothek.util.xml.XElement;
 public class StackDockProperty extends AbstractDockableProperty {
     /** The first location on a {@link StackDockStation} */
     public static final StackDockProperty FRONT = new StackDockProperty( 0 );
-    
+
     /** The last location on a {@link StackDockStation} */
     public static final StackDockProperty BACK = new StackDockProperty( Integer.MAX_VALUE );
-    
+
     private int index;
-    
+
     private Path placeholder;
 
     /**
@@ -64,7 +64,7 @@ public class StackDockProperty extends AbstractDockableProperty {
     public StackDockProperty( int index ){
         setIndex( index );
     }
-    
+
 
     /**
      * Constructs a property.
@@ -75,17 +75,17 @@ public class StackDockProperty extends AbstractDockableProperty {
         setIndex( index );
         setPlaceholder( placeholder );
     }
-    
+
     /**
      * Constructs a property with a location equal to 0.
      */
     public StackDockProperty(){
-    	// do nothing
+        // do nothing
     }
-    
+
     @Override
     public String toString(){
-	    return getClass().getSimpleName() + "[index=" + index + ", placeholder=" + placeholder + ", successor=" + getSuccessor() + "]";
+        return getClass().getSimpleName() + "[index=" + index + ", placeholder=" + placeholder + ", successor=" + getSuccessor() + "]";
     }
 
     public DockableProperty copy() {
@@ -93,7 +93,7 @@ public class StackDockProperty extends AbstractDockableProperty {
         copy( copy );
         return copy;
     }
-    
+
     /**
      * Sets the location which is determined by this property. The smallest
      * location is 0.
@@ -102,7 +102,7 @@ public class StackDockProperty extends AbstractDockableProperty {
     public void setIndex( int index ) {
         this.index = index;
     }
-    
+
     /**
      * Gets the location of this property.
      * @return the location
@@ -111,23 +111,23 @@ public class StackDockProperty extends AbstractDockableProperty {
     public int getIndex() {
         return index;
     }
-    
+
     /**
      * Sets the placeholder name this location.
      * @param placeholder the placeholder, can be <code>null</code>
      */
     public void setPlaceholder( Path placeholder ){
-		this.placeholder = placeholder;
-	}
-    
+        this.placeholder = placeholder;
+    }
+
     /**
      * Gets the placeholder naming this location.
      * @return the placeholder, can be <code>null</code>
      */
     public Path getPlaceholder(){
-		return placeholder;
-	}
-    
+        return placeholder;
+    }
+
     public String getFactoryID() {
         return StackDockPropertyFactory.ID;
     }
@@ -136,79 +136,83 @@ public class StackDockProperty extends AbstractDockableProperty {
         Version.write( out, Version.VERSION_1_0_8 );
         out.writeInt( index );
         if( placeholder == null ){
-        	out.writeBoolean( false );
+            out.writeBoolean( false );
         }
         else{
-        	out.writeBoolean( true );
-        	out.writeUTF( placeholder.toString() );
-        }
-    }
-    
-    public void store( XElement element ) {
-    	if( index >= 0 ){
-    		element.addElement( "index" ).setInt( index );
-    	}
-    	
-        if( placeholder != null ){
-        	element.addElement( "placeholder" ).setString( placeholder.toString() );
+            out.writeBoolean( true );
+            out.writeUTF( placeholder.toString() );
         }
     }
 
-    public void load( DataInputStream in ) throws IOException {    	
+    public void store( XElement element ) {
+        if( index >= 0 ){
+            element.addElement( "index" ).setInt( index );
+        }
+
+        if( placeholder != null ){
+            element.addElement( "placeholder" ).setString( placeholder.toString() );
+        }
+    }
+
+    public void load( DataInputStream in ) throws IOException {
         Version version = Version.read( in );
         version.checkCurrent();
         boolean version8 = Version.VERSION_1_0_8.compareTo( version ) <= 0;
         index = in.readInt();
         placeholder = null;
-        
+
         if( version8 ){
-        	if( in.readBoolean() ){
-        		placeholder = new Path( in.readUTF() );
-        	}
+            if( in.readBoolean() ){
+                placeholder = new Path( in.readUTF() );
+            }
         }
     }
-    
+
     public void load( XElement element ) {
-    	index = -1;
-    	placeholder = null;
-    	
-    	XElement xindex = element.getElement( "index" );
-    	XElement xplaceholder = element.getElement( "placeholder" );
-    	
-    	if( xindex == null && xplaceholder == null ){
-    		if( element.getValue() != null && element.getValue().length() > 0 ){
-    			index = element.getInt();
-    		}
-    	}
-    	else{
-    		if( xindex != null ){
-    			index = xindex.getInt();
-    		}
-    		if( xplaceholder != null ){
-    			placeholder = new Path( xplaceholder.getString() );
-    		}
-    	}
+        index = -1;
+        placeholder = null;
+
+        XElement xindex = element.getElement( "index" );
+        XElement xplaceholder = element.getElement( "placeholder" );
+
+        if( xindex == null && xplaceholder == null ){
+            if( element.getValue() != null && element.getValue().length() > 0 ){
+                index = element.getInt();
+            }
+        }
+        else{
+            if( xindex != null ){
+                index = xindex.getInt();
+            }
+            if( xplaceholder != null ){
+                placeholder = new Path( xplaceholder.getString() );
+            }
+        }
     }
 
-	@Override
-	public int hashCode(){
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + index;
-		return result;
-	}
+    @Override
+    public int hashCode(){
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + index;
+        return result;
+    }
 
-	@Override
-	public boolean equals( Object obj ){
-		if( this == obj )
-			return true;
-		if( !super.equals( obj ) )
-			return false;
-		if( !(obj instanceof StackDockProperty) )
-			return false;
-		StackDockProperty other = (StackDockProperty)obj;
-		if( index != other.index )
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals( Object obj ){
+        if( this == obj ) {
+            return true;
+        }
+        if( !super.equals( obj ) ) {
+            return false;
+        }
+        if( !(obj instanceof StackDockProperty) ) {
+            return false;
+        }
+        StackDockProperty other = (StackDockProperty)obj;
+        if( index != other.index ) {
+            return false;
+        }
+        return true;
+    }
 }

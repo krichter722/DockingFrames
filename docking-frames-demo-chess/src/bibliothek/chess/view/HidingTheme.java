@@ -11,26 +11,26 @@ import bibliothek.gui.dock.title.DockTitleFactory;
 import bibliothek.gui.dock.title.DockTitleRequest;
 import bibliothek.gui.dock.title.TitleMovingImage;
 import bibliothek.gui.dock.util.Priority;
- 
+
 /**
- * A theme that can hide all {@link DockTitle}s when used together with a 
+ * A theme that can hide all {@link DockTitle}s when used together with a
  * {@link ChessBoard}.
  * @author Benjamin Sigg
  */
 public class HidingTheme extends BasicTheme {
-	private  boolean showTitles;
-	
-	/**
-	 * Creates a new theme
-	 */
+    private  boolean showTitles;
+
+    /**
+     * Creates a new theme
+     */
     public HidingTheme(){
-    	setShowTitles( false );
+        setShowTitles( false );
     }
 
     public void setShowTitles( boolean show ){
-    	this.showTitles = show;
-    	
-    	if( show ){
+        this.showTitles = show;
+
+        if( show ){
             setMovingImageFactory( new BasicMovingImageFactory(){
                 @Override
                 public MovingImage create( DockController controller, Dockable dockable ) {
@@ -42,8 +42,8 @@ public class HidingTheme extends BasicTheme {
                     }
                 }
             }, Priority.DEFAULT );
-    	}
-    	else{
+        }
+        else{
             setMovingImageFactory( new DockableMovingImageFactory(){
                 public MovingImage create( DockController controller, Dockable dockable ) {
                     return null;
@@ -52,41 +52,41 @@ public class HidingTheme extends BasicTheme {
                     return null;
                 }
             }, Priority.DEFAULT );
-    	}
-    	
-    	updateTitleFactory();
+        }
+
+        updateTitleFactory();
     }
-    
+
     private void updateTitleFactory(){
-    	DockController controller = getController();
-    	if( controller != null ){
-	    	if( showTitles ){
-	    		controller.getDockTitleManager().registerTheme( "chess-board", null );
-	    	}
-	    	else{
-	            controller.getDockTitleManager().registerTheme( "chess-board", new DockTitleFactory(){
-	            	public void install( DockTitleRequest request ){
-	    	        	// ignore	
-	            	}
-	            	
-	            	public void request( DockTitleRequest request ){
-	            		request.answer( null );
-	            	}
-	            	
-	            	public void uninstall( DockTitleRequest request ){
-	    	        	// ignore	
-	            	}
-	            });
-	    	}
-    	}
+        DockController controller = getController();
+        if( controller != null ){
+            if( showTitles ){
+                controller.getDockTitleManager().registerTheme( "chess-board", null );
+            }
+            else{
+                controller.getDockTitleManager().registerTheme( "chess-board", new DockTitleFactory(){
+                    public void install( DockTitleRequest request ){
+                        // ignore
+                    }
+
+                    public void request( DockTitleRequest request ){
+                        request.answer( null );
+                    }
+
+                    public void uninstall( DockTitleRequest request ){
+                        // ignore
+                    }
+                });
+            }
+        }
     }
-    
+
     @Override
     public void install( DockController controller ) {
         super.install( controller );
         updateTitleFactory();
     }
-    
+
     @Override
     public void uninstall( DockController controller ) {
         super.uninstall( controller );

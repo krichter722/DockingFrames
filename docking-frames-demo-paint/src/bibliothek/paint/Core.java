@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -65,13 +65,13 @@ import bibliothek.util.xml.XIO;
 public class Core {
     /** whether the application runs in a secure environment or not */
     private boolean secure;
-    
+
     /** the manager managing all the elements of the view */
     private ViewManager view;
-    
+
     /** whether to use a xml or a binary file to store persistent data */
     private boolean formatXML = true;
-    
+
     /**
      * Creates a new core.
      * @param secure whether the application runs in a secure environment or not
@@ -79,7 +79,7 @@ public class Core {
     public Core( boolean secure ){
         this.secure = secure;
     }
-    
+
     /**
      * Starts a new main-frame.
      * @param monitor the callback informing the caller about the state
@@ -91,46 +91,46 @@ public class Core {
         final JFrame frame = new JFrame( "Paint" );
         frame.setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
         frame.setIconImage( Resources.toImage( Resources.getIcon( "application" ) ) );
-        
+
         final CControl control = new CControl( frame, secure );
 
         RootMenuPiece settings = new RootMenuPiece( "View", false );
         settings.add( new SingleCDockableListMenuPiece( control ));
         settings.add( new SeparatingMenuPiece( new CLayoutChoiceMenuPiece( control, false ), true, false, false ));
-        
+
         RootMenuPiece layout = new RootMenuPiece( "Layout", false );
         layout.add( new SubmenuPiece( "LookAndFeel", true, new CLookAndFeelMenuPiece( control )));
         layout.add( new SubmenuPiece( "Layout", true, new CThemeMenuPiece( control )));
         layout.add( CPreferenceMenuPiece.setup( control ));
-        
+
         JMenuBar bar = new JMenuBar();
         bar.add( settings.getMenu() );
         bar.add( layout.getMenu() );
 
         frame.setJMenuBar( bar );
-        
+
         frame.getContentPane().add( control.getContentArea() );
-        
+
         PictureRepository pictures = new PictureRepository();
         view = new ViewManager( control, pictures );
-        
+
         frame.setBounds( 20, 20, 600, 500 );
-        
+
         // read and write settings
         if( secure ){
             // InputStream in = Core.class.getResourceAsStream( "/data/bibliothek/paint/config.xml" );
             InputStream in = Core.class.getResourceAsStream( "/data/bibliothek/paint/config.xml" );
             if( in != null ){
                 try{
-                	if( formatXML ){
-	                    readXML( XIO.readUTF( in ) );
-	                    in.close();
-                	}
-                	else{
-	                    DataInputStream dataIn = new DataInputStream( in );
-	                    read( dataIn );
-	                    dataIn.close();
-                	}
+                    if( formatXML ){
+                        readXML( XIO.readUTF( in ) );
+                        in.close();
+                    }
+                    else{
+                        DataInputStream dataIn = new DataInputStream( in );
+                        read( dataIn );
+                        dataIn.close();
+                    }
                 }
                 catch( IOException ex ){
                     ex.printStackTrace();
@@ -139,49 +139,49 @@ public class Core {
         }
         else{
             try{
-            	if( formatXML ){
-	                InputStream in = new BufferedInputStream( new FileInputStream( "config.xml" ));
-	                readXML( XIO.readUTF( in ) );
-	                in.close();
-            	}
-            	else{
-            		DataInputStream in = new DataInputStream( new FileInputStream( "paint.config" ));
-            		read( in );
-            		in.close();
-            	}
+                if( formatXML ){
+                    InputStream in = new BufferedInputStream( new FileInputStream( "config.xml" ));
+                    readXML( XIO.readUTF( in ) );
+                    in.close();
+                }
+                else{
+                    DataInputStream in = new DataInputStream( new FileInputStream( "paint.config" ));
+                    read( in );
+                    in.close();
+                }
             }
             catch( IOException ex ){
                 ex.printStackTrace();
             }
         }
-        
+
         view.getWorkingArea().setVisible( true );
-        
+
         frame.addWindowListener( new WindowAdapter(){
             @Override
             public void windowClosing( WindowEvent e ) {
                 try{
                     frame.dispose();
-                    
+
                     if( !secure ){
                         try{
-                        	if( formatXML ){
-	                            XElement element = new XElement( "config" );
-	                            writeXML( element );
-	                            OutputStream out = new BufferedOutputStream( new FileOutputStream( "config.xml" ));
-	                            XIO.writeUTF( element, out );
-                        	}
-                        	else{
-	                            DataOutputStream out = new DataOutputStream( new FileOutputStream( "paint.config" ));
-	                            write( out );
-	                            out.close();
-                        	}
+                            if( formatXML ){
+                                XElement element = new XElement( "config" );
+                                writeXML( element );
+                                OutputStream out = new BufferedOutputStream( new FileOutputStream( "config.xml" ));
+                                XIO.writeUTF( element, out );
+                            }
+                            else{
+                                DataOutputStream out = new DataOutputStream( new FileOutputStream( "paint.config" ));
+                                write( out );
+                                out.close();
+                            }
                         }
                         catch( IOException ex ){
                             ex.printStackTrace();
                         }
                     }
-                    
+
                     view.getControl().destroy();
                 }
                 finally{
@@ -194,13 +194,13 @@ public class Core {
                 }
             }
         });
-        
+
         // startup finished
         frame.setVisible( true );
         if( monitor != null )
             monitor.running();
     }
-    
+
     /**
      * Writes all the settings of this application.
      * @param out the stream to write into
@@ -210,7 +210,7 @@ public class Core {
         view.getPictures().write( out );
         view.getControl().getResources().writeStream( out );
     }
-    
+
     /**
      * Writes all the settings of this application.
      * @param element the xml element to write into
@@ -219,7 +219,7 @@ public class Core {
         view.getPictures().writeXML( element.addElement( "pictures" ) );
         view.getControl().getResources().writeXML( element.addElement( "resources" ) );
     }
-    
+
     /**
      * Reads all the settings of this application.
      * @param in the stream to read from
@@ -229,7 +229,7 @@ public class Core {
         view.getPictures().read( in );
         view.getControl().getResources().readStream( in );
     }
-    
+
     /**
      * Reads all the settings of this application.
      * @param element the element to read from

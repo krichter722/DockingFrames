@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Herve Guillaume, Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Herve Guillaume
  * rvguillaume@hotmail.com
  * FR - France
@@ -42,38 +42,38 @@ import bibliothek.util.FrameworkOnly;
  */
 @FrameworkOnly
 public class PersistentColumn{
-	private int size;
-	private int preferred;
-	private Column source;
-	private Map<Dockable, PersistentCell> cells;
-	
-	public PersistentColumn( int size, int preferred, Column source, Map<Dockable, PersistentCell> cells ){
-		this.size = size;
-		this.preferred = preferred;
-		if( size <= 0 ){
-			this.size = preferred;
-		}
-		this.source = source;
-		this.cells = cells;
-	}
-	
-	public Column getSource(){
-		return source;
-	}
-	
-	public void setSize( int size ){
-		this.size = size;
-	}
-	
-	public int getSize(){
-		return size;
-	}
-	
-	public int getPreferredSize(){
-		return preferred;
-	}
-	
-	public Map<Dockable, PersistentCell> getCells(){
-		return cells;
-	}
+    private int size;
+    private int preferred;
+    private Column source;
+    private Map<Dockable, PersistentCell> cells;
+
+    public PersistentColumn( int size, int preferred, Column source, Map<Dockable, PersistentCell> cells ){
+        this.size = size;
+        this.preferred = preferred;
+        if( size <= 0 ){
+            this.size = preferred;
+        }
+        this.source = source;
+        this.cells = cells;
+    }
+
+    public Column getSource(){
+        return source;
+    }
+
+    public void setSize( int size ){
+        this.size = size;
+    }
+
+    public int getSize(){
+        return size;
+    }
+
+    public int getPreferredSize(){
+        return preferred;
+    }
+
+    public Map<Dockable, PersistentCell> getCells(){
+        return cells;
+    }
 }

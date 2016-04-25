@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -58,30 +58,30 @@ import bibliothek.gui.dock.util.DockUtilities;
  * @author Benjamin Sigg
  */
 public class DefaultMouseFocusObserver implements MouseFocusObserver{
-    
+
     /** The controller to be informed about changes */
     private DockController controller;
-    
-    /** 
-     * Listener added to the {@link DockRelocator}, updates the focused {@link Dockable} after a 
-     * drag and drop operation completed. 
+
+    /**
+     * Listener added to the {@link DockRelocator}, updates the focused {@link Dockable} after a
+     * drag and drop operation completed.
      */
     private VetoableDockRelocatorListener relocatorListener = new VetoableDockRelocatorAdapter(){
-    	public void dropped( final DockRelocatorEvent event ){
-    		EventQueue.invokeLater( new Runnable(){
+        public void dropped( final DockRelocatorEvent event ){
+            EventQueue.invokeLater( new Runnable(){
                 public void run(){
-                	FocusController focus = controller.getFocusController();
-                	FocusStrategy strategy = focus.getStrategy();
-                	if( strategy == null || strategy.shouldFocusAfterDrop( event.getDockable() )){
-                		controller.setFocusedDockable( new DefaultFocusRequest( event.getDockable(), null, true ));
-                	}
+                    FocusController focus = controller.getFocusController();
+                    FocusStrategy strategy = focus.getStrategy();
+                    if( strategy == null || strategy.shouldFocusAfterDrop( event.getDockable() )){
+                        controller.setFocusedDockable( new DefaultFocusRequest( event.getDockable(), null, true ));
+                    }
                 }
             });
-    	};
-	};
-	
-	/** Listener added to the {@link GlobalMouseDispatcher} for registering any {@link MouseEvent} */
-	private GlobalMouseListener listener = new GlobalMouseListener();
+        };
+    };
+
+    /** Listener added to the {@link GlobalMouseDispatcher} for registering any {@link MouseEvent} */
+    private GlobalMouseListener listener = new GlobalMouseListener();
 
     /**
      * Creates a new FocusController.
@@ -102,10 +102,10 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
             }
         });
     }
-    
+
     /**
      * Stops this FocusController. This controller will remove all
-     * its listeners and become ready for the garbage collector. 
+     * its listeners and become ready for the garbage collector.
      */
     public void kill(){
         getController().getRelocator().removeVetoableDockRelocatorListener( relocatorListener );
@@ -114,7 +114,7 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
         dispatcher.removeMouseMotionListener( listener );
         dispatcher.removeMouseWheelListener( listener );
     }
-    
+
     /**
      * Gets the affected controller.
      * @return the controller
@@ -122,9 +122,9 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
     public DockController getController() {
         return controller;
     }
-    
+
     /**
-     * This method may be called at any time by any component that received 
+     * This method may be called at any time by any component that received
      * the {@link MouseEvent} <code>event</code>.  This observer may transfer the
      * focus because of this call.<br>
      * If this application runs in a {@link DockController#isRestrictedEnvironment() restricted environment}
@@ -132,13 +132,13 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
      * @param event the event to check
      */
     public void check( MouseEvent event ){
-    	if( interact( event )){
-    		check( (AWTEvent)event );
-    	}
+        if( interact( event )){
+            check( (AWTEvent)event );
+        }
     }
-    
+
     /**
-     * This method may be called at any time by any component that received 
+     * This method may be called at any time by any component that received
      * the {@link MouseWheelEvent} <code>event</code>.  This observer may transfer the
      * focus because of this call.<br>
      * If this application runs in a {@link DockController#isRestrictedEnvironment() restricted environment}
@@ -146,11 +146,11 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
      * @param event the event to check
      */
     public void check( MouseWheelEvent event ){
-    	if( interact( event )){
-    		check( (AWTEvent)event );
-    	}
+        if( interact( event )){
+            check( (AWTEvent)event );
+        }
     }
-    
+
     /**
      * Lets check this controller whether the focus should change, or not. Clients
      * invoking this method should first check whether <code>event</code> is
@@ -160,15 +160,16 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
      * @see #interact(AWTEvent)
      */
     protected void check( AWTEvent event ){
-        if( controller.getRelocator().isOnPut() || controller.isOnFocusing() )
+        if( controller.getRelocator().isOnPut() || controller.isOnFocusing() ) {
             return;
-        
+        }
+
         Object source = event.getSource();
         if( source instanceof Component ){
             Component component = (Component)source;
             if( event.getID() == MouseEvent.MOUSE_PRESSED ){
                 if( component.isFocusable() && component.isEnabled()){
-                	check( component, false, true, event );
+                    check( component, false, true, event );
                 }
                 else{
                     check( component, true, false, event );
@@ -179,7 +180,7 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
             }
         }
     }
-    
+
     /**
      * Tells whether this event should change the focus.
      * @param event the event
@@ -187,10 +188,10 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
      */
     protected boolean interact( AWTEvent event ){
         int id = event.getID();
-        
+
         return id == MouseEvent.MOUSE_PRESSED || id == MouseEvent.MOUSE_WHEEL;
     }
-    
+
     /**
      * Handles the veto that was given when trying to forward
      * <code>event</code>. The default implementation calls
@@ -199,13 +200,13 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
      * @param veto which veto was called by a {@link FocusVetoListener}
      */
     protected void handleVeto( AWTEvent event, FocusVeto veto ){
-    	if( veto == FocusVeto.VETO ){
-	    	if( event instanceof InputEvent ){
-	    		((InputEvent)event).consume();
-	    	}
-    	}
+        if( veto == FocusVeto.VETO ){
+            if( event instanceof InputEvent ){
+                ((InputEvent)event).consume();
+            }
+        }
     }
-    
+
     /**
      * Tries to find the Dockable which owns <code>component</code>
      * and sets this Dockable to the focusedDockable. The method
@@ -217,7 +218,7 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
     protected void check( Component component, AWTEvent event ){
         check( component, true, false, event );
     }
-    
+
     /**
      * Tries to find the Dockable which owns <code>component</code>
      * and sets this Dockable to the focusedDockable. The method
@@ -231,49 +232,50 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
      * @param event the event that causes this check
      */
     protected void check( final Component component, final boolean ensureFocus, boolean requestFocusInWindow, final AWTEvent event ){
-    	DockElementRepresentative element = getDockable( component, event );
-    	if( element == null ){
-    		return;
-    	}
+        DockElementRepresentative element = getDockable( component, event );
+        if( element == null ){
+            return;
+        }
         Dockable dock = element.getElement().asDockable();
         if( dock == null ){
-        	return;
+            return;
         }
-        
+
         Dockable focused = controller.getFocusedDockable();
         boolean change = true;
-        if( focused != null )
+        if( focused != null ) {
             change = !DockUtilities.isAncestor( dock, focused );
-        
+        }
+
         if( change ){
-        	if( component instanceof FocusAwareComponent ){
-        		FocusAwareComponent aware = (FocusAwareComponent)component;
-        		if( requestFocusInWindow ){
-        			aware.maybeRequestFocus();
-        		}
-        		aware.invokeOnFocusRequest(new Runnable(){
-					public void run(){
-						DockElementRepresentative element = getDockable( component, event );
-						if( element != null ){
-							Dockable dock = element.getElement().asDockable();
-					        if( dock != null ){
-					        	controller.setFocusedDockable( new DefaultFocusRequest( dock, component, false, ensureFocus, element.shouldTransfersFocus() ));
-					        }
-						}
-					}
-				});
-    		}
-        	else{
-            	if( requestFocusInWindow ){
-               		component.requestFocusInWindow();
-               	}
+            if( component instanceof FocusAwareComponent ){
+                FocusAwareComponent aware = (FocusAwareComponent)component;
+                if( requestFocusInWindow ){
+                    aware.maybeRequestFocus();
+                }
+                aware.invokeOnFocusRequest(new Runnable(){
+                    public void run(){
+                        DockElementRepresentative element = getDockable( component, event );
+                        if( element != null ){
+                            Dockable dock = element.getElement().asDockable();
+                            if( dock != null ){
+                                controller.setFocusedDockable( new DefaultFocusRequest( dock, component, false, ensureFocus, element.shouldTransfersFocus() ));
+                            }
+                        }
+                    }
+                });
+            }
+            else{
+                if( requestFocusInWindow ){
+                    component.requestFocusInWindow();
+                }
                 controller.setFocusedDockable( new DefaultFocusRequest( dock, component, false, ensureFocus, element.shouldTransfersFocus() ));
-        	}
+            }
         }
     }
-    
+
     /**
-     * Gets the top-dockable which has <code>component</code> or 
+     * Gets the top-dockable which has <code>component</code> or
      * parent of <code>component</code> as base Component.
      * @param component a Component
      * @param event the event that causes this check
@@ -281,65 +283,67 @@ public class DefaultMouseFocusObserver implements MouseFocusObserver{
      */
     protected DockElementRepresentative getDockable( Component component, AWTEvent event ){
         DockElementRepresentative element = controller.searchElement( component );
-        if( element == null )
+        if( element == null ) {
             return null;
-        
+        }
+
         if( event instanceof MouseEvent || event instanceof MouseWheelEvent ){
-        	if( !element.shouldFocus() ){
-        		return null;
-        	}
+            if( !element.shouldFocus() ){
+                return null;
+            }
         }
-        
+
         Dockable dockable = element.getElement().asDockable();
-        if( dockable == null )
+        if( dockable == null ) {
             return null;
-        
-        FocusVeto veto = controller.getFocusController().checkFocusedDockable( element );
-        
-        if( veto != null && veto != FocusVeto.NONE ){
-        	handleVeto( event, veto );
-        	return null;
         }
-        
+
+        FocusVeto veto = controller.getFocusController().checkFocusedDockable( element );
+
+        if( veto != null && veto != FocusVeto.NONE ){
+            handleVeto( event, veto );
+            return null;
+        }
+
         return element;
     }
-    
+
     /**
      * This listener forwards all {@link MouseEvent}s to the {@link DefaultMouseFocusObserver#check(MouseEvent)}
      * and {@link DefaultMouseFocusObserver#check(MouseWheelEvent)}.
      * @author Benjamin Sigg
      */
     private class GlobalMouseListener implements MouseListener, MouseMotionListener, MouseWheelListener{
-		public void mouseWheelMoved( MouseWheelEvent e ){
-			check( e );
-		}
+        public void mouseWheelMoved( MouseWheelEvent e ){
+            check( e );
+        }
 
-		public void mouseDragged( MouseEvent e ){
-			check( e );	
-		}
+        public void mouseDragged( MouseEvent e ){
+            check( e );
+        }
 
-		public void mouseMoved( MouseEvent e ){
-			check( e );
-		}
+        public void mouseMoved( MouseEvent e ){
+            check( e );
+        }
 
-		public void mouseClicked( MouseEvent e ){
-			check( e );
-		}
+        public void mouseClicked( MouseEvent e ){
+            check( e );
+        }
 
-		public void mousePressed( MouseEvent e ){
-			check( e );
-		}
+        public void mousePressed( MouseEvent e ){
+            check( e );
+        }
 
-		public void mouseReleased( MouseEvent e ){
-			check( e );
-		}
+        public void mouseReleased( MouseEvent e ){
+            check( e );
+        }
 
-		public void mouseEntered( MouseEvent e ){
-			check( e );
-		}
+        public void mouseEntered( MouseEvent e ){
+            check( e );
+        }
 
-		public void mouseExited( MouseEvent e ){
-			check( e );
-		}
+        public void mouseExited( MouseEvent e ){
+            check( e );
+        }
     }
 }

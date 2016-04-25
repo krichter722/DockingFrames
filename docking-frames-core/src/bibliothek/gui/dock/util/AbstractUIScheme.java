@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -38,29 +38,29 @@ import java.util.List;
  * @param <B> The kind of filter between <code>V</code> and <code>U</code>
  */
 public abstract class AbstractUIScheme<V, U extends UIValue<V>, B extends UIBridge<V,U>> implements UIScheme<V,U,B>{
-	/** all the listeners of this scheme */
-	private List<UISchemeListener<V, U, B>> listeners = new ArrayList<UISchemeListener<V,U,B>>();
-	
-	public void addListener( UISchemeListener<V, U, B> listener ){
-		if( listener == null ){
-			throw new IllegalArgumentException( "listener must not be null" );
-		}
-		listeners.add( listener );
-	}
+    /** all the listeners of this scheme */
+    private List<UISchemeListener<V, U, B>> listeners = new ArrayList<UISchemeListener<V,U,B>>();
 
-	public void removeListener( UISchemeListener<V, U, B> listener ){
-		listeners.remove( listener );
-	}
+    public void addListener( UISchemeListener<V, U, B> listener ){
+        if( listener == null ){
+            throw new IllegalArgumentException( "listener must not be null" );
+        }
+        listeners.add( listener );
+    }
 
-	/**
-	 * Fires the event <code>event</code> to all registered {@link UISchemeListener}s.
-	 * @param event the event to fire
-	 */
-	@SuppressWarnings("unchecked")
-	protected void fire( UISchemeEvent<V, U, B> event ){
-		UISchemeListener<V, U, B>[] listeners = this.listeners.toArray( new UISchemeListener[ this.listeners.size() ] );
-		for( UISchemeListener<V,U,B> listener : listeners ){
-			listener.changed( event );
-		}
-	}
+    public void removeListener( UISchemeListener<V, U, B> listener ){
+        listeners.remove( listener );
+    }
+
+    /**
+     * Fires the event <code>event</code> to all registered {@link UISchemeListener}s.
+     * @param event the event to fire
+     */
+    @SuppressWarnings("unchecked")
+    protected void fire( UISchemeEvent<V, U, B> event ){
+        UISchemeListener<V, U, B>[] listeners = this.listeners.toArray( new UISchemeListener[ this.listeners.size() ] );
+        for( UISchemeListener<V,U,B> listener : listeners ){
+            listener.changed( event );
+        }
+    }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -52,7 +52,7 @@ import bibliothek.gui.dock.common.FontMap;
 import bibliothek.util.Path;
 
 /**
- * A frame contains some buttons that change some properties in order to 
+ * A frame contains some buttons that change some properties in order to
  * change size and colors.
  * @author Benjamin Sigg
  */
@@ -71,10 +71,10 @@ public class Frame extends DefaultMultipleCDockable {
     private JCheckBox showSingleTab;
     /** whether other dockables are allowed to get the focus */
     private JCheckBox preventFocusLost = new JCheckBox( "Prevent focus lost", false );
-    
+
     /** placeholder for this frame */
     private Path placeholder;
-    
+
     /** a factory that can create new frames */
     public static final EmptyMultipleCDockableFactory<Frame> FACTORY = new EmptyMultipleCDockableFactory<Frame>(){
         @Override
@@ -82,14 +82,14 @@ public class Frame extends DefaultMultipleCDockable {
             return new Frame();
         }
     };
-    
+
     /**
      * Creates a new Frame
      */
     public Frame(){
         super( FACTORY );
         setTitleText( "Frame" );
-        
+
         JPanel various = new JPanel( new GridLayout( 3, 1 ) );
         various.setBorder( BorderFactory.createTitledBorder( "Various" ) );
         showTitle = new JCheckBox( "Show title", isTitleShown() );
@@ -97,10 +97,10 @@ public class Frame extends DefaultMultipleCDockable {
         various.add( showTitle );
         various.add( showSingleTab );
         various.add( preventFocusLost );
-        
+
         JPanel sizes = new JPanel( new GridBagLayout() );
         sizes.setBorder( BorderFactory.createTitledBorder( "Size" ) );
-        
+
         sizes.add( lockedWidth, new GridBagConstraints( 0, 0, 2, 1, 1.0, 1.0,
                 GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets( 1, 1, 1, 1 ), 0, 0 ));
         sizes.add( lockedHeight, new GridBagConstraints( 0, 1, 2, 1, 1.0, 1.0,
@@ -109,12 +109,12 @@ public class Frame extends DefaultMultipleCDockable {
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets( 1, 1, 1, 1 ), 0, 0 ));
         sizes.add( new JLabel( "Height: " ), new GridBagConstraints( 0, 3, 1, 1, 1.0, 1.0,
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets( 1, 1, 1, 1 ), 0, 0 ));
-        
+
         sizes.add( width, new GridBagConstraints( 1, 2, 1, 1, 100.0, 1.0,
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets( 1, 1, 1, 1 ), 0, 0 ));
         sizes.add( height, new GridBagConstraints( 1, 3, 1, 1, 100.0, 1.0,
                 GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets( 1, 1, 1, 1 ), 0, 0 ));
-        
+
         JPanel buttons = new JPanel( new GridLayout( 1, 2 ));
         JButton set = new JButton( "Request" );
         set.setToolTipText( "States the request, but does not yet process it." );
@@ -123,15 +123,15 @@ public class Frame extends DefaultMultipleCDockable {
         buttons.add( set );
         buttons.add( process );
         sizes.add( buttons, new GridBagConstraints( 0, 4, 2, 1, 1.0, 1.0, GridBagConstraints.LAST_LINE_END,
-                GridBagConstraints.NONE, new Insets( 1, 1, 1, 1 ), 0, 0 )); 
-        
-        
+                GridBagConstraints.NONE, new Insets( 1, 1, 1, 1 ), 0, 0 ));
+
+
         JPanel properties = new JPanel( new GridLayout( 23, 1 ));
         properties.setBorder( BorderFactory.createTitledBorder( "Color" ) );
-        
+
         ColorMap colors = getColors();
         FontMap fonts = getFonts();
-        
+
         properties.add( new ColorButton( colors, ColorMap.COLOR_KEY_TAB_BACKGROUND, Color.WHITE ));
         properties.add( new ColorButton( colors, ColorMap.COLOR_KEY_TAB_BACKGROUND_SELECTED, Color.WHITE ));
         properties.add( new ColorButton( colors, ColorMap.COLOR_KEY_TAB_BACKGROUND_FOCUSED, Color.WHITE ));
@@ -155,15 +155,15 @@ public class Frame extends DefaultMultipleCDockable {
         properties.add( new FontButton( fonts, FontMap.FONT_KEY_TAB ));
         properties.add( new FontButton( fonts, FontMap.FONT_KEY_TAB_SELECTED ));
         properties.add( new FontButton( fonts, FontMap.FONT_KEY_TAB_FOCUSED ));
-        
+
         JPanel all = new JPanel( new GridBagLayout() );
-        all.add( various, new GridBagConstraints( 0, 0, 1, 1, 1.0, 1.0, 
+        all.add( various, new GridBagConstraints( 0, 0, 1, 1, 1.0, 1.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets( 0, 0, 0, 0 ), 0, 0 ));
-        all.add( sizes, new GridBagConstraints( 0, 1, 1, 1, 1.0, 1.0, 
+        all.add( sizes, new GridBagConstraints( 0, 1, 1, 1, 1.0, 1.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets( 0, 0, 0, 0 ), 0, 0 ));
-        all.add( properties, new GridBagConstraints( 0, 2, 1, 1, 1.0, 1.0, 
+        all.add( properties, new GridBagConstraints( 0, 2, 1, 1, 1.0, 1.0,
                 GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets( 0, 0, 0, 0 ), 0, 0 ));
-        
+
         getContentPane().add( new JScrollPane( all ));
         getContentPane().addComponentListener( new ComponentAdapter(){
             @Override
@@ -177,9 +177,9 @@ public class Frame extends DefaultMultipleCDockable {
             }
         });
         showSingleTab.addActionListener( new ActionListener(){
-        	public void actionPerformed( ActionEvent e ){
-	        	setSingleTabShown( showSingleTab.isSelected() );	
-        	}
+            public void actionPerformed( ActionEvent e ){
+                setSingleTabShown( showSingleTab.isSelected() );
+            }
         });
         lockedWidth.addActionListener( new ActionListener(){
             public void actionPerformed( ActionEvent e ) {
@@ -202,16 +202,16 @@ public class Frame extends DefaultMultipleCDockable {
             }
         });
     }
-    
+
     public boolean isFocusLostAllowed(){
-    	return !preventFocusLost.isSelected();
+        return !preventFocusLost.isSelected();
     }
-    
+
     public void setPlaceholder( Path placeholder ){
-		this.placeholder = placeholder;
-	}
-    
+        this.placeholder = placeholder;
+    }
+
     public Path getPlaceholder(){
-		return placeholder;
-	}
+        return placeholder;
+    }
 }

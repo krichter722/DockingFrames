@@ -30,7 +30,7 @@ public class StorageDockable extends DefaultSingleCDockable{
     private static final PreferenceOperation LOAD = new PreferenceOperation( "load", Icons.get( "load" ), "Load the layout of this entry" );
 
     private Core core;
-    
+
     private DefaultPreferenceModel model;
     private int entryCount = 0;
 
@@ -41,10 +41,10 @@ public class StorageDockable extends DefaultSingleCDockable{
 
         model = new DefaultPreferenceModel( control.getController() );
         model.add( new Entry( ++entryCount ) );
-        
+
         PreferenceTable table = new PreferenceTable();
         table.setModel( model );
-        
+
         setLayout( new BorderLayout() );
         add( new JScrollPane( table ), BorderLayout.CENTER );
     }
@@ -53,16 +53,16 @@ public class StorageDockable extends DefaultSingleCDockable{
         private int index;
         private Object data;
         private String label;
-        
+
         public Entry( int index ){
             this.index = index;
             label = "empty";
         }
-        
+
         public void setModel( PreferenceModel model ){
-	        // ignore	
+            // ignore
         }
-        
+
         @Override
         public PreferenceOperation[] getOperations() {
             return new PreferenceOperation[]{
@@ -110,7 +110,7 @@ public class StorageDockable extends DefaultSingleCDockable{
                     if( data instanceof byte[] ){
                         core.getEnvironment().getEnvironmentControl().getResources().readArray( (byte[])data );
                     }
-                    
+
                     core.getSingleDockables().updateTable();
                     core.getMultiDockables().updateTable();
                 }
@@ -155,13 +155,13 @@ public class StorageDockable extends DefaultSingleCDockable{
         public void setValue( Object value ) {
             // ignore
         }
-        
+
         public void read(){
-	        // ignore	
+            // ignore
         }
-        
+
         public void write(){
-	        // ignore	
+            // ignore
         }
     }
 }

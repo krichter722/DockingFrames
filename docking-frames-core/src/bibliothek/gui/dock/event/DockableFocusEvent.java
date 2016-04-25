@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -36,7 +36,7 @@ public class DockableFocusEvent {
     private DockController controller;
     private Dockable oldFocus;
     private Dockable newFocus;
-    
+
     /**
      * Creates a new event.
      * @param controller the controller on which the change occurred
@@ -48,7 +48,7 @@ public class DockableFocusEvent {
         this.oldFocus = oldFocus;
         this.newFocus = newFocus;
     }
-    
+
     /**
      * Gets the controller on which the focus change occurred.
      * @return the source
@@ -56,7 +56,7 @@ public class DockableFocusEvent {
     public DockController getController() {
         return controller;
     }
-    
+
     /**
      * Gets the {@link Dockable} which had the focus before the change.
      * @return the old focus owner, can be <code>null</code>
@@ -64,7 +64,7 @@ public class DockableFocusEvent {
     public Dockable getOldFocusOwner() {
         return oldFocus;
     }
-    
+
     /**
      * Gets the {@link Dockable} which has the focus after the change.
      * @return the new focus owner, can be <code>null</code>

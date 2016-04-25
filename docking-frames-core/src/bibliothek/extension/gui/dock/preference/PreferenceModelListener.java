@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,7 +37,7 @@ public interface PreferenceModelListener {
      * @param endIndex the index of the last new preference
      */
     public void preferenceAdded( PreferenceModel model, int beginIndex, int endIndex );
-    
+
     /**
      * Called when some preferences have been removed from <code>model</code>.
      * @param model the model that changed
@@ -45,7 +45,7 @@ public interface PreferenceModelListener {
      * @param endIndex the old index of the last preference that was removed
      */
     public void preferenceRemoved( PreferenceModel model, int beginIndex, int endIndex );
-    
+
     /**
      * Called when some preferences have been changed. This includes
      * the value of a preference, the text or description, but also the enabled {@link PreferenceOperation}s.

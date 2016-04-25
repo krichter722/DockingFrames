@@ -2,9 +2,9 @@
 // * Bibliothek - DockingFrames
 // * Library built on Java/Swing, allows the user to "drag and drop"
 // * panels containing any Swing-Component the developer likes to add.
-// * 
+// *
 // * Copyright (C) 2012 Benjamin Sigg
-// * 
+// *
 // * This library is free software; you can redistribute it and/or
 // * modify it under the terms of the GNU Lesser General Public
 // * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
 // * You should have received a copy of the GNU Lesser General Public
 // * License along with this library; if not, write to the Free Software
 // * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-// * 
+// *
 // * Benjamin Sigg
 // * benjamin_sigg@gmx.ch
 // * CH - Switzerland
@@ -47,106 +47,106 @@
 //@ClientOnly
 //public class CustomizeableSplitLayoutmanager<R, N, L> extends DefaultSplitLayoutManager {
 //
-//	public CustomizeableRoot toTree( SplitDockStation station ){
-//		
-//	}
-//	
-//	private CustomizeableRoot toRoot( Root root ){
-//	}
-//	
-//	private CustomizeableNode toNode( Node node ){
-//		
-//	}
-//	
-//	private CustomizeableLeaf toLeaf( Leaf leaf ){
-//		
-//	}
-//	
-//	/**
-//	 * A wrapper around a {@link SplitNode}, offers storage for subclasses of {@link CustomizeableSplitLayoutmanager}
-//	 * @param <D> the type of the data that is stored in this node
-//	 */
-//	public abstract class CustomizeableSplitNode<D> {
-//		private D data;
-//		
-//		/**
-//		 * Gets the {@link SplitNode} which was used to create this node.
-//		 * @return the original node
-//		 */
-//		public abstract SplitNode getOrigin();
-//		
-//		/**
-//		 * Gets the custom data that was set by a client.
-//		 * @return the custom data, can be <code>null</code>
-//		 */
-//		public D getData(){
-//			return data;
-//		}
-//		
-//		/**
-//		 * Sets custom data, can be used by a client. It is up to the client to decide what kind of information should
-//		 * be stored.
-//		 * @param data the data to store, can be <code>null</code>
-//		 */
-//		public void setData( D data ){
-//			this.data = data;
-//		}
-//	}
+//    public CustomizeableRoot toTree( SplitDockStation station ){
 //
-//	/**
-//	 * A wrapper around a {@link Root}.
-//	 */
-//	public class CustomizeableRoot extends CustomizeableSplitNode<R> {
-//		private Root root;
-//		private CustomizeableSplitNode<?> child;
-//		
-//		private CustomizeableRoot( Root root, CustomizeableSplitNode<?> child ){
-//			this.root = root;
-//		}
-//		
-//		/**
-//		 * Gets the only child of this root, either a {@link CustomizeableNode} or a {@link CustomizeableLeaf}.
-//		 * @return the child, can be <code>null</code>
-//		 */
-//		public CustomizeableSplitNode<?> getChild(){
-//			return child;
-//		}
-//		
-//		@Override
-//		public Root getOrigin(){
-//			return root;
-//		}
-//	}
+//    }
 //
-//	/**
-//	 * A wrapper around a {@link Node}
-//	 */
-//	public class CustomizeableNode extends CustomizeableSplitNode<N> {
-//		private Node node;
-//		
-//		private CustomizeableNode( Node node ){
-//			this.node = node;
-//		}
-//		
-//		@Override
-//		public SplitNode getOrigin(){
-//			return node;
-//		}
-//	}
+//    private CustomizeableRoot toRoot( Root root ){
+//    }
 //
-//	/**
-//	 * A wrapper around a {@link Leaf}
-//	 */
-//	public class CustomizeableLeaf extends CustomizeableSplitNode<L> {
-//		private Leaf leaf;
-//		
-//		private CustomizeableLeaf( Leaf leaf ){
-//			this.leaf = leaf;
-//		}
-//		
-//		@Override
-//		public SplitNode getOrigin(){
-//			return leaf;
-//		}
-//	}
+//    private CustomizeableNode toNode( Node node ){
+//
+//    }
+//
+//    private CustomizeableLeaf toLeaf( Leaf leaf ){
+//
+//    }
+//
+//    /**
+//     * A wrapper around a {@link SplitNode}, offers storage for subclasses of {@link CustomizeableSplitLayoutmanager}
+//     * @param <D> the type of the data that is stored in this node
+//     */
+//    public abstract class CustomizeableSplitNode<D> {
+//        private D data;
+//
+//        /**
+//         * Gets the {@link SplitNode} which was used to create this node.
+//         * @return the original node
+//         */
+//        public abstract SplitNode getOrigin();
+//
+//        /**
+//         * Gets the custom data that was set by a client.
+//         * @return the custom data, can be <code>null</code>
+//         */
+//        public D getData(){
+//            return data;
+//        }
+//
+//        /**
+//         * Sets custom data, can be used by a client. It is up to the client to decide what kind of information should
+//         * be stored.
+//         * @param data the data to store, can be <code>null</code>
+//         */
+//        public void setData( D data ){
+//            this.data = data;
+//        }
+//    }
+//
+//    /**
+//     * A wrapper around a {@link Root}.
+//     */
+//    public class CustomizeableRoot extends CustomizeableSplitNode<R> {
+//        private Root root;
+//        private CustomizeableSplitNode<?> child;
+//
+//        private CustomizeableRoot( Root root, CustomizeableSplitNode<?> child ){
+//            this.root = root;
+//        }
+//
+//        /**
+//         * Gets the only child of this root, either a {@link CustomizeableNode} or a {@link CustomizeableLeaf}.
+//         * @return the child, can be <code>null</code>
+//         */
+//        public CustomizeableSplitNode<?> getChild(){
+//            return child;
+//        }
+//
+//        @Override
+//        public Root getOrigin(){
+//            return root;
+//        }
+//    }
+//
+//    /**
+//     * A wrapper around a {@link Node}
+//     */
+//    public class CustomizeableNode extends CustomizeableSplitNode<N> {
+//        private Node node;
+//
+//        private CustomizeableNode( Node node ){
+//            this.node = node;
+//        }
+//
+//        @Override
+//        public SplitNode getOrigin(){
+//            return node;
+//        }
+//    }
+//
+//    /**
+//     * A wrapper around a {@link Leaf}
+//     */
+//    public class CustomizeableLeaf extends CustomizeableSplitNode<L> {
+//        private Leaf leaf;
+//
+//        private CustomizeableLeaf( Leaf leaf ){
+//            this.leaf = leaf;
+//        }
+//
+//        @Override
+//        public SplitNode getOrigin(){
+//            return leaf;
+//        }
+//    }
 //}

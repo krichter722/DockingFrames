@@ -16,39 +16,39 @@ import bibliothek.notes.view.NoteViewManager;
  */
 public class CopyAction extends SimpleButtonAction {
     /** a manager for the graphical representation of Notes */
-	private NoteViewManager manager;
-	/** a model needed to create new instances of {@link Note} */
-	private NoteModel model;
-	/** the Note which will be copied by this action */
-	private Note note;
-	
-	/**
-	 * Creates a new action.
-	 * @param manager the manager of the graphical representation of all Notes
-	 * @param model the set of known Notes
-	 * @param note the owner of this action. This Note will be copied when
-	 * the action is triggered.
-	 */
-	public CopyAction( NoteViewManager manager, NoteModel model, Note note ){
-		this.manager = manager;
-		this.model = model;
-		this.note = note;
-		
-		setText( "Copy" );
-		setIcon( ResourceSet.APPLICATION_ICONS.get( "copy" ) );
-	}
+    private NoteViewManager manager;
+    /** a model needed to create new instances of {@link Note} */
+    private NoteModel model;
+    /** the Note which will be copied by this action */
+    private Note note;
 
-	@Override
-	public void action( Dockable dockable ){
-		super.action( dockable );
-		
-		Note copy = model.addNote();
-		
-		copy.setColor( note.getColor() );
-		copy.setIcon( note.getIcon() );
-		copy.setText( note.getText() );
-		copy.setTitle( note.getTitle() );
-		
-		manager.show( copy, dockable );
-	}
+    /**
+     * Creates a new action.
+     * @param manager the manager of the graphical representation of all Notes
+     * @param model the set of known Notes
+     * @param note the owner of this action. This Note will be copied when
+     * the action is triggered.
+     */
+    public CopyAction( NoteViewManager manager, NoteModel model, Note note ){
+        this.manager = manager;
+        this.model = model;
+        this.note = note;
+
+        setText( "Copy" );
+        setIcon( ResourceSet.APPLICATION_ICONS.get( "copy" ) );
+    }
+
+    @Override
+    public void action( Dockable dockable ){
+        super.action( dockable );
+
+        Note copy = model.addNote();
+
+        copy.setColor( note.getColor() );
+        copy.setIcon( note.getIcon() );
+        copy.setText( note.getText() );
+        copy.setTitle( note.getTitle() );
+
+        manager.show( copy, dockable );
+    }
 }

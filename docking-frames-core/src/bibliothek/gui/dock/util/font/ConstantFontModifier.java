@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -33,17 +33,18 @@ import java.awt.Font;
  */
 public class ConstantFontModifier implements FontModifier{
     private Font font;
-    
+
     /**
      * Creates a new modifier.
      * @param font the font which is to be returned by this modifier
      */
     public ConstantFontModifier( Font font ){
-        if( font == null )
+        if( font == null ) {
             throw new IllegalArgumentException( "font must not be null" );
+        }
         this.font = font;
     }
-    
+
     public Font modify( Font font ) {
         return this.font;
     }

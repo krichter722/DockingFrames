@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,10 +37,10 @@ import bibliothek.gui.dock.station.support.PlaceholderMap;
 public class StackDockStationLayout {
     /** the name of the selected child */
     private int selected;
-    
+
     /** all the items of this layout */
     private PlaceholderMap placeholders;
-    
+
     /**
      * Creates a new layout.
      * @param selected the name of the selected child
@@ -51,7 +51,7 @@ public class StackDockStationLayout {
         this.placeholders = placeholders;
     }
 
-    
+
     /**
      * Gets the name of the selected child.
      * @return the selected child
@@ -59,12 +59,12 @@ public class StackDockStationLayout {
     public int getSelected() {
         return selected;
     }
-    
+
     /**
      * Gets all the items of this layout, including the encoded {@link Dockable}s.
      * @return the placeholders
      */
     public PlaceholderMap getPlaceholders(){
-		return placeholders;
-	}
+        return placeholders;
+    }
 }

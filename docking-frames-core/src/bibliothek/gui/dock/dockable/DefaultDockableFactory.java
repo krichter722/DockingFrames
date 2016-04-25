@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,7 +41,7 @@ import bibliothek.util.Version;
 import bibliothek.util.xml.XElement;
 
 /**
- * A factory which can read and write the properties of a 
+ * A factory which can read and write the properties of a
  * {@link DefaultDockable}. Note that this factory does not store any
  * information about the components added to the content pane of the
  * DefaultDockable.
@@ -50,40 +50,41 @@ import bibliothek.util.xml.XElement;
 public class DefaultDockableFactory implements DockFactory<DefaultDockable, DefaultDockablePerspective, Object> {
     /** The unique id of this factory */
     public static final String ID = "DefaultDockableFactory";
-    
+
     private String id;
-    
+
     /** creates a new factory */
     public DefaultDockableFactory(){
         id = ID;
     }
-    
+
     /**
      * Creates a new factory with the given identifier.
      * @param id the id of the factory, not <code>null</code>
      */
     public DefaultDockableFactory( String id ){
-        if( id == null )
+        if( id == null ) {
             throw new IllegalArgumentException( "id must not be null" );
+        }
         this.id = id;
     }
-    
+
     public String getID() {
         return id;
     }
 
     public void estimateLocations( Object layout, LocationEstimationMap children ){
-    	// nothing to do
+        // nothing to do
     }
-    
+
     public Object getLayout( DefaultDockable element, Map<Dockable, Integer> children ) {
         return new Object();
     }
-    
+
     public void setLayout( DefaultDockable element, Object layout, Map<Integer, Dockable> children, PlaceholderStrategy placeholders ) {
         // nothing to do
     }
-    
+
     public void setLayout( DefaultDockable element, Object layout, PlaceholderStrategy placeholders ) {
         // nothing to do
     }
@@ -91,21 +92,21 @@ public class DefaultDockableFactory implements DockFactory<DefaultDockable, Defa
     public DefaultDockable layout( Object layout, Map<Integer, Dockable> children, PlaceholderStrategy placeholders ) {
         return new DefaultDockable();
     }
-    
+
     public DefaultDockable layout( Object layout, PlaceholderStrategy placeholders ) {
         return new DefaultDockable();
     }
-    
+
     public DefaultDockablePerspective layoutPerspective( Object layout, Map<Integer, PerspectiveDockable> children ){
-    	return new DefaultDockablePerspective();
+        return new DefaultDockablePerspective();
     }
-    
+
     public void layoutPerspective( DefaultDockablePerspective perspective, Object layout, Map<Integer, PerspectiveDockable> children ){
-	    // nothing to do	
+        // nothing to do
     }
-    
+
     public Object getPerspectiveLayout( DefaultDockablePerspective element, Map<PerspectiveDockable, Integer> children ){
-    	return new Object();
+        return new Object();
     }
 
     public Object read( DataInputStream in, PlaceholderStrategy placeholders ) throws IOException {

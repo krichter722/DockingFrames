@@ -14,12 +14,12 @@ public class HierarchyNode {
     private String type;
     /** children of this node */
     private HierarchyNode[] children;
-    
+
     /**
      * Creates a new node.
      * @param name the name of the class or interface represented by this node
      * @param type the kind of java-element that this node represents
-     * @param children interfaces and classes which the java-element, 
+     * @param children interfaces and classes which the java-element,
      * that is represented by this node, extends or implements.
      */
     public HierarchyNode( String name, String type, HierarchyNode[] children ){
@@ -27,7 +27,7 @@ public class HierarchyNode {
         this.type = type;
         this.children = children;
     }
-    
+
     /**
      * Gets the name of the class or interface that is represented by this node.
      * @return the name
@@ -35,7 +35,7 @@ public class HierarchyNode {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Gets the kind of java-element that is represented by this node.
      * @return the kind of element
@@ -43,7 +43,7 @@ public class HierarchyNode {
     public String getType() {
         return type;
     }
-    
+
     /**
      * Gets the number of children this node has.
      * @return the number of children
@@ -51,7 +51,7 @@ public class HierarchyNode {
     public int getChildrenCount(){
         return children.length;
     }
-    
+
     /**
      * Gets the <code>index</code>'th child of this node.
      * @param index the location of the child

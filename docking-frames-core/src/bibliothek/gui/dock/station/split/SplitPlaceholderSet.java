@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,42 +40,42 @@ import bibliothek.util.Path;
 
 /**
  * Keeps track of the various placeholders and {@link Dockable}s of a {@link SplitDockStation}
- * and makes sure that a placeholder is used by no more than one {@link SplitNode}. 
+ * and makes sure that a placeholder is used by no more than one {@link SplitNode}.
  * @author Benjamin Sigg
  */
 @FrameworkOnly
 public class SplitPlaceholderSet {
-	/** access to the owner of this set */
-	private SplitDockAccess access;
-	
-	/**
-	 * Creates a new set.
-	 * @param access Access to the owner of this set, not <code>null</code>
-	 */
-	public SplitPlaceholderSet( SplitDockAccess access ){
-		this.access = access;
-		
-	}
-	
-	/**
-	 * Ensures that <code>node</code> is associated with the placeholder for <code>dockable</code>.
-	 * @param node the owner of <code>dockable</code>, can be <code>null</code> to indicate
-	 * that noone must use the placeholder of <code>dockable</code>
-	 * @param dockable the item whose placeholder is updated
-	 * @param protectedNodes nodes that will not be removed even if they are no longer {@link SplitNode#isOfUse() useful}
-	 */
-	public void set( SplitNode node, Dockable dockable, SplitNode... protectedNodes ){
-		PlaceholderStrategy strategy = access.getOwner().getPlaceholderStrategy();
-		if( strategy != null ){
-			Path placeholder = strategy.getPlaceholderFor( dockable );
-			if( placeholder != null ){
-				set( node, placeholder, protectedNodes );
-			}
-		}
-	}
-	
+    /** access to the owner of this set */
+    private SplitDockAccess access;
+
     /**
-     * Ensures that <code>node</code> is associated with <code>placeholder</code> 
+     * Creates a new set.
+     * @param access Access to the owner of this set, not <code>null</code>
+     */
+    public SplitPlaceholderSet( SplitDockAccess access ){
+        this.access = access;
+
+    }
+
+    /**
+     * Ensures that <code>node</code> is associated with the placeholder for <code>dockable</code>.
+     * @param node the owner of <code>dockable</code>, can be <code>null</code> to indicate
+     * that noone must use the placeholder of <code>dockable</code>
+     * @param dockable the item whose placeholder is updated
+     * @param protectedNodes nodes that will not be removed even if they are no longer {@link SplitNode#isOfUse() useful}
+     */
+    public void set( SplitNode node, Dockable dockable, SplitNode... protectedNodes ){
+        PlaceholderStrategy strategy = access.getOwner().getPlaceholderStrategy();
+        if( strategy != null ){
+            Path placeholder = strategy.getPlaceholderFor( dockable );
+            if( placeholder != null ){
+                set( node, placeholder, protectedNodes );
+            }
+        }
+    }
+
+    /**
+     * Ensures that <code>node</code> is associated with <code>placeholder</code>
      * but no other node has <code>placeholder</code>.
      * @param node the node which must have <code>placeholder</code>, <code>null</code> to
      * indicate that noone must use <code>placeholder</code>
@@ -83,53 +83,53 @@ public class SplitPlaceholderSet {
      * @param protectedNodes nodes that will not be removed even if they are no longer {@link SplitNode#isOfUse() useful}
      */
     public void set( final SplitNode node, final Path placeholder, final SplitNode... protectedNodes ){
-    	final List<SplitNode> nodesToDelete = new ArrayList<SplitNode>();
-    	
-    	Root root = access.getOwner().getRoot();
-    	root.visit( new SplitNodeVisitor() {
-			public void handleRoot( Root root ){
-				handle( root );
-			}
-			
-			public void handlePlaceholder( Placeholder placeholder ){
-				handle( placeholder );
-			}
-			
-			public void handleNode( Node node ){
-				handle( node );
-			}
-			
-			public void handleLeaf( Leaf leaf ){
-				handle( leaf );
-			}
-			
-			private void handle( SplitNode check ){
-				if( check != node ){
-					check.removePlaceholder( placeholder );
-					PlaceholderMap map = check.getPlaceholderMap();
-					if( map != null ){
-						map.removeAll( placeholder, true );
-					}
-					if( !check.isOfUse() ){
-						nodesToDelete.add( check );
-					}
-				}
-			}
-		});
-    	
-    	if( node != null ){
-    		node.addPlaceholder( placeholder );
-    	}
-    	
-    	if( access.isTreeAutoCleanupEnabled() ){
-    		for( SplitNode protectedNode : protectedNodes ){
-    			nodesToDelete.remove( protectedNode );
-    		}
-    		
-    		for( SplitNode delete : nodesToDelete ){
-    			delete.delete( true );
-    		}
-    	}
+        final List<SplitNode> nodesToDelete = new ArrayList<SplitNode>();
+
+        Root root = access.getOwner().getRoot();
+        root.visit( new SplitNodeVisitor() {
+            public void handleRoot( Root root ){
+                handle( root );
+            }
+
+            public void handlePlaceholder( Placeholder placeholder ){
+                handle( placeholder );
+            }
+
+            public void handleNode( Node node ){
+                handle( node );
+            }
+
+            public void handleLeaf( Leaf leaf ){
+                handle( leaf );
+            }
+
+            private void handle( SplitNode check ){
+                if( check != node ){
+                    check.removePlaceholder( placeholder );
+                    PlaceholderMap map = check.getPlaceholderMap();
+                    if( map != null ){
+                        map.removeAll( placeholder, true );
+                    }
+                    if( !check.isOfUse() ){
+                        nodesToDelete.add( check );
+                    }
+                }
+            }
+        });
+
+        if( node != null ){
+            node.addPlaceholder( placeholder );
+        }
+
+        if( access.isTreeAutoCleanupEnabled() ){
+            for( SplitNode protectedNode : protectedNodes ){
+                nodesToDelete.remove( protectedNode );
+            }
+
+            for( SplitNode delete : nodesToDelete ){
+                delete.delete( true );
+            }
+        }
     }
 
     /**
@@ -138,55 +138,55 @@ public class SplitPlaceholderSet {
      * @param node the node which must not be searched, can be <code>null</code>
      * @param map the map from which placeholders will be removed
      */
-	public void removeDoublePlaceholders( final SplitNode node, final PlaceholderMap map ){
-		final Set<Path> placeholdersToRemove = new HashSet<Path>();
-		final PlaceholderStrategy strategy = access.getOwner().getPlaceholderStrategy();
-		
-		Root root = access.getOwner().getRoot();
-		root.visit( new SplitNodeVisitor() {
-			public void handleRoot( Root root ){
-				handle( root );
-			}
-			
-			public void handlePlaceholder( Placeholder placeholder ){
-				handle( placeholder );
-			}
-			
-			public void handleNode( Node node ){
-				handle( node );
-			}
-			
-			public void handleLeaf( Leaf leaf ){
-				if( leaf != node ){
-					handle( leaf );
-					handle( leaf.getDockable() );
-				}
-			}
-			
-			private void handle( SplitNode check ){
-				if( check != node ){
-					for( Path placeholder : check.getPlaceholders() ){
-						placeholdersToRemove.add( placeholder );
-					}
-				}
-			}
-			
-			private void handle( Dockable dockable ){
-				if( strategy != null && dockable != null ){
-					Path placeholder = strategy.getPlaceholderFor( dockable );
-					if( placeholder != null ){
-						placeholdersToRemove.add( placeholder );
-					}
-					DockStation station = dockable.asDockStation();
-					if( station != null ){
-						for( int i = 0, n = station.getDockableCount(); i<n; i++ ){
-							handle( station.getDockable( i ) );
-						}
-					}
-				}
-			}
-		});
-		
-		map.removeAll( placeholdersToRemove, true );
-	}
+    public void removeDoublePlaceholders( final SplitNode node, final PlaceholderMap map ){
+        final Set<Path> placeholdersToRemove = new HashSet<Path>();
+        final PlaceholderStrategy strategy = access.getOwner().getPlaceholderStrategy();
+
+        Root root = access.getOwner().getRoot();
+        root.visit( new SplitNodeVisitor() {
+            public void handleRoot( Root root ){
+                handle( root );
+            }
+
+            public void handlePlaceholder( Placeholder placeholder ){
+                handle( placeholder );
+            }
+
+            public void handleNode( Node node ){
+                handle( node );
+            }
+
+            public void handleLeaf( Leaf leaf ){
+                if( leaf != node ){
+                    handle( leaf );
+                    handle( leaf.getDockable() );
+                }
+            }
+
+            private void handle( SplitNode check ){
+                if( check != node ){
+                    for( Path placeholder : check.getPlaceholders() ){
+                        placeholdersToRemove.add( placeholder );
+                    }
+                }
+            }
+
+            private void handle( Dockable dockable ){
+                if( strategy != null && dockable != null ){
+                    Path placeholder = strategy.getPlaceholderFor( dockable );
+                    if( placeholder != null ){
+                        placeholdersToRemove.add( placeholder );
+                    }
+                    DockStation station = dockable.asDockStation();
+                    if( station != null ){
+                        for( int i = 0, n = station.getDockableCount(); i<n; i++ ){
+                            handle( station.getDockable( i ) );
+                        }
+                    }
+                }
+            }
+        });
+
+        map.removeAll( placeholdersToRemove, true );
+    }
 }

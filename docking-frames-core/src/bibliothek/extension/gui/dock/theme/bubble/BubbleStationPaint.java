@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -52,17 +52,17 @@ public class BubbleStationPaint implements StationPaint {
             // ignore
         }
     };
-    
+
     public void drawDivider( Graphics g, DockStation station, Rectangle bounds ) {
         color.setId( "paint.divider" );
         color.connect( station.getController() );
-        
+
         Graphics2D g2 = (Graphics2D)g.create();
         g2.setColor( color.value() );
         g2.setComposite( AlphaComposite.getInstance( AlphaComposite.SRC_ATOP, 0.4f ) );
-        
+
         g2.fillRect( bounds.x, bounds.y, bounds.width, bounds.height );
-        
+
         g2.dispose();
         color.connect( null );
     }
@@ -70,41 +70,41 @@ public class BubbleStationPaint implements StationPaint {
     public void drawInsertion( Graphics g, DockStation station, Rectangle stationBounds, Rectangle dockableBounds ) {
         color.setId( "paint.insertion" );
         color.connect( station.getController() );
-        
+
         Graphics2D g2 = (Graphics2D)g.create();
         g2.setColor( color.value() );
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         g2.setStroke( new BasicStroke( 3f ));
-        
+
         int x = dockableBounds.x-1;
         int y = dockableBounds.y-1;
         int w = dockableBounds.width-2;
         int h = dockableBounds.height-2;
-        
+
         g2.setComposite( AlphaComposite.getInstance( AlphaComposite.SRC_ATOP, 0.4f ) );
         g2.drawRoundRect( x, y, w, h, 50, 50 );
         g2.fillRoundRect( x, y, w, h, 50, 50 );
-        
+
         g2.dispose();
-        
+
         color.connect( null );
     }
 
     public void drawInsertionLine( Graphics g, DockStation station, int x1, int y1, int x2, int y2 ) {
         color.setId( "paint.line" );
         color.connect( station.getController() );
-        
+
         Graphics2D g2 = (Graphics2D)g.create();
         g2.setColor( color.value() );
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         g2.setStroke( new BasicStroke( 3f ));
         g2.drawLine( x1, y1, x2, y2 );
         g2.dispose();
-        
+
         color.connect( null );
     }
-    
+
     public void drawRemoval( Graphics g, DockStation station, Rectangle stationBounds, Rectangle dockableBounds ){
-    	// ignore
+        // ignore
     }
 }

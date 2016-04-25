@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -36,50 +36,50 @@ import bibliothek.util.Path;
  * @author Benjamin Sigg
  */
 public interface KeyStrokeValidator {
-	/** a validator that accepts any stroke */
-	public static final KeyStrokeValidator EVERYTHING = new KeyStrokeValidator(){
-		public boolean isValid(KeyStroke keyStroke) {
-			return true;
-		}
-		public boolean isCompleteable(KeyStroke keyStroke) {
-			return false;
-		}
-	};
-	
-	/** A validator that does not allow modifier keystrokes like pressing a single 'shift' */
-	public static final KeyStrokeValidator NO_MODIFIER = new KeyStrokeValidator(){
-		public boolean isValid( KeyStroke keyStroke ){
-			return !KeyStrokeEditor.isModifierKey( keyStroke.getKeyCode() );
-		}
-		
-		public boolean isCompleteable(KeyStroke keyStroke) {
-			return true;
-		}
-	};
-	
-	/** a validator that allows only modifier keys */
-	public static final KeyStrokeValidator MODIFIER = new KeyStrokeValidator(){
-		public boolean isValid(KeyStroke keyStroke) {
-			return KeyStrokeEditor.isModifierKey( keyStroke.getKeyCode() );
-		}
-		public boolean isCompleteable(KeyStroke keyStroke) {
-			return false;
-		}
-	};
-	
-	/**
-	 * Checks whether <code>keyStroke</code> is valid.
-	 * @param keyStroke the keystroke to check
-	 * @return <code>true</code> if valid
-	 */
-	public boolean isValid( KeyStroke keyStroke );
-	
-	/**
-	 * Tells whether the invalid <code>keyStroke</code> can become valid
-	 * by adding additional keys.
-	 * @param keyStroke some invalid KeyStroke
-	 * @return <code>true</code> if the keystroke can be completed
-	 */
-	public boolean isCompleteable( KeyStroke keyStroke );
+    /** a validator that accepts any stroke */
+    public static final KeyStrokeValidator EVERYTHING = new KeyStrokeValidator(){
+        public boolean isValid(KeyStroke keyStroke) {
+            return true;
+        }
+        public boolean isCompleteable(KeyStroke keyStroke) {
+            return false;
+        }
+    };
+
+    /** A validator that does not allow modifier keystrokes like pressing a single 'shift' */
+    public static final KeyStrokeValidator NO_MODIFIER = new KeyStrokeValidator(){
+        public boolean isValid( KeyStroke keyStroke ){
+            return !KeyStrokeEditor.isModifierKey( keyStroke.getKeyCode() );
+        }
+
+        public boolean isCompleteable(KeyStroke keyStroke) {
+            return true;
+        }
+    };
+
+    /** a validator that allows only modifier keys */
+    public static final KeyStrokeValidator MODIFIER = new KeyStrokeValidator(){
+        public boolean isValid(KeyStroke keyStroke) {
+            return KeyStrokeEditor.isModifierKey( keyStroke.getKeyCode() );
+        }
+        public boolean isCompleteable(KeyStroke keyStroke) {
+            return false;
+        }
+    };
+
+    /**
+     * Checks whether <code>keyStroke</code> is valid.
+     * @param keyStroke the keystroke to check
+     * @return <code>true</code> if valid
+     */
+    public boolean isValid( KeyStroke keyStroke );
+
+    /**
+     * Tells whether the invalid <code>keyStroke</code> can become valid
+     * by adding additional keys.
+     * @param keyStroke some invalid KeyStroke
+     * @return <code>true</code> if the keystroke can be completed
+     */
+    public boolean isCompleteable( KeyStroke keyStroke );
 
 }

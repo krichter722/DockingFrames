@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,22 +40,22 @@ public interface MissingCDockableStrategy {
         public boolean shouldStoreSingle( String id ) {
             return false;
         }
-         
+
         public boolean shouldStoreMulti( String arg0 ){
-        	return false;
+            return false;
         }
-        
+
         public boolean shouldCreate( String id, MultipleCDockableFactory<?, ?> factory ) {
             return false;
         }
-        
+
         public <L extends MultipleCDockableLayout> boolean shouldCreate(
                 String id, MultipleCDockableFactory<?, L> factory,
                 String uniqueId, L data ) {
             return false;
         }
     };
-    
+
     /**
      * A strategy that will always throw away information for {@link MultipleCDockable}s
      * but store information for {@link SingleCDockable}.
@@ -64,11 +64,11 @@ public interface MissingCDockableStrategy {
         public boolean shouldStoreSingle( String id ) {
             return true;
         }
-        
+
         public boolean shouldStoreMulti( String arg0 ){
-        	return false;
+            return false;
         }
-        
+
         public boolean shouldCreate( String id, MultipleCDockableFactory<?, ?> factory ) {
             return false;
         }
@@ -78,7 +78,7 @@ public interface MissingCDockableStrategy {
             return false;
         }
     };
-    
+
     /**
      * A strategy that will always store any information
      */
@@ -86,11 +86,11 @@ public interface MissingCDockableStrategy {
         public boolean shouldStoreSingle( String id ) {
             return true;
         }
-        
+
         public boolean shouldStoreMulti( String arg0 ){
-        	return true;
+            return true;
         }
-        
+
         public boolean shouldCreate( String id, MultipleCDockableFactory<?, ?> factory ) {
             return true;
         }
@@ -100,8 +100,8 @@ public interface MissingCDockableStrategy {
             return true;
         }
     };
-    
-    
+
+
     /**
      * Tells whether layout information for the missing {@link SingleCDockable}
      * with identifier <code>id</code> should be stored.
@@ -119,7 +119,7 @@ public interface MissingCDockableStrategy {
      * <code>false</code> if the information should be purged.
      */
     public boolean shouldStoreMulti( String id );
-    
+
     /**
      * Tells whether the factory <code>factory</code> should be used to create
      * {@link MultipleCDockable}s for which location information is available.
@@ -128,7 +128,7 @@ public interface MissingCDockableStrategy {
      * @return <code>true</code> if dockables can be restored by <code>factory</code>
      */
     public boolean shouldCreate( String id, MultipleCDockableFactory<?,?> factory );
-    
+
     /**
      * Tells whether the {@link MultipleCDockable} with identifier <code>uniqueId</code>
      * should automatically be created outside the normal setup-phase. This method

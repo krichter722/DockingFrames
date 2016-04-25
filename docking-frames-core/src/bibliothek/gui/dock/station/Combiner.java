@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -50,7 +50,7 @@ public interface Combiner {
      * Prepares information telling how two {@link Dockable}s may be combined.
      * @param source the {@link Dockable}s which may be combined, their parent station and
      * other helpful information.
-     * @param force how much the caller of this method would like the method not to return a 
+     * @param force how much the caller of this method would like the method not to return a
      * value of <code>null</code>. Implementations should read the {@link Enforcement#getForce() force}
      * property, where a value of <code>1</code> means that this method must success, while <code>0</code>
      * means that this method may or may not success. In general the modules in the framework expect that a value below
@@ -60,25 +60,25 @@ public interface Combiner {
      * a combination is not desired
      */
     public CombinerTarget prepare( CombinerSource source, Enforcement force );
-	
-	/**
+
+    /**
      * Merges two {@link Dockable}s into a new Dockable. This method may
-     * set the {@link DockController} of the created element in order to initialize 
+     * set the {@link DockController} of the created element in order to initialize
      * it more efficiently.
-     * @param source information about the two {@link Dockable}s that are going to be merged, not <code>null</code>. This 
+     * @param source information about the two {@link Dockable}s that are going to be merged, not <code>null</code>. This
      * object may or may not have been created by this {@link Combiner}, some sanity checks are advised before using it
      * @param target information that was created by {@link #prepare(CombinerSource, Enforcement)} using <code>source</code>, not <code>null</code>
      * @return the combined {@link Dockable}, not <code>null</code>
      */
     public Dockable combine( CombinerSource source, CombinerTarget target );
-    
-	/**
-	 * Prepares the layout of the {@link DockStation}s that are created by this {@link Combiner} to
-	 * keep track of a new {@link DockableProperty} with its own placeholder. The new property
-	 * is set "aside" an existing location. For more information please read the documentation
-	 * of {@link DockStation#asDockable()}.
-	 * @param request information about a location and methods to create the neighbor location
-	 * @see DockStation#aside(AsideRequest)
-	 */
-	public void aside( AsideRequest request );
+
+    /**
+     * Prepares the layout of the {@link DockStation}s that are created by this {@link Combiner} to
+     * keep track of a new {@link DockableProperty} with its own placeholder. The new property
+     * is set "aside" an existing location. For more information please read the documentation
+     * of {@link DockStation#asDockable()}.
+     * @param request information about a location and methods to create the neighbor location
+     * @see DockStation#aside(AsideRequest)
+     */
+    public void aside( AsideRequest request );
 }

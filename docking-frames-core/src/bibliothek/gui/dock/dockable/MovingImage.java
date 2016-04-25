@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,12 +37,12 @@ import java.awt.Point;
  */
 public interface MovingImage {
     /**
-     * Gets a Component which represents the {@link MovingImage}. 
+     * Gets a Component which represents the {@link MovingImage}.
      * This method must always return the same Component.
      * @return always the same Component
      */
     public Component getComponent();
-    
+
     /**
      * Gest the preferred offset of this image in respect to the mouse.
      * @param pressPoint the position of the mouse in respect to the element that was selected
@@ -50,7 +50,7 @@ public interface MovingImage {
      * @return the offset, or <code>null</code> if a default offset should be used
      */
     public Point getOffset( Point pressPoint );
-    
+
     /**
      * Called before this image is displayed. The method should connect the
      * image with other objects, like the object it represents.<br>
@@ -60,7 +60,7 @@ public interface MovingImage {
      * is not transparent.
      */
     public void bind( boolean transparency );
-    
+
     /**
      * The reverse of {@link #bind(boolean)}. The image should remove any connections
      * to other objects.<br>

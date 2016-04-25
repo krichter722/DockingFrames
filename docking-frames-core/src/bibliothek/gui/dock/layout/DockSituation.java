@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -69,20 +69,20 @@ import bibliothek.util.xml.XException;
 
 /**
  * A <code>DockSituation</code> is a converter: the relationship of {@link DockStation}s and {@link Dockable}s,
- * the position of <code>Dockable</code>s and other information are converted into a 
+ * the position of <code>Dockable</code>s and other information are converted into a
  * stream of bytes. The other direction, read a stream and create <code>Dockable</code>s and <code>DockStation</code>s, is also possible.<br>
  * @author Benjamin Sigg
  */
 public class DockSituation {
-	/** Name for an {@link ExtensionName} to load additional {@link DockFactory}s */
-	public static final Path DOCK_FACTORY_EXTENSION = new Path("dock.DockSituation.DockFactory");
-	
-	/** Name for an {@link ExtensionName} to load additional {@link AdjacentDockFactory}s */
-	public static final Path ADJACENT_DOCK_FACTORY_EXTENSION = new Path("dock.DockSituation.AdjacentDockFactory");
-	
-	/** Name of a parameter of an {@link ExtensionName} pointing to <code>this</code> */
-	public static final String EXTENSION_PARAM = "situation";
-	
+    /** Name for an {@link ExtensionName} to load additional {@link DockFactory}s */
+    public static final Path DOCK_FACTORY_EXTENSION = new Path("dock.DockSituation.DockFactory");
+
+    /** Name for an {@link ExtensionName} to load additional {@link AdjacentDockFactory}s */
+    public static final Path ADJACENT_DOCK_FACTORY_EXTENSION = new Path("dock.DockSituation.AdjacentDockFactory");
+
+    /** Name of a parameter of an {@link ExtensionName} pointing to <code>this</code> */
+    public static final String EXTENSION_PARAM = "situation";
+
     /** the factories used to create new {@link DockElement elements}*/
     private Map<String, DockFactory<?,?,?>> factories = new HashMap<String, DockFactory<?,?,?>>();
 
@@ -97,10 +97,10 @@ public class DockSituation {
 
     /** a filter for elements which should be ignored */
     private DockSituationIgnore ignore;
-    
+
     /** strategy used to filter placeholders in the intermediate format */
     private PlaceholderStrategy intermediatePlaceholders;
-    
+
     /** strategy used to filter placeholders when converting the intermediate format to real {@link DockElement}s */
     private PlaceholderStrategy placeholders;
 
@@ -111,8 +111,9 @@ public class DockSituation {
      * @param factories the factories
      */
     public DockSituation( DockFactory<?,?,?>...factories ){
-        for( DockFactory<?,?,?> factory : factories )
+        for( DockFactory<?,?,?> factory : factories ) {
             this.factories.put( getID( factory ), factory );
+        }
     }
 
     /**
@@ -123,22 +124,22 @@ public class DockSituation {
      * controller is used to access the {@link ExtensionManager} and load additional factories
      */
     public DockSituation( DockController controller ){
-        this( 
+        this(
                 new DefaultDockableFactory(),
                 new SplitDockStationFactory(),
                 new StackDockStationFactory(),
                 new FlapDockStationFactory());
-        
+
         @SuppressWarnings("rawtypes")
-		List<DockFactory> factories = controller.getExtensions().load( new ExtensionName<DockFactory>( DOCK_FACTORY_EXTENSION, DockFactory.class, EXTENSION_PARAM, this ) );
+        List<DockFactory> factories = controller.getExtensions().load( new ExtensionName<DockFactory>( DOCK_FACTORY_EXTENSION, DockFactory.class, EXTENSION_PARAM, this ) );
         for( DockFactory<?,?,?> factory : factories ){
-        	add( factory );
+            add( factory );
         }
-     
+
         @SuppressWarnings("rawtypes")
-		List<AdjacentDockFactory> adjacent = controller.getExtensions().load( new ExtensionName<AdjacentDockFactory>( ADJACENT_DOCK_FACTORY_EXTENSION, AdjacentDockFactory.class, EXTENSION_PARAM, this ) );
+        List<AdjacentDockFactory> adjacent = controller.getExtensions().load( new ExtensionName<AdjacentDockFactory>( ADJACENT_DOCK_FACTORY_EXTENSION, AdjacentDockFactory.class, EXTENSION_PARAM, this ) );
         for( AdjacentDockFactory<?> factory : adjacent ){
-        	addAdjacent( factory );
+            addAdjacent( factory );
         }
     }
 
@@ -147,23 +148,23 @@ public class DockSituation {
      * properties of this {@link DockSituation} will be noticed and used by the created {@link Perspective}. However
      * changes on the properties of the {@link Perspective} will not influence this {@link DockSituation}.<br>
      * Note that subclasses may create {@link Perspective}s that need the client to make additional settings before
-     * it can be used. 
+     * it can be used.
      * @return the new perspective
      */
     public Perspective createPerspective(){
-    	return new Perspective( this ){
-			@Override
-			protected String getID( PerspectiveElement element ){
-				return DockSituation.this.getID( element );
-			}
-			
-			@Override
-			protected DockFactory<?,?,?> getFactory( String id ){
-				return DockSituation.this.getFactory( id );
-			}
-		};
+        return new Perspective( this ){
+            @Override
+            protected String getID( PerspectiveElement element ){
+                return DockSituation.this.getID( element );
+            }
+
+            @Override
+            protected DockFactory<?,?,?> getFactory( String id ){
+                return DockSituation.this.getFactory( id );
+            }
+        };
     }
-    
+
     /**
      * Sets a filter which decides, which elements (stations and dockables)
      * are stored.
@@ -180,53 +181,53 @@ public class DockSituation {
     public DockSituationIgnore getIgnore() {
         return ignore;
     }
-    
+
     /**
      * Sets a strategy for deleting invalid placeholders.
      * @param placeholders the strategy, <code>null</code> for keeping all placeholders
      */
     public void setPlaceholderStrategy( PlaceholderStrategy placeholders ){
-		this.placeholders = placeholders;
-	}
-    
+        this.placeholders = placeholders;
+    }
+
     /**
      * Gets the current strategy for removing invalid placeholders.
      * @return the strategy, may be <code>null</code>
      */
     public PlaceholderStrategy getPlaceholderStrategy(){
-		return placeholders;
-	}
-    
+        return placeholders;
+    }
+
     /**
      * Sets the strategy for deleting invalid placeholders in the intermediate format
      * @param intermediatePlaceholders the strategy, can be <code>null</code>
      */
     public void setIntermediatePlaceholders( PlaceholderStrategy intermediatePlaceholders ){
-		this.intermediatePlaceholders = intermediatePlaceholders;
-	}
-    
+        this.intermediatePlaceholders = intermediatePlaceholders;
+    }
+
     /**
      * Gets the strategy for deleting invalid placeholders in the intermediate format.
      * @return the intermediate strategy, can be <code>null</code>
      */
     public PlaceholderStrategy getIntermediatePlaceholders(){
-		return intermediatePlaceholders;
-	}
-    
+        return intermediatePlaceholders;
+    }
+
     /**
      * Gets a placeholder for <code>element</code> using the current {@link PlaceholderStrategy}.
      * @param element some element, not <code>null</code>
      * @return the placeholder, can be <code>null</code>
      */
     protected Path getPlaceholder( DockElement element ){
-    	if( placeholders == null ){
-    		return null;
-    	}
-    	Dockable dockable = element.asDockable();
-    	if( dockable == null ){
-    		return null;
-    	}
-    	return placeholders.getPlaceholderFor( dockable );
+        if( placeholders == null ){
+            return null;
+        }
+        Dockable dockable = element.asDockable();
+        if( dockable == null ){
+            return null;
+        }
+        return placeholders.getPlaceholderFor( dockable );
     }
 
     /**
@@ -236,7 +237,7 @@ public class DockSituation {
     public void add( DockFactory<?,?,?> factory ){
         factories.put( getID( factory ), factory );
     }
-    
+
     /**
      * Adds an adjacent factory
      * @param factory the new factory
@@ -292,7 +293,7 @@ public class DockSituation {
     }
 
     /**
-     * Converts the layout of <code>element</code> and all its children into a 
+     * Converts the layout of <code>element</code> and all its children into a
      * {@link DockLayoutComposition}.
      * @param element the element to convert
      * @return the composition or <code>null</code> if the element is ignored
@@ -303,13 +304,15 @@ public class DockSituation {
      */
     @SuppressWarnings("unchecked")
     public DockLayoutComposition convert( DockElement element ){
-        if( ignoreElement( element ))
+        if( ignoreElement( element )) {
             return null;
+        }
 
         String id = getID( element );
         DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( id );
-        if( factory == null )
+        if( factory == null ) {
             throw new IllegalArgumentException( "Unknown factory-id: " + element.getFactoryID() );
+        }
 
         DockStation station = element.asDockStation();
         Map<Dockable, Integer> ids = new HashMap<Dockable, Integer>();
@@ -361,16 +364,19 @@ public class DockSituation {
     @SuppressWarnings("unchecked")
     public DockElement convert( DockLayoutComposition composition ){
         DockLayoutInfo info = composition.getLayout();
-        if( info == null )
+        if( info == null ) {
             return null;
+        }
 
         DockLayout<?> layout = info.getDataLayout();
-        if( layout == null )
+        if( layout == null ) {
             return null;
+        }
 
         DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( layout.getFactoryID() );
-        if( factory == null )
+        if( factory == null ) {
             return null;
+        }
 
         DockElement result = null;
         Map<Integer, Dockable> children = null;
@@ -393,7 +399,7 @@ public class DockSituation {
                     if( dockable != null ){
                         children.put( index, dockable );
                         if( dockable.getDockParent() != null ){
-                        	dockable.getDockParent().drag( dockable );
+                            dockable.getDockParent().drag( dockable );
                         }
                     }
                 }
@@ -450,14 +456,14 @@ public class DockSituation {
     @SuppressWarnings("unchecked")
     private void writeCompositionStream( DockLayoutComposition composition, DataOutputStream out ) throws IOException{
         DockLayoutInfo info = composition.getLayout();
-        
+
         // placeholder
         Path placeholder = info.getPlaceholder();
         out.writeBoolean( placeholder != null );
         if( placeholder != null ){
-        	out.writeUTF( placeholder.toString() );
+            out.writeUTF( placeholder.toString() );
         }
-    	
+
         if( info.getKind() == DockLayoutInfo.Data.BYTE ){
             // data
             out.write( info.getDataByte() );
@@ -465,12 +471,13 @@ public class DockSituation {
         else if( info.getKind() == DockLayoutInfo.Data.DOCK_LAYOUT ){
             DockLayout<?> layout = info.getDataLayout();
             DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( layout.getFactoryID() );
-            if( factory == null )
+            if( factory == null ) {
                 throw new IOException( "Missing factory: " + layout.getFactoryID() );
-            
+            }
+
             // factory
             out.writeUTF( getID( factory ) );
-            
+
             // contents
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
             DataOutputStream dout = new DataOutputStream( bout );
@@ -494,8 +501,9 @@ public class DockSituation {
             out.writeInt( adjacentLayouts.size() );
             for( DockLayout<?> adjacentLayout : adjacentLayouts ){
                 AdjacentDockFactory<Object> adjacentFactory = (AdjacentDockFactory<Object>)getAdjacentFactory( adjacentLayout.getFactoryID() );
-                if( adjacentFactory == null )
+                if( adjacentFactory == null ) {
                     throw new IOException( "Missing adjacent factory: " + adjacentLayout.getFactoryID() );
+                }
 
                 ByteArrayOutputStream adjacentBOut = new ByteArrayOutputStream();
                 DataOutputStream adjacentOut = new DataOutputStream( adjacentBOut );
@@ -541,14 +549,14 @@ public class DockSituation {
     @SuppressWarnings("unchecked")
     private DockLayoutComposition readCompositionStream( DataInputStream in, Version version ) throws IOException{
         // factory
-    	Path entryPlaceholder = null;
-    	
-    	if( Version.VERSION_1_0_8.compareTo( version ) <= 0 ){
-    		if( in.readBoolean() ){
-	    		entryPlaceholder = new Path( in.readUTF() );
-	   		}
-    	}
-    	
+        Path entryPlaceholder = null;
+
+        if( Version.VERSION_1_0_8.compareTo( version ) <= 0 ){
+            if( in.readBoolean() ){
+                entryPlaceholder = new Path( in.readUTF() );
+            }
+        }
+
         byte[] entry = readBuffer( in );
 
         DockLayoutInfo info = readEntry( entry, entryPlaceholder );
@@ -559,7 +567,7 @@ public class DockSituation {
             int layoutCount = in.readInt();
             if( layoutCount > 0 ){
                 adjacentLayouts = new ArrayList<DockLayout<?>>( layoutCount );
-                
+
                 for( int i = 0; i < layoutCount; i++ ){
                     String adjacentFactoryId = in.readUTF();
                     int adjacentCount = in.readInt();
@@ -569,8 +577,9 @@ public class DockSituation {
                             // skip
                             while( adjacentCount > 0 ){
                                 int skipped = (int)in.skip( adjacentCount );
-                                if( skipped <= 0 )
+                                if( skipped <= 0 ) {
                                     throw new EOFException();
+                                }
                                 adjacentCount -= skipped;
                             }
                         }
@@ -623,9 +632,9 @@ public class DockSituation {
     @SuppressWarnings("unchecked")
     private DockLayoutInfo readEntry( byte[] entry, Path placeholder ) throws IOException{
         DataInputStream entryIn = new DataInputStream( new ByteArrayInputStream( entry ));
-        
+
         String factoryId = entryIn.readUTF();
-        
+
         DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( factoryId );
 
         // contents
@@ -681,8 +690,9 @@ public class DockSituation {
         int read = 0;
         while( read < count ){
             int input = in.read( buffer, read, count-read );
-            if( input < 0 )
+            if( input < 0 ) {
                 throw new EOFException();
+            }
             read += input;
         }
 
@@ -711,8 +721,9 @@ public class DockSituation {
 
         for( int i = 0; i < count; i++ ){
             int read = in.read();
-            if( read == -1 )
+            if( read == -1 ) {
                 throw new EOFException( "unexpectetly reached end of file" );
+            }
             dout.write( read );
         }
 
@@ -744,14 +755,14 @@ public class DockSituation {
      * @throws IOException if the stream throws an exception
      */
     public void write( Map<String, DockStation> stations, DataOutputStream out ) throws IOException{
-    	Map<String, DockLayoutComposition> map = new HashMap<String, DockLayoutComposition>();
-    	for( Map.Entry<String, DockStation> entry : stations.entrySet() ){
-    		DockLayoutComposition composition = convert( entry.getValue() );
-    		if( composition != null ){
-    			map.put( entry.getKey(), composition );
-    		}
-    	}
-    	writeCompositions( map, out );
+        Map<String, DockLayoutComposition> map = new HashMap<String, DockLayoutComposition>();
+        for( Map.Entry<String, DockStation> entry : stations.entrySet() ){
+            DockLayoutComposition composition = convert( entry.getValue() );
+            if( composition != null ){
+                map.put( entry.getKey(), composition );
+            }
+        }
+        writeCompositions( map, out );
     }
 
     /**
@@ -772,7 +783,7 @@ public class DockSituation {
 
     /**
      * Reads <code>data</code> as stream and returns the roots of the
-     * {@link DockElement DockElements} which were found. 
+     * {@link DockElement DockElements} which were found.
      * @param data the array to read
      * @return the root stations which were found
      * @throws IOException if <code>data</code> can't be read
@@ -786,7 +797,7 @@ public class DockSituation {
 
     /**
      * Reads <code>in</code> and returns the roots of the
-     * {@link DockElement DockElements} which were found. 
+     * {@link DockElement DockElements} which were found.
      * @param in the stream to read
      * @return the roots of all elements that were found
      * @throws IOException if the stream can't be read
@@ -817,7 +828,7 @@ public class DockSituation {
      * @throws IOException if an I/O-error occurs
      */
     public Map<String, DockLayoutComposition> readCompositions( DataInputStream in ) throws IOException{
-    	Version version = Version.read( in );
+        Version version = Version.read( in );
         version.checkCurrent();
 
         int count = in.readInt();
@@ -826,12 +837,12 @@ public class DockSituation {
             String key = in.readUTF();
             DockLayoutComposition composition = readComposition( in );
             if( composition != null ){
-            	result.put( key, composition );
+                result.put( key, composition );
             }
         }
         return result;
     }
-    
+
     /**
      * Writes the contents of <code>composition</code> into <code>element</code> without
      * changing the attributes of <code>element</code>.
@@ -849,14 +860,15 @@ public class DockSituation {
             DockLayout<?> layout = info.getDataLayout();
 
             DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( layout.getFactoryID() );
-            if( factory == null )
+            if( factory == null ) {
                 throw new IllegalArgumentException( "Missing factory: " + layout.getFactoryID() );
+            }
 
             XElement xfactory = element.addElement( "layout" );
             xfactory.addString( "factory", getID( factory ) );
             Path placeholder = info.getPlaceholder();
             if( placeholder != null ){
-            	xfactory.addString( "placeholder", placeholder.toString() );
+                xfactory.addString( "placeholder", placeholder.toString() );
             }
             factory.write( layout.getData(), xfactory );
         }
@@ -871,8 +883,9 @@ public class DockSituation {
 
             for( DockLayout<?> adjacentLayout : adjacentLayouts ){
                 AdjacentDockFactory<Object> adjacentFactory = (AdjacentDockFactory<Object>)getAdjacentFactory( adjacentLayout.getFactoryID() );
-                if( adjacentFactory == null )
+                if( adjacentFactory == null ) {
                     throw new IllegalArgumentException( "Missing adjacent factory: " + adjacentLayout.getFactoryID() );
+                }
 
                 XElement xlayout = xadjacent.addElement( "layout" );
                 xlayout.addString( "factory", getAdjacentID( adjacentFactory ) );
@@ -951,7 +964,7 @@ public class DockSituation {
             Path placeholder = null;
             XAttribute xplaceholder = element.getAttribute( "placeholder" );
             if( xplaceholder != null ){
-            	placeholder = new Path( xplaceholder.getString() );
+                placeholder = new Path( xplaceholder.getString() );
             }
             DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( factoryId );
             if( factory != null ){
@@ -989,14 +1002,14 @@ public class DockSituation {
      * not be changed
      */
     public void writeXML( Map<String, DockStation> stations, XElement element ) {
-    	Map<String, DockLayoutComposition> map = new HashMap<String, DockLayoutComposition>();
-    	for( Map.Entry<String, DockStation> entry : stations.entrySet() ){
-    		DockLayoutComposition composition = convert( entry.getValue() );
-    		if( composition != null ){
-    			map.put( entry.getKey(), composition );
-    		}
-    	}
-    	writeCompositionsXML( map, element );
+        Map<String, DockLayoutComposition> map = new HashMap<String, DockLayoutComposition>();
+        for( Map.Entry<String, DockStation> entry : stations.entrySet() ){
+            DockLayoutComposition composition = convert( entry.getValue() );
+            if( composition != null ){
+                map.put( entry.getKey(), composition );
+            }
+        }
+        writeCompositionsXML( map, element );
     }
 
     /**
@@ -1006,13 +1019,13 @@ public class DockSituation {
      * will not be changed
      */
     public void writeCompositionsXML( Map<String, DockLayoutComposition> stations, XElement element ) {
-    	for( Map.Entry<String, DockLayoutComposition> entry : stations.entrySet() ){
+        for( Map.Entry<String, DockLayoutComposition> entry : stations.entrySet() ){
             XElement xchild = element.addElement( "element" );
             xchild.addString( "name", entry.getKey() );
             writeCompositionXML( entry.getValue(), xchild );
         }
     }
-    
+
     /**
      * Reads a set of {@link DockStation}s that were stored earlier.
      * @param root the xml element from which to read
@@ -1025,8 +1038,9 @@ public class DockSituation {
             DockLayoutComposition composition = readCompositionXML( xelement );
             DockElement element = composition == null ? null : convert( composition );
             DockStation station = element == null ? null : element.asDockStation();
-            if( station != null )
+            if( station != null ) {
                 result.put( name, station );
+            }
         }
         return result;
     }
@@ -1037,17 +1051,17 @@ public class DockSituation {
      * @return the set of compositions
      */
     public Map<String, DockLayoutComposition> readCompositionsXML( XElement root ){
-    	Map<String, DockLayoutComposition> result = new HashMap<String, DockLayoutComposition>();
+        Map<String, DockLayoutComposition> result = new HashMap<String, DockLayoutComposition>();
         for( XElement xelement : root.getElements( "element" )){
             String name = xelement.getString( "name" );
             DockLayoutComposition composition = readCompositionXML( xelement );
             if( composition != null ){
-            	result.put( name, composition );
+                result.put( name, composition );
             }
         }
         return result;
     }
-    
+
     /**
      * Using the factories currently known to this {@link DockSituation}, this
      * method tries to fill gaps in <code>composition</code>. It checks
@@ -1077,7 +1091,7 @@ public class DockSituation {
                 info = original;
             }
         }
-        
+
         if( info.getKind() == DockLayoutInfo.Data.DOCK_LAYOUT ){
             info = fillMissing( info );
         }
@@ -1111,13 +1125,13 @@ public class DockSituation {
 
         return composition;
     }
-    
+
     /**
      * Called by {@link #fillMissing(DockLayoutComposition)} only for
      * {@link DockLayoutInfo}s which contain a {@link DockLayout}. This method
      * can apply further updates to <code>info</code> if necessary. The default
      * implementation just returns <code>info</code>.<br>
-     * This method is intended for subclasses which wrap {@link DockFactory}s 
+     * This method is intended for subclasses which wrap {@link DockFactory}s
      * and use a {@link DockLayout} even for incomplete data.
      * @param info the info to update
      * @return either <code>info</code> if nothing changed or a new
@@ -1150,33 +1164,33 @@ public class DockSituation {
      * <ul>
      *  <li><code>composition</code> does not have children</li>
      *  <li><code>composition</code> does not carry a {@link DockLayout}</li>
-     *  <li>There is no {@link DockFactory} registered for the factory-id found 
+     *  <li>There is no {@link DockFactory} registered for the factory-id found
      *  in <code>composition</code></li>
      * </ul> <br>
-     * Note: if the number of factories changed, then it might be a good idea 
+     * Note: if the number of factories changed, then it might be a good idea
      * to call {@link #fillMissing(DockLayoutComposition)} before invoking this method.
      * @param composition the composition whose children should be analyzed
      * @param location the location of <code>composition</code>, can be <code>null</code>
      */
     public void estimateLocations( DockLayoutComposition composition, DockableProperty location ){
-    	DefaultLocationEstimationMap map = new DefaultLocationEstimationMap( composition );
-    	estimateLocations( map );
-    	if( location != null ){
-    		appendFirstOnEstimate( composition, location );
-    	}
+        DefaultLocationEstimationMap map = new DefaultLocationEstimationMap( composition );
+        estimateLocations( map );
+        if( location != null ){
+            appendFirstOnEstimate( composition, location );
+        }
     }
-    
+
     private void appendFirstOnEstimate( DockLayoutComposition composition, DockableProperty location ){
-    	DockLayoutInfo info = composition.getLayout();
-    	DockableProperty property = info.getLocation();
-    	if( property != null ){
-    		info.setLocation( DockUtilities.append( property, location ) );
-    	}
-    	for( DockLayoutComposition child : composition.getChildren() ){
-    		appendFirstOnEstimate( child, location );
-    	}
+        DockLayoutInfo info = composition.getLayout();
+        DockableProperty property = info.getLocation();
+        if( property != null ){
+            info.setLocation( DockUtilities.append( property, location ) );
+        }
+        for( DockLayoutComposition child : composition.getChildren() ){
+            appendFirstOnEstimate( child, location );
+        }
     }
-    
+
     /**
      * Recursively tries to estimate the locations of all {@link DockLayoutInfo}s that can
      * be found in <code>map</code>.<br>
@@ -1184,43 +1198,44 @@ public class DockSituation {
      * @param map the root of the tree for which locations need to be estimated
      */
     @SuppressWarnings("unchecked")
-	protected void estimateLocations( DefaultLocationEstimationMap map ){
-    	DockLayoutComposition composition = map.getRoot();
+    protected void estimateLocations( DefaultLocationEstimationMap map ){
+        DockLayoutComposition composition = map.getRoot();
 
-    	List<DockLayoutComposition> children = composition.getChildren();
-    	if( children == null || children.size() == 0 ){
-    		return;
-    	}
+        List<DockLayoutComposition> children = composition.getChildren();
+        if( children == null || children.size() == 0 ){
+            return;
+        }
 
-    	DockLayout<Object> layout = (DockLayout<Object>)composition.getLayout().getDataLayout();
-    	if( layout == null ){
-    		return;
-    	}
+        DockLayout<Object> layout = (DockLayout<Object>)composition.getLayout().getDataLayout();
+        if( layout == null ){
+            return;
+        }
 
-    	DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( layout.getFactoryID() );
-    	if( factory == null ){
-    		return;
-    	}
-    	
-    	for( int i = 0, n = map.getChildCount(); i<n; i++ ){
-    		estimateLocations( map.subMap( i ) );
-    	}
-    	
-    	map.prepare();
-    	factory.estimateLocations( layout.getData(), map );
-    	map.finish();
+        DockFactory<DockElement,?,Object> factory = (DockFactory<DockElement,?,Object>)getFactory( layout.getFactoryID() );
+        if( factory == null ){
+            return;
+        }
+
+        for( int i = 0, n = map.getChildCount(); i<n; i++ ){
+            estimateLocations( map.subMap( i ) );
+        }
+
+        map.prepare();
+        factory.estimateLocations( layout.getData(), map );
+        map.finish();
     }
 
     /**
-     * Tells whether to ignore this element when saving. If an element is ignored, no 
+     * Tells whether to ignore this element when saving. If an element is ignored, no
      * factory is needed for it. This implementation forwards
      * the call to the {@link DockSituationIgnore} of this situation.
      * @param element the element which might not be saved
      * @return <code>true</code> if the element should not be saved
      */
     protected boolean ignoreElement( DockElement element ){
-        if( ignore == null )
+        if( ignore == null ) {
             return false;
+        }
 
         return ignore.ignoreElement( element );
     }
@@ -1233,8 +1248,9 @@ public class DockSituation {
      * @return <code>true</code> if the station is saved as having no children
      */
     protected boolean ignoreChildren( DockStation station ){
-        if( ignore == null )
+        if( ignore == null ) {
             return false;
+        }
 
         return ignore.ignoreChildren( station );
     }
@@ -1248,9 +1264,9 @@ public class DockSituation {
      * @see #getFactory(String)
      */
     protected String getID( PerspectiveElement element ){
-    	return element.getFactoryID();
+        return element.getFactoryID();
     }
-    
+
     /**
      * Gets the id of the factory which is needed to write (and later
      * read) <code>element</code>
@@ -1302,14 +1318,14 @@ public class DockSituation {
         if( info.getKind() == DockLayoutInfo.Data.DOCK_LAYOUT ){
             return info.getDataLayout().getFactoryID();
         }
-        
+
         return null;
     }
 
     /**
      * Tells what identifier is used for <code>factory</code> in the
      * {@link DockLayoutComposition}.<br>
-     * This method just calls {@link #getID(DockFactory)}, but 
+     * This method just calls {@link #getID(DockFactory)}, but
      * {@link #getID(DockFactory)} is intended for internal use while this
      * method is intended to be used by clients which read out a {@link DockLayoutComposition}.
      * @param factory the factory which might be used
@@ -1319,20 +1335,20 @@ public class DockSituation {
     public String convertFactoryId( DockFactory<?,?,?> factory ){
         return getID( factory );
     }
-    
+
     /**
      * Tells what identifier the {@link DockFactory} has, for which the
      * identifier <code>id</code> is used within a {@link DockLayoutComposition}.<br>
      * This method just calls {@link #getFactoryID(String)}, but while
      * {@link #getFactoryID(String)} is intended for internal use, this method
-     * is intended for clients. 
+     * is intended for clients.
      * @param id an identifier found in a {@link DockLayoutComposition}
      * @return the identifer of a {@link DockFactory}
      */
     public String convertFactoryId( String id ){
         return getFactoryID( id );
     }
-    
+
     /**
      * Transforms an id read from a stream to the id of the factory which
      * would be used. This method must fulfill one contract:
@@ -1371,41 +1387,41 @@ public class DockSituation {
 
     /**
      * Gets the factory which has the given <code>id</code>. Note that this
-     * method should be a bijection to {@link #getID(DockFactory)}. The 
-     * default behavior compares <code>id</code> with the 
+     * method should be a bijection to {@link #getID(DockFactory)}. The
+     * default behavior compares <code>id</code> with the
      * {@link #getID(DockFactory)}.
      * @param id the name of the factory
      * @return the factory or <code>null</code> if no factory has this id
      */
     @Todo( compatibility=Compatibility.BREAK_MINOR, priority=Priority.MAJOR, target=Todo.Version.VERSION_1_1_3,
-    		description="remove the legacy code that filters out identifiers that look like 'secure ...'. Instead 'result' can be returned directly." )
+            description="remove the legacy code that filters out identifiers that look like 'secure ...'. Instead 'result' can be returned directly." )
     public DockFactory<? extends DockElement,?,?> getFactory( String id ){
         DockFactory<?, ?, ?> result = factories.get( id );
         if( result == null ){
-        	String base = null;
-        	if( id.startsWith( "delegate_secure " )){
-        		base = id.substring( "delegate_secure ".length() );
-        		id = "delegate_" + base; 
-        	}
-        	else if( id.startsWith( "secure " )){
-        		base = id.substring( "secure ".length() );
-        		id = base;
-        	}
-        	
-        	if( FlapDockStationFactory.ID.equals( base) || 
-        			ScreenDockStationFactory.ID.equals( base ) || 
-        			StackDockStationFactory.ID.equals( base ) || 
-        			SplitDockStationFactory.ID.equals( base )){
-        		result = factories.get( id );
-        	}
+            String base = null;
+            if( id.startsWith( "delegate_secure " )){
+                base = id.substring( "delegate_secure ".length() );
+                id = "delegate_" + base;
+            }
+            else if( id.startsWith( "secure " )){
+                base = id.substring( "secure ".length() );
+                id = base;
+            }
+
+            if( FlapDockStationFactory.ID.equals( base) ||
+                    ScreenDockStationFactory.ID.equals( base ) ||
+                    StackDockStationFactory.ID.equals( base ) ||
+                    SplitDockStationFactory.ID.equals( base )){
+                result = factories.get( id );
+            }
         }
         return result;
     }
 
     /**
      * Gets the adjacent factory which has the given <code>id</code>. Note that this
-     * method should be a bijection to {@link #getID(DockFactory)}. The 
-     * default behavior compares <code>id</code> with the 
+     * method should be a bijection to {@link #getID(DockFactory)}. The
+     * default behavior compares <code>id</code> with the
      * {@link #getID(DockFactory)}.
      * @param id the name of the factory
      * @return the factory or <code>null</code> if no factory has this id
@@ -1413,24 +1429,24 @@ public class DockSituation {
     public AdjacentDockFactory<?> getAdjacentFactory( String id ){
         return adjacent.get( id );
     }
-    
+
     /**
      * Gets all the adjacent factories that are currently registered at this {@link DockSituation},
      * the returned {@link Map} is unmodifiable.
      * @return an unmodifiable map containing all {@link AdjacentDockFactory}s.
      */
     public Map<String, AdjacentDockFactory<?>> getAdjacentFactorys(){
-    	return Collections.unmodifiableMap( adjacent );
+        return Collections.unmodifiableMap( adjacent );
     }
-    
+
     /**
      * Tells what identifier was associated with <code>composition</code> when it was
      * stored by a {@link DockSituation} of this type. The default implementation always
-     * returns <code>null</code>. 
+     * returns <code>null</code>.
      * @param composition some element that was created by this or a similar {@link DockSituation}
      * @return the identifier that was associated with <code>composition</code>
      */
     public String getIdentifier( DockLayoutComposition composition ){
-    	return null;
+        return null;
     }
 }

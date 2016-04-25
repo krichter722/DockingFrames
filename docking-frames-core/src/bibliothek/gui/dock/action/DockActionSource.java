@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -34,28 +34,28 @@ import bibliothek.gui.dock.event.DockActionSourceListener;
  * @author Benjamin Sigg
  */
 public interface DockActionSource extends Iterable<DockAction>{
-	/**
-	 * Gets a hint where to put this source in relation to other sources. Note
-	 * that an {@link ActionOffer} can choose to ignore these hints, or interpret
-	 * them in an unexpected way.
-	 * @return the preferred location of this source
-	 */
-	public LocationHint getLocationHint();
-	
+    /**
+     * Gets a hint where to put this source in relation to other sources. Note
+     * that an {@link ActionOffer} can choose to ignore these hints, or interpret
+     * them in an unexpected way.
+     * @return the preferred location of this source
+     */
+    public LocationHint getLocationHint();
+
     /**
      * Gets the number of {@link #getDockAction(int) DockActions} which are
      * provided by this source.
      * @return The number of {@link DockAction DockActions}
      */
     public int getDockActionCount();
-    
+
     /**
      * Gets the index'th {@link DockAction} of this source.
      * @param index The index of the action
      * @return The DockAction
      */
     public DockAction getDockAction( int index );
-        
+
     /**
      * Adds a listener to this source. The {@link DockActionSourceListener} should
      * be informed whenever some {@link DockAction DockActions} are added or
@@ -63,7 +63,7 @@ public interface DockActionSource extends Iterable<DockAction>{
      * @param listener The listener
      */
     public void addDockActionSourceListener( DockActionSourceListener listener );
-    
+
     /**
      * Removes an earlier added listener.
      * @param listener The listener to remove

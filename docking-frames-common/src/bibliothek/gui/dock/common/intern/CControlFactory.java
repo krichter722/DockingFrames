@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -52,15 +52,15 @@ public interface CControlFactory {
      * @return the new controller
      */
     public DockController createController( CControl owner );
-    
+
     /**
-     * Creates a new {@link DockFrontend} that will be used by <code>owner</code>. 
+     * Creates a new {@link DockFrontend} that will be used by <code>owner</code>.
      * @param owner the owner
      * @param controller the controller to be used by the new frontend
      * @return the new frontend
      */
     public CDockFrontend createFrontend( CControlAccess owner, DockController controller );
-    
+
     /**
      * Creates a new register that keeps track of all the elements shown and
      * used by <code>owner</code>.
@@ -68,17 +68,17 @@ public interface CControlFactory {
      * @return the new register
      */
     public MutableCControlRegister createRegister( CControl owner );
-    
+
     /**
      * Creates a new {@link FlapDockStation}.
      * @param expansion a {@link Component} which will be some parent of
-     * the result, the {@link FlapDockStation#getExpansionBounds()} should 
+     * the result, the {@link FlapDockStation#getExpansionBounds()} should
      * act as if <code>expansion</code> were the whole station
      * @param delegate some methods that can be used by the created station
      * @return the new station
      */
     public CommonDockStation<FlapDockStation,CFlapDockStation> createFlapDockStation( Component expansion, CommonStationDelegate<CFlapDockStation> delegate );
-    
+
     /**
      * Creates a new {@link ScreenDockStation}.
      * @param owner the owner of the dialogs of the station
@@ -86,7 +86,7 @@ public interface CControlFactory {
      * @return the new station
      */
     public CommonDockStation<ScreenDockStation,CScreenDockStation> createScreenDockStation( WindowProvider owner, CommonStationDelegate<CScreenDockStation> delegate );
-    
+
     /**
      * Creates a new {@link SplitDockStation} that implements {@link CommonDockable}
      * as well.

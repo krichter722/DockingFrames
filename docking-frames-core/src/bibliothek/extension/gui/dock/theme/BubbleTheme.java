@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -84,28 +84,28 @@ import bibliothek.gui.dock.util.property.DynamicPropertyFactory;
  * @author Benjamin Sigg
  */
 @ThemeProperties(
-        authors = { "Ivan Seidl", "Benjamin Sigg" }, 
-        descriptionBundle = "theme.bubble.description", 
-        nameBundle = "theme.bubble", 
+        authors = { "Ivan Seidl", "Benjamin Sigg" },
+        descriptionBundle = "theme.bubble.description",
+        nameBundle = "theme.bubble",
         webpages = { "" }  )
 public class BubbleTheme extends BasicTheme {
     /** the key to set the {@link ColorScheme} of this theme */
-    public static final PropertyKey<ColorScheme> BUBBLE_COLOR_SCHEME = 
+    public static final PropertyKey<ColorScheme> BUBBLE_COLOR_SCHEME =
         new PropertyKey<ColorScheme>( "dock.ui.BubbleTheme.ColorScheme",
-        	new DynamicPropertyFactory<ColorScheme>(){
-        		public ColorScheme getDefault(
-	        			PropertyKey<ColorScheme> key,
-	        			DockProperties properties ){
-	        		return new BubbleColorScheme();
-	        	}
-        	}, true );
-    
-	/**
-	 * Key for a property pointing to a {@link DockActionDistributor}. This interface is responsible for distributing
-	 * {@link DockAction}s to tabs, titles and info components.
-	 */
-	public static final PropertyKey<DockActionDistributor> ACTION_DISTRIBUTOR = new PropertyKey<DockActionDistributor>( "dock.bubble.DockActionDistributor",
-			new ConstantPropertyFactory<DockActionDistributor>( new DefaultDockActionDistributor() ), true);
+            new DynamicPropertyFactory<ColorScheme>(){
+                public ColorScheme getDefault(
+                        PropertyKey<ColorScheme> key,
+                        DockProperties properties ){
+                    return new BubbleColorScheme();
+                }
+            }, true );
+
+    /**
+     * Key for a property pointing to a {@link DockActionDistributor}. This interface is responsible for distributing
+     * {@link DockAction}s to tabs, titles and info components.
+     */
+    public static final PropertyKey<DockActionDistributor> ACTION_DISTRIBUTOR = new PropertyKey<DockActionDistributor>( "dock.bubble.DockActionDistributor",
+            new ConstantPropertyFactory<DockActionDistributor>( new DefaultDockActionDistributor() ), true);
 
     /** the {@link DockController}s which currently use this theme */
     private List<DockController> controllers = new ArrayList<DockController>();
@@ -137,24 +137,24 @@ public class BubbleTheme extends BasicTheme {
         controller.getDockTitleManager().registerTheme( FlapDockStation.BUTTON_TITLE_ID, BubbleButtonDockTitle.FACTORY );
 
         controller.getProperties().set( TabPane.LAYOUT_MANAGER, new MenuLineLayout(), Priority.THEME );
-        
+
         controller.getIcons().setScheme( Priority.THEME, new DefaultIconScheme( "data/bibliothek/gui/dock/core/bubble/icons.ini", BubbleTheme.class.getClassLoader(), controller ) );
 
         ActionViewConverter converter = controller.getActionViewConverter();
 
-        converter.putTheme( 
-                ActionType.BUTTON, 
-                ViewTarget.TITLE, 
+        converter.putTheme(
+                ActionType.BUTTON,
+                ViewTarget.TITLE,
                 new ButtonGenerator() );
 
-        converter.putTheme( 
-                ActionType.CHECK, 
-                ViewTarget.TITLE, 
+        converter.putTheme(
+                ActionType.CHECK,
+                ViewTarget.TITLE,
                 new CheckGenerator() );
 
-        converter.putTheme( 
-                ActionType.RADIO, 
-                ViewTarget.TITLE, 
+        converter.putTheme(
+                ActionType.RADIO,
+                ViewTarget.TITLE,
                 new RadioGenerator() );
 
         converter.putTheme(
@@ -178,7 +178,7 @@ public class BubbleTheme extends BasicTheme {
         super.uninstall( controller );
         controllers.remove( controller );
         controller.getProperties().unset( TabPane.LAYOUT_MANAGER, Priority.THEME );
-        
+
         controller.getDockTitleManager().clearThemeFactories();
 
         controller.getIcons().setScheme( Priority.THEME, null );
@@ -264,8 +264,9 @@ public class BubbleTheme extends BasicTheme {
      */
     private static class SeparatorGenerator implements ViewGenerator<SeparatorAction, BasicTitleViewItem<JComponent>>{
         public BasicTitleViewItem<JComponent> create( ActionViewConverter converter, SeparatorAction action, Dockable dockable ){
-            if( action.shouldDisplay( ViewTarget.TITLE ))
+            if( action.shouldDisplay( ViewTarget.TITLE )) {
                 return new BubbleSeparator( action );
+            }
 
             return null;
         }

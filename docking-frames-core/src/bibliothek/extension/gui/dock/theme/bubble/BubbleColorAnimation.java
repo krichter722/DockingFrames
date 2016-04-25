@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -38,39 +38,39 @@ import javax.swing.Timer;
 
 /**
  * A <code>BubbleColorAnimation</code> has the ability to convert one or many color-pairs smoothly from source
- * to destination color. It basically is a map storing {@link String}-{@link Color} pairs. 
+ * to destination color. It basically is a map storing {@link String}-{@link Color} pairs.
  * Clients have to call {@link #putColor(String, Color)} to start an animation. They
  * can call {@link #getColor(String)} any time to get the current intermediate color. Adding a {@link #addTask(Runnable) task}
  * will allow a client to be informed whenever the colors change.<br>
- * The animation itself takes {@link #setDuration(int) duration} milliseconds.  
+ * The animation itself takes {@link #setDuration(int) duration} milliseconds.
  * @author Benjamin Sigg
  */
 public class BubbleColorAnimation {
-	/** How long a transformation takes */
+    /** How long a transformation takes */
     private int duration = 1000;
-    
+
     /** The color pairs that can be animated */
     private Map<String, Entry> colors = new HashMap<String, Entry>();
     /** The timer that triggers steps of the animation */
     private Timer timer;
     /** The current time in milliseconds*/
     private long time = 0;
-    
+
     /** The tasks that are executed at every step of the animation */
     private List<Runnable> tasks = new ArrayList<Runnable>();
-    
+
     /**
      * Creates a new animation.
      */
     public BubbleColorAnimation(){
-    	timer = new Timer( 25, new ActionListener(){
+        timer = new Timer( 25, new ActionListener(){
             public void actionPerformed( ActionEvent e ) {
                 pulse();
             }
         });
-    	timer.setCoalesce( true );
+        timer.setCoalesce( true );
     }
-    
+
     /**
      * Sets a color-pair. The color <code>destination</code> is shown
      * after maximal {@link #getDuration() duration} milliseconds. This method
@@ -87,7 +87,7 @@ public class BubbleColorAnimation {
         }
         entry.setColors( source, destination );
     }
-    
+
     /**
      * If there is already a color stored under <code>key</code>, then a new animation
      * is started that smoothly changes the color <code>key</code> from its current value
@@ -109,7 +109,7 @@ public class BubbleColorAnimation {
             start();
         }
     }
-    
+
     /**
      * Gets the current color of the pair <code>key</code>.
      * @param key the key of the pair
@@ -117,12 +117,13 @@ public class BubbleColorAnimation {
      */
     public Color getColor( String key ){
         Entry entry = colors.get( key );
-        if( entry == null )
+        if( entry == null ) {
             return null;
-        
+        }
+
         return entry.getColor();
     }
-    
+
     /**
      * Adds a task to this animation. The task will be executed whenever the
      * animation makes a new step.
@@ -131,31 +132,31 @@ public class BubbleColorAnimation {
     public void addTask( Runnable runnable ){
         tasks.add( runnable );
     }
-    
+
     /**
      * Removes a task which was earlier added to this animation.
      * @param runnable the task to remove
      */
     public void removeTask( Runnable runnable ){
-    	tasks.remove( runnable );
+        tasks.remove( runnable );
     }
-    
+
     /**
      * Sets the length of one transformation.
      * @param duration the duration in milliseconds
      */
     public void setDuration( int duration ){
-		this.duration = duration;
-	}
-    
+        this.duration = duration;
+    }
+
     /**
      * Gets the length of one transformation.
      * @return the duration in milliseconds
      */
     public int getDuration(){
-		return duration;
-	}
-    
+        return duration;
+    }
+
     /**
      * Stops the animation immediately, possibly leaving the animation
      * in an unfinished state.
@@ -164,21 +165,23 @@ public class BubbleColorAnimation {
     public void stop(){
         timer.stop();
     }
-    
+
     /**
      * Immediately puts all colors to their final state and stops the animation.
      */
     public void kick(){
         if( timer.isRunning() ){
             stop();
-            for( Entry entry : colors.values() )
+            for( Entry entry : colors.values() ) {
                 entry.kick();
-            
-            for( Runnable task : tasks )
+            }
+
+            for( Runnable task : tasks ) {
                 task.run();
+            }
         }
     }
-    
+
     /**
      * Starts the animation if it is not yet running.
      */
@@ -188,7 +191,7 @@ public class BubbleColorAnimation {
             timer.start();
         }
     }
-    
+
     /**
      * Called when the animation has to perform another step.
      */
@@ -197,61 +200,66 @@ public class BubbleColorAnimation {
         long current = System.currentTimeMillis();
         int delta = (int)( current - time );
         time = current;
-        
-        for( Entry entry : colors.values() )
+
+        for( Entry entry : colors.values() ) {
             run = entry.step( delta ) | run;
-        
-        if( !run )
+        }
+
+        if( !run ) {
             timer.stop();
-        
-        for( Runnable task : tasks )
+        }
+
+        for( Runnable task : tasks ) {
             task.run();
+        }
     }
-    
+
     /**
      * One pair of colors.
      * @author Benjamin Sigg
      */
     private class Entry{
-    	/** The color which is abandoned by the animation */
+        /** The color which is abandoned by the animation */
         private Color source;
         /** The color to which the animation runs */
         private Color destination;
         /** Whether {@link #destination} was set */
         private boolean destinationSet = false;
-        
+
         /** Replacement of {@link #source} for special circumstances */
         private Color intermediate;
         /** The age of the current transition from source to destination */
         private int age;
-        
+
         /**
          * Gets the current color represented by this pair.
          * @return the color
          */
         public Color getColor(){
-            if( age <= 0 )
+            if( age <= 0 ) {
                 return source;
-            
-            if( age >= duration )
+            }
+
+            if( age >= duration ) {
                 return destination;
-            
+            }
+
             Color source = intermediate == null ? this.source : intermediate;
-            
+
             if( source == null ){
-            	if( age >= duration/2 ){
-            		return destination;
-            	}
-            	return null;
+                if( age >= duration/2 ){
+                    return destination;
+                }
+                return null;
             }
-            
+
             if( destination == null ){
-            	if( age <= duration/2 ){
-            		return source;
-            	}
-            	return null;
+                if( age <= duration/2 ){
+                    return source;
+                }
+                return null;
             }
-            
+
             double s = (duration - age) / (double)duration;
             double d = age / (double)duration;
             return new Color(
@@ -259,7 +267,7 @@ public class BubbleColorAnimation {
                     Math.max( 0, Math.min( 255, (int)(s * source.getGreen() + d * destination.getGreen()))),
                     Math.max( 0, Math.min( 255, (int)(s * source.getBlue() + d * destination.getBlue()))));
         }
-        
+
         /**
          * Makes another step of the animation towards {@link #destination}.
          * @param delta the time passed since the last call in milliseconds
@@ -268,9 +276,9 @@ public class BubbleColorAnimation {
          */
         public boolean step( int delta ){
             if( !destinationSet ){
-            	return false;
+                return false;
             }
-            
+
             age += delta;
             if( age >= duration ){
                 age = 0;
@@ -280,10 +288,10 @@ public class BubbleColorAnimation {
                 intermediate = null;
                 return false;
             }
-            
+
             return true;
         }
-        
+
         /**
          * Immediately finishes this animation.
          */
@@ -296,14 +304,14 @@ public class BubbleColorAnimation {
             destination = null;
             intermediate = null;
         }
-        
+
         /**
          * Replaces source and destination color immediately
          * @param source the new source
          * @param destination the new destination
          */
         public void setColors( Color source, Color destination ){
-        	if( age == 0 ){
+            if( age == 0 ){
                 this.source = destination;
             }
             else{
@@ -311,32 +319,32 @@ public class BubbleColorAnimation {
                 this.destination = destination;
             }
         }
-        
+
         /**
          * Sets all properties such that an animation from the current color
          * to <code>color</code> can happen.
          * @param color the new destination
          */
         public void setDestination( Color color ){
-        	destinationSet = true;
-        	if( destination == null || !destination.equals( color )){
-        		if( age == 0 ){
-	                destination = color;
-	                intermediate = null;
-	            }
-	            else if( source != null && source.equals( color ) ){
-	                intermediate = getColor();
-	            	source = destination;
-	                destination = color;
-	                age = 1;
-	            }
-	            else{
-	                intermediate = getColor();
-	                source = null;
-	                destination = color;
-	                age = 1;
-	            }
-        	}
+            destinationSet = true;
+            if( destination == null || !destination.equals( color )){
+                if( age == 0 ){
+                    destination = color;
+                    intermediate = null;
+                }
+                else if( source != null && source.equals( color ) ){
+                    intermediate = getColor();
+                    source = destination;
+                    destination = color;
+                    age = 1;
+                }
+                else{
+                    intermediate = getColor();
+                    source = null;
+                    destination = color;
+                    age = 1;
+                }
+            }
         }
     }
 }

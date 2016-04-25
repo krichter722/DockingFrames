@@ -13,11 +13,11 @@ public class MultipleTestLayout implements MultipleCDockableLayout{
     public void setContent( String content ) {
         this.content = content;
     }
-    
+
     public String getContent() {
         return content;
     }
-    
+
     public void readStream( DataInputStream in ) throws IOException {
         content = in.readUTF();
     }

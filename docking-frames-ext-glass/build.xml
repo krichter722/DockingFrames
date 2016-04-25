@@ -3,7 +3,7 @@
 
 <project name="glass" default="default" basedir="../">
 	<import file="../docking-frames-core/build.xml"/>
-	
+
 	<target name="default" depends="source, bin, doc">
 		<delete>
 			<fileset dir="${glass.temp}"/>
@@ -19,10 +19,10 @@
 		<property name="glasslib" value="glasslib.jar"/>
 
 		<property name="name.glass" value="docking-frames-ext-glass"/>
-		
+
 		<property name="location.glass" value="docking-frames-ext-glass"/>
 	</target>
-	
+
 	<target name="doc" depends="source, paths, dock.paths">
 		<mkdir dir="${glass.doc}/${name.glass}"/>
 		<javadoc destdir="${glass.doc}/${name.glass}" use="true" splitindex="true" useexternalfile="true">
@@ -36,7 +36,7 @@
 			<link href="${doc}/${name.common}"/>
 		</javadoc>
 	</target>
-	
+
 	<target name="bin" depends="source, bin.dir, bin.glass, paths">
 		<jar destfile="${glass.bin}/${name.glass}.jar">
 			<fileset dir="${glass.temp}/${name.glass}"/>
@@ -61,7 +61,7 @@
 			</fileset>
 		</copy>
 	</target>
-	
+
 	<!-- Paths -->
 	<target name="bin.dir" depends="clean, paths">
 		<mkdir dir="${glass.base}"/>

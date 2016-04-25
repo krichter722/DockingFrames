@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,27 +37,27 @@ import bibliothek.util.Path;
  * @author Benjamin Sigg
  */
 public abstract class PreferenceOperationIcon extends DockIcon{
-	/** The kind of {@link UIValue} this is */
-	public static final Path KIND_PREFERENCE_OPERATION = KIND_ICON.append( "preference" );
+    /** The kind of {@link UIValue} this is */
+    public static final Path KIND_PREFERENCE_OPERATION = KIND_ICON.append( "preference" );
 
-	/** the operation for which the icon is used */
-	private PreferenceOperation operation;
-	
-	/**
-	 * Creates a new icon.
-	 * @param id the identifier of this icon
-	 * @param operation the operation which uses this icon
-	 */
-	public PreferenceOperationIcon( String id, PreferenceOperation operation ){
-		super( id, KIND_PREFERENCE_OPERATION );
-		this.operation = operation;
-	}
-	
-	/**
-	 * Gets the operation for which this icon is used.
-	 * @return the operation
-	 */
-	public PreferenceOperation getOperation(){
-		return operation;
-	}
+    /** the operation for which the icon is used */
+    private PreferenceOperation operation;
+
+    /**
+     * Creates a new icon.
+     * @param id the identifier of this icon
+     * @param operation the operation which uses this icon
+     */
+    public PreferenceOperationIcon( String id, PreferenceOperation operation ){
+        super( id, KIND_PREFERENCE_OPERATION );
+        this.operation = operation;
+    }
+
+    /**
+     * Gets the operation for which this icon is used.
+     * @return the operation
+     */
+    public PreferenceOperation getOperation(){
+        return operation;
+    }
 }

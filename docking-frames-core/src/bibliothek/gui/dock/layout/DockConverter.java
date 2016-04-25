@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -57,7 +57,7 @@ public interface DockConverter <D extends DockElement, P extends PerspectiveElem
      * @return the id
      */
     public String getID();
-    
+
     /**
      * Gets the layout of <code>element</code>. This method should create
      * a new instance of the layout object, that new object should not be
@@ -69,26 +69,26 @@ public interface DockConverter <D extends DockElement, P extends PerspectiveElem
      * of the element. Children which are not in this map should not be
      * stored in the layout.<br>
      * The identifiers are in the range from 0 (incl.) to <code>children.size()</code> (excl.). The
-     * same identifiers will be used as indices by a {@link LocationEstimationMap}. See 
+     * same identifiers will be used as indices by a {@link LocationEstimationMap}. See
      * also {@link DockFactory#estimateLocations(Object, LocationEstimationMap)}.
      * @return the newly created, independent layout object.
      */
     public L getLayout( D element, Map<Dockable, Integer> children );
 
-	/**
-	 * Gets the layout information that is associated with <code>element</code>.
-	 * The layout information can be any {@link Object}. The only restriction
-	 * of the object is, that the associated {@link DockFactory} understands
-	 * how to read that object.<br>
-	 * @param element the element whose layout information is asked.
-	 * @param children a map providing identifiers for the children of this element. The
-	 * identifiers are in the range from 0 (incl.) to <code>children.size()</code> (excl.), 
-	 * the exact same identifiers would be given to {@link DockConverter#getLayout(bibliothek.gui.dock.DockElement, Map)}.
-	 * Is <code>null</code> if the children of this station should be ignored.
-	 * @return the layout information, may be <code>null</code> if this converter does not support perspectives
-	 */
-	public L getPerspectiveLayout( P element, Map<PerspectiveDockable, Integer> children );
-    
+    /**
+     * Gets the layout information that is associated with <code>element</code>.
+     * The layout information can be any {@link Object}. The only restriction
+     * of the object is, that the associated {@link DockFactory} understands
+     * how to read that object.<br>
+     * @param element the element whose layout information is asked.
+     * @param children a map providing identifiers for the children of this element. The
+     * identifiers are in the range from 0 (incl.) to <code>children.size()</code> (excl.),
+     * the exact same identifiers would be given to {@link DockConverter#getLayout(bibliothek.gui.dock.DockElement, Map)}.
+     * Is <code>null</code> if the children of this station should be ignored.
+     * @return the layout information, may be <code>null</code> if this converter does not support perspectives
+     */
+    public L getPerspectiveLayout( P element, Map<PerspectiveDockable, Integer> children );
+
     /**
      * Reads the contents of <code>layout</code> and changes the layout of
      * <code>element</code> accordingly. This method should remove all
@@ -98,10 +98,10 @@ public interface DockConverter <D extends DockElement, P extends PerspectiveElem
      * @param children some children, note that the map may not contain all elements
      * which were present when the layout was created.
      * @param placeholders a strategy to detect invalid placeholders, can be <code>null</code>.
-     * Factories loading only {@link Dockable}s but no {@link DockStation}s can safely ignore this argument. 
+     * Factories loading only {@link Dockable}s but no {@link DockStation}s can safely ignore this argument.
      */
     public void setLayout( D element, L layout, Map<Integer, Dockable> children, PlaceholderStrategy placeholders );
-    
+
     /**
      * Reads the contents of <code>layout</code> and changes the layout of
      * <code>element</code> accordingly. This method should not add or remove
@@ -109,10 +109,10 @@ public interface DockConverter <D extends DockElement, P extends PerspectiveElem
      * @param element the element whose properties will be changed
      * @param layout the new set of properties
      * @param placeholders a strategy to detect invalid placeholders, can be <code>null</code>.
-     * Factories loading only {@link Dockable}s but no {@link DockStation}s can safely ignore this argument. 
+     * Factories loading only {@link Dockable}s but no {@link DockStation}s can safely ignore this argument.
      */
     public void setLayout( D element, L layout, PlaceholderStrategy placeholders );
-    
+
     /**
      * Writes the contents of <code>layout</code> into <code>out</code>.
      * @param layout the layout to store
@@ -120,7 +120,7 @@ public interface DockConverter <D extends DockElement, P extends PerspectiveElem
      * @throws IOException if an I/O-error occurs
      */
     public void write( L layout, DataOutputStream out ) throws IOException;
-    
+
     /**
      * Writes the contents of <code>layout</code> into <code>element</code>.
      * @param layout the layout to store
@@ -128,7 +128,7 @@ public interface DockConverter <D extends DockElement, P extends PerspectiveElem
      * attributes of <code>element</code> should not be changed.
      */
     public void write( L layout, XElement element );
-    
+
     /**
      * Reads a layout from a stream.
      * @param in the stream to read from
@@ -139,10 +139,10 @@ public interface DockConverter <D extends DockElement, P extends PerspectiveElem
      * @throws IOException if an I/O-error occurs
      */
     public L read( DataInputStream in, PlaceholderStrategy placeholders ) throws IOException;
-    
+
     /**
      * Reads a layout from an xml-element.
-     * @param element the element to read, should not be changed by this 
+     * @param element the element to read, should not be changed by this
      * method.
      * @param placeholders a strategy to detect invalid placeholders, can be <code>null</code>.
      * Factories loading only {@link Dockable}s but no {@link DockStation}s can safely ignore this argument.

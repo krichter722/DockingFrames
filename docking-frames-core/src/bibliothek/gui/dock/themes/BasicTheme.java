@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -70,12 +70,12 @@ import bibliothek.gui.dock.util.property.DynamicPropertyFactory;
 
 /**
  * A {@link DockTheme theme} that does not install anything and uses the
- * default-implementations off all factories. It is possible to replace 
+ * default-implementations off all factories. It is possible to replace
  * any of the factories.
  * @author Benjamin Sigg
  */
 @ThemeProperties(
-        nameBundle="theme.basic", 
+        nameBundle="theme.basic",
         descriptionBundle="theme.basic.description",
         authors={"Benjamin Sigg"},
         webpages={})
@@ -97,24 +97,25 @@ public class BasicTheme implements DockTheme{
 
     /** the factory used to create components for {@link StackDockStation} */
     private NullPriorityValue<StackDockComponentFactory> stackDockComponentFactory = new NullPriorityValue<StackDockComponentFactory>();
-    
+
     /** the side at which tabs are normally shown */
     private NullPriorityValue<TabPlacement> tabPlacement = new NullPriorityValue<TabPlacement>();
 
     /** how spans are created */
     private NullPriorityValue<SpanFactory> spanFactory = new NullPriorityValue<SpanFactory>();
-    
+
     /** extensions used by this theme */
     private DockThemeExtension[] extensions;
-    
+
     /** the key to set the {@link ColorScheme} of this theme */
-    public static final PropertyKey<ColorScheme> BASIC_COLOR_SCHEME = 
-        new PropertyKey<ColorScheme>( "dock.ui.BasicTheme.ColorScheme",
-        		new DynamicPropertyFactory<ColorScheme>(){
-        			public ColorScheme getDefault( PropertyKey<ColorScheme> key, DockProperties properties ){
-        				return new BasicColorScheme();
-        			}
-        		}, true );
+    public static final PropertyKey<ColorScheme> BASIC_COLOR_SCHEME =
+        new PropertyKey<ColorScheme>("dock.ui.BasicTheme.ColorScheme",
+            new DynamicPropertyFactory<ColorScheme>(){
+            public ColorScheme getDefault( PropertyKey<ColorScheme> key, DockProperties properties ){
+                    return new BasicColorScheme();
+                }
+            },
+            true);
 
     /** the color scheme used in this theme */
     private PropertyValue<ColorScheme> colorScheme = new PropertyValue<ColorScheme>( BASIC_COLOR_SCHEME ){
@@ -129,7 +130,7 @@ public class BasicTheme implements DockTheme{
 
     /** the controller which is installed */
     private DockController controller;
-    
+
     /** a listener waiting for changed {@link LookAndFeel}s */
     private UIListener uiListener = new UIListener(){
         public void updateUI( DockController controller ){
@@ -163,23 +164,24 @@ public class BasicTheme implements DockTheme{
     }
 
     public void install( DockController controller, DockThemeExtension[] extensions ){
-    	this.extensions = extensions;
-    	for( DockThemeExtension extension : extensions ){
-    		extension.install( controller, this );
-    	}
-    	install( controller );
-    	for( DockThemeExtension extension : extensions ){
-    		extension.installed( controller, this );
-    	}
+        this.extensions = extensions;
+        for( DockThemeExtension extension : extensions ){
+            extension.install( controller, this );
+        }
+        install( controller );
+        for( DockThemeExtension extension : extensions ){
+            extension.installed( controller, this );
+        }
     }
-    
+
     /**
      * Installs the basic items of this theme, ignoring any {@link DockThemeExtension}.
      * @param controller the new owner of this theme
      */
     protected void install( DockController controller ){
-        if( this.controller != null )
+        if( this.controller != null ) {
             throw new IllegalStateException( "Theme is already in use" );
+        }
 
         this.controller = controller;
 
@@ -189,15 +191,16 @@ public class BasicTheme implements DockTheme{
         controller.getProperties().set( StackDockStation.COMPONENT_FACTORY, stackDockComponentFactory.get(), Priority.THEME );
         controller.getProperties().set( StackDockStation.TAB_PLACEMENT, tabPlacement.get(), Priority.THEME );
         controller.getProperties().set( DockTheme.SPAN_FACTORY, spanFactory.get(), Priority.THEME );
-        
+
         colorScheme.setProperties( controller );
 
         updateColors();
     }
 
     public void uninstall( DockController controller ){
-        if( this.controller != controller )
+        if( this.controller != controller ) {
             throw new IllegalArgumentException( "Trying to uninstall a controller which is not installed" );
+        }
 
         controller.getProperties().unset( StackDockStation.COMPONENT_FACTORY, Priority.THEME );
         controller.getProperties().unset( StackDockStation.TAB_PLACEMENT, Priority.THEME );
@@ -206,11 +209,11 @@ public class BasicTheme implements DockTheme{
         controller.getThemeManager().removeUIListener( uiListener );
 
         colorScheme.setProperties( (DockProperties)null );
-        
+
         for( DockThemeExtension extension : extensions ){
-    		extension.uninstall( controller, this );
-    	}
-        
+            extension.uninstall( controller, this );
+        }
+
         this.controller = null;
     }
 
@@ -218,7 +221,7 @@ public class BasicTheme implements DockTheme{
      * Called when the {@link LookAndFeel} changed, should update colors, fonts, ...
      */
     public void updateUI(){
-    	if( selection != null ){
+        if( selection != null ){
             SwingUtilities.updateComponentTreeUI( selection.get().getComponent() );
         }
     }
@@ -232,15 +235,15 @@ public class BasicTheme implements DockTheme{
      * can now be created lazily and automatically in exactly the moment when they are needed.
      */
     protected void updateColors(){
-    	if( controller != null ){
-    		ColorScheme scheme = colorScheme.getValue();
-    		
-	        if( scheme != null ){
-	        	scheme = new ExtendingColorScheme( scheme, controller );
-	        }
-	        
-	        controller.getColors().setScheme( Priority.THEME, scheme );
-    	}
+        if( controller != null ){
+            ColorScheme scheme = colorScheme.getValue();
+
+            if( scheme != null ){
+                scheme = new ExtendingColorScheme( scheme, controller );
+            }
+
+            controller.getColors().setScheme( Priority.THEME, scheme );
+        }
     }
 
     /**
@@ -258,8 +261,9 @@ public class BasicTheme implements DockTheme{
      * @see #setColorScheme(ColorScheme)
      */
     protected void setColorSchemeKey( PropertyKey<ColorScheme> key ){
-        if( key == null )
+        if( key == null ) {
             throw new IllegalArgumentException( "key must not be null" );
+        }
 
         colorScheme.setKey( key );
     }
@@ -267,7 +271,7 @@ public class BasicTheme implements DockTheme{
     /**
      * Sets the currently used set of colors. The colors of all {@link DockController}s
      * will change immediately.
-     * @param colorScheme the new scheme, <code>null</code> will 
+     * @param colorScheme the new scheme, <code>null</code> will
      * activate the default color scheme.
      */
     public void setColorScheme( ColorScheme colorScheme ) {
@@ -283,17 +287,17 @@ public class BasicTheme implements DockTheme{
     }
 
     /**
-     * Sets the factory which will be used to create components for 
+     * Sets the factory which will be used to create components for
      * {@link StackDockStation}. Note that this property has to be set
      * before the theme is installed. Otherwise it will take no effect.
      * @param stackDockComponentFactory the factory or <code>null</code>
      */
     public void setStackDockComponentFactory( StackDockComponentFactory stackDockComponentFactory ) {
-    	setStackDockComponentFactory( stackDockComponentFactory, Priority.CLIENT );
+        setStackDockComponentFactory( stackDockComponentFactory, Priority.CLIENT );
     }
-    
+
     /**
-     * Sets the factory which will be used to create components for 
+     * Sets the factory which will be used to create components for
      * {@link StackDockStation}. Note that this property has to be set
      * before the theme is installed. Otherwise it will take no effect.
      * @param stackDockComponentFactory the factory or <code>null</code>
@@ -302,16 +306,16 @@ public class BasicTheme implements DockTheme{
     public void setStackDockComponentFactory( StackDockComponentFactory stackDockComponentFactory, Priority priority ) {
         this.stackDockComponentFactory.set( priority, stackDockComponentFactory );
     }
-    
+
     /**
      * Sets the factory which will be used to create new {@link Span}s. Note that this property
      * has to be set before the theme is installed, otherwise it will take not effect.
      * @param factory the new factory, can be <code>null</code>
      */
     public void setSpanFactory( SpanFactory factory ){
-    	setSpanFactory( factory, Priority.CLIENT );
+        setSpanFactory( factory, Priority.CLIENT );
     }
-    
+
     /**
      * Sets the factory which will be used to create new {@link Span}s. Note that this property
      * has to be set before the theme is installed. Otherwise it will take no effect.
@@ -319,7 +323,7 @@ public class BasicTheme implements DockTheme{
      * @param priority the imprtance of the new setting (whether it should override existing settings or not).
      */
     public void setSpanFactory( SpanFactory factory, Priority priority ){
-    	this.spanFactory.set( priority, factory );
+        this.spanFactory.set( priority, factory );
     }
 
     /**
@@ -328,9 +332,9 @@ public class BasicTheme implements DockTheme{
      * @param movingImage the new factory
      */
     public void setMovingImageFactory( DockableMovingImageFactory movingImage ) {
-    	setMovingImageFactory( movingImage, Priority.CLIENT );
+        setMovingImageFactory( movingImage, Priority.CLIENT );
     }
-    
+
     /**
      * Sets the movingImage-property. The movignImage is needed to show an
      * image when the user grabs a {@link Dockable}
@@ -340,16 +344,16 @@ public class BasicTheme implements DockTheme{
     public void setMovingImageFactory( DockableMovingImageFactory movingImage, Priority priority ) {
         this.movingImage.set( priority, movingImage );
     }
-    
+
     /**
      * Sets the {@link Combiner} of this theme. The combiner is used to
      * merge two Dockables.
      * @param combiner the combiner
      */
     public void setCombiner( Combiner combiner ) {
-    	setCombiner( combiner, Priority.CLIENT );
+        setCombiner( combiner, Priority.CLIENT );
     }
-    
+
     /**
      * Sets the {@link Combiner} of this theme. The combiner is used to
      * merge two Dockables.
@@ -359,16 +363,16 @@ public class BasicTheme implements DockTheme{
     public void setCombiner( Combiner combiner, Priority priority ) {
         this.combiner.set( priority, combiner );
     }
-    
+
     /**
      * Sets the {@link StationPaint} of this theme. The paint is used to
      * draw markings on stations.
      * @param paint the paint
      */
     public void setPaint( StationPaint paint ) {
-    	setPaint( paint, Priority.CLIENT );
+        setPaint( paint, Priority.CLIENT );
     }
-    
+
     /**
      * Sets the {@link StationPaint} of this theme. The paint is used to
      * draw markings on stations.
@@ -378,16 +382,16 @@ public class BasicTheme implements DockTheme{
     public void setPaint( StationPaint paint, Priority priority ) {
         this.paint.set( priority, paint );
     }
-    
+
     /**
      * Sets the {@link DisplayerFactory} of this theme. The factory is needed
      * to create {@link DockableDisplayer}.
      * @param factory the factory
      */
     public void setDisplayerFactory( DisplayerFactory factory ) {
-    	setDisplayerFactory( factory, Priority.CLIENT );
+        setDisplayerFactory( factory, Priority.CLIENT );
     }
-    
+
     /**
      * Sets the {@link DisplayerFactory} of this theme. The factory is needed
      * to create {@link DockableDisplayer}.
@@ -404,9 +408,9 @@ public class BasicTheme implements DockTheme{
      * @param titleFactory the factory
      */
     public void setTitleFactory( DockTitleFactory titleFactory ) {
-    	setTitleFactory( titleFactory, Priority.CLIENT );
+        setTitleFactory( titleFactory, Priority.CLIENT );
     }
-    
+
     /**
      * Sets the {@link DockTitleFactory} of this station. The factory is
      * used to create {@link DockTitle DockTitles} for some Dockables.
@@ -415,9 +419,9 @@ public class BasicTheme implements DockTheme{
      */
     public void setTitleFactory( DockTitleFactory titleFactory, Priority priority ) {
         this.titleFactory.set( priority, titleFactory );
-        
+
         if( controller != null ){
-        	controller.getDockTitleManager().registerTheme( DockTitleManager.THEME_FACTORY_ID, this.titleFactory.get() );
+            controller.getDockTitleManager().registerTheme( DockTitleManager.THEME_FACTORY_ID, this.titleFactory.get() );
         }
     }
 
@@ -426,9 +430,9 @@ public class BasicTheme implements DockTheme{
      * @param selection the new selector
      */
     public void setDockableSelection( DockableSelection selection ){
-    	setDockableSelection( selection, Priority.CLIENT );
+        setDockableSelection( selection, Priority.CLIENT );
     }
-    
+
     /**
      * Sets how the user can select the focused {@link Dockable}.
      * @param selection the new selector
@@ -437,7 +441,7 @@ public class BasicTheme implements DockTheme{
     public void setDockableSelection( DockableSelection selection, Priority priority ){
         this.selection.set( priority, selection );
     }
-    
+
     /**
      * Sets the side at which tabs are to be displayed. This method has to
      * be called before a {@link DockController} is installed, otherwise the
@@ -446,9 +450,9 @@ public class BasicTheme implements DockTheme{
      * use the default value
      */
     public void setTabPlacement( TabPlacement tabPlacement ){
-    	setTabPlacement( tabPlacement, Priority.CLIENT );
+        setTabPlacement( tabPlacement, Priority.CLIENT );
     }
-    
+
     /**
      * Sets the side at which tabs are to be displayed. This method has to
      * be called before a {@link DockController} is installed, otherwise the
@@ -458,16 +462,16 @@ public class BasicTheme implements DockTheme{
      * @param priority the importance of the new setting (whether it should override existing settings or not).
      */
     public void setTabPlacement( TabPlacement tabPlacement, Priority priority ){
-		this.tabPlacement.set( priority, tabPlacement );
-	}
-    
+        this.tabPlacement.set( priority, tabPlacement );
+    }
+
     /**
      * Gets the side at which tabs are displayed.
      * @return the side with the tabs, may be <code>null</code>
      */
     public TabPlacement getTabPlacement(){
-		return tabPlacement.get();
-	}
+        return tabPlacement.get();
+    }
 
     public DockableMovingImageFactory getMovingImageFactory( DockController controller ) {
         return movingImage.get();

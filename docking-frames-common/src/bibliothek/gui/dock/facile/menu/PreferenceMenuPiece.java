@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,11 +44,11 @@ import bibliothek.util.ClientOnly;
 @ClientOnly
 public class PreferenceMenuPiece extends BaseMenuPiece{
     private DockController controller;
-    
+
     private PreferenceTreeModel model;
-    
+
     private MenuPieceText text;
-    
+
     private AbstractAction action = new AbstractAction(){
         public void actionPerformed( ActionEvent e ) {
             PreferenceTreeModel model = getModel();
@@ -56,57 +56,59 @@ public class PreferenceMenuPiece extends BaseMenuPiece{
             dialog.openDialog( controller.findRootWindow(), true );
         }
     };
-    
+
     /**
      * Creates a new unlinked menu piece
      */
     protected PreferenceMenuPiece(){
         this( null );
     }
-    
+
     /**
      * Creates a new menu piece
      * @param controller the controller for which this piece will work
      */
     public PreferenceMenuPiece( DockController controller ){
-    	text = new MenuPieceText( "PreferenceMenuPiece.text", this ){
-			protected void changed( String oldValue, String newValue ){
-				action.putValue( AbstractAction.NAME, newValue );
-			}
-		};
+        text = new MenuPieceText( "PreferenceMenuPiece.text", this ){
+            protected void changed( String oldValue, String newValue ){
+                action.putValue( AbstractAction.NAME, newValue );
+            }
+        };
         add( new JMenuItem( action ) );
         setController( controller );
     }
-    
+
     /**
      * Creates a new model for this piece.
      * @return the model
      */
     protected PreferenceTreeModel createModel(){
-        if( controller == null )
+        if( controller == null ) {
             return new PreferenceTreeModel( controller );
-        else
+        } else {
             return new DockingFramesPreference( controller );
+        }
     }
-    
+
     public PreferenceTreeModel getModel() {
-        if( model == null )
+        if( model == null ) {
             model = createModel();
+        }
         return model;
     }
-    
+
     @Override
     public void bind(){
-    	super.bind();
-    	text.setController( controller );
+        super.bind();
+        text.setController( controller );
     }
-    
+
     @Override
     public void unbind(){
-    	super.unbind();
-    	text.setController( null );
+        super.unbind();
+        text.setController( null );
     }
-    
+
     /**
      * Sets the controller for which this piece works.
      * @param controller the controller
@@ -116,10 +118,10 @@ public class PreferenceMenuPiece extends BaseMenuPiece{
         action.setEnabled( controller != null );
         model = null;
         if( isBound() ){
-        	text.setController( controller );
+            text.setController( controller );
         }
     }
-    
+
     /**
      * Gets the controller for which this piece works.
      * @return the controller

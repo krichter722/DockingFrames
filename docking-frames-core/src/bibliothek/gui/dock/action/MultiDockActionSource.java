@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,20 +41,20 @@ import bibliothek.gui.dock.event.DockActionSourceListener;
 public class MultiDockActionSource extends AbstractDockActionSource {
     private List<DockActionSource> sources = new ArrayList<DockActionSource>();
     private List<SeparatorSource> separators = new ArrayList<SeparatorSource>();
-    
+
     private Listener listener;
     private boolean separateSources = false;
     private LocationHint hint;
-    
+
     /**
      * Constructs a new source. The <code>sources</code> are added as children
      * of this source.
      * @param sources The children of this source
      */
     public MultiDockActionSource( DockActionSource...sources ){
-    	this( LocationHint.UNKNOWN, sources );
+        this( LocationHint.UNKNOWN, sources );
     }
-    
+
     /**
      * Constructs a new source. The <code>sources</code> are added as children
      * of this source.
@@ -63,95 +63,101 @@ public class MultiDockActionSource extends AbstractDockActionSource {
      */
     public MultiDockActionSource( LocationHint hint, DockActionSource...sources ){
         listener = new Listener();
-        
+
         for( DockActionSource source : sources ){
             this.sources.add( source );
         }
-        
+
         setHint( hint );
     }
-    
+
     public Iterator<DockAction> iterator(){
-    	return new Iterator<DockAction>(){
-    		private Iterator<DockActionSource> sourceIterator = sources.iterator();
-    		private Iterator<DockAction> actionIterator;
-    		
-			public boolean hasNext(){
-				if( actionIterator == null ){
-					if( sourceIterator.hasNext() )
-						actionIterator = sourceIterator.next().iterator();
-					else
-						return false;
-				}
-				
-				while( true ){
-					if( actionIterator.hasNext() )
-						return true;
-					
-					if( sourceIterator.hasNext() )
-						actionIterator = sourceIterator.next().iterator();
-					else
-						return false;
-				}
-			}
+        return new Iterator<DockAction>(){
+            private Iterator<DockActionSource> sourceIterator = sources.iterator();
+            private Iterator<DockAction> actionIterator;
 
-			public DockAction next(){
-				hasNext();
-				return actionIterator.next();
-			}
+            public boolean hasNext(){
+                if( actionIterator == null ){
+                    if( sourceIterator.hasNext() ) {
+                        actionIterator = sourceIterator.next().iterator();
+                    } else {
+                        return false;
+                    }
+                }
 
-			public void remove(){
-				hasNext();
-				actionIterator.remove();
-			}
-    		
-    	};
+                while( true ){
+                    if( actionIterator.hasNext() ) {
+                        return true;
+                    }
+
+                    if( sourceIterator.hasNext() ) {
+                        actionIterator = sourceIterator.next().iterator();
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            public DockAction next(){
+                hasNext();
+                return actionIterator.next();
+            }
+
+            public void remove(){
+                hasNext();
+                actionIterator.remove();
+            }
+
+        };
     }
-    
+
     @Override
     public void addDockActionSourceListener( DockActionSourceListener listener ){
-    	boolean empty = listeners.isEmpty();
-    	super.addDockActionSourceListener( listener );
-    	if( empty && !listeners.isEmpty() ){
-    		for( DockActionSource source : sources )
-    			source.addDockActionSourceListener( this.listener );
-    		updateSeparators();
-    	}
+        boolean empty = listeners.isEmpty();
+        super.addDockActionSourceListener( listener );
+        if( empty && !listeners.isEmpty() ){
+            for( DockActionSource source : sources ) {
+                source.addDockActionSourceListener( this.listener );
+            }
+            updateSeparators();
+        }
     }
-    
+
     @Override
     public void removeDockActionSourceListener( DockActionSourceListener listener ){
-    	boolean empty = listeners.isEmpty();
-    	super.removeDockActionSourceListener( listener );
-    	if( !empty && listeners.isEmpty() ){
-    		for( DockActionSource source : sources )
-    			source.removeDockActionSourceListener( this.listener );
-    	}
+        boolean empty = listeners.isEmpty();
+        super.removeDockActionSourceListener( listener );
+        if( !empty && listeners.isEmpty() ){
+            for( DockActionSource source : sources ) {
+                source.removeDockActionSourceListener( this.listener );
+            }
+        }
     }
-    
+
     public LocationHint getLocationHint(){
-    	return hint;
+        return hint;
     }
-    
+
     /**
      * Sets the location-hint of this source.
      * @param hint the hint that tells an {@link ActionOffer} where to
      * put this source.
      */
     public void setHint( LocationHint hint ){
-    	if( hint == null )
-    		throw new IllegalArgumentException( "Hint must not be null" );
-    	
-		this.hint = hint;
-	}
-    
+        if( hint == null ) {
+            throw new IllegalArgumentException( "Hint must not be null" );
+        }
+
+        this.hint = hint;
+    }
+
     /**
      * Adds a separator at the end of the current list of actions
      */
     public void addSeparator(){
         add( SeparatorAction.SEPARATOR );
     }
-    
+
     /**
      * Tells whether there is a separator between sources or not
      * @return <code>true</code> if there is a separator
@@ -159,9 +165,9 @@ public class MultiDockActionSource extends AbstractDockActionSource {
     public boolean isSeparateSources() {
         return separateSources;
     }
-    
+
     /**
-     * Sets whether there are separators between the children of this 
+     * Sets whether there are separators between the children of this
      * source or not.
      * @param separateSources <code>true</code> if children should be separated
      */
@@ -171,85 +177,87 @@ public class MultiDockActionSource extends AbstractDockActionSource {
             updateSeparators();
         }
     }
-    
+
     /**
      * Adds a source as child of this source. All {@link DockAction DockActions}
      * of <code>source</code> will be presented as actions of this source.<br>
-     * Note: creating circles or adding a source more than once will lead to 
+     * Note: creating circles or adding a source more than once will lead to
      * unspecified behavior.
      * @param source the new child
      */
     public void add( DockActionSource source ){
-    	SeparatorSource separator = new SeparatorSource( source );
-    	
+        SeparatorSource separator = new SeparatorSource( source );
+
         sources.add( source );
         sources.add( separator );
         separators.add( separator );
-        
+
         if( !listeners.isEmpty() ){
-        	source.addDockActionSourceListener( listener );
-        	separator.addDockActionSourceListener( listener );
+            source.addDockActionSourceListener( listener );
+            separator.addDockActionSourceListener( listener );
         }
-        
+
         int index = getDockActionCountUntil( sources.size()-2, false );
         int length = source.getDockActionCount();
-        if( length > 0 )
+        if( length > 0 ) {
             fireAdded( index, index+length-1 );
-        
+        }
+
         updateSeparators();
     }
-    
+
     /**
      * Removes <code>source</code> from this {@link MultiDockActionSource}.
      * @param source the child to remove
      */
     public void remove( DockActionSource source ){
-    	int index = sources.indexOf( source );
-    	if( index < 0 )
-    		return;
-    	
-    	SeparatorSource separator = (SeparatorSource)sources.get( index+1 );
-    	
-    	int actionIndex = getDockActionCountUntil( index, false );
-    	int length = source.getDockActionCount();
-    	
-    	sources.remove( index+1 );
-    	sources.remove( index );
-    	separators.remove( separator );
-    	
-    	if( !listeners.isEmpty() ){
-    		source.removeDockActionSourceListener( listener );
-    		separator.removeDockActionSourceListener( listener );
-    	}
-    	
-    	if( length > 0 ){
-    		fireRemoved( actionIndex, index+length-1 );
-    	}
-    	
-    	updateSeparators();
+        int index = sources.indexOf( source );
+        if( index < 0 ) {
+            return;
+        }
+
+        SeparatorSource separator = (SeparatorSource)sources.get( index+1 );
+
+        int actionIndex = getDockActionCountUntil( index, false );
+        int length = source.getDockActionCount();
+
+        sources.remove( index+1 );
+        sources.remove( index );
+        separators.remove( separator );
+
+        if( !listeners.isEmpty() ){
+            source.removeDockActionSourceListener( listener );
+            separator.removeDockActionSourceListener( listener );
+        }
+
+        if( length > 0 ){
+            fireRemoved( actionIndex, index+length-1 );
+        }
+
+        updateSeparators();
     }
-    
+
     /**
      * Removes all children of this source.
      */
     public void removeAll(){
-    	int length = getDockActionCount();
-    	if( !listeners.isEmpty() ){
-    		for( SeparatorSource source : separators ){
-    			source.removeDockActionSourceListener( listener );
-    		}
-    		for( DockActionSource source : sources ){
-    			source.removeDockActionSourceListener( listener );
-    		}
-    	}
-    	separators.clear();
-    	sources.clear();
-    	
-    	if( length > 0 ){
-    		fireRemoved( 0, length-1 );
-    	}
+        int length = getDockActionCount();
+        if( !listeners.isEmpty() ){
+            for( SeparatorSource source : separators ){
+                source.removeDockActionSourceListener( listener );
+            }
+            for( DockActionSource source : sources ){
+                source.removeDockActionSourceListener( listener );
+            }
+        }
+        separators.clear();
+        sources.clear();
+
+        if( length > 0 ){
+            fireRemoved( 0, length-1 );
+        }
     }
-    
+
     /**
      * Adds several actions to this source.
      * @param actions the new actions
@@ -257,11 +265,11 @@ public class MultiDockActionSource extends AbstractDockActionSource {
     public void add( DockAction... actions ){
         add( new DefaultDockActionSource( actions ));
     }
-    
+
     public int getDockActionCount(){
         return getDockActionCountUntil( sources.size(), true );
     }
-    
+
     /**
      * Gets the index of the child-source which contains <code>action</code>.
      * @param action the action for which is searched
@@ -271,14 +279,15 @@ public class MultiDockActionSource extends AbstractDockActionSource {
         for( int i = 0, n = sources.size(); i<n; i++ ){
             DockActionSource source = sources.get( i );
             for( int j = 0, m = source.getDockActionCount(); j<m; j++ ){
-                if( source.getDockAction( j ) == action )
+                if( source.getDockAction( j ) == action ) {
                     return i;
+                }
             }
         }
-        
+
         return -1;
     }
-    
+
     /**
      * Counts how many {@link DockAction DockActions} are provided by the
      * source-children with index 0 (incl) to <code>index</code> (excl).
@@ -289,45 +298,49 @@ public class MultiDockActionSource extends AbstractDockActionSource {
      * child-sources.
      */
     protected int getDockActionCountUntil( int index, boolean allowUpdate ){
-    	if( allowUpdate && listeners.isEmpty() )
-    		updateSeparators();
-    	
+        if( allowUpdate && listeners.isEmpty() ) {
+            updateSeparators();
+        }
+
         int sum = 0;
-        
-        for( int i = 0; i < index; i++ )
+
+        for( int i = 0; i < index; i++ ) {
             sum += sources.get( i ).getDockActionCount();
-        
+        }
+
         return sum;
     }
 
     public DockAction getDockAction( int index ) {
-    	if( listeners.isEmpty() )
-    		updateSeparators();
-    	
-    	int sum = 0;
+        if( listeners.isEmpty() ) {
+            updateSeparators();
+        }
+
+        int sum = 0;
         for( int i = 0, n = sources.size(); i<n; i++ ){
             int length = sources.get( i ).getDockActionCount();
-            if( sum <= index && index < sum + length )
+            if( sum <= index && index < sum + length ) {
                 return sources.get( i ).getDockAction( index - sum );
-            
+            }
+
             sum += length;
         }
-        
+
         throw new ArrayIndexOutOfBoundsException();
     }
-    
+
     /**
      * Ensures that all separators which must be visible are really visible.
      */
     private void updateSeparators(){
-    	int size = separators.size();
-    	int index = 0;
-    	
-    	for( SeparatorSource source : separators ){
-    		source.update( ++index == size );
-    	}
+        int size = separators.size();
+        int index = 0;
+
+        for( SeparatorSource source : separators ){
+            source.update( ++index == size );
+        }
     }
-    
+
     /**
      * A listener to the sources of this group of sources.
      * @author Benjamin Sigg
@@ -345,23 +358,24 @@ public class MultiDockActionSource extends AbstractDockActionSource {
             updateSeparators();
         }
     }
-    
+
     /**
-     * A source that shows one separator. 
+     * A source that shows one separator.
      * @author Benjamin Sigg
      */
     private class SeparatorSource extends DefaultDockActionSource{
-    	private DockActionSource predecessor;
-    	
-    	public SeparatorSource( DockActionSource predecessor ){
-    		this.predecessor = predecessor;
-    	}
-    	
-    	public void update( boolean last ){
-    		if( !separateSources || last )
-    			remove( SeparatorAction.SEPARATOR );
-    		else if( predecessor.getDockActionCount() > 0 && getDockActionCount() == 0 )
-    			add( SeparatorAction.SEPARATOR );
-    	}
+        private DockActionSource predecessor;
+
+        public SeparatorSource( DockActionSource predecessor ){
+            this.predecessor = predecessor;
+        }
+
+        public void update( boolean last ){
+            if( !separateSources || last ) {
+                remove( SeparatorAction.SEPARATOR );
+            } else if( predecessor.getDockActionCount() > 0 && getDockActionCount() == 0 ) {
+                add( SeparatorAction.SEPARATOR );
+            }
+        }
     }
 }

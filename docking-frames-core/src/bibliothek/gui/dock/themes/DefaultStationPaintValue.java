@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,26 +40,26 @@ import bibliothek.gui.dock.util.UIValue;
  * @author Benjamin Sigg
  */
 public class DefaultStationPaintValue extends StationThemeItemValue<StationPaint> implements StationPaintValue {
-	    
+
     /**
      * Creates a new wrapper.
      * @param id a unique identifier used on {@link ThemeManager} to get the current {@link StationPaint}
      * @param station the station that is painted by this wrapper
      */
     public DefaultStationPaintValue( String id, DockStation station ){
-    	super( id, KIND_STATION_PAINT, ThemeManager.STATION_PAINT_TYPE, station );
+        super( id, KIND_STATION_PAINT, ThemeManager.STATION_PAINT_TYPE, station );
     }
-    
+
     /**
      * Calls {@link StationPaint#drawDivider(Graphics, DockStation, Rectangle)}
      * @param g the graphics context
      * @param bounds the boundaries of the divider
      */
     public void drawDivider( Graphics g, Rectangle bounds ) {
-    	StationPaint paint = get();
-    	if( paint != null ){
-    		paint.drawDivider( g, getStation(), bounds );
-    	}
+        StationPaint paint = get();
+        if( paint != null ){
+            paint.drawDivider( g, getStation(), bounds );
+        }
     }
 
     /**
@@ -69,12 +69,12 @@ public class DefaultStationPaintValue extends StationThemeItemValue<StationPaint
      * @param dockableBounds the bounds that the new child will have
      */
     public void drawInsertion( Graphics g, Rectangle stationBounds, Rectangle dockableBounds ) {
-    	StationPaint paint = get();
-    	if( paint != null ){
-    		paint.drawInsertion( g, getStation(), stationBounds, dockableBounds );
-    	}
+        StationPaint paint = get();
+        if( paint != null ){
+            paint.drawInsertion( g, getStation(), stationBounds, dockableBounds );
+        }
     }
-    
+
     /**
      * Paints a single line from x1/y1 to x2/y2.
      * @param g the graphics context used for painting
@@ -84,12 +84,12 @@ public class DefaultStationPaintValue extends StationThemeItemValue<StationPaint
      * @param y2 the y-coordinate of the second end of the line
      */
     public void drawInsertionLine( Graphics g, int x1, int y1, int x2, int y2 ) {
-    	StationPaint paint = get();
-    	if( paint != null ){
-    		paint.drawInsertionLine( g, getStation(), x1, y1, x2, y2 );
-    	}
+        StationPaint paint = get();
+        if( paint != null ){
+            paint.drawInsertionLine( g, getStation(), x1, y1, x2, y2 );
+        }
     }
-    
+
     /**
      * Paints some markings when a {@link Dockable} is removed from a {@link DockStation}.
      * @param g the graphics context used for painting
@@ -97,9 +97,9 @@ public class DefaultStationPaintValue extends StationThemeItemValue<StationPaint
      * @param dockableBounds the bounds that the old child currently has
      */
     public void drawRemoval( Graphics g, Rectangle stationBounds, Rectangle dockableBounds ){
-    	StationPaint paint = get();
-    	if( paint != null ){
-    		paint.drawRemoval( g, getStation(), stationBounds, dockableBounds );
-    	}
+        StationPaint paint = get();
+        if( paint != null ){
+            paint.drawRemoval( g, getStation(), stationBounds, dockableBounds );
+        }
     }
 }

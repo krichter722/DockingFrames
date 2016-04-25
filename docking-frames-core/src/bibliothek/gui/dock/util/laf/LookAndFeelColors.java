@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -43,51 +43,51 @@ public interface LookAndFeelColors {
      * as an unselected menu item.
      */
     public static final String TITLE_BACKGROUND = "dock.title.background";
-    
+
     /**
      * The foreground of unselected title components. Normally the same
      * as an unselected menu item.
      */
     public static final String TITLE_FOREGROUND = "dock.title.foreground";
-    
+
     /**
      * The background of selected title components. Normally the same as
      * a selected menu item.
      */
     public static final String TITLE_SELECTION_BACKGROUND = "dock.title.selection.background";
-    
+
     /**
      * The foreground of selected title components. Normally the same as
      * a selected menu item.
      */
     public static final String TITLE_SELECTION_FOREGROUND = "dock.title.selection.foreground";
-    
+
     /**
      * The color used for ordinary selections. Normally the same as the
      * background color of a selection in a textfield.
      */
     public static final String SELECTION = "dock.selection.background";
-    
+
     /**
      * The background color for any kind of panels
      */
     public static final String PANEL_BACKGROUND = "dock.background";
-    
+
     /**
      * The foreground color for any kind of panels
      */
     public static final String PANEL_FOREGROUND = "dock.foreground";
-    
+
     /**
      * The shadow around controls
      */
     public static final String CONTROL_SHADOW = "dock.control.shadow";
-    
+
     /**
      * The color for borderes around internal windows.
      */
     public static final String WINDOW_BORDER = "dock.window.border";
-    
+
     /**
      * Searches for a color respecting the properties of the current
      * LookAndFeel.
@@ -96,26 +96,26 @@ public interface LookAndFeelColors {
      * @return the color that matches <code>key</code> or <code>null</code>
      */
     public Color getColor( String key );
-    
+
     /**
      * Called when this objects gets activated. The object may now register
      * listeners or do other resource hungry stuff.
      */
     public void bind();
-    
+
     /**
      * Called when this objects gets deactivated. The object may now
      * unregister listeners and free resources.
      */
     public void unbind();
-    
+
     /**
-     * Adds a listener to this object, the listener must be informed when 
+     * Adds a listener to this object, the listener must be informed when
      * a color changes.
      * @param listener the listener to add
      */
     public void addListener( LookAndFeelColorsListener listener );
-    
+
     /**
      * Removes a listener from this object.
      * @param listener the listener to remove

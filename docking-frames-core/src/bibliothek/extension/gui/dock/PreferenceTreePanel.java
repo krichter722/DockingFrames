@@ -1,3 +1,29 @@
+/*
+ * Bibliothek - DockingFrames
+ * Library built on Java/Swing, allows the user to "drag and drop"
+ * panels containing any Swing-Component the developer likes to add.
+ *
+ * Copyright (C) 2007 Benjamin Sigg
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Benjamin Sigg
+ * benjamin_sigg@gmx.ch
+ * CH - Switzerland
+ */
+
 package bibliothek.extension.gui.dock;
 
 import java.awt.Dimension;
@@ -30,17 +56,17 @@ import bibliothek.util.Path;
  */
 public class PreferenceTreePanel extends JPanel{
     private PreferenceTreeModel model;
-    
+
     private JTree tree;
     private PreferenceTable table;
-    
+
     /**
      * Creates a new panel.
      */
     public PreferenceTreePanel(){
         this( null );
     }
-    
+
     /**
      * Creates a new panel.
      * @param model the contents of this panel, might be <code>null</code>
@@ -49,32 +75,32 @@ public class PreferenceTreePanel extends JPanel{
         this.model = model;
         setLayout( new GridLayout( 1, 1 ) );
         JSplitPane pane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT );
-        
+
         if( model == null ){
-        	tree = new JTree( new DefaultTreeModel( new DefaultMutableTreeNode( "<null>" ) ) );
+            tree = new JTree( new DefaultTreeModel( new DefaultMutableTreeNode( "<null>" ) ) );
         }
         else{
-        	tree = new JTree( model );
+            tree = new JTree( model );
         }
         tree.setEditable( false );
         tree.setRootVisible( false );
         tree.setShowsRootHandles( true );
         tree.getSelectionModel().setSelectionMode( TreeSelectionModel.SINGLE_TREE_SELECTION );
         pane.setLeftComponent( new JScrollPane( tree ) );
-        
+
         table = new PreferenceTable();
         pane.setRightComponent( new JScrollPane( table ) );
-        
+
         tree.addTreeSelectionListener( new TreeSelectionListener(){
             public void valueChanged( TreeSelectionEvent e ) {
                 checkSelection();
             }
         });
-        
+
         add( pane );
         checkSelection();
     }
-    
+
     /**
      * Adds an operation to this panel. Calling this method before setting a model
      * will allow the client to determine the order of the operations.
@@ -82,9 +108,9 @@ public class PreferenceTreePanel extends JPanel{
      * @see PreferenceTable#addOperation(PreferenceOperation)
      */
     public void addOperation( PreferenceOperation operation ){
-    	table.addOperation( operation );
+        table.addOperation( operation );
     }
-    
+
     /**
      * Sets an editor for some type.
      * @param type the type for which the editor will be used
@@ -92,9 +118,9 @@ public class PreferenceTreePanel extends JPanel{
      * @see PreferenceTable#setEditorFactory(Path, PreferenceEditorFactory)
      */
     public void setEditorFactory( Path type, PreferenceEditorFactory<?> factory ){
-    	table.setEditorFactory( type, factory );
+        table.setEditorFactory( type, factory );
     }
-    
+
     /**
      * Access to the {@link JTree} which shows the {@link PreferenceTreeModel}.
      * Clients should not change the {@link TreeModel} of the tree. But
@@ -103,9 +129,9 @@ public class PreferenceTreePanel extends JPanel{
      * @return the tree used on this panel
      */
     public JTree getTree() {
-		return tree;
-	}
-    
+        return tree;
+    }
+
     /**
      * Access to the {@link PreferenceTable} which shows the currently
      * selected {@link PreferenceModel}. Clients should not change the
@@ -114,18 +140,18 @@ public class PreferenceTreePanel extends JPanel{
      * @return the table used on this panel
      */
     public PreferenceTable getTable() {
-		return table;
-	}
-    
+        return table;
+    }
+
     @Override
     public Dimension getPreferredSize() {
-    	Dimension size = super.getPreferredSize();
-    	if( table.getModel() == null ){
-    		size = new Dimension( size.width * 2, size.height );
-    	}
-    	return size;
+        Dimension size = super.getPreferredSize();
+        if( table.getModel() == null ){
+            size = new Dimension( size.width * 2, size.height );
+        }
+        return size;
     }
-    
+
     private void checkSelection(){
         PreferenceModel preference = null;
         TreePath path = tree.getSelectionPath();
@@ -135,7 +161,7 @@ public class PreferenceTreePanel extends JPanel{
         }
         table.setModel( preference );
     }
-    
+
     /**
      * Sets the model of this panel.
      * @param model the new model, can be <code>null</code>
@@ -143,14 +169,14 @@ public class PreferenceTreePanel extends JPanel{
     public void setModel( PreferenceTreeModel model ) {
         this.model = model;
         if( model == null ){
-        	tree.setModel( new DefaultTreeModel( new DefaultMutableTreeNode( "<null>" ) ) );
-        	table.setModel( null );
+            tree.setModel( new DefaultTreeModel( new DefaultMutableTreeNode( "<null>" ) ) );
+            table.setModel( null );
         }
         else{
-        	tree.setModel( model );
+            tree.setModel( model );
         }
     }
-    
+
     /**
      * Gets the model which is shown on this panel.
      * @return the model that is shown

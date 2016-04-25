@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -36,27 +36,27 @@ import bibliothek.gui.DockTheme;
  * @author Benjamin Sigg
  */
 public class ControllerTitleFactory implements DockTitleFactory{
-	/**
-	 * An instance of this factory.<br>
-	 * Note: it is safe to use {@link #install(DockTitleRequest)} and
-	 * {@link #uninstall(DockTitleRequest)} on this singleton, the call will be forwarded
-	 * to the {@link DockController} of the calling {@link DockTitleRequest}.
-	 */
+    /**
+     * An instance of this factory.<br>
+     * Note: it is safe to use {@link #install(DockTitleRequest)} and
+     * {@link #uninstall(DockTitleRequest)} on this singleton, the call will be forwarded
+     * to the {@link DockController} of the calling {@link DockTitleRequest}.
+     */
     public static final ControllerTitleFactory INSTANCE = new ControllerTitleFactory();
-    
+
     private DockTitleVersion getControllerVersion( DockTitleRequest request ){
-    	return request.getVersion().getController().getDockTitleManager().getVersion( DockTitleManager.THEME_FACTORY_ID );
+        return request.getVersion().getController().getDockTitleManager().getVersion( DockTitleManager.THEME_FACTORY_ID );
     }
-    
+
     public void install( DockTitleRequest request ){
-	    getControllerVersion( request ).install( request );	
+        getControllerVersion( request ).install( request );
     }
-    
+
     public void request( DockTitleRequest request ){
-    	getControllerVersion( request ).request( request );
+        getControllerVersion( request ).request( request );
     }
-    
+
     public void uninstall( DockTitleRequest request ){
-	    getControllerVersion( request ).uninstall( request );	
+        getControllerVersion( request ).uninstall( request );
     }
 }

@@ -9,43 +9,43 @@ import java.util.List;
  *
  */
 public class Board {
-	/**
-	 * Describes states in which the possible moves for a player might
-	 * be restricted.
-	 * @author Benjamin Sigg
-	 */
+    /**
+     * Describes states in which the possible moves for a player might
+     * be restricted.
+     * @author Benjamin Sigg
+     */
     public static enum State{
         /** The state when the king is in danger */
-    	CHECK,
-    	/** The state when a player has won */
-    	CHECKMATE, 
-    	/** The state when a player can't move anymore */
-    	STALLED,
-    	/** The state where nothing special happens */
-    	NOTHING
+        CHECK,
+        /** The state when a player has won */
+        CHECKMATE,
+        /** The state when a player can't move anymore */
+        STALLED,
+        /** The state where nothing special happens */
+        NOTHING
     }
-    
+
     /** The cells which might be covered by one figure */
     private Figure[][] figures = new Figure[8][8];
     /** Tells for every cell whether it is attacked by the opponent or not */
     private boolean[][] attacked = new boolean[8][8];
     /** The player which can do the next move */
     private Player player = Player.WHITE;
-    
+
     /**
      *  A list of {@link ChessListener} which are informed whenever the state of
      * this board changes.
      */
     private List<ChessListener> listeners = new ArrayList<ChessListener>();
-    
+
     /** the white king */
     private Figure white;
     /** the black king */
     private Figure black;
-    
+
     /** whether this board is a copy of the original board or not */
     private boolean copy = false;
-   
+
     /**
      * Creates a new board, puts all figures at their initial position.
      */
@@ -54,7 +54,7 @@ public class Board {
             put( new Figure( this, Player.WHITE, Figure.Type.PAWN, 1, i ));
             put( new Figure( this, Player.BLACK, Figure.Type.PAWN, 6, i ));
         }
-        
+
         put( new Figure( this, Player.WHITE, Figure.Type.ROCK, 0, 0 ));
         put( new Figure( this, Player.WHITE, Figure.Type.KNIGHT, 0, 1 ));
         put( new Figure( this, Player.WHITE, Figure.Type.BISHOP, 0, 2 ));
@@ -63,7 +63,7 @@ public class Board {
         put( new Figure( this, Player.WHITE, Figure.Type.BISHOP, 0, 5 ));
         put( new Figure( this, Player.WHITE, Figure.Type.KNIGHT, 0, 6 ));
         put( new Figure( this, Player.WHITE, Figure.Type.ROCK, 0, 7 ));
-        
+
         put( new Figure( this, Player.BLACK, Figure.Type.ROCK, 7, 0 ));
         put( new Figure( this, Player.BLACK, Figure.Type.KNIGHT, 7, 1 ));
         put( new Figure( this, Player.BLACK, Figure.Type.BISHOP, 7, 2 ));
@@ -73,14 +73,14 @@ public class Board {
         put( new Figure( this, Player.BLACK, Figure.Type.KNIGHT, 7, 6 ));
         put( new Figure( this, Player.BLACK, Figure.Type.ROCK, 7, 7 ));
     }
-    
+
     /**
      * Creates a new board copying as much as possible from <code>board</code>.
      * @param board the original board
      */
     private Board( Board board ){
         copy = true;
-        
+
         for( int r = 0; r < 8; r++ ){
             for( int c = 0; c < 8; c++ ){
                 if( board.figures[r][c] != null ){
@@ -97,7 +97,7 @@ public class Board {
             }
         }
     }
-    
+
     /**
      * Gets a copy of this board. The copy is independent of this board.
      * @return the copy
@@ -105,7 +105,7 @@ public class Board {
     public Board copy(){
         return new Board( this );
     }
-    
+
     /**
      * Adds an observer to this board. The observer will be notified whenever
      * a state of this board changes.
@@ -114,7 +114,7 @@ public class Board {
     public void addListener( ChessListener listener ){
         listeners.add( listener );
     }
-    
+
     /**
      * Removes an observer from this board.
      * @param listener the observer to remove
@@ -122,15 +122,15 @@ public class Board {
     public void removeListener( ChessListener listener ){
         listeners.remove( listener );
     }
-    
+
     /**
-     * Gets the player which has the turn. 
+     * Gets the player which has the turn.
      * @return the current player
      */
     public Player getPlayer() {
         return player;
     }
-    
+
     /**
      * Gets a pawn on the first or the last row.
      * @return a pawn or <code>null</code> if now pawn is on the first or
@@ -140,25 +140,25 @@ public class Board {
         for( int c = 0; c < 8; c++ ){
             if( isType( 0, c, Figure.Type.PAWN ))
                 return getFigure( 0, c );
-            
+
             if( isType( 7, c, Figure.Type.PAWN ))
                 return getFigure( 7, c );
         }
-        
+
         return null;
     }
-    
+
     /**
      * Switches the players. Also rebuilds the attack-matrix.
      */
     public void switchPlayer(){
         player = player.opponent();
         buildAttackMatrix();
-        
+
         for( ChessListener listener : listeners )
             listener.playerSwitched( player );
     }
-    
+
     /**
      * Builds the attack-matrix. The attack-matrix tells for every cell
      * whether it is attacked by a figure of the opponent, or not.
@@ -167,7 +167,7 @@ public class Board {
         for( int r = 0; r < 8; r++ )
             for( int c = 0; c < 8; c++ )
                 attacked[r][c] = false;
-        
+
         for( int r = 0; r < 8; r++ ){
             for( int c = 0; c < 8; c++ ){
                 if( figures[r][c] != null ){
@@ -183,7 +183,7 @@ public class Board {
             }
         }
     }
-    
+
     /**
      * Tells in which state the game is.
      * @return the state
@@ -200,7 +200,7 @@ public class Board {
                 }
             }
         }
-        
+
         if( isKingAttacked() ){
             if( moveable )
                 return State.CHECK;
@@ -214,7 +214,7 @@ public class Board {
                 return State.STALLED;
         }
     }
-    
+
     /**
      * Puts the <code>figure</code> at the location delivered by the figure
      * itself.
@@ -223,17 +223,17 @@ public class Board {
     public void put( Figure figure ){
         figures[figure.getRow()][figure.getColumn()] = figure;
     }
-    
+
     /**
      * Gets the figure at the designated location.
-     * @param r the row 
+     * @param r the row
      * @param c the column
      * @return the figure or <code>null</code>
      */
     public Figure getFigure( int r, int c ){
         return figures[r][c];
     }
-    
+
     /**
      * Gets the figure which represents the king for a given player.
      * @param player the player, black or white
@@ -245,7 +245,7 @@ public class Board {
         else
             return black;
     }
-    
+
     /**
      * Tells whether the cell r/c is currently under attack by the
      * players opponent.
@@ -256,7 +256,7 @@ public class Board {
     public boolean isAttacked( int r, int c ){
         return attacked[r][c];
     }
-    
+
     /**
      * Tells whether the king of the current player is attacked or not.
      * @return <code>true</code> if the king is attacked.
@@ -265,7 +265,7 @@ public class Board {
         Figure king = getKing( player );
         return isAttacked( king.getRow(), king.getColumn() );
     }
-    
+
     /**
      * Removes a figure from this board.
      * @param r the row
@@ -274,11 +274,11 @@ public class Board {
     public void kill( int r, int c ){
         Figure figure = figures[r][c];
         figures[r][c] = null;
-        
+
         for( ChessListener listener : listeners )
             listener.killed( r, c, figure );
     }
-    
+
     /**
      * Moves a figure on this board.
      * @param sr the current row
@@ -289,12 +289,12 @@ public class Board {
     public void move( int sr, int sc, int dr, int dc ){
         Figure figure = figures[sr][sc];
         figure.setLocation( dr, dc );
-        
+
         figures[sr][sc] = null;
         if( figures[dr][dc] != null )
             kill( dr, dc );
         figures[dr][dc] = figure;
-        
+
         if( !copy ){
             for( int i = 0; i < 8; i++ ){
                 for( int j = 0; j < 8; j++ ){
@@ -306,11 +306,11 @@ public class Board {
                 }
             }
         }
-        
+
         for( ChessListener listener : listeners )
             listener.moved( sr, sc, dr, dc, figure );
     }
-    
+
     /**
      * Tells whether there is a figure of <code>player</code> at the
      * designated location.
@@ -325,7 +325,7 @@ public class Board {
             return false;
         return figure.getPlayer() == player;
     }
-    
+
     /**
      * Tells whether the is a figure of type <code>type</code> at the
      * designated location.
@@ -341,7 +341,7 @@ public class Board {
         else
             return figure.getType() == type;
     }
-    
+
     /**
      * Tells whether the designated cell is empty or not.
      * @param r the row
@@ -351,7 +351,7 @@ public class Board {
     public boolean isEmpty( int r, int c ){
         return getFigure( r, c ) == null;
     }
-    
+
     /**
      * Tells whether <code>r/c</code> is a valid location.
      * @param r the row
@@ -361,7 +361,7 @@ public class Board {
     public boolean isValid( int r, int c ){
         return r >= 0 && c >= 0 && r < 8 && c < 8;
     }
-    
+
     /**
      * Visits field <code>r/c</code>.
      * @param r the row
@@ -373,21 +373,21 @@ public class Board {
     public boolean visit( int r, int c, CellVisitor visitor ){
         return visitor.visit( r, c, figures[r][c] );
     }
-    
+
     /**
      * A visitor can be used to visit a set of cells filtered by some
      * rule.
      * @author Benjamin Sigg
      */
     public static interface CellVisitor{
-    	/**
-    	 * Called when visiting the cell <code>r/c</code>.
-    	 * @param r the row
-    	 * @param c the column
-    	 * @param figure the figure in this cell
-    	 * @return <code>true</code> if other cells should be visited,
-    	 * <code>false</code> if the algorithm should stop immediately
-    	 */
+        /**
+         * Called when visiting the cell <code>r/c</code>.
+         * @param r the row
+         * @param c the column
+         * @param figure the figure in this cell
+         * @return <code>true</code> if other cells should be visited,
+         * <code>false</code> if the algorithm should stop immediately
+         */
         public boolean visit( int r, int c, Figure figure );
     }
 }

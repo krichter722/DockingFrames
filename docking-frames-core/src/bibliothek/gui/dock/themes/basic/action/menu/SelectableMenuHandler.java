@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -43,61 +43,62 @@ import bibliothek.gui.dock.event.SelectableDockActionListener;
  *
  */
 public class SelectableMenuHandler extends AbstractMenuHandler<JMenuItem, SelectableDockAction> {
-	/** a listener intended to ensure the selection-state on the view and in the action are the same */
-	private Listener listener = new Listener();
-	
-	/**
+    /** a listener intended to ensure the selection-state on the view and in the action are the same */
+    private Listener listener = new Listener();
+
+    /**
      * Creates a new handler
      * @param action the action to observe
      * @param dockable the Dockable for which actions are dispatched
      * @param item the item to manage
      */
     public SelectableMenuHandler( final SelectableDockAction action, final Dockable dockable, JMenuItem item ) {
-    	super( action, dockable, item );
-    	addActionListener( listener );
+        super( action, dockable, item );
+        addActionListener( listener );
     }
-    
+
     public void addActionListener( ActionListener listener ){
-    	item.addActionListener( listener );
+        item.addActionListener( listener );
     }
-    
+
     public void removeActionListener( ActionListener listener ){
-    	item.removeActionListener( listener );
+        item.removeActionListener( listener );
     }
-    
+
     @Override
     public void bind(){
-    	super.bind();
-    	item.setSelected( getAction().isSelected( getDockable() ) );
-    	action.addSelectableListener( listener );
+        super.bind();
+        item.setSelected( getAction().isSelected( getDockable() ) );
+        action.addSelectableListener( listener );
     }
-    
+
     @Override
     public void unbind(){
-    	super.unbind();
-    	action.removeSelectableListener( listener );
+        super.unbind();
+        action.removeSelectableListener( listener );
     }
-    
+
     /**
-     * A listener added 
+     * A listener added
      * @author Benjamin Sigg
      */
     private class Listener implements ActionListener, SelectableDockActionListener{
-    	public void actionPerformed( ActionEvent e ){
-    		boolean old = action.isSelected( dockable );
-    		boolean current = item.isSelected();
-    		if( old != current ){
-    		    action.trigger( dockable );
-    		    item.setSelected( action.isSelected( dockable ) );
-    		}
-    	}
-    	public void selectedChanged( SelectableDockAction action, Set<Dockable> dockables ){
-    		if( dockables.contains( dockable )){
-    			boolean old = item.isSelected(); 
-    			boolean selected = action.isSelected( dockable );
-    			if( old != selected )
-    				item.setSelected( selected );
-    		}
-    	}
+        public void actionPerformed( ActionEvent e ){
+            boolean old = action.isSelected( dockable );
+            boolean current = item.isSelected();
+            if( old != current ){
+                action.trigger( dockable );
+                item.setSelected( action.isSelected( dockable ) );
+            }
+        }
+        public void selectedChanged( SelectableDockAction action, Set<Dockable> dockables ){
+            if( dockables.contains( dockable )){
+                boolean old = item.isSelected();
+                boolean selected = action.isSelected( dockable );
+                if( old != selected ) {
+                    item.setSelected( selected );
+                }
+            }
+        }
     }
 }

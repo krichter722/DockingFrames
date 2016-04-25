@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -53,36 +53,36 @@ import bibliothek.util.Condition;
  * @author Benjamin Sigg
  *
  */
-@ColorCodes({"stack.tab.top.selected.focused", "stack.tab.bottom.selected.focused", 
+@ColorCodes({"stack.tab.top.selected.focused", "stack.tab.bottom.selected.focused",
     "stack.tab.text", "stack.tab.top.selected", "stack.tab.bottom.selected",
-    "stack.tab.top.disabled", "stack.tab.bottom.disabled", 
+    "stack.tab.top.disabled", "stack.tab.bottom.disabled",
     "stack.tab.text", "stack.border"})
 public class BasicTabDockTitle extends BasicDockTitle {
     /**
      * A factory creating new {@link BasicTabDockTitle}s.
      */
     public static final DockTitleFactory FACTORY = new DockTitleFactory(){
-    	public void install( DockTitleRequest request ){
-        	// ignore	
-    	}
-    	
-    	public void uninstall( DockTitleRequest request ){
-        	// ignore	
-    	}
-    	
-    	public void request( DockTitleRequest request ){
-    		request.answer( new BasicTabDockTitle( request.getTarget(), request.getVersion() ) );
-    	}
+        public void install( DockTitleRequest request ){
+            // ignore
+        }
+
+        public void uninstall( DockTitleRequest request ){
+            // ignore
+        }
+
+        public void request( DockTitleRequest request ){
+            request.answer( new BasicTabDockTitle( request.getTarget(), request.getVersion() ) );
+        }
     };
-    
+
     /** whether this tab is currently selected */
     private boolean selected = false;
-    
+
     /** whether to paint the icon when this tab is not selected */
     private boolean paintIconWhenInactive = true;
-    
+
     private TitleColor borderColor;
-    
+
     /**
      * Creates a new title
      * @param dockable the element for which this title is shown
@@ -90,71 +90,77 @@ public class BasicTabDockTitle extends BasicDockTitle {
      */
     public BasicTabDockTitle( Dockable dockable, DockTitleVersion origin ) {
         super( dockable, origin, false );
-        
+
         setBorder( ThemeManager.BORDER_MODIFIER + ".title.tab", BorderFactory.createEmptyBorder( 0, 0, 1, 0 ) );
-        
+
         setActiveLeftColorId( "stack.tab.top.selected.focused" );
         setActiveRightColorId( "stack.tab.bottom.selected.focused" );
         setActiveTextColorId( "stack.tab.text" );
-        
+
         setInactiveLeftColorId( "stack.tab.top.selected" );
         setInactiveRightColorId( "stack.tab.bottom.selected" );
         setInactiveTextColorId( "stack.tab.text" );
-        
+
         setDisabledLeftColorId( "stack.tab.top.disabled" );
         setDisabledRightColorId( "stack.tab.bottom.disabled" );
-        
+
         borderColor = new TitleColor( "stack.border", this, Color.BLACK ){
             @Override
             protected void changed( Color oldColor, Color newColor ) {
                 repaint();
             }
         };
-        
-        addConditionalFont( DockFont.ID_TAB_FOCUSED, TitleFont.KIND_TAB_TITLE_FONT,
+
+        addConditionalFont( DockFont.ID_TAB_FOCUSED,
+                TitleFont.KIND_TAB_TITLE_FONT,
                 new Condition(){
-            public boolean getState() {
-                return isActive();
-            }
-        }, null );
-        
-        addConditionalFont( DockFont.ID_TAB_SELECTED, TitleFont.KIND_TAB_TITLE_FONT,
+                    public boolean getState() {
+                        return isActive();
+                    }
+                },
+                null );
+
+        addConditionalFont( DockFont.ID_TAB_SELECTED,
+                TitleFont.KIND_TAB_TITLE_FONT,
                 new Condition(){
-            public boolean getState() {
-                return selected;
-            }
-        }, null );
-        
-        addConditionalFont( DockFont.ID_TAB_UNSELECTED, TitleFont.KIND_TAB_TITLE_FONT,  
+                    public boolean getState() {
+                        return selected;
+                    }
+                },
+                null );
+
+        addConditionalFont( DockFont.ID_TAB_UNSELECTED,
+                TitleFont.KIND_TAB_TITLE_FONT,
                 new Condition(){
-            public boolean getState() {
-                return !isActive();
-            }
-        }, null );
+                    public boolean getState() {
+                        return !isActive();
+                    }
+                },
+                null );
     }
-    
+
     @Override
     public void bind() {
         super.bind();
-        
+
         DockController controller = getDockable().getController();
         ColorManager colors = controller.getColors();
 
         borderColor.setManager( colors );
     }
-    
+
     @Override
     public void unbind() {
         super.unbind();
 
         borderColor.setManager( null );
     }
-    
+
     @Override
     public Dimension getMinimumSize(){
-	    return getPreferredSize();
+        return getPreferredSize();
     }
-    
+
     @Override
     public void changed( DockTitleEvent event ) {
         super.changed( event );
@@ -165,24 +171,26 @@ public class BasicTabDockTitle extends BasicDockTitle {
             updateTabIcon();
         }
     }
-    
+
     @Override
     protected void setIcon( Icon icon ) {
-        if( selected || paintIconWhenInactive )
+        if( selected || paintIconWhenInactive ) {
             super.setIcon( icon );
-        else
+        } else {
             super.setIcon( null );
+        }
     }
-    
+
     /**
      * Ensures that the icon of the {@link #getDockable() Dockable} is
      * shown but only if this title is {@link #selected} or
      * {@link #paintIconWhenInactive} is <code>true</code>.
      */
     private void updateTabIcon(){
-        if( selected || paintIconWhenInactive )
+        if( selected || paintIconWhenInactive ) {
             setIcon( getDockable().getTitleIcon() );
-        else
+        } else {
             setIcon( null );
+        }
     }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -53,7 +53,7 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
             return new KeyStrokeEditor();
         }
     };
-    
+
     /**
      * Transforms <code>stroke</code> into a human readable string.
      * @param stroke the stroke to transform
@@ -64,34 +64,36 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
     public static final String toString( KeyStroke stroke, boolean complete ){
         // source copy & pasted from BasicMenuItemUI
         String result = "";
-        
+
         int modifiers = stroke.getModifiers();
         if( modifiers != 0 ){
             result = KeyEvent.getKeyModifiersText( modifiers );
             if( !complete ){
-            	result += "+";
+                result += "+";
             }
         }
 
         int keyCode = stroke.getKeyCode();
         if( !isModifierKey( keyCode )){
-        	if( complete && modifiers != 0 )
-        		result += "+";
-        	
+            if( complete && modifiers != 0 ) {
+                result += "+";
+            }
+
             if( keyCode != 0 ){
                 result += KeyEvent.getKeyText( keyCode );
             }
             else{
                 result += stroke.getKeyChar();
             }
-            
-            if( !complete )
-            	result += "+";
+
+            if( !complete ) {
+                result += "+";
+            }
         }
 
         return result;
     }
-    
+
     /**
      * Tells whether <code>keyCode</code> is a modifier key.
      * @param keyCode some code of a key
@@ -110,19 +112,19 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
                 return false;
         }
     }
-    
+
     private KeyStroke stroke;
     private KeyStrokeValidator validator = KeyStrokeValidator.EVERYTHING;
     private PreferenceEditorCallback<KeyStroke> callback;
     private boolean focused = false;
     private EditorText text;
-    
+
     /**
      * Creates a new editor
      */
     public KeyStrokeEditor(){
         setEditable( false );
-        
+
         addFocusListener( new FocusListener(){
             public void focusGained( FocusEvent e ) {
                 focused = true;
@@ -130,7 +132,7 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
             }
             public void focusLost( FocusEvent e ) {
                 focused = false;
-                
+
                 if( callback != null ){
                     if( stroke == null ){
                         setValue( callback.get() );
@@ -144,15 +146,15 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
                 }
             }
         });
-        
+
         text = new EditorText( "preference.keystroke.click", this ){
-			protected void changed( String oldValue, String newValue ){
-				if( !focused ){
-					setText( newValue );
-				}
-			}
-		};
-        
+            protected void changed( String oldValue, String newValue ){
+                if( !focused ){
+                    setText( newValue );
+                }
+            }
+        };
+
         addKeyListener( new KeyAdapter(){
             @Override
             public void keyPressed( KeyEvent e ) {
@@ -163,7 +165,7 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
             }
         });
     }
-    
+
     private void maybeStore( KeyStroke stroke ){
         if( stroke != null && callback != null ){
             if( validator.isValid( stroke ) ){
@@ -173,12 +175,13 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
     }
 
     public void setValueInfo( Object information ) {
-    	if( information instanceof KeyStrokeValidator )
-    		validator = (KeyStrokeValidator)information;
-    	else
-    		validator = KeyStrokeValidator.EVERYTHING;
+        if( information instanceof KeyStrokeValidator ) {
+            validator = (KeyStrokeValidator)information;
+        } else {
+            validator = KeyStrokeValidator.EVERYTHING;
+        }
     }
-    
+
     public Component getComponent() {
         return this;
     }
@@ -194,7 +197,7 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
             text.setController( callback.getModel().getController() );
         }
         else{
-        	text.setController( null );
+            text.setController( null );
         }
     }
 
@@ -209,14 +212,14 @@ public class KeyStrokeEditor extends JTextField implements PreferenceEditor<KeyS
             }
         }
         else{
-        	if( validator.isValid( value )){
-        		setText( toString( value, true ) );
-        	}
-        	else{
-        		setText( toString( value, !validator.isCompleteable( value ) ));
-        	}
+            if( validator.isValid( value )){
+                setText( toString( value, true ) );
+            }
+            else{
+                setText( toString( value, !validator.isCompleteable( value ) ));
+            }
         }
-        
+
         if( callback != null ){
             callback.setOperation( PreferenceOperation.DELETE, stroke != null );
         }

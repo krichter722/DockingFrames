@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,9 +40,9 @@ import bibliothek.gui.dock.common.intern.action.CDropDownItem;
  * @author Benjamin Sigg
  */
 public class CButton extends CDropDownItem<CommonSimpleButtonAction> {
-	/** all the registered {@link ActionListener} */
-	private List<ActionListener> listeners = new ArrayList<ActionListener>();
-	
+    /** all the registered {@link ActionListener} */
+    private List<ActionListener> listeners = new ArrayList<ActionListener>();
+
     /**
      * Creates the new button
      */
@@ -50,19 +50,19 @@ public class CButton extends CDropDownItem<CommonSimpleButtonAction> {
         super( null );
         init( new CommonSimpleButtonAction( this ));
     }
-    
+
     /**
-     * Creates and initializes this button. 
-     * @param action the action that represents this action, can be <code>null</code> but then 
+     * Creates and initializes this button.
+     * @param action the action that represents this action, can be <code>null</code> but then
      * subclasses have to call {@link #init(CommonSimpleButtonAction)}
      */
     protected CButton( CommonSimpleButtonAction action ){
-    	super( null );
-    	if( action != null ){
-    		init( action );
-    	}
+        super( null );
+        if( action != null ){
+            init( action );
+        }
     }
-    
+
     /**
      * Creates a new button.
      * @param text the text of this button
@@ -73,53 +73,53 @@ public class CButton extends CDropDownItem<CommonSimpleButtonAction> {
         setText( text );
         setIcon( icon );
     }
-    
+
     @Override
     protected void init( CommonSimpleButtonAction action ){
-    	super.init( action );
+        super.init( action );
         action.addActionListener( new ActionListener(){
             public void actionPerformed( ActionEvent e ) {
                 action();
             }
         });
     }
-    
+
     /**
      * Adds <code>listener</code> to this button, <code>listener</code> will be called
      * whenever this button it triggered.
      * @param listener the new listener, not <code>null</code>
      */
     public void addActionListener( ActionListener listener ){
-    	if( listener == null ){
-    		throw new IllegalArgumentException( "listener must not be null" );
-    	}
-    	listeners.add( listener );
+        if( listener == null ){
+            throw new IllegalArgumentException( "listener must not be null" );
+        }
+        listeners.add( listener );
     }
-    
+
     /**
      * Removes <code>listener</code> from this button.
      * @param listener the listener to remove
      */
     public void removeActionListener( ActionListener listener ){
-    	listeners.remove( listener );
+        listeners.remove( listener );
     }
-    
+
     /**
      * Invoked when the user clicks onto this button. The default behavior
      * is to call {@link #fire()}.
      */
     protected void action(){
-    	fire();
+        fire();
     }
-    
+
     /**
      * Informs all {@link ActionListener}s that this button was clicked.
      */
     protected void fire(){
-    	ActionEvent event = new ActionEvent( this, ActionEvent.ACTION_PERFORMED, null );
-    	
-    	for( ActionListener listener : listeners.toArray( new ActionListener[ listeners.size() ] )){
-    		listener.actionPerformed( event );
-    	}
+        ActionEvent event = new ActionEvent( this, ActionEvent.ACTION_PERFORMED, null );
+
+        for( ActionListener listener : listeners.toArray( new ActionListener[ listeners.size() ] )){
+            listener.actionPerformed( event );
+        }
     }
 }

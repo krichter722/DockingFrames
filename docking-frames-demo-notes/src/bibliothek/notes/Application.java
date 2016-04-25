@@ -12,8 +12,8 @@ public class Application {
      * Entrypoint
      * @param args ignored
      */
-	public static void main( String[] args ){
-		Core core = new Core( false, null );
-		core.startup();
-	}
+    public static void main( String[] args ){
+        Core core = new Core( false, null );
+        core.startup();
+    }
 }

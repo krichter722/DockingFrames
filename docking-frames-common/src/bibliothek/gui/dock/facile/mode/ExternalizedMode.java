@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2009 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,61 +46,61 @@ import bibliothek.util.Path;
  * @param <M> the areas that are managed by this mode
  */
 public class ExternalizedMode<M extends ExternalizedModeArea> extends DefaultLocationMode<M>{
-	/** the unique identifier of this mode */
-	public static final Path IDENTIFIER = new Path( "dock.mode.externalized" );
+    /** the unique identifier of this mode */
+    public static final Path IDENTIFIER = new Path( "dock.mode.externalized" );
 
     /** the key used for the {@link IconManager} to read the {@link javax.swing.Icon} for the "externalize"-action */
     public static final String ICON_IDENTIFIER = CLocationModeManager.ICON_MANAGER_KEY_EXTERNALIZE;
-	
+
     /** customizeable algorithms */
     private ExternalizedModeBehavior behavior = new DefaultExternalizedModeBehavior();
-    
+
     /**
-     * Empty default constructor. Subclasses should call 
+     * Empty default constructor. Subclasses should call
      * {@link #setActionProvider(LocationModeActionProvider)} to complete
      * initialization of this mode.
      */
     protected ExternalizedMode(){
-    	// nothing
+        // nothing
     }
-    
-	/**
-	 * Creates a new mode.
-	 * @param control the control in whose realm this mode works
-	 */
-	public ExternalizedMode( CControl control ){
-		setActionProvider( new DefaultLocationModeActionProvider( new CExternalizeAction( control ) ) );
-	}
-	
-	/**
-	 * Creates a new mode.
-	 * @param controller the owner of this mode
-	 */
-	public ExternalizedMode( DockController controller ){
-		setActionProvider( new DefaultLocationModeActionProvider( new ExternalizedModeAction( controller, this ) ) );
-	}
-	
-	public Path getUniqueIdentifier(){
-		return IDENTIFIER;
-	}
 
-	public ExtendedMode getExtendedMode(){
-		return ExtendedMode.EXTERNALIZED;
-	}
-	
-	public boolean isDefaultMode( Dockable dockable ){
-		return false;
-	}
-	
-	@Override
-	public boolean runApply( Dockable dockable, Location history, AffectedSet set ){
-		return externalize( dockable, history, set );
-	}
-	
+    /**
+     * Creates a new mode.
+     * @param control the control in whose realm this mode works
+     */
+    public ExternalizedMode( CControl control ){
+        setActionProvider( new DefaultLocationModeActionProvider( new CExternalizeAction( control ) ) );
+    }
+
+    /**
+     * Creates a new mode.
+     * @param controller the owner of this mode
+     */
+    public ExternalizedMode( DockController controller ){
+        setActionProvider( new DefaultLocationModeActionProvider( new ExternalizedModeAction( controller, this ) ) );
+    }
+
+    public Path getUniqueIdentifier(){
+        return IDENTIFIER;
+    }
+
+    public ExtendedMode getExtendedMode(){
+        return ExtendedMode.EXTERNALIZED;
+    }
+
+    public boolean isDefaultMode( Dockable dockable ){
+        return false;
+    }
+
+    @Override
+    public boolean runApply( Dockable dockable, Location history, AffectedSet set ){
+        return externalize( dockable, history, set );
+    }
+
     /**
      * Makes sure that <code>dockable</code> is externalized, where
      * <code>location</code> describes the new position of <code>dockable</code>.
-     * @param dockable the element to externalized, can already be in 
+     * @param dockable the element to externalized, can already be in
      * externalize-state.
      * @param location a location describing the new position of <code>dockable</code>,
      * the behavior is unspecified if <code>location</code> does not describe
@@ -110,60 +110,60 @@ public class ExternalizedMode<M extends ExternalizedModeArea> extends DefaultLoc
      * @return whether the operation was a success or not
      */
     private boolean externalize( Dockable dockable, Location location, AffectedSet affected ){
-    	affected.add( dockable );
+        affected.add( dockable );
 
         ExternalizedModeArea area = null;
         if( location != null ){
-        	area = get( location.getRoot() );
+            area = get( location.getRoot() );
         }
         if( area == null ){
-        	area = getDefaultArea();
+            area = getDefaultArea();
         }
 
         DockableProperty property = null;
         if( location != null ){
-        	property = location.getLocation();
+            property = location.getLocation();
         }
         if( property == null && !area.isChild( dockable )){
-        	property = behavior.findLocation( area, dockable );
+            property = behavior.findLocation( area, dockable );
         }
-        
+
         return area.setLocation( dockable, property, affected );
     }
-    
+
     public ModeSettingFactory<Location> getSettingFactory(){
-    	return new NullModeSettingsFactory<Location>( getUniqueIdentifier() );
+        return new NullModeSettingsFactory<Location>( getUniqueIdentifier() );
     }
-    
+
     /**
      * Tells this {@link ExternalizedMode} how some algorithms are implemented.
      * @param behavior the new behavior, not <code>null</code>
      */
     public void setBehavior( ExternalizedModeBehavior behavior ){
-    	if( behavior == null ){
-    		throw new IllegalArgumentException( "behavior must not be null" );
-    	}
-    	
-		this.behavior = behavior;
-	}
-    
+        if( behavior == null ){
+            throw new IllegalArgumentException( "behavior must not be null" );
+        }
+
+        this.behavior = behavior;
+    }
+
     /**
      * Gets the current implementation of some algorithms of this mode.
      * @return the behavior
      */
     public ExternalizedModeBehavior getBehavior(){
-		return behavior;
-	}
-    
+        return behavior;
+    }
+
     public void ensureNotHidden( Dockable dockable ){
-	    // ignore	
+        // ignore
     }
-    
+
     public void writeSetting( ModeSetting<Location> setting ){
-	    // ignore	
+        // ignore
     }
-    
+
     public void readSetting( ModeSetting<Location> setting ){
-    	// ignore
+        // ignore
     }
 }

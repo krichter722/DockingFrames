@@ -16,17 +16,17 @@ import com.sun.javadoc.Parameter;
 public class EntryableMethodList extends AbstractEntryable{
     /** the class whose methods are collected */
     private ClassDoc doc;
-    
+
     /**
      * Creates a new list of methods.
      * @param doc the owner of the methods
      */
     public EntryableMethodList( ClassDoc doc ){
         this.doc = doc;
-        
+
         for( MethodDoc method : doc.methods() ){
             add( new EntryableMethod( method ) );
-            
+
             print( method.returnType() );
             print( " " );
             italic( true );
@@ -42,7 +42,7 @@ public class EntryableMethodList extends AbstractEntryable{
             println( ")" );
         }
     }
-    
+
     public Entry toEntry() {
         return new Entry( "method-list", doc.qualifiedName(), "Methods of " + doc.qualifiedName(), content(), "class:" + doc.qualifiedName() );
     }

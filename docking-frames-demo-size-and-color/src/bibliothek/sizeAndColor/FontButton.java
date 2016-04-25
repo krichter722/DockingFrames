@@ -20,9 +20,9 @@ import bibliothek.gui.dock.common.FontMap;
 public class FontButton extends JPanel{
     private FontMap map;
     private String key;
-    
+
     private Font font;
-    
+
     private JCheckBox selected;
     private JButton button;
 
@@ -34,14 +34,14 @@ public class FontButton extends JPanel{
     public FontButton( FontMap map, String key ){
         this.map = map;
         this.key = key;
-        
+
         selected = new JCheckBox( key );
         button = new JButton( "F" );
-        
+
         setLayout( new BorderLayout() );
         add( selected, BorderLayout.CENTER );
         add( button, BorderLayout.EAST );
-        
+
         selected.addActionListener( new ActionListener(){
             public void actionPerformed( ActionEvent e ) {
                 transmit();
@@ -53,7 +53,7 @@ public class FontButton extends JPanel{
             }
         });
     }
-    
+
     /**
      * Opens a {@link JColorChooser} and lets the user change the color.
      */
@@ -65,7 +65,7 @@ public class FontButton extends JPanel{
             transmit();
         }
     }
-    
+
     /**
      * Transmits the current setting to the {@link ColorMap} of this button.
      */
@@ -74,11 +74,11 @@ public class FontButton extends JPanel{
             Font font = this.font;
             if( font == null )
                 font = button.getFont();
-            
+
             map.setFont( key, font );
         }
         else{
             map.removeFont( key );
         }
-    }    
+    }
 }

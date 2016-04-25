@@ -10,33 +10,33 @@ import kux.glass.IGlassFactory.SGlassParameter;
  *
  */
 public interface IGlassParameterFactory {
-	/**
-	 * Creates the glass parameters for the selected tabs.
-	 * @return
-	 */
-	SGlassParameter getSelectedGlassParameters();
-	
-	/**
-	 * Creates the glass parameters for the unselected tabs.
-	 * @return
-	 */
-	SGlassParameter getUnSelectedGlassParameters();
-	
-	/**
-	 * Creates the glass parameter for the focused tab.
-	 * @return
-	 */
-	SGlassParameter getFocusedGlassParameters();
-	
-	/**
-	 * Creates the glass parameter for the background strip painter.
-	 * @return
-	 */
-	SGlassParameter getStripBGGlassParameters();
-	
-	/**
-	 * Creates the glass parameters for a disabled tab.
-	 * @return the new parameter
-	 */
-	SGlassParameter getDisabledGlassParameters();
+    /**
+     * Creates the glass parameters for the selected tabs.
+     * @return
+     */
+    SGlassParameter getSelectedGlassParameters();
+
+    /**
+     * Creates the glass parameters for the unselected tabs.
+     * @return
+     */
+    SGlassParameter getUnSelectedGlassParameters();
+
+    /**
+     * Creates the glass parameter for the focused tab.
+     * @return
+     */
+    SGlassParameter getFocusedGlassParameters();
+
+    /**
+     * Creates the glass parameter for the background strip painter.
+     * @return
+     */
+    SGlassParameter getStripBGGlassParameters();
+
+    /**
+     * Creates the glass parameters for a disabled tab.
+     * @return the new parameter
+     */
+    SGlassParameter getDisabledGlassParameters();
 }

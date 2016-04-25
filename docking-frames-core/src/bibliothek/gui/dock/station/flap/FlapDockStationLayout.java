@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,10 +37,10 @@ import bibliothek.gui.dock.station.support.PlaceholderMap;
 public class FlapDockStationLayout {
     /** whether the direction of the window is chosen automatically or not */
     private boolean autoDirection;
-    
+
     /** the direction of the window */
     private Direction direction;
-    
+
     /** placeholders for all the items, contains also the encoded {@link Dockable}s. */
     private PlaceholderMap placeholders;
 
@@ -56,7 +56,7 @@ public class FlapDockStationLayout {
         this.direction = direction;
         this.placeholders = placeholders;
     }
-    
+
     /**
      * Gets the direction into which the window will open
      * @return the direction
@@ -64,7 +64,7 @@ public class FlapDockStationLayout {
     public Direction getDirection() {
         return direction;
     }
-    
+
     /**
      * Tells whether the direction is chosen automatically or not.
      * @return <code>true</code> if the direction is chosen automatically
@@ -72,12 +72,12 @@ public class FlapDockStationLayout {
     public boolean isAutoDirection() {
         return autoDirection;
     }
-    
+
     /**
      * Gets all the items.
      * @return the location of all items and all placeholders
      */
     public PlaceholderMap getPlaceholders(){
-		return placeholders;
-	}
+        return placeholders;
+    }
 }

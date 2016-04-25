@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -33,7 +33,7 @@ import bibliothek.gui.dock.event.DockHierarchyEvent;
 import bibliothek.gui.dock.event.DockHierarchyListener;
 
 /**
- * A connecting view item is a wrapper around another {@link ViewItem}. This 
+ * A connecting view item is a wrapper around another {@link ViewItem}. This
  * item registers when a {@link DockController} is available and needed. It
  * does this by observing a {@link Dockable}.
  * @author Benjamin Sigg
@@ -45,13 +45,13 @@ public abstract class ConnectingViewItem<A> implements ViewItem<A>{
     private ViewItem<A> delegate;
     /** the observed {@link DockElement} */
     private Dockable dockable;
-    
+
     /** the currently available controller */
     private DockController controller;
-    
+
     /** the current bind state */
     private boolean bound = false;
-    
+
     /** a listener added to {@link #dockable} */
     private DockHierarchyListener listener = new DockHierarchyListener(){
         public void controllerChanged( DockHierarchyEvent event ) {
@@ -61,18 +61,20 @@ public abstract class ConnectingViewItem<A> implements ViewItem<A>{
             // ignore
         }
     };
-    
+
     /**
      * Creates a new item.
      * @param dockable the element to observe for a {@link DockController}.
      * @param delegate the delegate that carries out most of the work
      */
     public ConnectingViewItem( Dockable dockable, ViewItem<A> delegate ){
-        if( dockable == null )
+        if( dockable == null ) {
             throw new IllegalArgumentException( "dockable must not be null" );
-        if( delegate == null )
+        }
+        if( delegate == null ) {
             throw new IllegalArgumentException( "delegate must not be null" );
-            
+        }
+
         this.dockable = dockable;
         this.delegate = delegate;
     }
@@ -88,14 +90,14 @@ public abstract class ConnectingViewItem<A> implements ViewItem<A>{
             controller = current;
         }
     }
-    
+
     /**
      * Called when the {@link DockController} changed.
      * @param oldController the old controller, can be <code>null</code>
      * @param newController the new controller, can be <code>null</code>
      */
     protected abstract void changed( DockController oldController, DockController newController );
-    
+
     public void bind(){
         if( !bound ){
             // if we would live in a perfect world, this check wouldn't be necessary
@@ -103,7 +105,7 @@ public abstract class ConnectingViewItem<A> implements ViewItem<A>{
             dockable.addDockHierarchyListener( listener );
             check();
         }
-        
+
         delegate.bind();
     }
 
@@ -121,7 +123,7 @@ public abstract class ConnectingViewItem<A> implements ViewItem<A>{
             dockable.removeDockHierarchyListener( listener );
             check();
         }
-        
+
         delegate.unbind();
     }
 }

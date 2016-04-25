@@ -29,7 +29,7 @@ public class CGlassExtension implements Extension {
    }
 
    public void uninstall (DockController controller) {
-      // ignore	
+      // ignore
    }
 
    @SuppressWarnings("unchecked")

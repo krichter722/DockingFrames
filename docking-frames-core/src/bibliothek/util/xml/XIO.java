@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -54,7 +54,7 @@ public class XIO {
         out.append( "<?xml version='1.0'?>\n" );
         write( element, 0, out );
     }
-    
+
     /**
      * Writes the contents of <code>element</code> into <code>out</code> using
      * the <code>UTF-8</code> encoding.
@@ -65,7 +65,7 @@ public class XIO {
     public static void writeUTF( XElement element, OutputStream out ) throws IOException{
         write( element, out, "UTF-8" );
     }
-    
+
     /**
      * Writes the contents of <code>element</code> into <code>out</code>.
      * @param element the element to write
@@ -94,7 +94,7 @@ public class XIO {
     public static XElement readUTF( InputStream in ) throws IOException{
         return read( in, "UTF-8" );
     }
-    
+
     /**
      * Reads a xml file provided from <code>in</code> using <code>encoding</code>
      * as encoding.
@@ -110,11 +110,11 @@ public class XIO {
                 // ignore
             }
         };
-        
+
         return read( new InputSource( reader ));
     }
 
-    
+
     /**
      * Writes the contents of <code>element</code> into <code>out</code>.
      * @param element the element to write
@@ -123,9 +123,10 @@ public class XIO {
      * @throws IOException if an I/O-error occurs
      */
     private static void write( XElement element, int tabs, Appendable out ) throws IOException{
-        for( int i = 0; i < tabs; i++ )
+        for( int i = 0; i < tabs; i++ ) {
             out.append( "\t" );
-        
+        }
+
         out.append( "<" );
         out.append( element.getName() );
         for( XAttribute attribute : element.attributes() ){
@@ -137,7 +138,7 @@ public class XIO {
         }
         String value = element.getValue();
         XElement[] children = element.children();
-        
+
         if( value.length() == 0 && children.length == 0 ){
             out.append( "/>" );
         }
@@ -146,10 +147,11 @@ public class XIO {
             if( value.length() > 0 ){
                 if( children.length > 0 ){
                     out.append( "\n\t" );
-                    for( int i = 0; i < tabs; i++ )
+                    for( int i = 0; i < tabs; i++ ) {
                         out.append( "\t" );
+                    }
                 }
-                    
+
                 encode( value, out );
             }
             if( children.length > 0 ){
@@ -158,17 +160,18 @@ public class XIO {
                     write( child, tabs+1, out );
                     out.append( "\n" );
                 }
-                
-                for( int i = 0; i < tabs; i++ )
+
+                for( int i = 0; i < tabs; i++ ) {
                     out.append( "\t" );
+                }
             }
-            
+
             out.append( "</" );
             out.append( element.getName() );
             out.append( ">" );
         }
     }
-    
+
     /**
      * Encodes <code>value</code> such that it is a valid string in a xml-file.
      * @param value the value to encode
@@ -199,7 +202,7 @@ public class XIO {
             }
         }
     }
-    
+
     /**
      * Interprets <code>text</code> as a xml-file and reads it.
      * @param text the content to read, in xml format
@@ -211,7 +214,7 @@ public class XIO {
         in.setCharacterStream( new StringReader( text.toString() ) );
         return read( in );
     }
-    
+
     /**
      * Reads a xml-file from <code>source</code>.
      * @param source the xml-file
@@ -243,7 +246,7 @@ public class XIO {
     public static XElement read( Reader reader ) throws IOException{
         return read( new InputSource( reader ));
     }
-    
+
     /**
      * A handler used to read from a {@link SAXParser}.
      * @author Benjamin Sigg
@@ -253,7 +256,7 @@ public class XIO {
         private XElement element;
         /** the current stack of active entries */
         private LinkedList<XElement> stack = new LinkedList<XElement>();
-        
+
         /**
          * Gets the first element that was read.
          * @return the first element
@@ -261,7 +264,7 @@ public class XIO {
         public XElement getElement() {
             return element;
         }
-        
+
         @Override
         public void startElement( String uri, String localName, String name,
                 Attributes attributes ) throws SAXException {
@@ -273,9 +276,9 @@ public class XIO {
             else{
                 stack.getFirst().addElement( element );
             }
-            
+
             stack.addFirst( element );
-            
+
             // read the attributes
             for( int i = 0, n = attributes.getLength(); i<n; i++ ){
                 XAttribute attr = new XAttribute( attributes.getQName( i ));
@@ -283,7 +286,7 @@ public class XIO {
                 element.addAttribute( attr );
             }
         }
-        
+
         @Override
         public void characters( char[] ch, int start, int length ) throws SAXException {
             if( length > 0 ){
@@ -295,7 +298,7 @@ public class XIO {
                 stack.getFirst().setValue( value );
             }
         }
-        
+
         @Override
         public void endElement( String uri, String localName, String name )
                 throws SAXException {

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -59,7 +59,7 @@ import bibliothek.gui.dock.util.color.ColorCodes;
  * the side at which the title lies open.
  * @author Benjamin Sigg
  */
-@ColorCodes({ 
+@ColorCodes({
     "displayer.border.high.active",
     "displayer.border.high.active.mouse",
     "displayer.border.high.inactive",
@@ -71,7 +71,7 @@ import bibliothek.gui.dock.util.color.ColorCodes;
     "displayer.border.low.inactive.mouse",
     "displayer.border.low.disabled" })
 public class BubbleDisplayer extends BasicDockableDisplayer {
-	/** the size of the border in pixel */
+    /** the size of the border in pixel */
     private int borderSize = 2;
     /** the panel on which the {@link Dockable} of this displayer is shown */
     private JPanel dockable;
@@ -88,48 +88,48 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
     private DisplayerColor borderLowInactive = new BubbleDisplayerColor( "displayer.border.low.inactive", Color.BLACK );
     private DisplayerColor borderLowInactiveMouse = new BubbleDisplayerColor( "displayer.border.low.inactive.mouse", Color.BLACK );
     private DisplayerColor borderLowDisabled = new BubbleDisplayerColor( "displayer.border.low.disabled", Color.LIGHT_GRAY );
-    
+
     /** <code>true</code> if the mouse is over the title of this displayer */
     private boolean mouse = false;
-    
+
     /** whether the {@link Dockable} of this displayer is disabled */
     private boolean disabled = false;
-    
-    /** 
+
+    /**
      * a listener to the controller informing this displayer when the focused
      * {@link Dockable} has changed.
      */
     private Listener listener = new Listener();
-    
+
     /** The border of this displayer */
     private DisplayerBorder openBorder;
-    
+
     /** the current {@link DisablingStrategy} */
     private PropertyValue<DisablingStrategy> disablingStrategy = new PropertyValue<DisablingStrategy>( DisablingStrategy.STRATEGY ){
-    	@Override
-    	protected void valueChanged( DisablingStrategy oldValue, DisablingStrategy newValue ){
-    		if( oldValue != null ){
-    			oldValue.removeDisablingStrategyListener( disablingStrategyListener );
-    		}
-    		if( newValue != null ){
-    			newValue.addDisablingStrategyListener( disablingStrategyListener );
-    			setDisabled( newValue.isDisabled( getDockable() ));
-    		}
-    		else{
-    			setDisabled( false );
-    		}
-    	}
-    };   
-    
+        @Override
+        protected void valueChanged( DisablingStrategy oldValue, DisablingStrategy newValue ){
+            if( oldValue != null ){
+                oldValue.removeDisablingStrategyListener( disablingStrategyListener );
+            }
+            if( newValue != null ){
+                newValue.addDisablingStrategyListener( disablingStrategyListener );
+                setDisabled( newValue.isDisabled( getDockable() ));
+            }
+            else{
+                setDisabled( false );
+            }
+        }
+    };
+
     /** a listener to {@link #disablingStrategy} */
     private DisablingStrategyListener disablingStrategyListener = new DisablingStrategyListener(){
-    	public void changed( DockElement item ){
-    		if( getDockable() == item ){
-    			setDisabled( disablingStrategy.getValue().isDisabled( item ));
-    		}
-    	}
+        public void changed( DockElement item ){
+            if( getDockable() == item ){
+                setDisabled( disablingStrategy.getValue().isDisabled( item ));
+            }
+        }
     };
-    
+
     /**
      * Creates a new displayer
      * @param station the station for which this displayer will be used
@@ -138,7 +138,7 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
      */
     public BubbleDisplayer( DockStation station, Dockable dockable, DockTitle title ){
         super( station, dockable, title );
-        
+
         this.dockable.setOpaque( false );
         openBorder = new DisplayerBorder( this.dockable, "bubble" );
         animation = new BubbleColorAnimation();
@@ -147,45 +147,45 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
                 pulse();
             }
         });
-        
+
         updateAnimation();
-        
+
         setRespectBorderHint( true );
         setDefaultBorderHint( true );
         setSingleTabShowInnerBorder( true );
         setSingleTabShowOuterBorder( false );
     }
-    
+
     /**
      * Called when the {@link DisablingStrategy} changes the disabled state.
      * @param disabled the new state of the {@link Dockable}
      */
     protected void setDisabled( boolean disabled ){
-		if( this.disabled != disabled ){
-			this.disabled = disabled;
-			updateAnimation();
-		}
-	}
-    
+        if( this.disabled != disabled ){
+            this.disabled = disabled;
+            updateAnimation();
+        }
+    }
+
     /**
      * Whether the {@link Dockable} is currently enabled or not
      * @return the disabled state
      */
     public boolean isDisabled(){
-		return disabled;
-	}
-    
+        return disabled;
+    }
+
     /**
      * Sets the colors to which the animation should run.
      */
     protected void updateAnimation(){
         if( animation != null ){
             DockController controller = getController();
-            
+
             if( isDisabled() ){
-            	animation.putColor( "high", borderHighDisabled.value() );
+                animation.putColor( "high", borderHighDisabled.value() );
                 animation.putColor( "low", borderLowDisabled.value() );
-            } 
+            }
             else if( controller != null && controller.getFocusedDockable() == getDockable() ){
                 if( mouse ){
                     animation.putColor( "high", borderHighActiveMouse.value() );
@@ -208,7 +208,7 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
             }
         }
     }
-    
+
     /**
      * Called by the animation when the colors changed and the displayer should
      * be repainted.
@@ -216,22 +216,24 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
     protected void pulse(){
         dockable.repaint();
     }
-    
+
     @Override
     public void setController( DockController controller ) {
         DockController old = getController();
         if( old != controller ){
-            if( old != null )
+            if( old != null ) {
                 old.removeDockableFocusListener( listener );
-            
-            if( controller != null )
+            }
+
+            if( controller != null ) {
                 controller.addDockableFocusListener( listener );
-            
+            }
+
             super.setController( controller );
         }
-        
+
         disablingStrategy.setProperties( controller );
-        
+
         openBorder.setController( controller );
         borderHighActive.connect( controller );
         borderHighActiveMouse.connect( controller );
@@ -245,40 +247,42 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
         borderLowDisabled.connect( controller );
         animation.kick();
     }
-    
+
     @Override
     protected Component getComponent( Dockable dockable ) {
         ensureDockable();
         return this.dockable;
     }
-    
+
     @Override
     public void setTitle( DockTitle title ) {
         DockTitle old = getTitle();
-        if( old != null )
+        if( old != null ) {
             old.removeMouseInputListener( listener );
-        
+        }
+
         super.setTitle( title );
-        
-        if( title != null )
+
+        if( title != null ) {
             title.addMouseInputListener( listener );
-        
+        }
+
         mouse = false;
         updateAnimation();
         ensureDockable();
     }
-    
+
     @Override
     public void setDockable( Dockable dockable ) {
         super.setDockable( dockable );
         ensureDockable();
         this.dockable.removeAll();
         if( dockable != null ){
-        	this.dockable.add( dockable.getComponent() );
+            this.dockable.add( dockable.getComponent() );
         }
         ensureBorder();
     }
-    
+
     /**
      * Ensures that there is a panel for the {@link Dockable}
      */
@@ -286,39 +290,40 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
         if( dockable == null ){
             dockable = new JPanel( new GridLayout( 1, 1 ));
         }
-        
+
         ensureBorder();
     }
-    
+
     private void ensureBorder(){
         if( dockable != null ){
             Dockable dock = getDockable();
             boolean station = dock != null && dock.asDockStation() != null;
-            
-            if( getTitle() == null && station )
+
+            if( getTitle() == null && station ) {
                 setDefaultBorderHint( false );
-            else
+            } else {
                 setDefaultBorderHint( true );
+            }
         }
     }
-    
+
     @Override
     protected void updateBorder() {
         if( isRespectBorderHint() ){
             if( getHints().getShowBorderHint() || getTitle() != null ){
-            	openBorder.setBorder( getDefaultBorder() );
+                openBorder.setBorder( getDefaultBorder() );
             }
             else{
-            	openBorder.setBorder( null );
+                openBorder.setBorder( null );
             }
         }
     }
-    
+
     @Override
     protected Border getDefaultBorder() {
         return new OpenBorder();
     }
-    
+
     @Override
     public Insets getDockableInsets() {
         Insets insets = super.getDockableInsets();
@@ -335,14 +340,14 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
 
     @Override
     protected BasicDockableDisplayerDecorator createStackedDecorator(){
-    	return createStackedDecorator( BubbleTheme.ACTION_DISTRIBUTOR );
+        return createStackedDecorator( BubbleTheme.ACTION_DISTRIBUTOR );
     }
-    
+
     @Override
     protected TabDecorator createTabDecorator(){
-	    return new TabDecorator( getStation(), BubbleTheme.ACTION_DISTRIBUTOR );
+        return new TabDecorator( getStation(), BubbleTheme.ACTION_DISTRIBUTOR );
     }
-    
+
     /**
      * A listener to the controller, reacting when the focused {@link Dockable}
      * has changed.
@@ -363,7 +368,7 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
             updateAnimation();
         }
     }
-    
+
     /**
      * A color used on a {@link BubbleDisplayer}.
      * @author Benjamin Sigg
@@ -383,16 +388,16 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
             updateAnimation();
         }
     }
-    
+
     /**
      * The border which will be painted around the {@link BubbleDisplayer#dockable dockable}.
      * @author Benjamin Sigg
      */
     public class OpenBorder implements Border{
         public Insets getBorderInsets( Component c ) {
-            if( getTitle() == null )
+            if( getTitle() == null ) {
                 return new Insets( borderSize, borderSize, borderSize, borderSize );
-            else{
+            } else{
                 switch( getTitleLocation() ){
                     case BOTTOM: return new Insets( borderSize, borderSize, 0, borderSize );
                     case LEFT: return new Insets( borderSize, 0, borderSize, borderSize );
@@ -400,7 +405,7 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
                     case TOP: return new Insets( 0, borderSize, borderSize, borderSize );
                 }
             }
-            
+
             // error
             return new Insets( 0, 0, 0, 0 );
         }
@@ -412,49 +417,52 @@ public class BubbleDisplayer extends BasicDockableDisplayer {
         public void paintBorder( Component c, Graphics g, int x, int y, int width, int height ) {
             Color high = animation.getColor( "high" );
             Color low = animation.getColor( "low" );
-            
+
             boolean noTitle = getTitle() == null;
             boolean top = noTitle || getTitleLocation() != Location.TOP;
             boolean left = noTitle || getTitleLocation() != Location.LEFT;
             boolean right = noTitle || getTitleLocation() != Location.RIGHT;
             boolean bottom = noTitle || getTitleLocation() != Location.BOTTOM;
-            
+
             int highSize = borderSize / 2;
             int lowSize = borderSize - highSize;
-            
+
             if( top ){
                 g.setColor( high );
                 g.fillRect( x, y, width, highSize );
                 g.setColor( low );
                 g.fillRect( x, y+highSize, width, lowSize );
             }
-            
+
             if( left ){
                 g.setColor( high );
                 g.fillRect( x, y, highSize, height );
                 g.setColor( low );
-                if( top )
+                if( top ) {
                     g.fillRect( x+highSize, y+highSize, lowSize, height-highSize );
-                else
+                } else {
                     g.fillRect( x+highSize, y, lowSize, height );
+                }
             }
-            
+
             if( right ){
                 g.setColor( high );
                 g.fillRect( x+width-borderSize, y, highSize, height );
                 g.setColor( low );
-                if( top )
+                if( top ) {
                     g.fillRect( x+width-lowSize, y+highSize, lowSize, height-highSize );
-                else
+                } else {
                     g.fillRect( x+width-lowSize, y, lowSize, height );
+                }
             }
-            
+
             if( bottom ){
                 g.setColor( high );
-                if( right )
-                	g.fillRect( x, y+height-borderSize, width-borderSize, highSize );
-                else
-                	g.fillRect( x, y+height-borderSize, width, highSize );
+                if( right ) {
+                    g.fillRect( x, y+height-borderSize, width-borderSize, highSize );
+                } else {
+                    g.fillRect( x, y+height-borderSize, width, highSize );
+                }
                 g.setColor( low );
                 g.fillRect( x, y+height-lowSize, width, lowSize );
             }

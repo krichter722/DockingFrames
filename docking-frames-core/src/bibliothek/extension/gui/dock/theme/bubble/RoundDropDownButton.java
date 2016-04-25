@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -53,9 +53,9 @@ import bibliothek.gui.dock.util.Transparency;
 import bibliothek.gui.dock.util.color.ColorCodes;
 
 /**
- * A button which can be pressed by the user either to execute 
+ * A button which can be pressed by the user either to execute
  * a {@link bibliothek.gui.dock.action.DockAction} or to show a popup-menu
- * with a selection of <code>DockActions</code>. This button uses a 
+ * with a selection of <code>DockActions</code>. This button uses a
  * {@link BasicDropDownButtonHandler} to manage its internal states.
  * @author Benjamin Sigg
  */
@@ -69,7 +69,7 @@ import bibliothek.gui.dock.util.color.ColorCodes;
     "action.dropdown.mouse.selected.enabled",
     "action.dropdown.pressed.enabled",
     "action.dropdown.pressed.selected.enabled",
-    
+
     "action.dropdown.focus",
     "action.dropdown.enabled.focus",
     "action.dropdown.selected.focus",
@@ -78,7 +78,7 @@ import bibliothek.gui.dock.util.color.ColorCodes;
     "action.dropdown.mouse.selected.enabled.focus",
     "action.dropdown.pressed.enabled.focus",
     "action.dropdown.pressed.selected.enabled.focus",
-    
+
     "action.dropdown.line",
     "action.dropdown.line.enabled",
     "action.dropdown.line.selected",
@@ -97,26 +97,26 @@ import bibliothek.gui.dock.util.color.ColorCodes;
     "action.dropdown.text.pressed.enabled",
     "action.dropdown.text.pressed.selected.enabled" })
 public class RoundDropDownButton extends JComponent implements RoundButtonConnectable{
-	/** the animation that changes the colors */
+    /** the animation that changes the colors */
     private BubbleColorAnimation animation;
-    
+
     /** a model containing all information needed to paint this button */
     private BasicDropDownButtonModel model;
-    
+
     /** a handler reacting if this button is pressed */
     private BasicDropDownButtonHandler handler;
-    
+
     /** the icon to show for the area in which the popup-menu could be opened */
     private Icon dropIcon;
     /** a disabled version of {@link #dropIcon} */
     private Icon disabledDropIcon;
-    
+
     /** the colors used on this button */
     private RoundActionColor[] colors;
-    
+
     /** a component painting icon and text */
     private MiniButtonContent content;
-    
+
     /**
      * Creates a new button
      * @param handler a handler used to announce that this button is clicked
@@ -124,65 +124,65 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
      * @param action the action that is shown
      */
     public RoundDropDownButton( BasicDropDownButtonHandler handler, Dockable dockable, DockAction action ){
-		animation = new BubbleColorAnimation(){
-			@Override
-			protected void pulse(){
-				super.pulse();
-				content.setLabelForeground( animation.getColor( "text" ) );
-			}
-		};
-        
-        colors = new RoundActionColor[]{
-                new RoundActionColor( "action.dropdown", dockable, action, Color.WHITE ),
-                new RoundActionColor( "action.dropdown.enabled", dockable, action, Color.LIGHT_GRAY ),
-                new RoundActionColor( "action.dropdown.selected", dockable, action, Color.YELLOW ),
-                new RoundActionColor( "action.dropdown.enabled.selected", dockable, action, Color.ORANGE ),
-                new RoundActionColor( "action.dropdown.mouse.enabled", dockable, action, Color.RED ),
-                new RoundActionColor( "action.dropdown.mouse.selected.enabled", dockable, action, new Color( 128, 0, 0 ) ),
-                new RoundActionColor( "action.dropdown.pressed.enabled", dockable, action, Color.BLUE ),
-                new RoundActionColor( "action.dropdown.pressed.selected.enabled", dockable, action, Color.MAGENTA ),
-
-                new RoundActionColor( "action.dropdown.focus", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.enabled.focus", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.selected.focus", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.enabled.selected.focus", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.mouse.enabled.focus", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.mouse.selected.enabled.focus", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.pressed.enabled.focus", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.pressed.selected.enabled.focus", dockable, action, Color.DARK_GRAY ),
-                
-                new RoundActionColor( "action.dropdown.line", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.line.enabled", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.line.selected", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.line.enabled.selected", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.line.mouse.enabled", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.line.mouse.selected.enabled", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.line.pressed.enabled", dockable, action, Color.DARK_GRAY ),
-                new RoundActionColor( "action.dropdown.line.pressed.selected.enabled", dockable, action, Color.DARK_GRAY ),
-                
-                new RoundActionColor( "action.dropdown.text", dockable, action, null ),
-                new RoundActionColor( "action.dropdown.text.enabled", dockable, action, null ),
-                new RoundActionColor( "action.dropdown.text.selected", dockable, action, null ),
-                new RoundActionColor( "action.dropdown.text.enabled.selected", dockable, action, null ),
-                new RoundActionColor( "action.dropdown.text.mouse.enabled", dockable, action, null ),
-                new RoundActionColor( "action.dropdown.text.mouse.selected.enabled", dockable, action, null ),
-                new RoundActionColor( "action.dropdown.text.pressed.enabled", dockable, action, null ),
-                new RoundActionColor( "action.dropdown.text.pressed.selected.enabled", dockable, action, null ),
+        animation = new BubbleColorAnimation(){
+            @Override
+            protected void pulse(){
+                super.pulse();
+                content.setLabelForeground( animation.getColor( "text" ) );
+            }
         };
-        
+
+        colors = new RoundActionColor[]{
+            new RoundActionColor( "action.dropdown", dockable, action, Color.WHITE ),
+            new RoundActionColor( "action.dropdown.enabled", dockable, action, Color.LIGHT_GRAY ),
+            new RoundActionColor( "action.dropdown.selected", dockable, action, Color.YELLOW ),
+            new RoundActionColor( "action.dropdown.enabled.selected", dockable, action, Color.ORANGE ),
+            new RoundActionColor( "action.dropdown.mouse.enabled", dockable, action, Color.RED ),
+            new RoundActionColor( "action.dropdown.mouse.selected.enabled", dockable, action, new Color( 128, 0, 0 ) ),
+            new RoundActionColor( "action.dropdown.pressed.enabled", dockable, action, Color.BLUE ),
+            new RoundActionColor( "action.dropdown.pressed.selected.enabled", dockable, action, Color.MAGENTA ),
+
+            new RoundActionColor( "action.dropdown.focus", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.enabled.focus", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.selected.focus", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.enabled.selected.focus", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.mouse.enabled.focus", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.mouse.selected.enabled.focus", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.pressed.enabled.focus", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.pressed.selected.enabled.focus", dockable, action, Color.DARK_GRAY ),
+
+            new RoundActionColor( "action.dropdown.line", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.line.enabled", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.line.selected", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.line.enabled.selected", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.line.mouse.enabled", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.line.mouse.selected.enabled", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.line.pressed.enabled", dockable, action, Color.DARK_GRAY ),
+            new RoundActionColor( "action.dropdown.line.pressed.selected.enabled", dockable, action, Color.DARK_GRAY ),
+
+            new RoundActionColor( "action.dropdown.text", dockable, action, null ),
+            new RoundActionColor( "action.dropdown.text.enabled", dockable, action, null ),
+            new RoundActionColor( "action.dropdown.text.selected", dockable, action, null ),
+            new RoundActionColor( "action.dropdown.text.enabled.selected", dockable, action, null ),
+            new RoundActionColor( "action.dropdown.text.mouse.enabled", dockable, action, null ),
+            new RoundActionColor( "action.dropdown.text.mouse.selected.enabled", dockable, action, null ),
+            new RoundActionColor( "action.dropdown.text.pressed.enabled", dockable, action, null ),
+            new RoundActionColor( "action.dropdown.text.pressed.selected.enabled", dockable, action, null ),
+        };
+
         animation.addTask( new Runnable(){
             public void run() {
                 repaint();
             }
         });
-        
+
         this.handler = handler;
         dropIcon = handler.getDropDownIcon();
-        
+
         content = createButtonContent();
         setLayout( null );
         add( content );
-        
+
         model = new BasicDropDownButtonModel( this, handler, handler ){
             @Override
             public void changed() {
@@ -190,15 +190,15 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
                 revalidate();
                 repaint();
             }
-            
+
             @Override
             protected boolean inDropDownArea( int x, int y ) {
                 return overDropIcon( x, y );
             }
         };
-        
+
         content.setModel( model );
-        
+
         addFocusListener( new FocusListener(){
             public void focusGained( FocusEvent e ) {
                 repaint();
@@ -207,128 +207,133 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
                 repaint();
             }
         });
-        
+
         updateColors();
     }
-    
+
     /**
      * Creates the component painting the content of this button.
      * @return the new component
      */
     protected MiniButtonContent createButtonContent(){
-    	return new MiniButtonContent();
+        return new MiniButtonContent();
     }
-    
+
     public void setController( DockController controller ) {
         for( RoundActionColor color : colors ){
             color.connect( controller );
         }
-        
+
         animation.kick();
     }
-    
+
     public BasicDropDownButtonModel getModel() {
         return model;
     }
-    
+
     @Override
     public void updateUI() {
         disabledDropIcon = null;
-        
+
         super.updateUI();
-        
-        if( handler != null )
+
+        if( handler != null ) {
             handler.updateUI();
+        }
     }
-    
+
     @Override
     public Dimension getPreferredSize() {
-        if( isPreferredSizeSet() )
+        if( isPreferredSizeSet() ) {
             return super.getPreferredSize();
-        
+        }
+
         Dimension contentSize = content.getPreferredSize();
-        
-        if( model.getOrientation().isHorizontal() )
+
+        if( model.getOrientation().isHorizontal() ) {
             return new Dimension( (int)(0.5 * contentSize.height + contentSize.width + 1 + 1.5*dropIcon.getIconWidth()), (int)(1.5 * contentSize.height));
-        else
+        } else {
             return new Dimension( (int)(1.5 * contentSize.width), (int)(0.5 * contentSize.width + contentSize.height + 1 + 1.5 * dropIcon.getIconHeight()) );
+        }
     }
-    
+
     @Override
     public void doLayout(){
-    	if( model.getOrientation().isHorizontal() ){
-    		content.setBounds( getHeight() / 3, getHeight() / 6, (int)(getWidth() - 1 - 1.5*dropIcon.getIconWidth()), (int)(getHeight() / 1.5));
-    	}
-    	else{
-    		content.setBounds( getWidth() / 3, getWidth() / 6, (int)(getWidth() / 1.5), (int)(getHeight() - 1 - 1.5*dropIcon.getIconHeight()));
-    	}
+        if( model.getOrientation().isHorizontal() ){
+            content.setBounds( getHeight() / 3, getHeight() / 6, (int)(getWidth() - 1 - 1.5*dropIcon.getIconWidth()), (int)(getHeight() / 1.5));
+        }
+        else{
+            content.setBounds( getWidth() / 3, getWidth() / 6, (int)(getWidth() / 1.5), (int)(getHeight() - 1 - 1.5*dropIcon.getIconHeight()));
+        }
     }
-    
+
     @Override
     public boolean contains( int x, int y ){
-    	if( !super.contains( x, y ))
-    		return false;
-    	
-    	int w = getWidth();
-    	int h = getHeight();
-    	RoundRectangle2D rect;
-    	
-    	if( model.getOrientation().isHorizontal() )
-    		rect = new RoundRectangle2D.Double( 0, 0, w, h, h, h );
-    	else
-    		rect = new RoundRectangle2D.Double( 0, 0, w, h, w, w );
-    	
-    	return rect.contains( x, y );
+        if( !super.contains( x, y )) {
+            return false;
+        }
+
+        int w = getWidth();
+        int h = getHeight();
+        RoundRectangle2D rect;
+
+        if( model.getOrientation().isHorizontal() ) {
+            rect = new RoundRectangle2D.Double( 0, 0, w, h, h, h );
+        } else {
+            rect = new RoundRectangle2D.Double( 0, 0, w, h, w, w );
+        }
+
+        return rect.contains( x, y );
     }
-    
+
     @Override
     protected void paintComponent( Graphics g ) {
-    	BasicDropDownButtonModel model = getModel();
-    	BackgroundPaint paint = model.getBackground();
-    	BackgroundComponent component = model.getBackgroundComponent();
-    	
-    	AbstractPaintableComponent paintable = new AbstractPaintableComponent( component, this, paint ){
-			protected void foreground( Graphics g ){
-				doPaintForeground( g );	
-			}
-			
-			protected void background( Graphics g ){
-				doPaintBackground( g );
-			}
-			
-			protected void border( Graphics g ){
-				// ignore	
-			}
-			
-			protected void children( Graphics g ){
-				// ignore	
-			}
-			
-			protected void overlay( Graphics g ){
-				// ignore
-			}
-			
-			public Transparency getTransparency(){
-				return Transparency.DEFAULT;
-			}
-		};
-		
-		Graphics2D g2 = (Graphics2D)g.create();
+        BasicDropDownButtonModel model = getModel();
+        BackgroundPaint paint = model.getBackground();
+        BackgroundComponent component = model.getBackgroundComponent();
+
+        AbstractPaintableComponent paintable = new AbstractPaintableComponent( component, this, paint ){
+            protected void foreground( Graphics g ){
+                doPaintForeground( g );
+            }
+
+            protected void background( Graphics g ){
+                doPaintBackground( g );
+            }
+
+            protected void border( Graphics g ){
+                // ignore
+            }
+
+            protected void children( Graphics g ){
+                // ignore
+            }
+
+            protected void overlay( Graphics g ){
+                // ignore
+            }
+
+            public Transparency getTransparency(){
+                return Transparency.DEFAULT;
+            }
+        };
+
+        Graphics2D g2 = (Graphics2D)g.create();
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-        
-		paintable.paint( g2 );
-		
-		g2.dispose();
+
+        paintable.paint( g2 );
+
+        g2.dispose();
     }
-    
+
     private void doPaintBackground( Graphics g ){
         Graphics2D g2 = (Graphics2D)g;
-        
+
         int x = 0;
         int y = 0;
         int w = getWidth();
         int h = getHeight();
-        
+
         if( model.getOrientation().isHorizontal() ){
             g2.setColor( animation.getColor( "background" ) );
             g2.fillRoundRect( x, y, w, h, h, h );
@@ -338,35 +343,37 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
             g2.fillRoundRect( x, y, w, h, w, w );
         }
     }
-    
+
     private void doPaintForeground( Graphics g ){
         Icon drop = dropIcon;
         if( !isEnabled() ){
-            if( disabledDropIcon == null )
+            if( disabledDropIcon == null ) {
                 disabledDropIcon = handler.getDisabledDropDownIcon();
+            }
             drop = disabledDropIcon;
         }
-        
+
         Graphics2D g2 = (Graphics2D)g;
         paintChildren( g );
-        
+
         int x = 0;
         int y = 0;
         int w = getWidth();
         int h = getHeight();
-        
+
         int dropIconWidth = drop == null ? 5 : drop.getIconWidth();
         int dropIconHeight = drop == null ? 5 : drop.getIconHeight();
-        
+
         if( model.getOrientation().isHorizontal() ){
             g2.setColor( animation.getColor( "mouse" ) );
             // int mx = x + (int)( 0.5 * 1.25 * iconWidth + 0.5 * (w - 1.25 * dropIconWidth) );
             int mx = x + w - (int)(1.5 * dropIconWidth) - 1;
             g2.drawLine( mx, y+1, mx, y+h-2 );
-            
-            if( drop != null )
-            	drop.paintIcon( this, g, (int)(x + w - 1.25 * dropIconWidth), y+(h-dropIconHeight)/2 );
-            
+
+            if( drop != null ) {
+                drop.paintIcon( this, g, (int)(x + w - 1.25 * dropIconWidth), y+(h-dropIconHeight)/2 );
+            }
+
             if( hasFocus() && isFocusable() && isEnabled() ){
                 Stroke stroke = g2.getStroke();
                 g2.setStroke( new BasicStroke( 3f ) );
@@ -380,10 +387,11 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
             // int my = y + (int)( 0.5 * 1.25 * iconHeight + 0.5 * (h - 1.25 * dropIconHeight) );
             int my = y + h - (int)(1.5 * dropIconHeight) - 1;
             g2.drawLine( x+1, my, x+w-2, my );
-            
-            if( drop != null )
-            	drop.paintIcon( this, g, x + ( w - dropIconWidth ) / 2, (int)(y+h-1.25*dropIconHeight) );
-            
+
+            if( drop != null ) {
+                drop.paintIcon( this, g, x + ( w - dropIconWidth ) / 2, (int)(y+h-1.25*dropIconHeight) );
+            }
+
             if( hasFocus() && isFocusable() && isEnabled() ){
                 Stroke stroke = g2.getStroke();
                 g2.setStroke( new BasicStroke( 3f ) );
@@ -393,7 +401,7 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
             }
         }
     }
-    
+
     /**
      * Tells whether the point x,y is over the icon that represents the drop-area.
      * @param x the x-coordinate
@@ -402,26 +410,27 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
      * open a popup menu
      */
     public boolean overDropIcon( int x, int y ){
-    	if( !contains( x, y ))
-    		return false;
-    	
+        if( !contains( x, y )) {
+            return false;
+        }
+
         int rx = 0;
         int ry = 0;
         int rw = getWidth();
         int rh = getHeight();
-        
+
         int dropIconWidth = dropIcon == null ? 0 : dropIcon.getIconWidth();
         int dropIconHeight = dropIcon == null ? 0 : dropIcon.getIconHeight();
-        
+
         if( model.getOrientation().isHorizontal() ){
-        	// int mx = rx + (int)( 0.5 * 1.25 * iconWidth + 0.5 * (rw - 1.25 * dropIconWidth) );
-        	int mx = rx + rw - (int)(1.5 * dropIconWidth) - 1;
-        	return x >= mx;
+            // int mx = rx + (int)( 0.5 * 1.25 * iconWidth + 0.5 * (rw - 1.25 * dropIconWidth) );
+            int mx = rx + rw - (int)(1.5 * dropIconWidth) - 1;
+            return x >= mx;
         }
         else{
-        	// int my = ry + (int)( 0.5 * 1.25 * iconHeight + 0.5 * (rh - 1.25 * dropIconHeight) );
-        	int my = ry + rh - (int)(1.5 * dropIconHeight) - 1;
-        	return y >= my;
+            // int my = ry + (int)( 0.5 * 1.25 * iconHeight + 0.5 * (rh - 1.25 * dropIconHeight) );
+            int my = ry + rh - (int)(1.5 * dropIconHeight) - 1;
+            return y >= my;
         }
     }
 
@@ -430,28 +439,31 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
      */
     public void updateColors(){
         String postfix = "";
-        
+
         boolean selected = model.isSelected();
         boolean enabled = model.isEnabled();
         boolean pressed = model.isMousePressed();
         boolean entered = model.isMouseInside();
         boolean mouseOverDrop = model.isMouseOverDropDown();
-        
-        if( selected )
+
+        if( selected ) {
             postfix = ".selected";
-        
-        if( enabled )
+        }
+
+        if( enabled ) {
             postfix += ".enabled";
-        
+        }
+
         String mouse;
-        if( mouseOverDrop && enabled )
+        if( mouseOverDrop && enabled ) {
             mouse = "dropdown.line";
-        else
+        } else {
             mouse = "dropdown";
-        
+        }
+
         String text = "action.dropdown.text";
         String background;
-        
+
         if( pressed && enabled ){
             background = "action.dropdown.pressed" + postfix;
             mouse = "action." + mouse + ".pressed" + postfix;
@@ -467,21 +479,25 @@ public class RoundDropDownButton extends JComponent implements RoundButtonConnec
             mouse = "action." + mouse + postfix;
             text += postfix;
         }
-        
+
         String focus = background + ".focus";
-        
+
         for( RoundActionColor color : colors ){
-            if( background.equals( color.getId() ))
+            if( background.equals( color.getId() )) {
                 animation.putColor( "background", color.value() );
-            if( mouse.equals( color.getId() ))
+            }
+            if( mouse.equals( color.getId() )) {
                 animation.putColor( "mouse", color.value() );
-            if( focus.equals( color.getId() ))
+            }
+            if( focus.equals( color.getId() )) {
                 animation.putColor( "focus", color.value() );
-            if( text.equals( color.getId() ))
-            	animation.putColor( "text", color.value() );
+            }
+            if( text.equals( color.getId() )) {
+                animation.putColor( "text", color.value() );
+            }
         }
     }
-    
+
     /**
      * A color used in a round dropdown button
      * @author Benjamin Sigg

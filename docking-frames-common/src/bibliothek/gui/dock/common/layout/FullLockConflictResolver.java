@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -32,7 +32,7 @@ import bibliothek.gui.dock.facile.station.split.*;
  * where two requests collide and a satisfying solution is not possible: the
  * two affected trees are checked for their "fully locked state" and if one
  * is fully locked but not the other, then the request of the fully locked one
- * is answered. Fully locked means that each child of some node has a request. 
+ * is answered. Fully locked means that each child of some node has a request.
  * @author Benjamin Sigg
  *
  */
@@ -60,11 +60,11 @@ public class FullLockConflictResolver extends DefaultConflictResolver<RequestDim
     public double resolveVertical( ResizeNode<RequestDimension> node,
             ResizeRequest top, double deltaTop, ResizeRequest bottom,
             double deltaBottom ) {
-        
+
         if( top.getFractionWidth() == 1 && bottom.getFractionWidth() == 1 ){
             boolean topLocked = checkVerticalFullLock( node.getLeft() );
             boolean bottomLocked = checkVerticalFullLock( node.getRight() );
-            
+
             if( !topLocked && bottomLocked ){
                 return deltaBottom;
             }
@@ -85,7 +85,7 @@ public class FullLockConflictResolver extends DefaultConflictResolver<RequestDim
      *  {@link #checkHorizontalFullLock(ResizeElement) fully locked}</li>
      *  <li>if <code>element</code> is a leaf: it has a resize request for the width</li>
      *  <li>in any other case: <code>true</code></li>
-     * </ul> 
+     * </ul>
      * @param element the element to check
      * @return <code>true</code> if the horizontal dimension has very high
      * priority for this node, <code>false</code> otherwise
@@ -97,28 +97,33 @@ public class FullLockConflictResolver extends DefaultConflictResolver<RequestDim
             ResizeRequest leftRequest = node.getLeft().getRequest();
             ResizeRequest rightRequest = node.getRight().getRequest();
 
-            if( leftRequest == null || leftRequest.getFractionWidth() == -1 )
+            if( leftRequest == null || leftRequest.getFractionWidth() == -1 ) {
                 return false;
+            }
 
-            if( rightRequest == null || rightRequest.getFractionWidth() == -1 )
+            if( rightRequest == null || rightRequest.getFractionWidth() == -1 ) {
                 return false;
+            }
 
-            if( !checkHorizontalFullLock( node.getLeft()))
+            if( !checkHorizontalFullLock( node.getLeft())) {
                 return false;
+            }
 
-            if( !checkHorizontalFullLock( node.getRight()))
+            if( !checkHorizontalFullLock( node.getRight())) {
                 return false;
+            }
         }
         else if( element instanceof ResizeLeaf<?> ){
             ResizeLeaf<RequestDimension> leaf = (ResizeLeaf<RequestDimension>)element;
             ResizeRequest request = leaf.getRequest();
-            if( request == null || request.getFractionWidth() == -1 )
+            if( request == null || request.getFractionWidth() == -1 ) {
                 return false;
+            }
         }
 
         return true;
     }
-    
+
 
     /**
      * Checks whether <code>element</code> is fully locked in its vertical dimension.
@@ -129,7 +134,7 @@ public class FullLockConflictResolver extends DefaultConflictResolver<RequestDim
      *  {@link #checkHorizontalFullLock(ResizeElement) fully locked}</li>
      *  <li>if <code>element</code> is a leaf: it has a resize request for the height</li>
      *  <li>in any other case: <code>true</code></li>
-     * </ul> 
+     * </ul>
      * @param element the element to check
      * @return <code>true</code> if the vertical dimension has very high
      * priority for this node, <code>false</code> otherwise
@@ -141,23 +146,28 @@ public class FullLockConflictResolver extends DefaultConflictResolver<RequestDim
             ResizeRequest leftRequest = node.getLeft().getRequest();
             ResizeRequest rightRequest = node.getRight().getRequest();
 
-            if( leftRequest == null || leftRequest.getFractionHeight() == -1 )
+            if( leftRequest == null || leftRequest.getFractionHeight() == -1 ) {
                 return false;
+            }
 
-            if( rightRequest == null || rightRequest.getFractionHeight() == -1 )
+            if( rightRequest == null || rightRequest.getFractionHeight() == -1 ) {
                 return false;
+            }
 
-            if( !checkVerticalFullLock( node.getLeft()))
+            if( !checkVerticalFullLock( node.getLeft())) {
                 return false;
+            }
 
-            if( !checkVerticalFullLock( node.getRight()))
+            if( !checkVerticalFullLock( node.getRight())) {
                 return false;
+            }
         }
         else if( element instanceof ResizeLeaf<?> ){
             ResizeLeaf<RequestDimension> leaf = (ResizeLeaf<RequestDimension>)element;
             ResizeRequest request = leaf.getRequest();
-            if( request == null || request.getFractionHeight() == -1 )
+            if( request == null || request.getFractionHeight() == -1 ) {
                 return false;
+            }
         }
 
         return true;

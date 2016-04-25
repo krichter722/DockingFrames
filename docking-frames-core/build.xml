@@ -102,7 +102,7 @@
 
 	<target name="paths">
 		<property name="javac-1.5" value="/home/beni/jdk1.5.0_22/bin/javac"/>
-		
+
 		<property name="base" value="dock"/>
 		<property name="source" value="${base}/src"/>
 		<property name="bin" value="${base}/bin"/>
@@ -217,18 +217,18 @@
 			<fileset dir="${temp}/${name.layouts}"/>
 		</jar>
 	</target>
-	
+
 	<target name="webstartTutorial" depends="bin, paths">
 		<mkdir dir="${web.tutorial}"/>
 		<mkdir dir="${web.tutorial}/lib"/>
-		
+
 		<jar destfile="${web.tutorial}/lib/${name.core}.jar">
 			<fileset dir="${temp}/${name.core}"/>
 		</jar>
 		<jar destfile="${web.tutorial}/lib/${name.common}.jar">
 			<fileset dir="${temp}/${name.common}"/>
 		</jar>
-		
+
 		<jar destfile="${web.tutorial}/${name.tutorial}.jar" duplicate="preserve">
 			<fileset dir="${temp}/${name.tutorial}"/>
 			<fileset dir="${source}/${name.tutorial}"/>
@@ -399,7 +399,7 @@
 		<javac
 			fork="yes"
 			executable="${javac-1.5}"
-			srcdir="${source}/${name.core}" 
+			srcdir="${source}/${name.core}"
 			destdir="${temp}/${name.core}" debug="on"  source="1.5" target="1.5"/>
 		<javac srcdir="${source}/${name.core.j6}" destdir="${temp}/${name.core}" debug="on" source="1.6" target="1.6"/>
 		<copy todir="${temp}/${name.core}">
@@ -552,7 +552,7 @@
 	    <loadresource property="dock.version">
 	       <file file="${location.core}/version"/>
 	    </loadresource>
-		
+
 		<replaceregexp replace="&lt;version&gt;${dock.version}&lt;/version&gt;">
 			<fileset dir=".">
     			<include name="**/pom.xml"/>
@@ -560,7 +560,7 @@
 			<regexp pattern="&lt;version&gt;(1\.1\.2.*)&lt;/version&gt;"/>
 		</replaceregexp>
 	</target>
-	
+
 	<!-- paths source -->
 	<target name="source dir" depends="clean, paths">
 		<mkdir dir="${base}"/>

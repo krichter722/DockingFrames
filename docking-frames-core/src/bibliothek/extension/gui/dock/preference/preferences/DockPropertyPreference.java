@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -43,7 +43,7 @@ import bibliothek.util.Path;
 public class DockPropertyPreference<V> extends DefaultPreference<V> {
     private PropertyKey<V> key;
     private DockProperties properties;
-    
+
     /**
      * Creates a new preference.
      * @param properties the properties from which this preference reads its values
@@ -54,16 +54,18 @@ public class DockPropertyPreference<V> extends DefaultPreference<V> {
      */
     public DockPropertyPreference( DockProperties properties, PropertyKey<V> key, Path type, Path path ){
         super( type, path );
-        if( key == null )
+        if( key == null ) {
             throw new IllegalArgumentException( "key must not be null" );
-        
-        if( properties == null )
+        }
+
+        if( properties == null ) {
             throw new IllegalArgumentException( "properties must not be null" );
-        
+        }
+
         this.key = key;
         this.properties = properties;
     }
-    
+
     /**
      * Creates a new preference.
      * @param properties the properties from which this preference reads its values
@@ -75,16 +77,18 @@ public class DockPropertyPreference<V> extends DefaultPreference<V> {
      */
     public DockPropertyPreference( DockProperties properties, PropertyKey<V> key, String label, Path type, Path path ){
         super( label, type, path );
-        if( key == null )
+        if( key == null ) {
             throw new IllegalArgumentException( "key must not be null" );
-        
-        if( properties == null )
+        }
+
+        if( properties == null ) {
             throw new IllegalArgumentException( "properties must not be null" );
-        
+        }
+
         this.key = key;
         this.properties = properties;
     }
-    
+
     /**
      * Creates a new preference.
      * @param prefix the prefix of the key used for the {@link TextManager}. The strings
@@ -100,21 +104,21 @@ public class DockPropertyPreference<V> extends DefaultPreference<V> {
     public DockPropertyPreference( String prefix, DockProperties properties, PropertyKey<V> key, V defaultValue, Path type, Path path ){
         this( properties, key, type, path );
         setDefaultValue( defaultValue );
-        
+
         setLabelId( prefix + ".label" );
         setDescriptionId( prefix + ".description" );
     }
-    
+
     public void read(){
-    	V value = properties.get( key, Priority.CLIENT );
-    	if( value == null ){
-    		setValue( getDefaultValue() );
-    	}
-    	else{
-    		setValue( value );
-    	}
+        V value = properties.get( key, Priority.CLIENT );
+        if( value == null ){
+            setValue( getDefaultValue() );
+        }
+        else{
+            setValue( value );
+        }
     }
-    
+
     public void write(){
         properties.setOrRemove( key, getValue(), Priority.CLIENT );
     }

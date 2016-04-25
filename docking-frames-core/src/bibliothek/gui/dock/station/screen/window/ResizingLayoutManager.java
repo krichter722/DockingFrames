@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2011 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,27 +42,27 @@ import bibliothek.gui.dock.station.screen.ScreenDockWindow;
  * @author Benjamin Sigg
  */
 public class ResizingLayoutManager extends GridLayout{
-	private ScreenDockWindow window;
-	private Component windowComponent;
-	
-	/**
-	 * Creates a new layout manager
-	 * @param window the window which is updated
-	 * @param windowComponent the component whose preferred size will be used for <code>window</code>
-	 */
-	public ResizingLayoutManager( ScreenDockWindow window, Component windowComponent ){
-		this.window = window;
-		this.windowComponent = windowComponent;
-	}
-	
-	@Override
-	public void layoutContainer( Container parent ){
-		Rectangle bounds = window.getWindowBounds();
-		Dimension size = windowComponent.getPreferredSize();
-		if( bounds.width != size.width || bounds.height != size.height ){
-			window.setWindowBounds( new Rectangle( bounds.getLocation(), size ) );
-		}
-		
-		super.layoutContainer( parent );
-	}
+    private ScreenDockWindow window;
+    private Component windowComponent;
+
+    /**
+     * Creates a new layout manager
+     * @param window the window which is updated
+     * @param windowComponent the component whose preferred size will be used for <code>window</code>
+     */
+    public ResizingLayoutManager( ScreenDockWindow window, Component windowComponent ){
+        this.window = window;
+        this.windowComponent = windowComponent;
+    }
+
+    @Override
+    public void layoutContainer( Container parent ){
+        Rectangle bounds = window.getWindowBounds();
+        Dimension size = windowComponent.getPreferredSize();
+        if( bounds.width != size.width || bounds.height != size.height ){
+            window.setWindowBounds( new Rectangle( bounds.getLocation(), size ) );
+        }
+
+        super.layoutContainer( parent );
+    }
 }

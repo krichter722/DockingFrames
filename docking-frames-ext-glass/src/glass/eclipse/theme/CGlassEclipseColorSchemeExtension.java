@@ -66,7 +66,7 @@ public class CGlassEclipseColorSchemeExtension extends DefaultColorScheme {
       setColor("glass.disabled.center", colMap.colDisabledGlassCenter);
       setColor("glass.disabled.light", colMap.colDisabledGlassLight);
       setColor("glass.disabled.boundary", colMap.colDisabledGlassBoundary);
-      
+
       setColor("stack.border.glass", new Color(96, 96, 96));
 
       setColor("selection.border.glass", RexSystemColor.getBorderColor());
@@ -86,13 +86,13 @@ public class CGlassEclipseColorSchemeExtension extends DefaultColorScheme {
       //      setColor("highlight.outer");
       //      setColor("shadow.inner");
       //      setColor("shadow.outer");
-      //       
+      //
       //      setColor("hover", Color.GREEN);
       //            setColor("highlight.inner.hover");
       //            setColor("highlight.outer.hover");
       //            setColor("shadow.inner.hover");
       //            setColor("shadow.outer.hover");
-      //       
+      //
       //      setColor("selected");
       //      setColor("highlight.inner.selected");
       //      setColor("highlight.outer.selected");

@@ -19,37 +19,37 @@ import bibliothek.demonstration.Monitor;
  *
  */
 public class Main implements Demonstration{
-	/**
-	 * Starts up this application
-	 * @param args are ignored
-	 */
-	public static void main( String[] args ){
-		Core core = new Core( null );
-		core.startup();
-	}
+    /**
+     * Starts up this application
+     * @param args are ignored
+     */
+    public static void main( String[] args ){
+        Core core = new Core( null );
+        core.startup();
+    }
 
-	/** a description of this application */
-	private String description;
+    /** a description of this application */
+    private String description;
 
-	/**
-	 * Creates a new Demonstration
-	 */
-	public Main(){
-	    try{
-	        Reader in = new InputStreamReader( Main.class.getResourceAsStream( "/data/bibliothek/chess/description.txt" ));
-	        StringBuilder builder = new StringBuilder();
-	        int c;
-	        while( (c = in.read()) != -1 ){
-	            builder.append( (char)c );
-	        }
-	        in.close();
-	        description = builder.toString();
-	    }
-	    catch( IOException ex ){
-	        ex.printStackTrace();
-	    }
-	}
-	
+    /**
+     * Creates a new Demonstration
+     */
+    public Main(){
+        try{
+            Reader in = new InputStreamReader( Main.class.getResourceAsStream( "/data/bibliothek/chess/description.txt" ));
+            StringBuilder builder = new StringBuilder();
+            int c;
+            while( (c = in.read()) != -1 ){
+                builder.append( (char)c );
+            }
+            in.close();
+            description = builder.toString();
+        }
+        catch( IOException ex ){
+            ex.printStackTrace();
+        }
+    }
+
     public String getHTML() {
         return description;
     }

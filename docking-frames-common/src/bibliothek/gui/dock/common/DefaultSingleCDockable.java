@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -36,7 +36,7 @@ import bibliothek.gui.dock.dockable.IconHandling;
 import bibliothek.util.ClientOnly;
 
 /**
- * A <code>DefaultSingleCDockable</code> is an element which has a 
+ * A <code>DefaultSingleCDockable</code> is an element which has a
  * {@link #getContentPane() content-pane} where clients can add or remove as many
  * {@link java.awt.Component}s as they whish.
  * @author Benjamin Sigg
@@ -46,7 +46,7 @@ import bibliothek.util.ClientOnly;
 public class DefaultSingleCDockable extends DefaultCDockable implements SingleCDockable{
     /** a unique id */
     private String id;
-    
+
     /**
      * Creates a new dockable
      * @param id a unique id, not <code>null</code>
@@ -56,7 +56,7 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
     public DefaultSingleCDockable( String id, CAction... actions ){
         this( id, null, IconHandling.REPLACE_NULL_ICON, null, null, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -68,7 +68,7 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
     public DefaultSingleCDockable( String id, Component content, CAction... actions ){
         this( id, null, IconHandling.REPLACE_NULL_ICON, null, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -81,7 +81,7 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
     public DefaultSingleCDockable( String id, String title, Component content, CAction... actions ){
         this( id, null, IconHandling.REPLACE_NULL_ICON, title, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -94,7 +94,7 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
     public DefaultSingleCDockable( String id, Icon icon, Component content, CAction... actions ){
         this( id, icon, IconHandling.KEEP_NULL_ICON, null, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -108,7 +108,7 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
     public DefaultSingleCDockable( String id, Icon icon, String title, Component content, CAction... actions ){
         this( id, icon, IconHandling.KEEP_NULL_ICON, title, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -119,7 +119,7 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
     public DefaultSingleCDockable( String id, String title, CAction... actions ){
         this( id, null, IconHandling.REPLACE_NULL_ICON, title, null, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -130,7 +130,7 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
     public DefaultSingleCDockable( String id, Icon icon, CAction... actions ){
         this( id, icon, IconHandling.KEEP_NULL_ICON, null, null, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -156,9 +156,9 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
      * A separator is inserted for every entry that is <code>null</code> of this array.
      */
     public DefaultSingleCDockable( String id, Icon icon, String title, Component content, Permissions permissions, CAction... actions ){
-    	this( id, icon, IconHandling.KEEP_NULL_ICON, title, content, permissions, actions );
+        this( id, icon, IconHandling.KEEP_NULL_ICON, title, content, permissions, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param id the unique id, must not be <code>null</code>
@@ -174,13 +174,14 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
      */
     public DefaultSingleCDockable( String id, Icon icon, IconHandling iconHandling, String title, Component content, Permissions permissions, CAction... actions ){
         super( permissions == null ? Permissions.DEFAULT : permissions );
-        if( id == null )
+        if( id == null ) {
             throw new NullPointerException( "id must not be null" );
-        
+        }
+
         this.id = id;
         setTitleIconHandling( iconHandling );
         setTitleIcon( icon );
-        
+
         if( title != null ){
             setTitleText( title );
         }
@@ -190,14 +191,15 @@ public class DefaultSingleCDockable extends DefaultCDockable implements SingleCD
         }
         if( actions != null ){
             for( CAction action : actions ){
-                if( action != null )
+                if( action != null ) {
                     addAction( action );
-                else
+                } else {
                     addSeparator();
+                }
             }
         }
     }
-    
+
     /**
      * Gets the id of this dockable. The id is unique among all dockables
      * which are added to the same {@link CControl}.

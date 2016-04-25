@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -52,9 +52,9 @@ public class GlassEclipseTabTransmitter extends TabColorTransmitter implements C
     };
 
     private static final String KEYS[] = new String[]{
-        "stack.tab.border.glass", 
-        "stack.tab.border.selected.glass", 
-        "stack.tab.border.selected.focused.glass", 
+        "stack.tab.border.glass",
+        "stack.tab.border.selected.glass",
+        "stack.tab.border.selected.focused.glass",
         "stack.tab.border.selected.focuslost.glass",
 
         "stack.tab.top.glass",
@@ -69,9 +69,9 @@ public class GlassEclipseTabTransmitter extends TabColorTransmitter implements C
 
         "stack.tab.text.glass",
         "stack.tab.text.selected.glass",
-        "stack.tab.text.selected.focused.glass", 
+        "stack.tab.text.selected.focused.glass",
         "stack.tab.text.selected.focuslost.glass",
-        
+
         "glass.selected.center",
         "glass.selected.light",
         "glass.selected.boundary",
@@ -84,9 +84,9 @@ public class GlassEclipseTabTransmitter extends TabColorTransmitter implements C
     public GlassEclipseTabTransmitter( ColorManager manager ){
         super( manager, KEYS );
     }
-    
+
     public boolean matches( String id ){
-	    return id.startsWith( "glass." ) || id.endsWith( ".glass" );
+        return id.startsWith( "glass." ) || id.endsWith( ".glass" );
     }
 
     @Override
@@ -145,15 +145,15 @@ public class GlassEclipseTabTransmitter extends TabColorTransmitter implements C
             return Colors.diffMirror( source, 1.0 );
 
         if( "glass.selected.center".equals( key ))
-        	return Colors.brighter( source, 0.25 );
-        	
-        if( "glass.selected.light".equals( key ))
-        	return Colors.brighter( source, 0.5 );
-        	
-        if( "glass.selected.boundary".equals( key ))
-        	return Colors.darker( source, 0.25 );
+            return Colors.brighter( source, 0.25 );
 
-        
+        if( "glass.selected.light".equals( key ))
+            return Colors.brighter( source, 0.5 );
+
+        if( "glass.selected.boundary".equals( key ))
+            return Colors.darker( source, 0.25 );
+
+
         return null;
     }
 
@@ -175,19 +175,19 @@ public class GlassEclipseTabTransmitter extends TabColorTransmitter implements C
             return source;
 
         if( "stack.tab.text.selected.focused.glass".equals( key ))
-            return Colors.diffMirror( source, 1.0 ); 
+            return Colors.diffMirror( source, 1.0 );
         if( "stack.tab.text.selected.focuslost.glass".equals( key ))
             return Colors.diffMirror( source, 1.0 );
 
         if( "glass.focused.center".equals( key ))
-        	return source;
-        	
+            return source;
+
         if( "glass.focused.light".equals( key ))
-        	return Colors.brighter( source, 0.5 );
-        	
+            return Colors.brighter( source, 0.5 );
+
         if( "glass.focused.boundary".equals( key ))
-        	return Colors.darker( source, 0.5 );
-        
+            return Colors.darker( source, 0.5 );
+
         return null;
     }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,7 +42,7 @@ import bibliothek.gui.dock.station.split.SplitLayoutManager;
 import bibliothek.util.FrameworkOnly;
 
 /**
- * A {@link LockedResizeLayoutManager} that looks out for 
+ * A {@link LockedResizeLayoutManager} that looks out for
  * {@link CDockable#isResizeLockedVertically()} and {@link CDockable#isResizeLockedHorizontally()}.
  * @author Benjamin Sigg
  */
@@ -50,7 +50,7 @@ import bibliothek.util.FrameworkOnly;
 public class CLockedResizeLayoutManager extends LockedResizeLayoutManager<RequestDimension> {
     /** the control in whose realm this manager works */
     private CControl control;
-    
+
     /**
      * Creates a new layout manager
      */
@@ -65,16 +65,16 @@ public class CLockedResizeLayoutManager extends LockedResizeLayoutManager<Reques
     public CLockedResizeLayoutManager( CControl control ){
         this.control = control;
     }
-    
+
     /**
-     * Creates a new layout manager using <code>delegate</code> as 
+     * Creates a new layout manager using <code>delegate</code> as
      * delegate for all tasks that have to be carried out.
-     * @param delegate the delegate used for standard tasks to carry out. 
+     * @param delegate the delegate used for standard tasks to carry out.
      */
     public CLockedResizeLayoutManager( SplitLayoutManager delegate ){
         super( delegate );
     }
-    
+
     /**
      * Sets the control in whose realm this manager should work.
      * @param control the control, can be <code>null</code>
@@ -82,30 +82,31 @@ public class CLockedResizeLayoutManager extends LockedResizeLayoutManager<Reques
     public void setControl( CControl control ){
         this.control = control;
     }
-    
+
     @Override
     public ConflictResolver<RequestDimension> getConflictResolver() {
-        if( control != null )
+        if( control != null ) {
             return control.getProperty( CControl.RESIZE_LOCK_CONFLICT_RESOLVER );
-        
+        }
+
         return super.getConflictResolver();
     }
-    
+
     @Override
     public ResizeRequest getRequest( RequestDimension size, Leaf leaf ) {
         if( size != null ){
             Rectangle modified = leaf.getCurrentBounds();
-            
+
             // +0.1: to work against a later integer conversion that might round down
             double deltaWidth = size.getWidth() + 0.001 - modified.width;
             double deltaHeight = size.getHeight() + 0.001 - modified.height;
-            
+
             Root root = leaf.getRoot();
             deltaWidth /= root.getWidthFactor();
             deltaHeight /= root.getHeightFactor();
-            
+
             return new ResizeRequest(
-                    deltaWidth, 
+                    deltaWidth,
                     deltaHeight,
                     size.isWidthSet() ? 1 : -1,
                     size.isHeightSet() ? 1 : -1 );
@@ -117,10 +118,11 @@ public class CLockedResizeLayoutManager extends LockedResizeLayoutManager<Reques
     public RequestDimension prepareResize( Leaf leaf ) {
         boolean lockedWidth = isLockedHorizontally( leaf.getDockable() );
         boolean lockedHeight = isLockedVertically( leaf.getDockable() );
-        
-        if( !lockedWidth && !lockedHeight )
+
+        if( !lockedWidth && !lockedHeight ) {
             return null;
-        
+        }
+
         RequestDimension request = new RequestDimension();
         Rectangle bounds = leaf.getCurrentBounds();
 
@@ -130,14 +132,14 @@ public class CLockedResizeLayoutManager extends LockedResizeLayoutManager<Reques
                 request.setWidth( bounds.width );
             }
         }
-        
+
         if( lockedHeight ){
             double height = leaf.getHeight();
             if( height > 0 ){
                 request.setHeight( bounds.height );
             }
         }
-        
+
         return request;
     }
 
@@ -154,13 +156,14 @@ public class CLockedResizeLayoutManager extends LockedResizeLayoutManager<Reques
         if( dockable != null && dockable.asDockStation() instanceof StackDockStation ){
             StackDockStation station = (StackDockStation)dockable.asDockStation();
             for( int i = 0, n = station.getDockableCount(); i<n; i++ ){
-                if( isLockedVertically( station.getDockable( i ) ))
+                if( isLockedVertically( station.getDockable( i ) )) {
                     return true;
+                }
             }
         }
         return false;
     }
-    
+
 
     /**
      * Checks whether <code>dockable</code>s width is locked.
@@ -175,8 +178,9 @@ public class CLockedResizeLayoutManager extends LockedResizeLayoutManager<Reques
         if( dockable != null && dockable.asDockStation() instanceof StackDockStation ){
             StackDockStation station = (StackDockStation)dockable.asDockStation();
             for( int i = 0, n = station.getDockableCount(); i<n; i++ ){
-                if( isLockedHorizontally( station.getDockable( i ) ))
+                if( isLockedHorizontally( station.getDockable( i ) )) {
                     return true;
+                }
             }
         }
         return false;

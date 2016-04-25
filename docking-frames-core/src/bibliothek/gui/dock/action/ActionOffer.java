@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,16 +42,16 @@ import bibliothek.gui.Dockable;
  */
 public interface ActionOffer {
     /**
-     * Tells whether this <code>ActionOffer</code> wants to collect the 
+     * Tells whether this <code>ActionOffer</code> wants to collect the
      * actions for the <code>dockable</code>, or if this ActionOffer
      * is not interested in the {@link Dockable}.
      * @param dockable The {@link Dockable} to test
      * @return <code>true</code> if this ActionOffer should tell which
      * {@link DockAction actions} will be associated with the <code>dockable</code>,
-     * <code>false</code> otherwise. 
+     * <code>false</code> otherwise.
      */
     public boolean interested( Dockable dockable );
-    
+
     /**
      * Generates one {@link DockActionSource source} of {@link DockAction actions}
      * for the given {@link Dockable}. The ActionOffer is free how to use the
@@ -63,7 +63,7 @@ public interface ActionOffer {
      * should return <code>true</code>, otherwise the behavior of this method
      * is not specified.
      * @param source the DockActionSource derived from dockable
-     * @param guards a list of DockActionSources derived from {@link ActionGuard ActionGuards} 
+     * @param guards a list of DockActionSources derived from {@link ActionGuard ActionGuards}
      * @param parent the DockActionSource derived from the parent of <code>dockable</code>
      * @param parents a list of DockActionSources derived from all parents of <code>dockable</code>
      * @return The source that was created.

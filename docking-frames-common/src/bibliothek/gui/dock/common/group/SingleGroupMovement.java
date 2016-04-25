@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2011 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,24 +35,24 @@ import bibliothek.gui.dock.common.mode.ExtendedMode;
  * @author Benjamin Sigg
  */
 public class SingleGroupMovement implements CGroupMovement{
-	private Dockable dockable;
-	private ExtendedMode target;
-	
-	/**
-	 * Creates a new movement object.
-	 * @param dockable the element whose location will be changed
-	 * @param target the new mode for <code>dockable</code>
-	 */
-	public SingleGroupMovement( Dockable dockable, ExtendedMode target ){
-		this.dockable = dockable;
-		this.target = target;
-	}
-	
-	public void apply( CGroupBehaviorCallback callback ){
-		callback.setMode( dockable, target );	
-	}
-	
-	public boolean forceAccept( DockStation parent, Dockable child ){
-		return true;
-	}
+    private Dockable dockable;
+    private ExtendedMode target;
+
+    /**
+     * Creates a new movement object.
+     * @param dockable the element whose location will be changed
+     * @param target the new mode for <code>dockable</code>
+     */
+    public SingleGroupMovement( Dockable dockable, ExtendedMode target ){
+        this.dockable = dockable;
+        this.target = target;
+    }
+
+    public void apply( CGroupBehaviorCallback callback ){
+        callback.setMode( dockable, target );
+    }
+
+    public boolean forceAccept( DockStation parent, Dockable child ){
+        return true;
+    }
 }

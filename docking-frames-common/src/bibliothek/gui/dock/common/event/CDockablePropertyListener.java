@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -36,77 +36,77 @@ import bibliothek.gui.dock.common.intern.CDockable;
  */
 public interface CDockablePropertyListener {
     /**
-     * Called when the {@link CDockable#isCloseable() closeable}-property has 
+     * Called when the {@link CDockable#isCloseable() closeable}-property has
      * changed.
      * @param dockable the source of the event
      */
     public void closeableChanged( CDockable dockable );
-    
+
     /**
      * Called when the {@link CDockable#isMinimizable() minimizable}-property
      * has changed.
      * @param dockable the source of the event
      */
     public void minimizableChanged( CDockable dockable );
-    
+
     /**
      * Called when the {@link CDockable#isMaximizable() maximizable}-property
      * has changed.
      * @param dockable the source of the event
      */
     public void maximizableChanged( CDockable dockable );
-    
+
     /**
      * Called when the {@link CDockable#isExternalizable() externalizable}-property
      * has changed.
      * @param dockable the source of the event
      */
     public void externalizableChanged( CDockable dockable );
-    
+
     /**
      * Called when the {@link CDockable#isNormalizeable()}-property has changed.
      * @param dockable the source of the event
      */
     public void normalizeableChanged( CDockable dockable );
-    
+
     /**
      * Called when the {@link CDockable#isResizeLockedHorizontally()} or
      * {@link CDockable#isResizeLockedVertically()}-property has changed.
      * @param dockable the source of the event
      */
     public void resizeLockedChanged( CDockable dockable );
-    
+
     /**
      * Called when the {@link CDockable#isMinimizedHold()}-property has changed.
      * @param dockable the source of the event
      */
     public void stickyChanged( CDockable dockable );
-    
+
 
     /**
-     * Called when the property {@link CDockable#getMinimizedSize()} has changed. 
+     * Called when the property {@link CDockable#getMinimizedSize()} has changed.
      * @param dockable the source of the event
      */
     public void minimizeSizeChanged( CDockable dockable );
-    
+
     /**
      * Called when the property {@link CDockable#isMinimizedHoldSwitchable()} has changed.
      * @param dockable the source of the event
      */
     public void stickySwitchableChanged( CDockable dockable );
-    
+
     /**
      * Called when the property {@link CDockable#isTitleShown()} has changed.
      * @param dockable the source of the event
      */
     public void titleShownChanged( CDockable dockable );
-    
+
     /**
      * Called when the property {@link CDockable#isSingleTabShown()} has changed.
      * @param dockable the source of the event
      */
     public void singleTabShownChanged( CDockable dockable );
-    
+
     /**
      * Called when an action that is returned by {@link CDockable#getAction(String)}
      * has been exchanged.
@@ -116,7 +116,7 @@ public interface CDockablePropertyListener {
      * @param newAction the new action, can be <code>null</code>
      */
     public void actionChanged( CDockable dockable, String key, CAction oldAction, CAction newAction );
-    
+
     /**
      * Called if the result of {@link CDockable#isEnabled(bibliothek.gui.dock.common.EnableableItem)} changed
      * for any argument.

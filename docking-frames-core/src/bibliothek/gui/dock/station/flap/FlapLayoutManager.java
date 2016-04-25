@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,26 +44,26 @@ public interface FlapLayoutManager {
      * @param station the station that will use this manager
      */
     public void install( FlapDockStation station );
-    
+
     /**
      * Called when this manager is no longer used.
      * @param station the station that will no longer use this manager
      */
     public void uninstall( FlapDockStation station );
-    
+
     /**
      * Adds an observer to this manager, the observer is to be informed if an important property
      * changes.
      * @param listener the new observer, not <code>null</code>
      */
     public void addListener( FlapLayoutManagerListener listener );
-    
+
     /**
      * Removes the observer <code>listener</code> from this manager.
      * @param listener the observer to remove
      */
     public void removeListener( FlapLayoutManagerListener listener );
-    
+
     /**
      * Called when <code>dockable</code> is added to <code>station</code> and
      * <code>station</code> does not know whether <code>dockable</code> should
@@ -73,7 +73,7 @@ public interface FlapLayoutManager {
      * @return the initial value of the hold property
      */
     public boolean isHold( FlapDockStation station, Dockable dockable );
-    
+
     /**
      * Called when the user changes the hold property of <code>dockable</code>.
      * @param station the caller
@@ -82,7 +82,7 @@ public interface FlapLayoutManager {
      * @param hold the new value
      */
     public void setHold( FlapDockStation station, Dockable dockable, boolean hold );
-    
+
     /**
      * Tells whether the user is supposed to switch the {@link #setHold(FlapDockStation, Dockable, boolean) hold} property.
      * @param station the caller
@@ -91,7 +91,7 @@ public interface FlapLayoutManager {
      * presented with a button to change the property
      */
     public boolean isHoldSwitchable( FlapDockStation station, Dockable dockable );
-    
+
     /**
      * Called when <code>dockable</code> is about to open and <code>station</code>
      * has to find out which size <code>dockable</code> should have.
@@ -101,7 +101,7 @@ public interface FlapLayoutManager {
      * @return the size of <code>dockable</code>
      */
     public int getSize( FlapDockStation station, Dockable dockable );
-    
+
     /**
      * Called when the user changes the size of <code>dockable</code>.
      * @param station the caller

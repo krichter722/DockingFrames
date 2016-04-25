@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -63,64 +63,64 @@ import bibliothek.util.Todo.Version;
  *
  */
 public abstract class AbstractDockableStation extends AbstractDockable implements DockStation {
-	/**
-	 * The list of {@link DockStationListener DockStationListeners} which
-	 * can be used to send events to all listeners.
-	 */
-	protected DockStationListenerManager listeners = new DockStationListenerManager( this );
-	
-	/** The theme of this station */
-	private DockTheme theme;
-    
-	/**
-	 * Constructs a new station, but does nothing more
-	 */
-	public AbstractDockableStation(){
-		super( PropertyKey.DOCK_STATION_TITLE, PropertyKey.DOCK_STATION_TOOLTIP );
-	}
-	
-	@Override
-	protected DockIcon createTitleIcon(){
-		return new DockStationIcon( "dockStation.default", this ){
-			protected void changed( Icon oldValue, Icon newValue ){
-				fireTitleIconChanged( oldValue, newValue );
-			}
-		};
-	}
-	
-	/**
-	 * Constructs a new station and sets the theme.
-	 * @param theme the theme, may be <code>null</code>
-	 */
-	public AbstractDockableStation( DockTheme theme ){
-		this();
-		this.theme = theme;
-	}
-	
+    /**
+     * The list of {@link DockStationListener DockStationListeners} which
+     * can be used to send events to all listeners.
+     */
+    protected DockStationListenerManager listeners = new DockStationListenerManager( this );
+
+    /** The theme of this station */
+    private DockTheme theme;
+
+    /**
+     * Constructs a new station, but does nothing more
+     */
+    public AbstractDockableStation(){
+        super( PropertyKey.DOCK_STATION_TITLE, PropertyKey.DOCK_STATION_TOOLTIP );
+    }
+
+    @Override
+    protected DockIcon createTitleIcon(){
+        return new DockStationIcon( "dockStation.default", this ){
+            protected void changed( Icon oldValue, Icon newValue ){
+                fireTitleIconChanged( oldValue, newValue );
+            }
+        };
+    }
+
+    /**
+     * Constructs a new station and sets the theme.
+     * @param theme the theme, may be <code>null</code>
+     */
+    public AbstractDockableStation( DockTheme theme ){
+        this();
+        this.theme = theme;
+    }
+
     public DockStation asDockStation() {
         return this;
     }
-    
+
     public DockTheme getTheme() {
-    	return theme;
+        return theme;
     }
-    
+
     public void updateTheme() {
-    	DockController controller = getController();
-    	if( controller != null ){
-    		DockTheme newTheme = controller.getTheme();
-    		if( newTheme != theme ){
-    			theme = newTheme;
-    			try{
-    				callDockUiUpdateTheme();
-    			}
-    			catch( IOException ex ){
-    				throw new RuntimeException( ex );
-    			}
-    		}
-    	}
+        DockController controller = getController();
+        if( controller != null ){
+            DockTheme newTheme = controller.getTheme();
+            if( newTheme != theme ){
+                theme = newTheme;
+                try{
+                    callDockUiUpdateTheme();
+                }
+                catch( IOException ex ){
+                    throw new RuntimeException( ex );
+                }
+            }
+        }
     }
-    
+
     /**
      * Calls the method {@link DockUI}.{@link DockUI#updateTheme(DockStation, DockFactory)}
      * with <code>this</code> as the first argument, and an appropriate factory
@@ -128,11 +128,11 @@ public abstract class AbstractDockableStation extends AbstractDockable implement
      * @throws IOException if the DockUI throws an exception
      */
     protected abstract void callDockUiUpdateTheme() throws IOException;
-        
+
     public DockActionSource getDirectActionOffers( Dockable dockable ) {
         return null;
     }
-    
+
     public DockActionSource getIndirectActionOffers( Dockable dockable ) {
         return null;
     }
@@ -150,32 +150,32 @@ public abstract class AbstractDockableStation extends AbstractDockable implement
     public boolean isVisible( Dockable dockable ) {
         return isStationShowing();
     }
-    
+
     public boolean isChildShowing( Dockable dockable ){
-    	return isVisible( dockable );
+        return isVisible( dockable );
     }
 
     public boolean isStationShowing(){
-	    return isStationVisible();
+        return isStationVisible();
     }
-    
+
     @Deprecated
-    @Todo( compatibility=Compatibility.BREAK_MAJOR, priority=Priority.ENHANCEMENT, target=Version.VERSION_1_1_3, description="remove this method" )    
+    @Todo( compatibility=Compatibility.BREAK_MAJOR, priority=Priority.ENHANCEMENT, target=Version.VERSION_1_1_3, description="remove this method" )
     public boolean isStationVisible() {
-    	boolean visible = isDockableShowing();
-    	if( visible ){
-    		return true;
-    	}
-    	if( getController() != null ){
-    		return getComponent().isShowing();
-    	}
-    	return false;
+        boolean visible = isDockableShowing();
+        if( visible ){
+            return true;
+        }
+        if( getController() != null ){
+            return getComponent().isShowing();
+        }
+        return false;
     }
 
     public boolean accept( Dockable child ) {
         return true;
     }
-    
+
     /**
      * Tells whether this station accepts <code>child</code> as new child. This is a shortcut
      * asking {@link #accept(Dockable)}, {@link Dockable#accept(DockStation)} and
@@ -184,9 +184,9 @@ public abstract class AbstractDockableStation extends AbstractDockable implement
      * @return <code>true</code> if acceptable
      */
     public boolean acceptable( Dockable child ){
-    	return DockUtilities.acceptable( this, child );
+        return DockUtilities.acceptable( this, child );
     }
-    
+
     /**
      * Tells whether this station accepts <code>child</code> as combination with <code>old</code>.
      * @param old some child of this station
@@ -194,36 +194,36 @@ public abstract class AbstractDockableStation extends AbstractDockable implement
      * @return <code>true</code> if <code>old</code> and <code>next</code> can be combined
      */
     public boolean acceptable( Dockable old, Dockable next ){
-    	return DockUtilities.acceptable( this, old, next );
+        return DockUtilities.acceptable( this, old, next );
     }
 
     public void changed( Dockable dockable, DockTitle title, boolean active ) {
         title.changed( new ActivityDockTitleEvent( this, dockable, active ));
     }
-    
+
     public void requestChildDockTitle( DockTitleRequest request ){
-	    // ignore	
+        // ignore
     }
-    
+
     public void requestChildDisplayer( DisplayerRequest request ){
-	    // ignore	
+        // ignore
     }
 
     public DockStationDropLayer[] getLayers(){
-    	return new DockStationDropLayer[]{
-    			new DefaultDropLayer( this )
-    	};
+        return new DockStationDropLayer[]{
+            new DefaultDropLayer( this )
+        };
     }
-    
+
     /**
      * Invokes {@link DockStationListenerManager#fireDockablesRepositioned(Dockable...)} for
      * all children starting at index <code>fromIndex</code>.
      * @param fromIndex the index of the first moved child
      */
     protected void fireDockablesRepositioned( int fromIndex ){
-    	fireDockablesRepositioned( fromIndex, getDockableCount()-1 );
+        fireDockablesRepositioned( fromIndex, getDockableCount()-1 );
     }
-    
+
     /**
      * Invokes {@link DockStationListenerManager#fireDockablesRepositioned(Dockable...)} for
      * all children starting at index <code>fromIndex</code> to index <code>toIndex</code>.
@@ -233,19 +233,19 @@ public abstract class AbstractDockableStation extends AbstractDockable implement
     protected void fireDockablesRepositioned( int fromIndex, int toIndex ){
         int count = toIndex - fromIndex + 1;
         if( count > 0 ){
-        	Dockable[] moved = new Dockable[count];
-        	for( int i = 0; i < count; i++ ){
-        		moved[i] = getDockable( i+fromIndex );
-        	}
-        	listeners.fireDockablesRepositioned( moved );
+            Dockable[] moved = new Dockable[count];
+            for( int i = 0; i < count; i++ ){
+                moved[i] = getDockable( i+fromIndex );
+            }
+            listeners.fireDockablesRepositioned( moved );
         }
     }
-    
+
     /**
      * Creates a generic set of algorithms.
      * @return the algorithms, not <code>null</code>
      */
     protected DockStationDelegate delegate(){
-    	return new DockStationDelegate();
+        return new DockStationDelegate();
     }
 }

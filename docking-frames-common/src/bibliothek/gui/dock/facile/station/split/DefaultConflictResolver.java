@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -26,7 +26,7 @@
 package bibliothek.gui.dock.facile.station.split;
 
 /**
- * A conflict resolver that tries to distribute space in conflicts 
+ * A conflict resolver that tries to distribute space in conflicts
  * equally to all parties
  * @author Benjamin Sigg
  */
@@ -40,27 +40,28 @@ public class DefaultConflictResolver<T> implements ConflictResolver<T>{
     private int increment( int i ){
         return (i==-1) ? -1 : (i+1);
     }
-    
+
     public ResizeRequest requestHorizontal( ResizeRequest left, ResizeRequest right, ResizeNode<T> node ) {
-        if( left == null && right == null )
+        if( left == null && right == null ) {
             return null;
-        
+        }
+
         if( left == null ){
-            return new ResizeRequest( 
-                    right.getDeltaWidth(), 
+            return new ResizeRequest(
+                    right.getDeltaWidth(),
                     right.getDeltaHeight(),
                     increment( right.getFractionWidth() ),
                     right.getFractionHeight());
         }
-        
+
         if( right == null ){
-            return new ResizeRequest( 
-                    left.getDeltaWidth(), 
+            return new ResizeRequest(
+                    left.getDeltaWidth(),
                     left.getDeltaHeight(),
                     increment(left.getFractionWidth()),
                     left.getFractionHeight());
         }
-    
+
         double widthDelta = 0;
         int widthFraction = -1;
         if( left.getFractionWidth() == -1 && right.getFractionWidth() == -1 ){
@@ -76,12 +77,12 @@ public class DefaultConflictResolver<T> implements ConflictResolver<T>{
             widthFraction = left.getFractionWidth()+1;
         }
         else{
-            widthDelta = left.getDeltaWidth() / left.getFractionWidth() + 
+            widthDelta = left.getDeltaWidth() / left.getFractionWidth() +
                 right.getDeltaWidth() / right.getFractionWidth() +
                 node.getNewDividerSize() - node.getOldDividerSize();
             widthFraction = 1;
         }
-        
+
         double heightDelta = 0;
         int heightFraction = -1;
         if( left.getFractionHeight() == -1 && right.getFractionHeight() == -1 ){
@@ -108,33 +109,35 @@ public class DefaultConflictResolver<T> implements ConflictResolver<T>{
             heightDelta = right.getDeltaHeight();
             heightFraction = right.getFractionHeight();
         }
-        
-        if( widthFraction == -1 && heightFraction == -1 )
+
+        if( widthFraction == -1 && heightFraction == -1 ) {
             return null;
-        
+        }
+
         return new ResizeRequest( widthDelta, heightDelta, widthFraction, heightFraction );
     }
-    
+
     public ResizeRequest requestVertical( ResizeRequest top, ResizeRequest bottom, ResizeNode<T> node ) {
-        if( top == null && bottom == null )
+        if( top == null && bottom == null ) {
             return null;
-        
+        }
+
         if( top == null ){
-            return new ResizeRequest( 
-                    bottom.getDeltaWidth(), 
+            return new ResizeRequest(
+                    bottom.getDeltaWidth(),
                     bottom.getDeltaHeight(),
                     bottom.getFractionWidth(),
                     increment(bottom.getFractionHeight()));
         }
-        
+
         if( bottom == null ){
-            return new ResizeRequest( 
-                    top.getDeltaWidth(), 
+            return new ResizeRequest(
+                    top.getDeltaWidth(),
                     top.getDeltaHeight(),
                     top.getFractionWidth(),
                     increment(top.getFractionHeight()));
         }
-        
+
         double widthDelta = 0;
         int widthFraction = -1;
         if( top.getFractionWidth() == -1 && bottom.getFractionWidth() == -1 ){
@@ -161,7 +164,7 @@ public class DefaultConflictResolver<T> implements ConflictResolver<T>{
             widthDelta = bottom.getDeltaWidth();
             widthFraction = bottom.getFractionWidth();
         }
-        
+
         double heightDelta = 0;
         int heightFraction = -1;
         if( top.getFractionHeight() == -1 && bottom.getFractionHeight() == -1 ){
@@ -182,35 +185,38 @@ public class DefaultConflictResolver<T> implements ConflictResolver<T>{
                 node.getNewDividerSize() - node.getOldDividerSize();
             heightFraction = 1;
         }
-        
-        if( widthFraction == -1 && heightFraction == -1 )
+
+        if( widthFraction == -1 && heightFraction == -1 ) {
             return null;
-        
+        }
+
         return new ResizeRequest( widthDelta, heightDelta, widthFraction, heightFraction );
     }
-    
-    
+
+
     public double resolveHorizontal( ResizeNode<T> node, ResizeRequest left,
             double deltaLeft, ResizeRequest right, double deltaRight ) {
 
 
-        if( left.getFractionWidth() == 1 && right.getFractionWidth() > 1 )
+        if( left.getFractionWidth() == 1 && right.getFractionWidth() > 1 ) {
             return deltaLeft;
-        else if( left.getFractionWidth() > 1 && right.getFractionWidth() == 1 )
+        } else if( left.getFractionWidth() > 1 && right.getFractionWidth() == 1 ) {
             return deltaRight;
-        else
+        } else {
             return (deltaLeft * left.getFractionWidth() + deltaRight * right.getFractionWidth()) /
-                (left.getFractionWidth() + right.getFractionWidth() );
+                    (left.getFractionWidth() + right.getFractionWidth() );
+        }
     }
     public double resolveVertical( ResizeNode<T> node, ResizeRequest top,
             double deltaTop, ResizeRequest bottom, double deltaBottom ) {
-        
-        if( top.getFractionHeight() == 1 && bottom.getFractionHeight() > 1 )
+
+        if( top.getFractionHeight() == 1 && bottom.getFractionHeight() > 1 ) {
             return deltaTop;
-        else if( top.getFractionHeight() > 1 && bottom.getFractionHeight() == 1 )
+        } else if( top.getFractionHeight() > 1 && bottom.getFractionHeight() == 1 ) {
             return deltaBottom;
-        else
+        } else {
             return (deltaTop * top.getFractionHeight() + deltaBottom * bottom.getFractionHeight()) /
-                (top.getFractionHeight() + bottom.getFractionHeight() );
+                    (top.getFractionHeight() + bottom.getFractionHeight() );
+        }
     }
 }

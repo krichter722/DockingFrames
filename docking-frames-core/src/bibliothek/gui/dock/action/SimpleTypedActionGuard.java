@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -38,7 +38,7 @@ import bibliothek.gui.Dockable;
  */
 public class SimpleTypedActionGuard<T extends Dockable> extends TypedActionGuard<T> {
     private DockActionSource source;
-    
+
     /**
      * Sets the type and the source of this guard
      * @param type The type for which this SimpleTypedActionGuard will react.
@@ -50,7 +50,7 @@ public class SimpleTypedActionGuard<T extends Dockable> extends TypedActionGuard
         super( type );
         setSource( source );
     }
-    
+
     /**
      * Gets the {@link DockActionSource} that will be added to all
      * {@link Dockable Dockables} with the correct type.
@@ -67,12 +67,13 @@ public class SimpleTypedActionGuard<T extends Dockable> extends TypedActionGuard
      * @param source The source, not <code>null</code>
      */
     public void setSource( DockActionSource source ) {
-        if( source == null )
+        if( source == null ) {
             throw new IllegalArgumentException( "source must not be null" );
-        
+        }
+
         this.source = source;
     }
-    
+
     @Override
     protected DockActionSource getTypedSource( T dockable ) {
         return source;

@@ -36,7 +36,7 @@ public class InspectionTree extends JTree{
     private InspectionPanel panel;
     /** shows which {@link Node} to select for a given link */
     private Map<String, Node> links = new HashMap<String, Node>();
-    
+
     /**
      * Opens a frame showing the tree that has <code>entryable</code> as root,
      * and additionally an {@link InspectionPanel}. This method blocks until
@@ -48,25 +48,25 @@ public class InspectionTree extends JTree{
         frontend.getController().setTheme( new NoStackTheme( new FlatTheme() ) );
         SplitDockStation station = new SplitDockStation();
         frontend.addRoot( "station", station );
-        
+
         final JFrame frame = new JFrame( "Inspect" );
-        
+
         InspectionTree tree = new InspectionTree( entryable );
         SplitDockGrid grid = new SplitDockGrid();
 
-        grid.addDockable( 0, 0, 1, 1, 
+        grid.addDockable( 0, 0, 1, 1,
                 new DefaultDockable( new JScrollPane( tree ), "Tree" ));
-        grid.addDockable( 1, 0, 1, 1, 
+        grid.addDockable( 1, 0, 1, 1,
                 new DefaultDockable( new JScrollPane( tree.getPanel() ), "Entry" ));
         station.dropTree( grid.toTree() );
-        
+
         frame.add( station, BorderLayout.CENTER );
         frame.setBounds( 20, 20, 500, 300 );
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        
+
         final Object LOCK = new Object();
         frame.setVisible( true );
-        
+
         frame.addWindowListener( new WindowAdapter(){
             @Override
             public void windowClosing( WindowEvent e ) {
@@ -76,7 +76,7 @@ public class InspectionTree extends JTree{
                 }
             }
         });
-        
+
         while( frame.isVisible() ){
             synchronized( LOCK ){
                 try {
@@ -88,7 +88,7 @@ public class InspectionTree extends JTree{
             }
         }
     }
-    
+
     /**
      * Creates a new tree, using <code>entryable</code> as root.
      * @param entryable the root
@@ -96,10 +96,10 @@ public class InspectionTree extends JTree{
     public InspectionTree( Entryable entryable ){
         panel = new InspectionPanel();
         panel.inspect( null );
-        
+
         DefaultTreeModel model = new DefaultTreeModel( new Node( entryable ));
         setModel( model );
-        
+
         addTreeSelectionListener( new TreeSelectionListener(){
             public void valueChanged( TreeSelectionEvent e ) {
                 Node node = (Node)getLastSelectedPathComponent();
@@ -110,7 +110,7 @@ public class InspectionTree extends JTree{
             }
         });
     }
-    
+
     /**
      * Gets the panel that shows the contents of the currently selected node
      * of this tree.
@@ -119,7 +119,7 @@ public class InspectionTree extends JTree{
     public InspectionPanel getPanel() {
         return panel;
     }
-    
+
     /**
      * Selects the {@link Entry} which has the name <code>link</code>.
      * @param link the name of the <code>Entry</code>
@@ -132,14 +132,14 @@ public class InspectionTree extends JTree{
     }
 
     /**
-     * A wrapper of an {@link Entryable} used to easily  combine 
+     * A wrapper of an {@link Entryable} used to easily  combine
      * <code>Entryable</code> and {@link JTree}.
      * @author Benjamin Sigg
      */
     private class Node extends DefaultMutableTreeNode{
         /** the data of this node */
         private Entry entry;
-        
+
         /**
          * Creates a new node
          * @param entryable the content of this node
@@ -149,11 +149,11 @@ public class InspectionTree extends JTree{
             String link = entry.getType() + ":" + entry.getId();
             setUserObject( link );
             links.put( link, this );
-            
+
             for( Entryable child : entryable.children() )
                 add( new Node( child ) );
         }
-        
+
         /**
          * Gets the content of this node.
          * @return the content

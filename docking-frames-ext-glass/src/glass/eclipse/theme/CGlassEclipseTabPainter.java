@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -48,46 +48,46 @@ import glass.eclipse.theme.utils.*;
 
 /**
  * Eclipse tab painter with glass look.
- * 
+ *
  * Based on ArchPainter of Janni Kovacs.
- * 
+ *
  * @author Thomas Hilbert
  */
 @ColorCodes({
-	"glass.selected.light", 
-	"glass.selected.boundary", 
-	"glass.selected.center", 
-	"glass.unselected.light", 
-	"glass.unselected.boundary", 
-	"glass.unselected.center", 
-	"glass.focused.light", 
-	"glass.focused.boundary", 
-	"glass.focused.center",
-	"glass.disabled.light", 
-	"glass.disabled.boundary", 
-	"glass.disabled.center", 
-	
-	"stack.tab.border.glass", 
-	"stack.tab.border.selected.glass", 
-	"stack.tab.border.selected.focused.glass", 
-	"stack.tab.border.selected.focuslost.glass",
-	"stack.tab.border.disabled.glass", 
-	"stack.tab.top.glass", 
-	"stack.tab.top.selected.glass", 
-	"stack.tab.top.selected.focused.glass", 
-	"stack.tab.top.selected.focuslost.glass",
-	"stack.tab.top.disabled.glass", 
-	"stack.tab.bottom.glass", 
-	"stack.tab.bottom.selected.glass", 
-	"stack.tab.bottom.selected.focused.glass", 
-	"stack.tab.bottom.selected.focuslost.glass",
-	"stack.tab.bottom.disabled.glass", 
-	"stack.tab.text.glass", 
-	"stack.tab.text.selected.glass", 
-	"stack.tab.text.selected.focused.glass",
-	"stack.tab.text.selected.focuslost.glass",
-	"stack.tab.text.disabled.glass", 
-	"stack.border.glass"})
+    "glass.selected.light",
+    "glass.selected.boundary",
+    "glass.selected.center",
+    "glass.unselected.light",
+    "glass.unselected.boundary",
+    "glass.unselected.center",
+    "glass.focused.light",
+    "glass.focused.boundary",
+    "glass.focused.center",
+    "glass.disabled.light",
+    "glass.disabled.boundary",
+    "glass.disabled.center",
+
+    "stack.tab.border.glass",
+    "stack.tab.border.selected.glass",
+    "stack.tab.border.selected.focused.glass",
+    "stack.tab.border.selected.focuslost.glass",
+    "stack.tab.border.disabled.glass",
+    "stack.tab.top.glass",
+    "stack.tab.top.selected.glass",
+    "stack.tab.top.selected.focused.glass",
+    "stack.tab.top.selected.focuslost.glass",
+    "stack.tab.top.disabled.glass",
+    "stack.tab.bottom.glass",
+    "stack.tab.bottom.selected.glass",
+    "stack.tab.bottom.selected.focused.glass",
+    "stack.tab.bottom.selected.focuslost.glass",
+    "stack.tab.bottom.disabled.glass",
+    "stack.tab.text.glass",
+    "stack.tab.text.selected.glass",
+    "stack.tab.text.selected.focused.glass",
+    "stack.tab.text.selected.focuslost.glass",
+    "stack.tab.text.disabled.glass",
+    "stack.border.glass"})
 public class CGlassEclipseTabPainter extends BaseTabComponent {
    /***/
    private static final long serialVersionUID = -3944491545940520488L;
@@ -104,7 +104,7 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
     * Glass parameter for focused tab background.
     */
    private IGlassFactory.SGlassParameter glassFocused;
-   
+
    /**
     * Glass parameter for disabled tab background.
     */
@@ -195,7 +195,7 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
       colGlassCenterFocused = new CGlassColor("glass.focused.center", getStation(), getDockable(), new Color(0, 0, 150));
       colGlassBoundaryFocused = new CGlassColor("glass.focused.boundary", getStation(), getDockable(), new Color(0, 40, 80));
       colGlassLightFocused = new CGlassColor("glass.focused.light", getStation(), getDockable(), new Color(100, 200, 255));
-      
+
       colGlassCenterDisabled = new CGlassColor("glass.disabled.center", getStation(), getDockable(), new Color(150, 150, 150));
       colGlassBoundaryDisabled = new CGlassColor("glass.disabled.boundary", getStation(), getDockable(), new Color(0, 40, 80));
       colGlassLightDisabled = new CGlassColor("glass.disabled.light", getStation(), getDockable(), new Color(150, 150, 150));
@@ -219,7 +219,7 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
          }
 
          if( !isEnabled() ){
-        	 color2 = colorStackTabBorderDisabled.value();
+             color2 = colorStackTabBorderDisabled.value();
          }
          else if (isSelected()) {
             if (isFocused()) {
@@ -302,12 +302,12 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
    protected void updateColors () {
       update();
    }
-   
+
    @Override
-	protected void updateEnabled(){
-	   updateBorder();
-	   update();
-	}
+    protected void updateEnabled(){
+       updateBorder();
+       update();
+    }
 
    /**
     * Updates the layout information of this painter.
@@ -417,14 +417,14 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
       c1 = c1 == null ? colorStackTabTopDisabled.value() : c1;
       c2 = c2 == null ? CColor.BrighterColor(colorStackTabTopDisabled.value()) : c2;
       c3 = c3 == null ? colorStackTabBottomDisabled.value() : c3;
-      
+
       glassDisabled = f.getDisabledGlassParameters();
       if (glassUnSelected != null) {
           glassUnSelected.colorCenter = c1;
           glassUnSelected.colorSuperLight = c2;
           glassUnSelected.colorBoundary = c3;
        }
-      
+
       try {
          if (getButtons() != null) {
             if (isSelected() && isFocused()) {
@@ -450,7 +450,7 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
       Color c;
 
       if( !isEnabled() ){
-    	  c = colorStackTabTextDisabled.value();
+          c = colorStackTabTextDisabled.value();
       }
       else if (isFocused() && !focusTemporarilyLost) {
          c = colorStackTabTextSelectedFocused.value();
@@ -475,9 +475,9 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
       }
 
       if( containsButton( x, y )){
-    	  return true;
+          return true;
       }
-      
+
       boolean bRet = true;
       if (isSelected()) {
          Shape s = createSelectedTabShape(getWidth(), getHeight(), false);
@@ -493,7 +493,7 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
    @Override
    public void paintBackground (Graphics g) {
       if (getWidth() != 0 && getHeight() != 0) {
-    	  updateGlass();
+          updateGlass();
          Graphics2D g2d = (Graphics2D)g.create();
 
          int iState = 0;
@@ -577,7 +577,7 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
                g2d.drawImage(img, 0, 0, null);
             }
          }
-         // restore default clipping 
+         // restore default clipping
          sTab = createUnSelectedTabShape(w, h, getTabIndex() == 0, false);
 
          // draw Border
@@ -628,19 +628,19 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
             paintWorkAround(g2d);
          }
 
-         // draw glass 
+         // draw glass
          // first render to image because glass is transparent and we would see the inactive tab in background
          BufferedImage bimg = null;
          dImg = new Dimension(isHorizontal() ? w : h, isHorizontal() ? h : w);
          if( !isEnabled() ){
-        	 if(glassDisabled != null){
-        		 try {
+             if(glassDisabled != null){
+                 try {
                      bimg = glass.RenderBufferedImage(glassDisabled, dImg, true);
-				 }
-				 catch( Exception e ) {
-					 bimg = glass.RenderBufferedImage( CGlassFactory.VALUE_GRAY, dImg, true );
-				 } 
-        	 }
+                 }
+                 catch( Exception e ) {
+                     bimg = glass.RenderBufferedImage( CGlassFactory.VALUE_GRAY, dImg, true );
+                 }
+             }
          }
          else if (bActive) {
             if (glassFocused != null) {
@@ -720,7 +720,7 @@ public class CGlassEclipseTabPainter extends BaseTabComponent {
     * An unselected tab before the selected tab is not painted behind the selected tab.
     * When we draw the selected tab, we first draw a little bit of the unselected tab in
     * background.
-    * 
+    *
     * @param g2d
     */
    private void paintWorkAround (Graphics2D g2d) {

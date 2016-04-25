@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,55 +46,55 @@ import bibliothek.gui.dock.util.property.ConstantPropertyFactory;
  * be changed.<br>
  * Every title is either in the state {@link #bind() bound} or {@link #unbind() unbound}.
  * As long as a title is unbound, it has not to do anything. As soon as it is
- * bound, it has to ensure that it shows the correct properties. A title 
+ * bound, it has to ensure that it shows the correct properties. A title
  * can assume that it is only bound when its <code>Dockable</code> knows
  * the {@link DockController}.
  * @author Benjamin Sigg
  */
 public interface DockTitle extends DockElementRepresentative, DockComponentRoot{
-	/** Key for a {@link OrientationToRotationStrategy}. The strategy can tell this title how to render its text given
-	 * the orientation of this title. */
-	public static final PropertyKey<OrientationToRotationStrategy> ORIENTATION_STRATEGY = 
-		new PropertyKey<OrientationToRotationStrategy>( "DockTitle.orientation", new ConstantPropertyFactory<OrientationToRotationStrategy>( OrientationToRotationStrategy.DEFAULT ), true );
-	
+    /** Key for a {@link OrientationToRotationStrategy}. The strategy can tell this title how to render its text given
+     * the orientation of this title. */
+    public static final PropertyKey<OrientationToRotationStrategy> ORIENTATION_STRATEGY =
+        new PropertyKey<OrientationToRotationStrategy>( "DockTitle.orientation", new ConstantPropertyFactory<OrientationToRotationStrategy>( OrientationToRotationStrategy.DEFAULT ), true );
+
     /** How to layout a {@link DockTitle} */
     public static enum Orientation{
         /**
          * The title is at the north side of some panel.
          */
         NORTH_SIDED( true ),
-        
+
         /**
          * The title is at the south side of some panel.
          */
         SOUTH_SIDED( true ),
-        
+
         /**
          * The title is at the east side of some panel.
          */
         EAST_SIDED( false ),
-        
+
         /**
          * The title is at the west side of some panel.
          */
         WEST_SIDED( false ),
-        
+
         /**
          * The title is somehow vertical oriented.
          */
-        FREE_VERTICAL( false ), 
-        
+        FREE_VERTICAL( false ),
+
         /**
          * The title is somehow horizontal oriented.
          */
         FREE_HORIZONTAL( true );
-    
+
         private boolean horizontal;
-        
+
         private Orientation( boolean horizontal ){
             this.horizontal = horizontal;
         }
-        
+
         /**
          * Tells a DockTitle that its preferred height should be smaller
          * than its preferred width
@@ -103,67 +103,67 @@ public interface DockTitle extends DockElementRepresentative, DockComponentRoot{
         public boolean isHorizontal() {
             return horizontal;
         }
-        
-        /** 
+
+        /**
          * Tells a DockTitle that its preferred width should be smaller
-         * than its preferred height 
+         * than its preferred height
          * @return <code>true</code> if the title lays vertical
          */
         public boolean isVertical(){
             return !isHorizontal();
         }
     };
-    
+
     /**
      * Gets a {@link Component} which paints this {@link DockTitle}.
      * This method must always return the same {@link Component}.
      * @return always the same {@link Component}
      */
     public Component getComponent();
-        
+
     /**
      * Adds a listener to all {@link Component}s of this title
      * which are visible and which may be "grabbed" by the mouse.
      * @param listener the new listener
      */
     public void addMouseInputListener( MouseInputListener listener );
-    
+
     /**
      * Removes a listener.
      * @param listener the listener to remove
      */
     public void removeMouseInputListener( MouseInputListener listener );
-    
+
     /**
      * Gets the owner of this title.
      * @return the owner
      */
     public Dockable getDockable();
-    
+
     /**
      * Sets the orientation of this title. The layout of this title
      * should be influenced by the orientation.
      * @param orientation the orientation
      */
     public void setOrientation( Orientation orientation );
-    
+
     /**
      * Gets the orientation of this title.
      * @return the orientation
      * @see #setOrientation(bibliothek.gui.dock.title.DockTitle.Orientation)
      */
     public Orientation getOrientation();
-    
+
     /**
      * Called if a property changed that might be important for painting this
      * title. The property can be anything, it does not necessarily have to be
      * a property of this title nor of its owner. Modules using this title
      * might send subclasses of {@link DockTitleEvent} to transmit more information
-     * to this title than {@link DockTitleEvent} would allow. 
+     * to this title than {@link DockTitleEvent} would allow.
      * @param event information about the current state
      */
     public void changed( DockTitleEvent event );
-    
+
     /**
      * Tells whether this title is selected (active) or not. The title
      * knows its state through the event-object of the method
@@ -171,7 +171,7 @@ public interface DockTitle extends DockElementRepresentative, DockComponentRoot{
      * @return the selection state
      */
     public boolean isActive();
-    
+
     /**
      * Called before this title is displayed. This method should connect the
      * title with other objects such as its {@link #getDockable() owner}.
@@ -183,7 +183,7 @@ public interface DockTitle extends DockElementRepresentative, DockComponentRoot{
      * will call the <code>bind</code>-method, as soon as the <code>Dockable</code> knows the controller.
      */
     public void bind();
-    
+
     /**
      * The reverse of {@link #bind()}. The title should remove any connections
      * to other objects and {@link DockAction#unbind(Dockable) unbind} its
@@ -193,7 +193,7 @@ public interface DockTitle extends DockElementRepresentative, DockComponentRoot{
      * will call the <code>unbind</code>-method before the {@link Dockable} looses the controller.
      */
     public void unbind();
-    
+
     /**
      * Gets information about how this title was created. This {@link DockTitleVersion} can be used
      * to create a {@link DockTitleRequest} which should create the same title again. If this title

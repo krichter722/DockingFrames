@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,7 +46,7 @@ public interface StandardDockActionListener {
      * @see StandardDockAction#getText(Dockable)
      */
     public void actionTextChanged( StandardDockAction action, Set<Dockable> dockables );
-    
+
     /**
      * Invoked when the tooltip of a {@link StandardDockAction} has been changed.
      * @param action The action whose tooltip is changed
@@ -55,7 +55,7 @@ public interface StandardDockActionListener {
      * @see StandardDockAction#getTooltipText(Dockable)
      */
     public void actionTooltipTextChanged( StandardDockAction action, Set<Dockable> dockables );
-    
+
     /**
      * Invoked when the icon of a {@link StandardDockAction} has been changed.
      * @param action The action whose icon is changed
@@ -65,7 +65,7 @@ public interface StandardDockActionListener {
      * @see StandardDockAction#getIcon(Dockable, ActionContentModifier)
      */
     public void actionIconChanged( StandardDockAction action, ActionContentModifier modifier, Set<Dockable> dockables );
-    
+
     /**
      * Invoked when the enabled-state of a {@link StandardDockAction} has been changed.
      * @param action The action whose state is changed
@@ -74,7 +74,7 @@ public interface StandardDockActionListener {
      * @see StandardDockAction#isEnabled(Dockable)
      */
     public void actionEnabledChanged( StandardDockAction action, Set<Dockable> dockables );
-    
+
     /**
      * Invoked when the representative-property of a {@link StandardDockAction} has been changed.
      * @param action the action whose property changed

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2011 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -49,34 +49,34 @@ import bibliothek.gui.dock.SplitDockStation;
  * A strategy may offer additional services like changing the {@link Cursor}, or a strategy
  * may not do anything at all.<br>
  * Implementations should (but are not enforced to) respect some properties:
- * <ul> 
- * 	<li>{@link SplitDockStation#isResizingEnabled()}: whether the user is allowed to resize the children.</li>
- * 	<li>{@link SplitDockStation#isContinousDisplay()}: whether resizing should happen immediatelly.</li>
+ * <ul>
+ *     <li>{@link SplitDockStation#isResizingEnabled()}: whether the user is allowed to resize the children.</li>
+ *     <li>{@link SplitDockStation#isContinousDisplay()}: whether resizing should happen immediatelly.</li>
  * </ul>
  * <br>
  * Clients usually do not need to implement this interface, and the framework offers only one default
- * implementation. The interface will however remain, ready for clients with unforseen needs. 
+ * implementation. The interface will however remain, ready for clients with unforseen needs.
  * @author Benjamin Sigg
  */
 public interface SplitDividerStrategy {
-	/**
-	 * Informs this strategy that <code>station</code> is going to use it and that <code>container</code> must
-	 * be monitored in order to receive {@link MouseEvent}s.
-	 * @param station the station whose children are resized by this strategy
-	 * @param container the component to monitor
-	 */
-	public void install( SplitDockStation station, Component container );
+    /**
+     * Informs this strategy that <code>station</code> is going to use it and that <code>container</code> must
+     * be monitored in order to receive {@link MouseEvent}s.
+     * @param station the station whose children are resized by this strategy
+     * @param container the component to monitor
+     */
+    public void install( SplitDockStation station, Component container );
 
-	/**
-	 * Informs this strategy that it will no lonver be used by <code>station</code>.
-	 * @param station the station that is no longer using <code>this</code>
-	 */
-	public void uninstall( SplitDockStation station );
-	
-	/**
-	 * Allows this strategy to paint onto the {@link SplitDockStation}.
-	 * @param station the station which is painted
-	 * @param g the graphics context to use
-	 */
-	public void paint( SplitDockStation station, Graphics g );
+    /**
+     * Informs this strategy that it will no lonver be used by <code>station</code>.
+     * @param station the station that is no longer using <code>this</code>
+     */
+    public void uninstall( SplitDockStation station );
+
+    /**
+     * Allows this strategy to paint onto the {@link SplitDockStation}.
+     * @param station the station which is painted
+     * @param g the graphics context to use
+     */
+    public void paint( SplitDockStation station, Graphics g );
 }

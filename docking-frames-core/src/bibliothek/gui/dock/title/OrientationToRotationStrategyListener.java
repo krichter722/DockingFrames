@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -33,13 +33,13 @@ import bibliothek.gui.Dockable;
  * @author Benjamin Sigg
  */
 public interface OrientationToRotationStrategyListener {
-	/**
-	 * Informs that the rotation of the text on any <code>title</code> representing <code>dockable</code> has changed. 
-	 * Any argument of this method can be <code>null</code>, in such a case it functions as wildcard. For example
-	 * if <code>title</code> is <code>null</code> than any {@link DockTitle} representing <code>dockable</code> needs
-	 * an update.
-	 * @param dockable the affected docakble, <code>null</code> if all dockables are affected 
-	 * @param title the affected title, <code>null</code> if all titles are affected
-	 */
-	public void rotationChanged( Dockable dockable, DockTitle title );
+    /**
+     * Informs that the rotation of the text on any <code>title</code> representing <code>dockable</code> has changed.
+     * Any argument of this method can be <code>null</code>, in such a case it functions as wildcard. For example
+     * if <code>title</code> is <code>null</code> than any {@link DockTitle} representing <code>dockable</code> needs
+     * an update.
+     * @param dockable the affected docakble, <code>null</code> if all dockables are affected
+     * @param title the affected title, <code>null</code> if all titles are affected
+     */
+    public void rotationChanged( Dockable dockable, DockTitle title );
 }

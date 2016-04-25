@@ -20,7 +20,7 @@ import com.sun.javadoc.ClassDoc;
 public class EntryableHierarchyClass extends AbstractEntryable{
     /** the root of the tree */
     private ClassDoc doc;
-    
+
     /**
      * Creates a new type-hierarchy.
      * @param doc the root of the tree
@@ -29,7 +29,7 @@ public class EntryableHierarchyClass extends AbstractEntryable{
         this.doc = doc;
         putClass( doc, null );
     }
-    
+
     /**
      * Writes the name of the class <code>doc</code> and collects all
      * children of the node <code>doc</code>.
@@ -39,15 +39,15 @@ public class EntryableHierarchyClass extends AbstractEntryable{
      */
     private void putClass( ClassDoc doc, Set<String> collecting ){
         Set<String> done = new HashSet<String>();
-        
+
         if( doc.superclass() != null )
             putClass( doc.superclass(), done );
-        
+
         mode( "class", type( doc ), doc.name(), doc.qualifiedName() );
         for( ClassDoc inter : doc.interfaces() )
             putInterface( inter, done, collecting );
     }
-    
+
     /**
      * Writes the name of the interface <code>doc</code> and collects all
      * children of the node <code>doc</code>.
@@ -63,7 +63,7 @@ public class EntryableHierarchyClass extends AbstractEntryable{
         if( done == null || !done.contains( doc.qualifiedName() )){
             if( collecting != null )
                 collecting.add( doc.qualifiedName() );
-            
+
             mode( "interface", doc.name(), doc.qualifiedTypeName() );
             ClassDoc[] subs = doc.interfaces();
             if( subs.length > 0 ){
@@ -74,7 +74,7 @@ public class EntryableHierarchyClass extends AbstractEntryable{
             }
         }
     }
-    
+
     /**
      * Gets a character identifying the type of <code>doc</code>.
      * @param doc a class, interface, enum or an unknown type
@@ -89,9 +89,9 @@ public class EntryableHierarchyClass extends AbstractEntryable{
             return "c";
         return "?";
     }
-    
+
     public Entry toEntry() {
-        return new Entry( "hierarchy-class", doc.qualifiedName(), "Hierarchy of " + doc.qualifiedName(), content(), 
+        return new Entry( "hierarchy-class", doc.qualifiedName(), "Hierarchy of " + doc.qualifiedName(), content(),
                 "class:" + doc.qualifiedName() );
     }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,13 +41,13 @@ import bibliothek.util.container.Triple;
 public abstract class BasicDropDownButtonModel extends BasicButtonModel{
     /** whether the mouse is currently over the dropdown area */
     private boolean overDropDown = false;
-    
+
     /** whether the selected action is currently enabled */
     private boolean selectionEnabled = true;
-    
+
     /** trigger used on this model */
     private BasicDropDownButtonTrigger trigger;
-    
+
     /**
      * Creates a new model.
      * @param owner the view of this model
@@ -57,7 +57,7 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
     public BasicDropDownButtonModel( JComponent owner, BasicDropDownButtonTrigger trigger, BasicResourceInitializer initializer ) {
         this( owner, trigger, initializer, true );
     }
-    
+
     /**
      * Creates a new model.
      * @param owner the view of this model
@@ -74,12 +74,12 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
             owner.addMouseMotionListener( listener );
         }
     }
-    
+
     @Override
     protected List<Triple<KeyStroke, String, Action>> listActions() {
         List<Triple<KeyStroke, String, Action>> list = super.listActions();
         Triple<KeyStroke, String, Action> popup = new Triple<KeyStroke, String, Action>();
-        
+
         popup.setA( KeyStroke.getKeyStroke( KeyEvent.VK_DOWN, 0, true ) );
         popup.setB( "basic_drop_down_model_popup" );
         popup.setC( new AbstractAction(){
@@ -88,19 +88,20 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
             }
         });
         list.add( popup );
-        
+
         return list;
     }
-    
+
     @Override
     protected void setMouseInside( boolean mouseInside ) {
         super.setMouseInside( mouseInside );
-        if( !mouseInside )
+        if( !mouseInside ) {
             setMouseOverDropDown( false );
+        }
     }
-    
+
     /**
-     * Sets whether the mouse is currently over the dropdown area of the 
+     * Sets whether the mouse is currently over the dropdown area of the
      * view or not. Clients should not call this method unless the handle all
      * mouse events.
      * @param overDropDown whether the mouse is over the dropdown area
@@ -109,7 +110,7 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
         this.overDropDown = overDropDown;
         changed();
     }
-    
+
     /**
      * Tells whether the mouse is currently over the dropdown area of
      * the view or not.
@@ -118,7 +119,7 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
     public boolean isMouseOverDropDown() {
         return overDropDown;
     }
-    
+
     /**
      * Sets whether the selected child-action of the represented {@link DropDownAction}
      * is currently enabled or not.
@@ -128,7 +129,7 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
         this.selectionEnabled = selectionEnabled;
         changed();
     }
-    
+
     /**
      * Tells whether the selected child-action of the represented
      * {@link DropDownAction} is currently enabled or not.
@@ -137,12 +138,12 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
     public boolean isSelectionEnabled() {
         return selectionEnabled;
     }
-    
+
     @Override
     public Icon getPaintIcon() {
         return super.getPaintIcon( isEnabled() && isSelectionEnabled() );
     }
-    
+
     /**
      * Tells whether the location x/y is over the dropdown area of the view or not.
      * The coordinates are in system of the {@link #getOwner() owner's} coordinate-system.
@@ -152,14 +153,14 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
      * selection-menu of the {@link DropDownAction}
      */
     protected abstract boolean inDropDownArea( int x, int y );
-    
+
     /**
      * Triggers the drop down menu to open.
      */
     protected void popupTriggered(){
         trigger.popupTriggered();
     }
-    
+
     /**
      * A listener ensuring that the {@link BasicDropDownButtonModel#isMouseOverDropDown() mouseOverDropDown}
      * property has always the correct value.
@@ -173,13 +174,13 @@ public abstract class BasicDropDownButtonModel extends BasicButtonModel{
                 setMouseOverDropDown( over );
             }
         }
-        
+
         @Override
         public void mouseDragged( MouseEvent e ) {
             boolean over = inDropDownArea( e.getX(), e.getY() );
             if( over != overDropDown ){
                 setMouseOverDropDown( over );
-            }        
+            }
         }
     }
 }

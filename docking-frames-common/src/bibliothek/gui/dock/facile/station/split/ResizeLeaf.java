@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -36,7 +36,7 @@ public class ResizeLeaf<T> extends ResizeElement<T>{
     private Leaf leaf;
     /** temporary data created by the LayoutManager */
     private T temporary;
-    
+
     /**
      * Creates a new leaf element.
      * @param layout the layout manager that uses this leafs
@@ -47,7 +47,7 @@ public class ResizeLeaf<T> extends ResizeElement<T>{
         super( parent, layout );
         this.leaf = leaf;
     }
-    
+
     /**
      * Gets the leaf which is represented by this leaf-element.
      * @return the origin
@@ -55,23 +55,23 @@ public class ResizeLeaf<T> extends ResizeElement<T>{
     public Leaf getLeaf() {
         return leaf;
     }
-    
+
     @Override
     protected ResizeRequest createRequest() {
         return getLayout().getRequest( temporary, leaf );
     }
-    
+
     @Override
     public void prepareResize() {
         temporary = getLayout().prepareResize( leaf );
         super.prepareResize();
     }
-    
+
     @Override
     protected ResizeElement<T>[] getChildren() {
         return null;
     }
-    
+
     @Override
     public void adapt( double deltaWidth, double deltaHeight ) {
         // nothing to do

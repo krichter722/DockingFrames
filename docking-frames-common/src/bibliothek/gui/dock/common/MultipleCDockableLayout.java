@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,7 +44,7 @@ public interface MultipleCDockableLayout {
      * @throws IOException if an I/O-error occurs
      */
     public void writeStream( DataOutputStream out ) throws IOException;
-    
+
     /**
      * Reads the content of this layout from <code>out</code>. All
      * properties should be set to their default value or to the value read
@@ -53,14 +53,14 @@ public interface MultipleCDockableLayout {
      * @throws IOException if an I/O-error occurs
      */
     public void readStream( DataInputStream in ) throws IOException;
-    
+
     /**
      * Writes the content of this layout into <code>element</code>.
      * @param element the xml element into which this method can write,
      * the attributes of <code>element</code> should not be changed
      */
     public void writeXML( XElement element );
-    
+
     /**
      * Reads the content of this layout from <code>element</code>. All
      * properties should be set to their default value or to the value

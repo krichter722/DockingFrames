@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -52,12 +52,12 @@ import bibliothek.gui.dock.title.DockTitle;
 public class DoubleClickController {
     /** the list of all observers */
     private LocatedListenerList<DoubleClickListener> observers =
-    	new LocatedListenerList<DoubleClickListener>();
-    
+        new LocatedListenerList<DoubleClickListener>();
+
     /** A map that tells which listener was added to which {@link Dockable} */
-    private Map<DockElementRepresentative, GlobalDoubleClickListener> listeners = 
+    private Map<DockElementRepresentative, GlobalDoubleClickListener> listeners =
         new HashMap<DockElementRepresentative, GlobalDoubleClickListener>();
-    
+
     /**
      * Creates a new <code>DoubleClickController</code>.
      * @param setup an observable that informs this object when <code>controller</code>
@@ -69,7 +69,7 @@ public class DoubleClickController {
                 controller.addRepresentativeListener( new DockControllerRepresentativeListener(){
                     public void representativeAdded( DockController controller,
                             DockElementRepresentative representative ) {
-                    
+
                         Dockable dockable = representative.getElement().asDockable();
                         if( dockable != null ){
                             GlobalDoubleClickListener listener = new GlobalDoubleClickListener( dockable );
@@ -77,11 +77,11 @@ public class DoubleClickController {
                             listeners.put( representative, listener );
                         }
                     }
-                    
+
                     public void representativeRemoved(
                             DockController controller,
                             DockElementRepresentative representative ) {
-                     
+
                         Dockable dockable = representative.getElement().asDockable();
                         if( dockable != null ){
                             GlobalDoubleClickListener listener = listeners.remove( representative );
@@ -94,7 +94,7 @@ public class DoubleClickController {
             }
         });
     }
-    
+
     /**
      * Adds a listener to this controller.
      * @param listener the new observer
@@ -102,7 +102,7 @@ public class DoubleClickController {
     public void addListener( DoubleClickListener listener ){
         observers.addListener( listener );
     }
-    
+
     /**
      * Removes a listener from this controller.
      * @param listener the observer to remove
@@ -110,7 +110,7 @@ public class DoubleClickController {
     public void removeListener( DoubleClickListener listener ){
         observers.removeListener( listener );
     }
-    
+
     /**
      * Fires an event to the {@link DoubleClickListener}s whose location in the
      * tree is equal or below <code>dockable</code>. The order in which the
@@ -119,15 +119,18 @@ public class DoubleClickController {
      * @param event the cause of the invocation, its click count must be 2.
      */
     public void send( Dockable dockable, MouseEvent event ){
-        if( dockable == null )
+        if( dockable == null ) {
             throw new NullPointerException( "dockable must not be null" );
-        
-        if( event == null )
+        }
+
+        if( event == null ) {
             throw new NullPointerException( "event must not be null" );
-        
-        if( event.getClickCount() != 2 )
+        }
+
+        if( event.getClickCount() != 2 ) {
             throw new IllegalArgumentException( "click count must be equal to 2" );
-        
+        }
+
         List<DoubleClickListener> list = observers.affected( dockable );
         for( DoubleClickListener observer : list ){
             if( observer.process( dockable, event )){
@@ -136,7 +139,7 @@ public class DoubleClickController {
             }
         }
     }
-    
+
 
     /**
      * A listener which waits for a double-click-event.
@@ -145,7 +148,7 @@ public class DoubleClickController {
     protected class GlobalDoubleClickListener extends MouseInputAdapter{
         /** The Dockable for which this listener is waiting */
         private Dockable dockable;
-        
+
         /**
          * Constructs a new listener.
          * @param dockable the element that will become the source
@@ -154,7 +157,7 @@ public class DoubleClickController {
         public GlobalDoubleClickListener( Dockable dockable ){
             this.dockable = dockable;
         }
-        
+
         @Override
         public void mousePressed( MouseEvent event ) {
             if( !event.isConsumed() && event.getClickCount() == 2 ){

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2009 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,39 +41,39 @@ import bibliothek.gui.dock.station.stack.tab.TabPane;
  */
 // Note: no BackgroundComponent, this panel is completely transparent
 public class EclipseTabInfo extends DockActionCombinedInfoComponent {
-	private EclipseTabPane pane;
-	private EclipseDockActionSource currentActions;
-	
-	/**
-	 * Creates a new component.
-	 * @param pane the owner of this info
-	 */
-	public EclipseTabInfo( EclipseTabPane pane ){
-		super( pane );
-		this.pane = pane;
-	}
-		
-	@Override
-	protected DockActionSource createActionSource( Dockable dockable ){
-		EclipseTab tab = pane.getOnTab( dockable );
-		currentActions = new EclipseDockActionSource( pane.getTheme(), dockable.getGlobalActionOffers(), tab.getEclipseTabStateInfo(), false );
-		return currentActions;
-	}
-	
-	@Override
-	protected void updateContent(){
-		super.updateContent();
-		if( getSelection() == null ){
-			currentActions = null;
-		}
-	}
-	
-	/**
-	 * Refreshes the list of actions that are shown on this panel.
-	 */
-	public void refreshActions(){
-		if( currentActions != null ){
-			currentActions.refresh();
-		}
-	}
+    private EclipseTabPane pane;
+    private EclipseDockActionSource currentActions;
+
+    /**
+     * Creates a new component.
+     * @param pane the owner of this info
+     */
+    public EclipseTabInfo( EclipseTabPane pane ){
+        super( pane );
+        this.pane = pane;
+    }
+
+    @Override
+    protected DockActionSource createActionSource( Dockable dockable ){
+        EclipseTab tab = pane.getOnTab( dockable );
+        currentActions = new EclipseDockActionSource( pane.getTheme(), dockable.getGlobalActionOffers(), tab.getEclipseTabStateInfo(), false );
+        return currentActions;
+    }
+
+    @Override
+    protected void updateContent(){
+        super.updateContent();
+        if( getSelection() == null ){
+            currentActions = null;
+        }
+    }
+
+    /**
+     * Refreshes the list of actions that are shown on this panel.
+     */
+    public void refreshActions(){
+        if( currentActions != null ){
+            currentActions.refresh();
+        }
+    }
 }

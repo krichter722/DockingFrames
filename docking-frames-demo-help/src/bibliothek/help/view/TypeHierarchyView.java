@@ -31,7 +31,7 @@ public class TypeHierarchyView extends DefaultDockable implements Linking, Undoa
     private JTree tree;
     /** the tree */
     private Entry entry;
-    
+
     /**
      * Creates a new view.
      * @param manager A manager to which this view will add a listener. This
@@ -40,51 +40,51 @@ public class TypeHierarchyView extends DefaultDockable implements Linking, Undoa
     public TypeHierarchyView( LinkManager manager ){
         setTitleText( "Hierarchy" );
         setTitleIcon( ResourceSet.ICONS.get( "hierarchy" ) );
-        
+
         manager.add( this );
         manager.getUR().register( this );
-        
+
         tree = new JTree(){
-        	@Override
-        	public void updateUI(){
-        		super.updateUI();
-        		setCellRenderer( new Renderer() );
-        	}
+            @Override
+            public void updateUI(){
+                super.updateUI();
+                setCellRenderer( new Renderer() );
+            }
         };
         setLayout( new BorderLayout() );
         add( new JScrollPane( tree ), BorderLayout.CENTER );
-        
+
         tree.setModel( new DefaultTreeModel( new DefaultMutableTreeNode()) );
     }
-    
+
     public Entry getCurrent(){
-    	return entry;
+        return entry;
     }
-    
+
     public void setCurrent( Entry entry ){
-    	if( this.entry != entry ){
-	    	this.entry = entry;
-	    	HierarchyNode node = entry.toSubHierarchy();
-	        if( node == null ){
-	        	tree.setModel( new DefaultTreeModel( new DefaultMutableTreeNode( "< empty >" )) );        	
-	        }
-	        else{
-	        	MutableTreeNode model = toModel( node );
-	        	tree.setModel( new DefaultTreeModel( model ) );
-	        	expandAll( model, new TreePath( model ) );
-	        }
-    	}
+        if( this.entry != entry ){
+            this.entry = entry;
+            HierarchyNode node = entry.toSubHierarchy();
+            if( node == null ){
+                tree.setModel( new DefaultTreeModel( new DefaultMutableTreeNode( "< empty >" )) );
+            }
+            else{
+                MutableTreeNode model = toModel( node );
+                tree.setModel( new DefaultTreeModel( model ) );
+                expandAll( model, new TreePath( model ) );
+            }
+        }
     }
-    
+
     public void selected( List<Entry> list ) {
         for( Entry entry : list ){
             if( entry.getType().equals( "hierarchy-class" ) || entry.getType().equals( "empty" )){
-            	setCurrent( entry );
+                setCurrent( entry );
                 break;
             }
         }
     }
-    
+
     /**
      * Wraps <code>node</code> into a {@link TreeNode} such that it can
      * be shown in a {@link JTree}.
@@ -95,10 +95,10 @@ public class TypeHierarchyView extends DefaultDockable implements Linking, Undoa
         DefaultMutableTreeNode model = new DefaultMutableTreeNode( node );
         for( int i = 0, n = node.getChildrenCount(); i<n; i++ )
             model.add( toModel( node.getChild( i )) );
-        
+
         return model;
     }
-    
+
     /**
      * Ensures that <code>node</code> and all children of <code>node</code>
      * are expanded.
@@ -113,7 +113,7 @@ public class TypeHierarchyView extends DefaultDockable implements Linking, Undoa
             expandAll( child, next );
         }
     }
-    
+
     /**
      * A {@link TreeCellRenderer} that shows an icon for nodes which
      * represent classes or interfaces.
@@ -125,7 +125,7 @@ public class TypeHierarchyView extends DefaultDockable implements Linking, Undoa
         public Component getTreeCellRendererComponent( JTree tree,
                 Object value, boolean sel, boolean expanded, boolean leaf,
                 int row, boolean hasFocus ) {
-            
+
             Object user = ((DefaultMutableTreeNode)value).getUserObject();
             if( user instanceof HierarchyNode ){
                 HierarchyNode node = (HierarchyNode)user;
@@ -139,7 +139,7 @@ public class TypeHierarchyView extends DefaultDockable implements Linking, Undoa
             }
             else
                 super.getTreeCellRendererComponent( tree, value, sel, expanded, leaf, row, hasFocus );
-            
+
             return this;
         }
     }

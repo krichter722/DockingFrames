@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -55,7 +55,7 @@ import bibliothek.gui.dock.util.color.ColorCodes;
     "stack.tab.background.focused" } )
 public class BasicStackDockComponent extends DefaultStackDockComponent {
     private StackDockComponentParent station;
-    
+
     public BasicStackDockComponent( StackDockComponentParent station ) {
         this.station = station;
     }
@@ -64,12 +64,12 @@ public class BasicStackDockComponent extends DefaultStackDockComponent {
     protected Tab createTab( Dockable dockable ) {
         return new BasicTab( dockable );
     }
-    
+
     @Override
     public boolean hasBorder() {
         return false;
     }
-    
+
     /**
      * A basic tab that listens to the {@link DockController} to recognize
      * when it is focused.
@@ -83,49 +83,52 @@ public class BasicStackDockComponent extends DefaultStackDockComponent {
         private TabColor colorBackground;
         private TabColor colorBackgroundSelected;
         private TabColor colorBackgroundFocused;
-        
+
         private TabColor[] colors;
         private DockController controller;
-        
+
         public BasicTab( Dockable dockable ) {
             super( dockable );
 
             colors = new TabColor[]{
-                    colorForeground = new BasicTabColor( "stack.tab.foreground" ),
-                    colorForegroundSelected = new BasicTabColor( "stack.tab.foreground.selected" ),
-                    colorForegroundFocused = new BasicTabColor( "stack.tab.foreground.focused" ),
-                    colorBackground = new BasicTabColor( "stack.tab.background" ),
-                    colorBackgroundSelected = new BasicTabColor( "stack.tab.background.selected" ),
-                    colorBackgroundFocused = new BasicTabColor( "stack.tab.background.focused" )
+                colorForeground = new BasicTabColor( "stack.tab.foreground" ),
+                colorForegroundSelected = new BasicTabColor( "stack.tab.foreground.selected" ),
+                colorForegroundFocused = new BasicTabColor( "stack.tab.foreground.focused" ),
+                colorBackground = new BasicTabColor( "stack.tab.background" ),
+                colorBackgroundSelected = new BasicTabColor( "stack.tab.background.selected" ),
+                colorBackgroundFocused = new BasicTabColor( "stack.tab.background.focused" )
             };
         }
-        
+
         @Override
         public void setController( DockController controller ) {
-            if( this.controller != null )
+            if( this.controller != null ) {
                 this.controller.removeDockableFocusListener( this );
-            
+            }
+
             super.setController( controller );
             this.controller = controller;
-            
-            for( TabColor color : colors )
+
+            for( TabColor color : colors ) {
                 color.connect( controller );
-            
-            if( controller != null )
+            }
+
+            if( controller != null ) {
                 controller.addDockableFocusListener( this );
-            
+            }
+
             updateColors();
         }
-        
+
         private void updateColors(){
             int index = station.indexOf( BasicTab.this.getDockable() );
             if( index >= 0 && index < getTabCount() ){
                 boolean focused = controller == null ? false : controller.getFocusedDockable() == getDockable();
                 boolean selected = index == getSelectedIndex();
-            
+
                 Color foreground = null;
                 Color background = null;
-                
+
                 if( focused ){
                     foreground = colorForegroundFocused.value();
                     background = colorBackgroundFocused.value();
@@ -138,16 +141,16 @@ public class BasicStackDockComponent extends DefaultStackDockComponent {
                     foreground = colorForeground.value();
                     background = colorBackground.value();
                 }
-                
+
                 setForegroundAt( index, foreground );
                 setBackgroundAt( index, background );
             }
         }
-        
+
         public void dockableFocused( DockableFocusEvent event ) {
             updateColors();
         }
-        
+
         /**
          * A color used on this tab.
          * @author Benjamin Sigg
@@ -160,7 +163,7 @@ public class BasicStackDockComponent extends DefaultStackDockComponent {
             public BasicTabColor( String id ){
                 super( id, station.getStackDockParent(), dockable, null );
             }
-            
+
             @Override
             protected void changed( Color oldColor, Color newColor ) {
                 updateColors();

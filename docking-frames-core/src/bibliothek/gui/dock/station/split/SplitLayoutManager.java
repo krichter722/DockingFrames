@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -38,7 +38,7 @@ import bibliothek.gui.dock.station.support.CombinerTarget;
  * {@link SplitLayoutManager} is responsible to define the actions that have
  * to be taken on drop and move-events. It is also responsible to validate
  * any movement of the dividers.
- * 
+ *
  * @author Benjamin Sigg
  */
 public interface SplitLayoutManager {
@@ -48,14 +48,14 @@ public interface SplitLayoutManager {
      * @param station the invoking station
      */
     public void install( SplitDockStation station );
-    
+
     /**
      * Called by a {@link SplitDockStation} which used this manager and no
      * longer does.
      * @param station the invoking station
      */
     public void uninstall( SplitDockStation station );
-    
+
     /**
      * Called before the station changes its fullscreen-Dockable.
      * @param station the invoking station
@@ -90,7 +90,7 @@ public interface SplitLayoutManager {
      * @see #prepareDrop(SplitDockStation, StationDropItem)
      */
     public PutInfo prepareMove( SplitDockStation station, StationDropItem dockable );
-    
+
     /**
      * Calculates the value a divider should have if the {@link Dockable}
      * of <code>putInfo</code> is added alongside of <code>origin</code>. The
@@ -101,7 +101,7 @@ public interface SplitLayoutManager {
      * @param item detailed information about the drag and drop operation that is going on
      */
     public void calculateDivider( SplitDockStation station, PutInfo putInfo, Leaf origin, StationDropItem item );
-    
+
     /**
      * Tests whether the specified <code>divider</code>-value is legal or not.
      * @param station the station for which the divider is calculated
@@ -110,19 +110,19 @@ public interface SplitLayoutManager {
      * @return a legal value as near as possible to <code>divider</code>
      */
     public double validateDivider( SplitDockStation station, double divider, Node node );
-    
+
     /**
      * Checks whether <code>info</code> is valid or not.
-     * @param station the station for which <code>info</code> will be used 
+     * @param station the station for which <code>info</code> will be used
      * @param info the preferred drop location
      * @return a valid {@link PutInfo}, <code>info</code> or <code>null</code>.
      */
     public PutInfo validatePutInfo( SplitDockStation station, PutInfo info );
-    
+
     /**
      * Called when the bounds of all {@link DockableDisplayer} of a station have
      * to be updated. Subclasses normally can just call
-     * {@link Root#updateBounds(double, double, double, double, double, double, boolean)} 
+     * {@link Root#updateBounds(double, double, double, double, double, double, boolean)}
      * with <code>width</code> and <code>height</code> set to 1.0.
      * @param root the root of a tree of {@link Dockable}s
      * @param x the left bound

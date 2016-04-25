@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -49,18 +49,18 @@ import bibliothek.util.ClientOnly;
  */
 @ClientOnly
 public class ReplaceAction extends GroupedButtonDockAction<Boolean> implements ListeningDockAction{
-	/** the key uses for the {@link bibliothek.gui.dock.util.IconManager} to get the {@link Icon} of this action */
-	public static final String KEY_ICON = "replace";
-	
-	/** A listener to the stations known to this action */
+    /** the key uses for the {@link bibliothek.gui.dock.util.IconManager} to get the {@link Icon} of this action */
+    public static final String KEY_ICON = "replace";
+
+    /** A listener to the stations known to this action */
     private DockStationListener dockStationListener;
-    
+
     private DockActionText text;
-    
+
     private DockActionText tooltip;
-    
+
     private DockActionIcon icon;
-    
+
     /**
      * Sets up this action.
      * @param controller The controller for which this action is used. This
@@ -70,114 +70,121 @@ public class ReplaceAction extends GroupedButtonDockAction<Boolean> implements L
      */
     public ReplaceAction( DockController controller ){
         super( null );
-        
+
         dockStationListener = new DockStationAdapter(){
             @Override
             public void dockableAdded( DockStation station, Dockable dockable ) {
-            	setGroup( createGroupKey( station.asDockable() ), station.asDockable() );
+                setGroup( createGroupKey( station.asDockable() ), station.asDockable() );
             }
             @Override
             public void dockableRemoved( DockStation station, Dockable dockable ) {
-            	setGroup( createGroupKey( station.asDockable() ), station.asDockable() );
+                setGroup( createGroupKey( station.asDockable() ), station.asDockable() );
             }
         };
-        
+
         setRemoveEmptyGroups( false );
-        
+
         setEnabled( true, true );
         setEnabled( false, false );
-        
+
         text = new DockActionText( "replace", this ){
-			protected void changed( String oldValue, String newValue ){
-				setText( true, newValue );
-		        setText( false, newValue );			
-			}
-		};
-        
+            protected void changed( String oldValue, String newValue ){
+                setText( true, newValue );
+                setText( false, newValue );
+            }
+        };
+
         tooltip = new DockActionText( "replace.tooltip", this ){
-			protected void changed( String oldValue, String newValue ){
-				setTooltip( true, newValue );
-				setTooltip( false, newValue );
-			}
-		};
-        
+            protected void changed( String oldValue, String newValue ){
+                setTooltip( true, newValue );
+                setTooltip( false, newValue );
+            }
+        };
+
         icon = new DockActionIcon( "replace", this ){
-			protected void changed( Icon oldValue, Icon newValue ){
-				setIcon( true, newValue );
-				setIcon( false, newValue );
-			}
-		};
-        
+            protected void changed( Icon oldValue, Icon newValue ){
+                setIcon( true, newValue );
+                setIcon( false, newValue );
+            }
+        };
+
         setController( controller );
     }
-    
+
     @Override
     protected Boolean createGroupKey( Dockable dockable ){
-    	DockStation station = dockable.asDockStation();
-    	if( station == null )
-    		throw new IllegalArgumentException( "Only dockables which are also a DockStation can be used for a ReplaceAction" );
-    	
-    	DockStation parent = dockable.getDockParent();
-    	if( parent == null )
-    		return false;
-    	
-    	int count = station.getDockableCount();
-    	if( count == 0 )
-    		return parent.canDrag( dockable );
-    	if( count == 1 ){
-    		return parent.canReplace( dockable, station.getDockable( 0 ) ) &&
-            	parent.accept( station.getDockable( 0 )) &&
-            	station.getDockable( 0 ).accept( parent ) &&
-            	station.canDrag( station.getDockable( 0 ));
-    	}
-    	return false;
+        DockStation station = dockable.asDockStation();
+        if( station == null ) {
+            throw new IllegalArgumentException( "Only dockables which are also a DockStation can be used for a ReplaceAction" );
+        }
+
+        DockStation parent = dockable.getDockParent();
+        if( parent == null ) {
+            return false;
+        }
+
+        int count = station.getDockableCount();
+        if( count == 0 ) {
+            return parent.canDrag( dockable );
+        }
+        if( count == 1 ){
+            return parent.canReplace( dockable, station.getDockable( 0 ) ) &&
+                parent.accept( station.getDockable( 0 )) &&
+                station.getDockable( 0 ).accept( parent ) &&
+                station.canDrag( station.getDockable( 0 ));
+        }
+        return false;
     }
-    
+
     public void action( Dockable dockable ) {
         DockStation station = dockable.asDockStation();
-        if( station == null )
-        	throw new IllegalArgumentException( "dockable is not a station" );
-        
+        if( station == null ) {
+            throw new IllegalArgumentException( "dockable is not a station" );
+        }
+
         DockStation parent = dockable.getDockParent();
         if( parent != null ){
-	        if( station.getDockableCount() == 0 ){
-	            if( parent.canDrag( station.asDockable() ))
-	                parent.drag( station.asDockable());
-	        }
-	        else{
-	            if( parent.canReplace( station.asDockable(), station.getDockable( 0 ) ) &&
-	                    parent.accept( station.getDockable( 0 )) &&
-	                    station.getDockable( 0 ).accept( parent ) &&
-	                    station.canDrag( station.getDockable( 0 ))){
-	                
-	                dockable = station.getDockable( 0 );
-	                
-	                station.drag( dockable );
-	                parent.replace( station.asDockable(), dockable );
-	            }
-	        }
+            if( station.getDockableCount() == 0 ){
+                if( parent.canDrag( station.asDockable() )) {
+                    parent.drag( station.asDockable());
+                }
+            }
+            else{
+                if( parent.canReplace( station.asDockable(), station.getDockable( 0 ) ) &&
+                        parent.accept( station.getDockable( 0 )) &&
+                        station.getDockable( 0 ).accept( parent ) &&
+                        station.canDrag( station.getDockable( 0 ))){
+
+                    dockable = station.getDockable( 0 );
+
+                    station.drag( dockable );
+                    parent.replace( station.asDockable(), dockable );
+                }
+            }
         }
     }
-    
+
     @Override
     public void bound( Dockable dockable ) {
-    	DockStation station = dockable.asDockStation();
-    	if( station == null )
-    		throw new IllegalArgumentException( "dockable is not a station" );
+        DockStation station = dockable.asDockStation();
+        if( station == null ) {
+            throw new IllegalArgumentException( "dockable is not a station" );
+        }
 
-    	station.addDockStationListener( dockStationListener );
-    	super.bound( dockable );
+        station.addDockStationListener( dockStationListener );
+        super.bound( dockable );
     }
     @Override
     public void unbound( Dockable dockable ) {
-    	DockStation station = dockable.asDockStation();
-    	if( station == null )
-    		throw new IllegalArgumentException( "dockable is not a station" );
+        DockStation station = dockable.asDockStation();
+        if( station == null ) {
+            throw new IllegalArgumentException( "dockable is not a station" );
+        }
 
-    	station.removeDockStationListener( dockStationListener );
+        station.removeDockStationListener( dockStationListener );
         super.unbound( dockable );
     }
-    
+
     public void setController( DockController controller ) {
         icon.setController( controller );
         text.setController( controller );

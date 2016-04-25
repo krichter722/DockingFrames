@@ -1,3 +1,29 @@
+/*
+ * Bibliothek - DockingFrames
+ * Library built on Java/Swing, allows the user to "drag and drop"
+ * panels containing any Swing-Component the developer likes to add.
+ *
+ * Copyright (C) 2007 Benjamin Sigg
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Benjamin Sigg
+ * benjamin_sigg@gmx.ch
+ * CH - Switzerland
+ */
+
 package bibliothek.extension.gui.dock.theme.eclipse.stack.tab;
 
 import java.awt.BorderLayout;
@@ -44,7 +70,7 @@ import bibliothek.gui.dock.title.DockTitleVersion;
  * method {@link DockTitle#changed(bibliothek.gui.dock.title.DockTitleEvent)}
  * is called for that purpose.
  * @author Benjamin Sigg
- * @deprecated Using a custom {@link TabPainter} is the preferred way to modify the tabs 
+ * @deprecated Using a custom {@link TabPainter} is the preferred way to modify the tabs
  */
 @Deprecated
 public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
@@ -55,7 +81,7 @@ public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
      * {@link DockTitleTab}.
      */
     public static final TabPainter FACTORY = createFactory( ArchGradientPainter.FACTORY );
-    
+
     /**
      * Creates a new factory which uses <code>fallback</code> to create
      * a {@link TabComponent} when no {@link DockTitle} is available.
@@ -64,32 +90,33 @@ public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
      */
     public static final TabPainter createFactory( final TabPainter fallback ){
         return new TabPainter(){
-        	public TabComponent createTabComponent( EclipseTabPane pane, Dockable dockable ){
-        		DockStation station = pane.getStation();
-        		DockController controller = station.getController();
-        		
-        		DockTitleVersion version = controller == null ? null : controller.getDockTitleManager().getVersion( EclipseTheme.TAB_DOCK_TITLE );
-                if( version == null )
+            public TabComponent createTabComponent( EclipseTabPane pane, Dockable dockable ){
+                DockStation station = pane.getStation();
+                DockController controller = station.getController();
+
+                DockTitleVersion version = controller == null ? null : controller.getDockTitleManager().getVersion( EclipseTheme.TAB_DOCK_TITLE );
+                if( version == null ) {
                     return fallback.createTabComponent( pane, dockable );
-                    
+                }
+
                 pane.setContentBorderAt( pane.indexOf( dockable ), null );
                 return new DockTitleTab( station, dockable, version, pane.getTheme() );
-        	}
-        	
-        	public InvisibleTab createInvisibleTab( InvisibleTabPane pane, Dockable dockable ){
-        		return fallback.createInvisibleTab( pane, dockable );
-        	}
-        	
-        	public TabPanePainter createDecorationPainter( EclipseTabPane pane ){
-        	    return fallback.createDecorationPainter( pane );
             }
-            
-        	public Border getFullBorder( BorderedComponent owner, DockController controller, Dockable dockable ){
+
+            public InvisibleTab createInvisibleTab( InvisibleTabPane pane, Dockable dockable ){
+                return fallback.createInvisibleTab( pane, dockable );
+            }
+
+            public TabPanePainter createDecorationPainter( EclipseTabPane pane ){
+                return fallback.createDecorationPainter( pane );
+            }
+
+            public Border getFullBorder( BorderedComponent owner, DockController controller, Dockable dockable ){
                 return BorderFactory.createLineBorder( controller.getColors().get( "stack.border" ) );
             }
         };
     }
-    
+
     /** the station on which this tab lies, might be <code>null</code> */
     private DockStation station;
     /** the element which is represented by this tab */
@@ -100,60 +127,67 @@ public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
     private TabPlacement placement;
     /** the theme using this tab */
     private EclipseTheme theme;
-    
+
     /** content of this tab */
     private JPanel content;
-    
+
     /** MouseListeners of this tab */
     private List<MouseListener> mouseListeners = new ArrayList<MouseListener>();
     /** MouseMotionListeners of this tab */
     private List<MouseMotionListener> mouseMotionListeners = new ArrayList<MouseMotionListener>();
-    
+
     /** whether this tab is currently focused */
     private boolean focused;
     /** whether this tab is currently selected */
     private boolean selected;
     /** whether icons should be painted when this tab is inactive */
     private boolean paintIconWhenInactive;
-    
+
     /** listener that is added to the current title */
     private MouseInputListener mouseListener = new MouseInputListener(){
         public void mouseClicked( MouseEvent e ) {
-            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] ))
+            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] )) {
                 m.mouseClicked( e );
+            }
         }
 
         public void mouseEntered( MouseEvent e ) {
-            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] ))
+            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] )) {
                 m.mouseEntered( e );
+            }
         }
 
         public void mouseExited( MouseEvent e ) {
-            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] ))
+            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] )) {
                 m.mouseExited( e );
+            }
         }
 
         public void mousePressed( MouseEvent e ) {
-            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] ))
+            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] )) {
                 m.mousePressed( e );
+            }
         }
 
         public void mouseReleased( MouseEvent e ) {
-            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] ))
+            for( MouseListener m : mouseListeners.toArray( new MouseListener[ mouseListeners.size() ] )) {
                 m.mouseReleased( e );
+            }
         }
 
         public void mouseDragged( MouseEvent e ) {
-            for( MouseMotionListener m : mouseMotionListeners.toArray( new MouseMotionListener[ mouseMotionListeners.size() ] ))
+            for( MouseMotionListener m : mouseMotionListeners.toArray( new MouseMotionListener[ mouseMotionListeners.size() ] )) {
                 m.mouseDragged( e );
+            }
         }
 
         public void mouseMoved( MouseEvent e ) {
-            for( MouseMotionListener m : mouseMotionListeners.toArray( new MouseMotionListener[ mouseMotionListeners.size() ] ))
+            for( MouseMotionListener m : mouseMotionListeners.toArray( new MouseMotionListener[ mouseMotionListeners.size() ] )) {
                 m.mouseMoved( e );
+            }
         }
     };
-    
+
     /**
      * Creates a new tab.
      * @param station the station which uses the tabbed pane, might be <code>null</code>
@@ -162,80 +196,80 @@ public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
      * @param theme the theme which uses this tab
      */
     public DockTitleTab( DockStation station, final Dockable dockable, DockTitleVersion title, EclipseTheme theme ){
-    	content = new JPanel( new BorderLayout() );
-    	content.setOpaque( false );
-    	
+        content = new JPanel( new BorderLayout() );
+        content.setOpaque( false );
+
         this.station = station;
         this.dockable = dockable;
         this.theme = theme;
         this.title = new DockTitleRequest( station, dockable, title ) {
-			@Override
-			protected void answer( DockTitle previous, DockTitle title ){
-				if( previous != null ){
-					content.removeAll();
-					dockable.unbind( previous );
-					previous.removeMouseInputListener( mouseListener );
-				}
-				
-				if( title != null ){
-					dockable.bind( title );
-					title.addMouseInputListener( mouseListener );
-					updateOrientation();
-					content.add( title.getComponent(), BorderLayout.CENTER );
-					fire();
-				}
-			}
-		};
+            @Override
+            protected void answer( DockTitle previous, DockTitle title ){
+                if( previous != null ){
+                    content.removeAll();
+                    dockable.unbind( previous );
+                    previous.removeMouseInputListener( mouseListener );
+                }
+
+                if( title != null ){
+                    dockable.bind( title );
+                    title.addMouseInputListener( mouseListener );
+                    updateOrientation();
+                    content.add( title.getComponent(), BorderLayout.CENTER );
+                    fire();
+                }
+            }
+        };
     }
 
     public EclipseTabStateInfo getEclipseTabStateInfo(){
-    	return this;
+        return this;
     }
-    
+
     public void setConfiguration( TabConfiguration configuration ){
-    	// ignore
+        // ignore
     }
-    
+
     public void setOrientation( TabPlacement orientation ){
-    	this.placement = orientation;
-    	updateOrientation();
+        this.placement = orientation;
+        updateOrientation();
     }
-    
+
     private void updateOrientation(){
-    	DockTitle title = this.title.getAnswer();
-    	if( placement != null && title != null ){
-    		switch( placement ){
-		    	case TOP_OF_DOCKABLE:
-		    		title.setOrientation( Orientation.NORTH_SIDED );
-		    		break;
-		    	case BOTTOM_OF_DOCKABLE:
-		    		title.setOrientation( Orientation.SOUTH_SIDED );
-		    		break;
-		    	case LEFT_OF_DOCKABLE:
-		    		title.setOrientation( Orientation.WEST_SIDED );
-		    		break;
-		    	case RIGHT_OF_DOCKABLE:
-		    		title.setOrientation( Orientation.EAST_SIDED );
-		    		break;
-		    }
-    	}
+        DockTitle title = this.title.getAnswer();
+        if( placement != null && title != null ){
+            switch( placement ){
+                case TOP_OF_DOCKABLE:
+                    title.setOrientation( Orientation.NORTH_SIDED );
+                    break;
+                case BOTTOM_OF_DOCKABLE:
+                    title.setOrientation( Orientation.SOUTH_SIDED );
+                    break;
+                case LEFT_OF_DOCKABLE:
+                    title.setOrientation( Orientation.WEST_SIDED );
+                    break;
+                case RIGHT_OF_DOCKABLE:
+                    title.setOrientation( Orientation.EAST_SIDED );
+                    break;
+            }
+        }
     }
-    
+
     public void setTab( EclipseTab tab ){
-    	// ignore
+        // ignore
     }
-    
+
     public void bind() {
-    	title.install();
-    	title.request();
+        title.install();
+        title.request();
         fire();
     }
-    
+
     public void unbind() {
-    	title.uninstall();
-    	title.requestNull();
+        title.uninstall();
+        title.requestNull();
     }
-    
+
     public void addMouseListener( MouseListener listener ) {
         mouseListeners.add( listener );
     }
@@ -247,60 +281,61 @@ public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
     public Component getComponent() {
         return content;
     }
-    
+
     public Dimension getMinimumSize( TabComponent[] tabs ){
-    	return getComponent().getMinimumSize();
+        return getComponent().getMinimumSize();
     }
-    
+
     public Dimension getPreferredSize( TabComponent[] tabs ){
-    	return getComponent().getPreferredSize();
+        return getComponent().getPreferredSize();
     }
-    
+
     public DockElement getElement() {
         return title.getTarget();
     }
-    
+
     public Dockable getDockable(){
-    	return title.getTarget();
+        return title.getTarget();
     }
-    
+
     public boolean isUsedAsTitle() {
         return true;
     }
-    
+
     public boolean shouldTransfersFocus(){
-	    return true;
+        return true;
     }
-    
+
     public boolean shouldFocus(){
-    	return true;
+        return true;
     }
-    
+
     /**
      * Calling this method has no effect, as this tab shows a {@link DockTitle} which has its own
      * mechanism to disable itself.
      */
     public void setEnabled( boolean enabled ){
-    	// ignore
+        // ignore
     }
-    
+
     public Point getPopupLocation( Point click, boolean popupTrigger ) {
-    	DockTitle current = title.getAnswer();
-    	if( current == null )
-    		return null;
-    	return current.getPopupLocation( click, popupTrigger );
+        DockTitle current = title.getAnswer();
+        if( current == null ) {
+            return null;
+        }
+        return current.getPopupLocation( click, popupTrigger );
     }
-    
+
     public void addMouseInputListener( MouseInputListener listener ) {
-    	mouseListeners.add( listener );
-    	mouseMotionListeners.add( listener );
+        mouseListeners.add( listener );
+        mouseMotionListeners.add( listener );
     }
-    
+
     public void removeMouseInputListener( MouseInputListener listener ) {
-    	mouseListeners.remove( listener );
-    	mouseMotionListeners.remove( listener );
+        mouseListeners.remove( listener );
+        mouseMotionListeners.remove( listener );
     }
-    
+
     public Insets getOverlap( TabComponent other ){
         return new Insets( 0, 0, 0, 0 );
     }
@@ -317,10 +352,10 @@ public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
         this.focused = focused;
         fire();
     }
-    
+
     public boolean isFocused(){
-		return focused;
-	}
+        return focused;
+    }
 
     public void setPaintIconWhenInactive( boolean paint ) {
         this.paintIconWhenInactive = paint;
@@ -331,42 +366,42 @@ public class DockTitleTab implements TabComponent, EclipseTabStateInfo{
         this.selected = selected;
         fire();
     }
-    
+
     public boolean isSelected(){
-    	return selected;
+        return selected;
     }
 
     public void setIcon( Icon icon ){
-	    // ignore	
+        // ignore
     }
-    
+
     public void setText( String text ){
-	    // ignore	
+        // ignore
     }
-    
+
     public void setTooltip( String tooltip ){
-	    // ignore	
+        // ignore
     }
-    
+
     /**
-     * Updates the selection and focus state of the title of this tab. 
+     * Updates the selection and focus state of the title of this tab.
      */
     public void update() {
         fire();
-    }    
-    
+    }
+
     /**
      * Fires an event to the {@link DockTitle} of this <code>DockTitleTab</code>.
      */
     protected void fire(){
-    	DockTitle answer = title.getAnswer();
-    	if( answer != null ){
-    		EclipseDockTitleEvent eclipseEvent = new EclipseDockTitleEvent( station, dockable, selected, focused, paintIconWhenInactive );
-    		answer.changed( eclipseEvent );
-    		
-    		DockActionSource actions = new EclipseDockActionSource( theme, dockable.getGlobalActionOffers(), getEclipseTabStateInfo(), true );
-    		ActionsDockTitleEvent actionEvent = new ActionsDockTitleEvent( station, dockable, actions );
-    		answer.changed( actionEvent );
-    	}
+        DockTitle answer = title.getAnswer();
+        if( answer != null ){
+            EclipseDockTitleEvent eclipseEvent = new EclipseDockTitleEvent( station, dockable, selected, focused, paintIconWhenInactive );
+            answer.changed( eclipseEvent );
+
+            DockActionSource actions = new EclipseDockActionSource( theme, dockable.getGlobalActionOffers(), getEclipseTabStateInfo(), true );
+            ActionsDockTitleEvent actionEvent = new ActionsDockTitleEvent( station, dockable, actions );
+            answer.changed( actionEvent );
+        }
     }
 }

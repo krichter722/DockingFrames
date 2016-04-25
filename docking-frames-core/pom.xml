@@ -10,7 +10,7 @@
 
 	<artifactId>docking-frames-core</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<name>${project.artifactId}</name>
 	<description>${project.name} is a core library</description>
 

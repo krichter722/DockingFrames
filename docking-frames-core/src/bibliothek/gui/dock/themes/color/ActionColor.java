@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,13 +40,13 @@ import bibliothek.util.Path;
 public abstract class ActionColor extends AbstractDockColor{
     /** the path describing this kind of color */
     public static final Path KIND_ACTION_COLOR = DockColor.KIND_DOCK_COLOR.append( "ActionColor" );
-    
+
     /** the dockable for which the action is used */
     private Dockable dockable;
-    
+
     /** the action for which this color is used */
     private DockAction action;
-    
+
     /**
      * Creates a new {@link DockColor}.
      * @param id the identifier of this color
@@ -60,8 +60,8 @@ public abstract class ActionColor extends AbstractDockColor{
         this.action = action;
         this.dockable = dockable;
     }
-    
-    
+
+
     /**
      * Creates a new {@link DockColor}.
      * @param id the identifier of this color
@@ -72,7 +72,7 @@ public abstract class ActionColor extends AbstractDockColor{
     public ActionColor( String id, Dockable dockable, DockAction action, Color backup ){
         this( id, KIND_ACTION_COLOR, dockable, action, backup );
     }
-    
+
     /**
      * Gets the action for which this color is used.
      * @return the action
@@ -80,7 +80,7 @@ public abstract class ActionColor extends AbstractDockColor{
     public DockAction getAction() {
         return action;
     }
-    
+
     /**
      * Gets the {@link Dockable} for which the action is shown.
      * @return the owner of the action

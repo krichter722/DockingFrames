@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Herve Guillaume, Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Herve Guillaume
  * rvguillaume@hotmail.com
  * FR - France
@@ -50,77 +50,77 @@ import bibliothek.gui.dock.title.DockTitleVersion;
  * A very simplistic implementation of a {@link DockTitle}. This particular
  * implementation shows a line with a width or height of 5 pixels and a custom
  * color.
- * 
+ *
  * @author Benjamin Sigg
  */
 public class DefaultToolbarDockTitle extends AbstractDockTitle{
-	/**
-	 * Creates a new factory that creates new {@link ToolbarDockTitle}s.
-	 * 
-	 * @param color
-	 *            the color of the title
-	 * @return the new factory
-	 */
-	public static DockTitleFactory createFactory( final Color color ){
-		return new DockTitleFactory(){
-			@Override
-			public void uninstall( DockTitleRequest request ){
-				// ignore
-			}
+    /**
+     * Creates a new factory that creates new {@link ToolbarDockTitle}s.
+     *
+     * @param color
+     *            the color of the title
+     * @return the new factory
+     */
+    public static DockTitleFactory createFactory( final Color color ){
+        return new DockTitleFactory(){
+            @Override
+            public void uninstall( DockTitleRequest request ){
+                // ignore
+            }
 
-			@Override
-			public void request( DockTitleRequest request ){
-				request.answer(new DefaultToolbarDockTitle(
-						request.getVersion(), request.getTarget(), color));
-			}
+            @Override
+            public void request( DockTitleRequest request ){
+                request.answer(new DefaultToolbarDockTitle(
+                        request.getVersion(), request.getTarget(), color));
+            }
 
-			@Override
-			public void install( DockTitleRequest request ){
-				// ignore
-			}
-		};
-	}
+            @Override
+            public void install( DockTitleRequest request ){
+                // ignore
+            }
+        };
+    }
 
-	private final Color color;
-	private final Orientation orientation = Orientation.FREE_HORIZONTAL;
+    private final Color color;
+    private final Orientation orientation = Orientation.FREE_HORIZONTAL;
 
-	public DefaultToolbarDockTitle( DockTitleVersion origin, Dockable dockable,
-			Color color ){
-		super(dockable, origin, true);
-		this.color = color;
-	}
+    public DefaultToolbarDockTitle( DockTitleVersion origin, Dockable dockable,
+            Color color ){
+        super(dockable, origin, true);
+        this.color = color;
+    }
 
-	@Override
-	protected BasicTitleViewItem<JComponent> createItemFor( DockAction action,
-			Dockable dockable ){
-		return dockable.getController().getActionViewConverter()
-				.createView(action, ToolbarExtension.TOOLBAR_TITLE, dockable);
-	}
+    @Override
+    protected BasicTitleViewItem<JComponent> createItemFor( DockAction action,
+            Dockable dockable ){
+        return dockable.getController().getActionViewConverter()
+                .createView(action, ToolbarExtension.TOOLBAR_TITLE, dockable);
+    }
 
-	@Override
-	public Dimension getPreferredSize(){
-		final Dimension size = super.getPreferredSize();
-		return new Dimension(Math.max(5, size.width), Math.max(5, size.height));
-	}
+    @Override
+    public Dimension getPreferredSize(){
+        final Dimension size = super.getPreferredSize();
+        return new Dimension(Math.max(5, size.width), Math.max(5, size.height));
+    }
 
-	@Override
-	public void setActive( boolean active ){
-		super.setActive(active);
-		repaint();
-	}
+    @Override
+    public void setActive( boolean active ){
+        super.setActive(active);
+        repaint();
+    }
 
-	@Override
-	public void paintBackground( Graphics g, JComponent component ){
-		g.setColor(color);
-		g.fillRect(0, 0, getWidth(), getHeight());
+    @Override
+    public void paintBackground( Graphics g, JComponent component ){
+        g.setColor(color);
+        g.fillRect(0, 0, getWidth(), getHeight());
 
-		if (isActive()){
-			g.setColor(Color.RED);
-			if (orientation.isHorizontal()){
-				g.drawLine(1, getHeight() / 2, getWidth() - 1, getHeight() / 2);
-			} else{
-				g.drawLine(getWidth() / 2, 1, getWidth() / 2, getHeight() - 1);
-			}
-		}
-	}
+        if (isActive()){
+            g.setColor(Color.RED);
+            if (orientation.isHorizontal()){
+                g.drawLine(1, getHeight() / 2, getWidth() - 1, getHeight() / 2);
+            } else{
+                g.drawLine(getWidth() / 2, 1, getWidth() / 2, getHeight() - 1);
+            }
+        }
+    }
 }

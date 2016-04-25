@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -47,44 +47,45 @@ import bibliothek.gui.dock.util.font.GenericFontModifier;
 public class FontMap {
     /** key for font used in titles */
     public static final String FONT_KEY_TITLE = "dock.title";
-    
+
     /** key for font used in titles if the title is focused */
     public static final String FONT_KEY_TITLE_FOCUSED = "dock.title.focused";
-    
+
     /** key for font used on the button for a minimized dokable */
     public static final String FONT_KEY_MINIMIZED_BUTTON = "dock.minimized";
-    
+
     /** key for font used on the focused button for a minimized dokable */
     public static final String FONT_KEY_MINIMIZED_BUTTON_FOCUSED = "dock.minimized.focused";
-    
+
     /** key for font used on a tab */
     public static final String FONT_KEY_TAB = "dock.tab";
-    
+
     /** key for font used on a selected tab */
     public static final String FONT_KEY_TAB_SELECTED = "dock.tab.selected";
-    
+
     /** key for font used on a focused tab */
     public static final String FONT_KEY_TAB_FOCUSED = "dock.tab.focused";
-    
+
     /** the map of fonts associated with {@link #dockable} */
     private Map<String, FontModifier> fonts = new HashMap<String, FontModifier>();
-    
+
     /** listeners to be informed when {@link #fonts} changes */
     private List<FontMapListener> listeners = new ArrayList<FontMapListener>();
-    
+
     /** the element for which this map is used */
     private CDockable dockable;
-    
+
     /**
      * Creates a new map
      * @param dockable the owner of this map
      */
     public FontMap( CDockable dockable ){
-        if( dockable == null )
+        if( dockable == null ) {
             throw new IllegalArgumentException( "Dockable must not be null" );
+        }
         this.dockable = dockable;
     }
-    
+
     /**
      * Gets the owner of this map.
      * @return the owner
@@ -92,17 +93,18 @@ public class FontMap {
     public CDockable getDockable() {
         return dockable;
     }
-    
+
     /**
      * Adds a listener to this map.
      * @param listener the new listener
      */
     public void addListener( FontMapListener listener ){
-        if( listener == null )
+        if( listener == null ) {
             throw new NullPointerException( "listener must not be null" );
+        }
         listeners.add( listener );
     }
-    
+
     /**
      * Removes <code>listener</code> from this map.
      * @param listener the listener to remove
@@ -110,7 +112,7 @@ public class FontMap {
     public void removeListener( FontMapListener listener ){
         listeners.remove( listener );
     }
-    
+
     /**
      * Gets the font which is associated with <code>key</code>.
      * @param key the key of the font
@@ -119,21 +121,22 @@ public class FontMap {
     public FontModifier getFont( String key ){
         return fonts.get( key );
     }
-    
+
     /**
      * Sets the font which should be used for <code>key</code>.
      * @param key the key of the font
      * @param font the new font, can be <code>null</code>
      */
     public void setFont( String key, Font font ){
-        if( font == null )
+        if( font == null ) {
             setFont( key, (FontModifier)null );
-        else
+        } else {
             setFont( key, new ConstantFontModifier( font ) );
+        }
     }
-    
+
     /**
-     * Tells to use a font that is derived from the original font of 
+     * Tells to use a font that is derived from the original font of
      * <code>key</code>. There are different modifications possible, all
      * have to be supplied in the same form: <code>key=value</code>.<br>
      * Example: <code>setFont( x, "i=!", "b=+", s=14" );</code> would
@@ -175,14 +178,14 @@ public class FontMap {
                 String[] entry = split( modification );
                 String entryKey = entry[0];
                 String entryValue = entry[1];
-                
+
                 boolean italic = "i".equals( entryKey );
                 boolean bold = "b".equals( entryKey );
                 boolean size = "s".equals( entryKey );
-                
+
                 if( italic || bold ){
                     GenericFontModifier.Modify modify;
-                    
+
                     if( "+".equals( entryValue )){
                         modify = GenericFontModifier.Modify.ON;
                     }
@@ -195,15 +198,16 @@ public class FontMap {
                     else{
                         throw new IllegalArgumentException( "illegal value, must be one of '+', '-' or '!': " + modification );
                     }
-                    
-                    if( italic )
+
+                    if( italic ) {
                         modifier.setItalic( modify );
-                    else
+                    } else {
                         modifier.setBold( modify );
+                    }
                 }
                 else if( size ){
                     String number;
-                    
+
                     if( entryValue.startsWith( "+" )){
                         modifier.setSizeDelta( true );
                         number = entryValue.substring( 1 ).trim();
@@ -216,43 +220,46 @@ public class FontMap {
                         modifier.setSizeDelta( false );
                         number = entryValue;
                     }
-                    
+
                     int parsed = Integer.parseInt( number );
                     if( entryValue.startsWith( "-" )){
                         parsed = -parsed;
                     }
-                    
+
                     modifier.setSize( parsed );
                 }
                 else{
                     throw new IllegalArgumentException( "unknown key: " + modification );
                 }
             }
-            
+
             setFont( key, modifier );
         }
     }
-    
+
     private String[] split( String modification ){
         int index = modification.indexOf( '=' );
-        if( index < 0 )
+        if( index < 0 ) {
             throw new IllegalArgumentException( "not in the form 'key'='value': " + modification );
-        
+        }
+
         String key = modification.substring( 0, index );
         String value = modification.substring( index+1 );
-        
+
         key = key.trim();
         value = value.trim();
-        
-        if( key.length() == 0 )
+
+        if( key.length() == 0 ) {
             throw new IllegalArgumentException( "missing key in: " + modification );
-        
-        if( value.length() == 0 )
+        }
+
+        if( value.length() == 0 ) {
             throw new IllegalArgumentException( "missing value in: " + modification );
-        
+        }
+
         return new String[]{ key, value };
     }
-    
+
     /**
      * Ensures that the original font is used for <code>key</code>
      * @param key the key which should no longer use a modified font
@@ -260,23 +267,25 @@ public class FontMap {
     public void removeFont( String key ){
         setFont( key, (FontModifier)null );
     }
-    
+
     /**
-     * Sets the font for <code>key</code>. 
+     * Sets the font for <code>key</code>.
      * @param key the key of the font
      * @param font the new value or <code>null</code> to set
      * the default value
      */
     public void setFont( String key, FontModifier font ){
         FontModifier old;
-        if( font == null )
+        if( font == null ) {
             old = fonts.remove( key );
-        else
+        } else {
             old = fonts.put( key, font );
-        
+        }
+
         if( (old == null && font != null) || (old != null && !old.equals( font )) ){
-            for( FontMapListener listener : listeners.toArray( new FontMapListener[ listeners.size() ] ))
+            for( FontMapListener listener : listeners.toArray( new FontMapListener[ listeners.size() ] )) {
                 listener.fontChanged( this, key, font );
+            }
         }
     }
 }

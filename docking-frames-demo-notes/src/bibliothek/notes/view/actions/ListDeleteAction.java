@@ -14,25 +14,25 @@ import bibliothek.notes.view.panels.ListView;
  */
 public class ListDeleteAction extends Delete{
     /** the owner */
-	private ListView list;
-	
-	/**
-	 * Creates a new action.
-	 * @param list the owner of this action
-	 * @param model the model from which a {@link Note} might be removed
-	 */
-	public ListDeleteAction( ListView list, NoteModel model ){
-		super( model );
-		this.list = list;
-		
-		setIcon( ResourceSet.APPLICATION_ICONS.get( "list.delete" ) );
-	}
-	
-	@Override
-	public void action( Dockable dockable ){
-		super.action( dockable );
-		Note note = list.getSelected();
-		if( note != null )
-			delete( note, list );
-	}
+    private ListView list;
+
+    /**
+     * Creates a new action.
+     * @param list the owner of this action
+     * @param model the model from which a {@link Note} might be removed
+     */
+    public ListDeleteAction( ListView list, NoteModel model ){
+        super( model );
+        this.list = list;
+
+        setIcon( ResourceSet.APPLICATION_ICONS.get( "list.delete" ) );
+    }
+
+    @Override
+    public void action( Dockable dockable ){
+        super.action( dockable );
+        Note note = list.getSelected();
+        if( note != null )
+            delete( note, list );
+    }
 }

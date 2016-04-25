@@ -29,7 +29,7 @@ public class ChessDockController extends DockController {
         }, null );
         setRestrictedEnvironment( true );
     }
-    
+
     /**
      * Creates the relocator that should be used by this controller.
      * @param controller <code>this</code>
@@ -41,17 +41,17 @@ public class ChessDockController extends DockController {
             {
                 setDragDistance( 0 );
             }
-            
+
             @Override
             protected Reaction dragMousePressed( int x, int y, int dx, int dy, int modifiers, Dockable dockable, boolean forceDrag ) {
                 Reaction reaction = super.dragMousePressed( x, y, dx, dy, modifiers, dockable, forceDrag );
                 if( reaction == Reaction.CONTINUE || reaction == Reaction.CONTINUE_CONSUMED ){
                     return createRemote( dockable ).drag( x, y, modifiers );
                 }
-                
+
                 return reaction;
             }
-        };             
+        };
     }
 }
 

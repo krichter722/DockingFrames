@@ -15,29 +15,29 @@ import bibliothek.notes.util.ResourceSet;
  */
 public class TitleAction extends SimpleButtonAction {
     /** the Note whose title might be changed */
-	private Note note;
-	
-	/**
-	 * Creates a new action.
-	 * @param note the <code>Note</code> whose title might be changed by this
-	 * action
-	 */
-	public TitleAction( Note note ){
-		this.note = note;
-		
-		setText( "Title" );
-		setIcon( ResourceSet.APPLICATION_ICONS.get( "title" ) );
-	}
-	
-	@Override
-	public void action( Dockable dockable ){
-		super.action( dockable );
-		
-		String title = JOptionPane.showInputDialog( dockable.getComponent(),
-				"Please enter new title of note", "Change title",
-				JOptionPane.PLAIN_MESSAGE );
-		
-		if( title != null )
-			TitleAction.this.note.setTitle( title );
-	}
+    private Note note;
+
+    /**
+     * Creates a new action.
+     * @param note the <code>Note</code> whose title might be changed by this
+     * action
+     */
+    public TitleAction( Note note ){
+        this.note = note;
+
+        setText( "Title" );
+        setIcon( ResourceSet.APPLICATION_ICONS.get( "title" ) );
+    }
+
+    @Override
+    public void action( Dockable dockable ){
+        super.action( dockable );
+
+        String title = JOptionPane.showInputDialog( dockable.getComponent(),
+                "Please enter new title of note", "Change title",
+                JOptionPane.PLAIN_MESSAGE );
+
+        if( title != null )
+            TitleAction.this.note.setTitle( title );
+    }
 }

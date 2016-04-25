@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,7 +35,7 @@ import java.awt.Component;
  * editor can ask its parent to show some buttons which represent operations this editor can execute. For
  * example an editor could ask its parent to show a "reset value to default"-button. The editor manages these buttons
  * by calling {@link PreferenceEditorCallback#setOperation(PreferenceOperation, boolean)} and by implementing
- * {@link #doOperation(PreferenceOperation)}.  
+ * {@link #doOperation(PreferenceOperation)}.
  * @author Benjamin Sigg
  * @param <V> the kind of value this editor edits
  */
@@ -45,7 +45,7 @@ public interface PreferenceEditor<V> {
      * @return the component, not <code>null</code>
      */
     public Component getComponent();
-    
+
     /**
      * Sets a callback, a callback can be used to read the value that has to
      * be edited or to store the edited value.<br>
@@ -54,7 +54,7 @@ public interface PreferenceEditor<V> {
      * @param callback the callback, might be <code>null</code>
      */
     public void setCallback( PreferenceEditorCallback<V> callback );
-    
+
     /**
      * Sets information about the value that is shown. This method is called
      * before {@link #setValue(Object)}. This method might be called with
@@ -62,13 +62,13 @@ public interface PreferenceEditor<V> {
      * @param information the information, may be <code>null</code>
      */
     public void setValueInfo( Object information );
-    
+
     /**
      * Sets the current value of this editor.
-     * @param value the value, might be <code>null</code> 
+     * @param value the value, might be <code>null</code>
      */
     public void setValue( V value );
-    
+
     /**
      * Gets the value of this editor.<br>
      * Note: editors should call {@link PreferenceEditorCallback#set(Object)}
@@ -77,7 +77,7 @@ public interface PreferenceEditor<V> {
      * @return the value, might be <code>null</code>
      */
     public V getValue();
-    
+
     /**
      * Executes the operation that matches <code>operation</code> or does
      * nothing if <code>operation</code> is unknown.

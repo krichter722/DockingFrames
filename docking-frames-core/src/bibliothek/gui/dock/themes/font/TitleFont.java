@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -38,13 +38,13 @@ import bibliothek.util.Path;
 public abstract class TitleFont extends AbstractDockFont{
     /** this kind describes a font that is used on a title */
     public static final Path KIND_TITLE_FONT = KIND_DOCK_FONT.append( "title" );
-    
+
     /** this kind describes a font that is used on a button title of a {@link FlapDockStation} */
     public static final Path KIND_FLAP_BUTTON_FONT = KIND_TITLE_FONT.append( "flap" );
-    
+
     /** this kind describes a font that is used for a title which then is used as tab */
     public static final Path KIND_TAB_TITLE_FONT = KIND_TITLE_FONT.append( "tab" );
-    
+
     private DockTitle title;
 
     /**

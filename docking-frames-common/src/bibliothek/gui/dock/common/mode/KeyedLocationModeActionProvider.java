@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2009 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -47,74 +47,75 @@ import bibliothek.gui.dock.support.mode.Mode;
  *
  */
 public class KeyedLocationModeActionProvider extends DefaultLocationModeActionProvider{
-	/** key used for {@link CDockable#getAction(String)} */
-	private String key;
-	
-	/** all the sources that are currently in use and created by this provider */
-	private List<KeyedActionSource> sources = new LinkedList<KeyedActionSource>();
-	
-	/**
-	 * Creates a new provider.
-	 * @param key the key for {@link CDockable#getAction(String)}, must not be <code>null</code>
-	 */
-	public KeyedLocationModeActionProvider( String key ){
-		if( key == null )
-			throw new IllegalArgumentException( "key must not be null" );
-		this.key = key;
-	}
-	
-	/**
-	 * Creates a new provider.
-	 * @param key the key for {@link CDockable#getAction(String)}, must not be <code>null</code>
-	 * @param defaultAction the default action, may be <code>null</code>
-	 */	
-	public KeyedLocationModeActionProvider( String key, CAction defaultAction ){
-		this( key );
-		setSelectModeAction( defaultAction );
-	}
-	
-	/**
-	 * Creates a new provider.
-	 * @param key the key for {@link CDockable#getAction(String)}, must not be <code>null</code>
-	 * @param defaultAction the default action, may be <code>null</code>
-	 */
-	public KeyedLocationModeActionProvider( String key, DockAction defaultAction ){
-		this( key );
-		setSelectModeAction( defaultAction );
-	}
-	
-	@Override
-	public void setSelectModeAction( DockAction selectModeAction ){
-		super.setSelectModeAction( selectModeAction );
-		for( KeyedActionSource source : sources ){
-			source.setDefaultAction( selectModeAction );
-		}
-	}
-	
-	public DockActionSource getActions( Dockable dockable, Mode<Location> currentMode, DockActionSource currentSource ){
-		if( currentSource instanceof KeyedActionSource ){
-			if( ((KeyedActionSource)currentSource).getKey().equals( key )){
-				return currentSource;
-			}
-		}
-			
-		
-		if( dockable instanceof CommonDockable ){
-			CDockable cdockable = ((CommonDockable)dockable).getDockable();
-			KeyedActionSource source = new KeyedActionSource( cdockable, key );
-			sources.add( source );
-			source.setDefaultAction( getSelectModeAction() );
-			source.setVisible( true );
-			return source;
-		}
-		else{
-			return super.getActions( dockable, currentMode, currentSource );
-		}
-	}
-	
-	public void destroy( Dockable dockable, DockActionSource source ){
-		if( sources.remove( source )){
-			((KeyedActionSource)source).destroy();
-		}
-	}
+    /** key used for {@link CDockable#getAction(String)} */
+    private String key;
+
+    /** all the sources that are currently in use and created by this provider */
+    private List<KeyedActionSource> sources = new LinkedList<KeyedActionSource>();
+
+    /**
+     * Creates a new provider.
+     * @param key the key for {@link CDockable#getAction(String)}, must not be <code>null</code>
+     */
+    public KeyedLocationModeActionProvider( String key ){
+        if( key == null ) {
+            throw new IllegalArgumentException( "key must not be null" );
+        }
+        this.key = key;
+    }
+
+    /**
+     * Creates a new provider.
+     * @param key the key for {@link CDockable#getAction(String)}, must not be <code>null</code>
+     * @param defaultAction the default action, may be <code>null</code>
+     */
+    public KeyedLocationModeActionProvider( String key, CAction defaultAction ){
+        this( key );
+        setSelectModeAction( defaultAction );
+    }
+
+    /**
+     * Creates a new provider.
+     * @param key the key for {@link CDockable#getAction(String)}, must not be <code>null</code>
+     * @param defaultAction the default action, may be <code>null</code>
+     */
+    public KeyedLocationModeActionProvider( String key, DockAction defaultAction ){
+        this( key );
+        setSelectModeAction( defaultAction );
+    }
+
+    @Override
+    public void setSelectModeAction( DockAction selectModeAction ){
+        super.setSelectModeAction( selectModeAction );
+        for( KeyedActionSource source : sources ){
+            source.setDefaultAction( selectModeAction );
+        }
+    }
+
+    public DockActionSource getActions( Dockable dockable, Mode<Location> currentMode, DockActionSource currentSource ){
+        if( currentSource instanceof KeyedActionSource ){
+            if( ((KeyedActionSource)currentSource).getKey().equals( key )){
+                return currentSource;
+            }
+        }
+
+
+        if( dockable instanceof CommonDockable ){
+            CDockable cdockable = ((CommonDockable)dockable).getDockable();
+            KeyedActionSource source = new KeyedActionSource( cdockable, key );
+            sources.add( source );
+            source.setDefaultAction( getSelectModeAction() );
+            source.setVisible( true );
+            return source;
+        }
+        else{
+            return super.getActions( dockable, currentMode, currentSource );
+        }
+    }
+
+    public void destroy( Dockable dockable, DockActionSource source ){
+        if( sources.remove( source )){
+            ((KeyedActionSource)source).destroy();
+        }
+    }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -56,36 +56,37 @@ public class NoStackTheme implements DockTheme {
      */
     public static <T extends DockTheme> ThemeFactory getFactory( final Class<T> theme ){
         final ThemeFactory factory = new ThemePropertyFactory<T>( theme );
-        
+
         return new ThemeFactory(){
             public DockTheme create( DockController controller ) {
                 return new NoStackTheme( factory.create( controller ) );
             }
-            
+
             public ThemeMeta createMeta( DockController controller ){
-            	return new Meta( this, controller, factory.createMeta( controller ));
+                return new Meta( this, controller, factory.createMeta( controller ));
             }
         };
     }
-    
+
     /** The delegate theme to get the basic factories */
     private DockTheme base;
-    
+
     /** {@link DockAcceptance} ensuring no nested stacks */
     private NoStackAcceptance acceptance = new NoStackAcceptance();
-    
+
     /**
      * Creates a new theme
      * @param base the wrapped theme, it is used as a delegate to get
      * some factories.
      */
     public NoStackTheme( DockTheme base ){
-        if( base == null )
+        if( base == null ) {
             throw new IllegalArgumentException( "Base theme must not be null" );
-        
+        }
+
         this.base = base;
     }
-    
+
     public Combiner getCombiner( DockStation station ) {
         return base.getCombiner( station );
     }
@@ -105,83 +106,84 @@ public class NoStackTheme implements DockTheme {
     public DockableMovingImageFactory getMovingImageFactory( DockController controller ) {
         return base.getMovingImageFactory( controller );
     }
-    
+
     public DockableSelection getDockableSelection( DockController controller ) {
         return base.getDockableSelection( controller );
     }
-    
-    public void install( DockController controller, DockThemeExtension[] extensions ){    	
+
+    public void install( DockController controller, DockThemeExtension[] extensions ){
         base.install( controller, extensions );
         controller.addAcceptance( acceptance );
     }
-    
+
     public void uninstall(DockController controller) {
-    	base.uninstall( controller );
+        base.uninstall( controller );
         controller.removeAcceptance( acceptance );
     }
-    
+
 
     private static class Meta extends DefaultThemeMeta implements ThemeMetaListener{
-    	private ThemeMeta meta;
-    	
-		public Meta( ThemeFactory factory, DockController controller, ThemeMeta meta ){
-			super( factory, controller, "theme.small", "theme.small.description", meta.getAuthors(), meta.getWebpages() );
-			this.meta = meta;
-		}
-    	
-		@Override
-		public void addListener( ThemeMetaListener listener ){
-			if( !hasListeners() ){
-				meta.addListener( this );
-			}
-			super.addListener( listener );
-		}
-		
-		@Override
-		public void removeListener( ThemeMetaListener listener ){
-			super.removeListener( listener );
-			if( !hasListeners() ){
-				meta.removeListener( this );
-			}
-		}
-		
-		@Override
-		public String getName(){
-			String small = super.getName();
-			String factory = meta.getName();
-			
-			return small  + " \"" + factory + "\"";
-		}
-		
-		@Override
-		public String[] getAuthors(){
-			String[] authors = getAuthors();
-            final String BENI = "Benjamin Sigg";
-            for( String author : authors ){
-                if( author.equals( BENI ))
-                    return authors;
+        private ThemeMeta meta;
+
+        public Meta( ThemeFactory factory, DockController controller, ThemeMeta meta ){
+            super( factory, controller, "theme.small", "theme.small.description", meta.getAuthors(), meta.getWebpages() );
+            this.meta = meta;
+        }
+
+        @Override
+        public void addListener( ThemeMetaListener listener ){
+            if( !hasListeners() ){
+                meta.addListener( this );
             }
-            
+            super.addListener( listener );
+        }
+
+        @Override
+        public void removeListener( ThemeMetaListener listener ){
+            super.removeListener( listener );
+            if( !hasListeners() ){
+                meta.removeListener( this );
+            }
+        }
+
+        @Override
+        public String getName(){
+            String small = super.getName();
+            String factory = meta.getName();
+
+            return small  + " \"" + factory + "\"";
+        }
+
+        @Override
+        public String[] getAuthors(){
+            String[] authors = getAuthors();
+            final String beni = "Benjamin Sigg";
+            for( String author : authors ){
+                if( author.equals( beni )) {
+                    return authors;
+                }
+            }
+
             String[] result = new String[ authors.length + 1 ];
             System.arraycopy( authors, 0, result, 0, authors.length );
-            result[ authors.length ] = BENI;
+            result[ authors.length ] = beni;
             return result;
-		}
-		
-		public void authorsChanged( ThemeMeta meta ){
-			setAuthors( meta.getAuthors() );
-		}
-		
-		public void webpagesChanged( ThemeMeta meta ){
-			setWebpages( meta.getWebpages() );
-		}
-		
-		public void descriptionChanged( ThemeMeta meta ){
-			// ignore
-		}
-		
-		public void nameChanged( ThemeMeta meta ){
-			fireNameChanged();
-		}
+        }
+
+        public void authorsChanged( ThemeMeta meta ){
+            setAuthors( meta.getAuthors() );
+        }
+
+        public void webpagesChanged( ThemeMeta meta ){
+            setWebpages( meta.getWebpages() );
+        }
+
+        public void descriptionChanged( ThemeMeta meta ){
+            // ignore
+        }
+
+        public void nameChanged( ThemeMeta meta ){
+            fireNameChanged();
+        }
     }
 }

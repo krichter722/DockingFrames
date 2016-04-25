@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,14 +40,14 @@ public interface CControlListener {
      * @param dockable the element that is now known
      */
     public void added( CControl control, CDockable dockable );
-    
+
     /**
      * Called when <code>dockable</code> has been removed.
      * @param control the caller
      * @param dockable the element that is no longer known
      */
     public void removed( CControl control, CDockable dockable );
-    
+
     /**
      * Called when <code>dockable</code> has been made visible.
      * @param control the caller
@@ -55,7 +55,7 @@ public interface CControlListener {
      * @see CDockable#isVisible()
      */
     public void opened( CControl control, CDockable dockable );
-    
+
     /**
      * Called when <code>dockable</code> has been made invisible.
      * @param control the caller

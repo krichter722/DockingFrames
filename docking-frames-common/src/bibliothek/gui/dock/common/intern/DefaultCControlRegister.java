@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -56,10 +56,10 @@ public class DefaultCControlRegister implements MutableCControlRegister {
 
     /** the center component of the main-frame */
     private CContentArea content;
-    
+
     /** whether the default stations are currently added */
     private boolean settingDefaultStations = false;
-    
+
     /** the whole list of station-containers known to this control, includes {@link #content} */
     private List<CStationContainer> containers = new ArrayList<CStationContainer>();
 
@@ -67,7 +67,7 @@ public class DefaultCControlRegister implements MutableCControlRegister {
     private CommonSingleDockableFactory backupFactory;
 
     /** the set of known factories */
-    private Map<String, CommonMultipleDockableFactory> factories = 
+    private Map<String, CommonMultipleDockableFactory> factories =
         new HashMap<String, CommonMultipleDockableFactory>();
 
     /** list of all dockables registered  */
@@ -79,30 +79,30 @@ public class DefaultCControlRegister implements MutableCControlRegister {
         new ArrayList<SingleCDockable>();
 
     /** the set of {@link MultipleCDockable}s */
-    private List<MultipleCDockable> multiDockables = 
+    private List<MultipleCDockable> multiDockables =
         new ArrayList<MultipleCDockable>();
-    
+
     /** the stations known  */
     private List<CStation<?>> stations = new ArrayList<CStation<?>>();
-    
+
     /** a listener added to all {@link CStationContainer}s, adds or removes {@link CStation}s
      * when necessary */
     private CStationContainerListener containerListener = new CStationContainerListener(){
-		public void removed( CStationContainer source, CStation<?> station ){
-			control.removeStation( station );
-		}
-		
-		public void added( CStationContainer source, CStation<?> station ){
-			try{
-				settingDefaultStations = source == content;
-				control.addStation( station, true );
-			}
-			finally{
-				settingDefaultStations = false;
-			}
-		}
-	};
-    
+        public void removed( CStationContainer source, CStation<?> station ){
+            control.removeStation( station );
+        }
+
+        public void added( CStationContainer source, CStation<?> station ){
+            try{
+                settingDefaultStations = source == content;
+                control.addStation( station, true );
+            }
+            finally{
+                settingDefaultStations = false;
+            }
+        }
+    };
+
     /**
      * Creates a new register
      * @param control the owner of this register
@@ -111,7 +111,7 @@ public class DefaultCControlRegister implements MutableCControlRegister {
         this.control = control;
         backupFactory = new CommonSingleDockableFactory( control );
     }
-    
+
     public CControl getControl() {
         return control;
     }
@@ -119,61 +119,63 @@ public class DefaultCControlRegister implements MutableCControlRegister {
     public List<CDockable> getDockables() {
         return Collections.unmodifiableList( dockables );
     }
-    
+
     public List<MultipleCDockable> getMultipleDockables() {
         return Collections.unmodifiableList( multiDockables );
     }
-    
+
     public List<SingleCDockable> getSingleDockables() {
         return Collections.unmodifiableList( singleDockables );
     }
-    
+
     public List<CStation<?>> getStations() {
         return Collections.unmodifiableList( stations );
     }
-    
+
     public List<CStationContainer> getStationContainers() {
         return Collections.unmodifiableList( containers );
     }
-    
-	public CStationContainer getContainer( CStation<?> child ){
-		for( CStationContainer container : getStationContainers() ){
-			for( int i = 0, n = container.getStationCount(); i<n; i++ ){
-				if( container.getStation( i ) == child ){
-					return container;
-				}
-			}
-		}
-		return null;
-	}
-    
-    public void addStationContainer( CStationContainer container ){
-        if( container == null )
-            throw new NullPointerException( "container is null" );
-        if( containers.contains( container ))
-            throw new IllegalArgumentException( "container already registered" );
-        
-        for( CStationContainer child : containers ){
-        	if( child.getUniqueId().equals( container.getUniqueId() )){
-        		throw new IllegalArgumentException( "A container with unique id '" + container.getUniqueId() + "' is already registered" );
-        	}
+
+    public CStationContainer getContainer( CStation<?> child ){
+        for( CStationContainer container : getStationContainers() ){
+            for( int i = 0, n = container.getStationCount(); i<n; i++ ){
+                if( container.getStation( i ) == child ){
+                    return container;
+                }
+            }
         }
-        
+        return null;
+    }
+
+    public void addStationContainer( CStationContainer container ){
+        if( container == null ) {
+            throw new NullPointerException( "container is null" );
+        }
+        if( containers.contains( container )) {
+            throw new IllegalArgumentException( "container already registered" );
+        }
+
+        for( CStationContainer child : containers ){
+            if( child.getUniqueId().equals( container.getUniqueId() )){
+                throw new IllegalArgumentException( "A container with unique id '" + container.getUniqueId() + "' is already registered" );
+            }
+        }
+
         containers.add( container );
-        
+
         try{
-        	settingDefaultStations = container == content;
-        	
-	        for( int i = 0, n = container.getStationCount(); i<n; i++ ){
-	        	control.addStation( container.getStation( i ), true );
-	        }
+            settingDefaultStations = container == content;
+
+            for( int i = 0, n = container.getStationCount(); i<n; i++ ){
+                control.addStation( container.getStation( i ), true );
+            }
         }
         finally{
-        	settingDefaultStations = false;
+            settingDefaultStations = false;
         }
         container.addStationContainerListener( containerListener );
     }
-    
+
     /**
      * Gets a list of keys for all {@link SingleCDockableFactory}s which
      * are currently registered at this control.
@@ -191,9 +193,9 @@ public class DefaultCControlRegister implements MutableCControlRegister {
     public Set<String> listMultipleDockableFactories(){
         return factories.keySet();
     }
-    
+
     /**
-     * Gets a list of all {@link MultipleCDockable}s that are registered at this 
+     * Gets a list of all {@link MultipleCDockable}s that are registered at this
      * control and whose {@link MultipleCDockable#getFactory()} method returns
      * <code>factory</code>.
      * @param factory the factory to look out for
@@ -208,7 +210,7 @@ public class DefaultCControlRegister implements MutableCControlRegister {
         }
         return result;
     }
-    
+
     /**
      * Gets a list of all visible {@link CDockable}s in the given mode.
      * @param mode the mode which each <code>CDockable</code> must have
@@ -223,7 +225,7 @@ public class DefaultCControlRegister implements MutableCControlRegister {
         }
         return list;
     }
-    
+
     /**
      * Gets a list of all identifiers of {@link SingleCDockable} for which
      * this control has location information within the current {@link CControl#load(String) setting}.
@@ -239,7 +241,7 @@ public class DefaultCControlRegister implements MutableCControlRegister {
         }
         return result;
     }
-    
+
     public String toSingleId( String id ){
         return "single " + id;
     }
@@ -247,19 +249,19 @@ public class DefaultCControlRegister implements MutableCControlRegister {
     public boolean isSingleId( String id ){
         return id.startsWith( "single " );
     }
-    
+
     public String singleToNormalId( String id ){
         return id.substring( 7 );
     }
-    
+
     public String toMultiId( String id ){
         return "multi " + id;
     }
-    
+
     public boolean isMultiId( String id ){
         return id.startsWith( "multi " );
     }
-    
+
     public String multiToNormalId( String id ){
         return id.substring( 6 );
     }
@@ -273,21 +275,21 @@ public class DefaultCControlRegister implements MutableCControlRegister {
         dockables.add( dockable );
         singleDockables.add( dockable );
     }
-    
+
     public SingleCDockable getSingleDockable( String id ){
-	    for( SingleCDockable dockable : singleDockables ){
-	    	if( dockable.getUniqueId().equals( id )){
-	    		return dockable;
-	    	}
-	    }
-	    return null;
+        for( SingleCDockable dockable : singleDockables ){
+            if( dockable.getUniqueId().equals( id )){
+                return dockable;
+            }
+        }
+        return null;
     }
 
     public void addStation( CStation<?> station ) {
-    	if( !settingDefaultStations ){
-    		checkStationIdentifierUniqueness( station.getUniqueId(), station );
-    	}
-    	
+        if( !settingDefaultStations ){
+            checkStationIdentifierUniqueness( station.getUniqueId(), station );
+        }
+
         stations.add( station );
     }
 
@@ -298,27 +300,33 @@ public class DefaultCControlRegister implements MutableCControlRegister {
      * @param adding the station that is about to be added
      */
     private void checkStationIdentifierUniqueness( String uniqueId, CStation<?> adding ){
-        if( uniqueId == null )
+        if( uniqueId == null ) {
             throw new NullPointerException( "uniqueId must not be null" );
+        }
 
-        if( CContentArea.getCenterIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) )
+        if( CContentArea.getCenterIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) ) {
             throw new IllegalArgumentException( "The id " + uniqueId + " is reserved for special purposes" );
-        if( CContentArea.getEastIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) )
+        }
+        if( CContentArea.getEastIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) ) {
             throw new IllegalArgumentException( "The id " + uniqueId + " is reserved for special purposes" );
-        if( CContentArea.getWestIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) )
+        }
+        if( CContentArea.getWestIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) ) {
             throw new IllegalArgumentException( "The id " + uniqueId + " is reserved for special purposes" );
-        if( CContentArea.getSouthIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) )
+        }
+        if( CContentArea.getSouthIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) ) {
             throw new IllegalArgumentException( "The id " + uniqueId + " is reserved for special purposes" );
-        if( CContentArea.getNorthIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) )
+        }
+        if( CContentArea.getNorthIdentifier( CControl.CONTENT_AREA_STATIONS_ID ).equals( uniqueId ) ) {
             throw new IllegalArgumentException( "The id " + uniqueId + " is reserved for special purposes" );
+        }
 
         for( CStation<?> station : stations ){
             if( station.getUniqueId().equals( uniqueId )){
-            	if( station == adding ){
-            		throw new IllegalArgumentException( "The station has already been registered" );
-            	}
-            	
-                throw new IllegalArgumentException( "There exists already a station with id: " + uniqueId );    
+                if( station == adding ){
+                    throw new IllegalArgumentException( "The station has already been registered" );
+                }
+
+                throw new IllegalArgumentException( "There exists already a station with id: " + uniqueId );
             }
         }
     }
@@ -332,7 +340,7 @@ public class DefaultCControlRegister implements MutableCControlRegister {
     }
 
     public CContentArea getDefaultContentArea(){
-	    return content;
+        return content;
     }
 
     public void putCommonMultipleDockableFactory( String id, CommonMultipleDockableFactory factory ) {
@@ -345,12 +353,12 @@ public class DefaultCControlRegister implements MutableCControlRegister {
 
     public boolean removeStationContainer( CStationContainer container ){
         if( containers.remove( container ) ){
-        	container.removeStationContainerListener( containerListener );
-        	
-        	for( int i = 0, n = container.getStationCount(); i<n; i++ ){
-        		control.removeStation( container.getStation( i ) );
-        	}
-        	return true;
+            container.removeStationContainerListener( containerListener );
+
+            for( int i = 0, n = container.getStationCount(); i<n; i++ ){
+                control.removeStation( container.getStation( i ) );
+            }
+            return true;
         }
         return false;
     }
@@ -376,7 +384,7 @@ public class DefaultCControlRegister implements MutableCControlRegister {
     }
 
     public void setDefaultContentArea( CContentArea container ){
-	    this.content = container;	
+        this.content = container;
     }
 
     public CDockable getDockable( int index ) {
@@ -394,11 +402,12 @@ public class DefaultCControlRegister implements MutableCControlRegister {
         }
         return result;
     }
-    
+
     public MultipleCDockableFactory<?, ?> getFactory( String id ) {
         CommonMultipleDockableFactory factory = factories.get( id );
-        if( factory == null )
+        if( factory == null ) {
             return null;
+        }
         return factory.getFactory();
     }
 }

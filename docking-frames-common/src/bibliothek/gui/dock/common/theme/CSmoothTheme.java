@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -60,9 +60,9 @@ public class CSmoothTheme extends CDockTheme<SmoothTheme> {
         super( theme );
         init( control );
     }
-    
+
     /**
-     * Creates a new theme. This theme can be used directly with a 
+     * Creates a new theme. This theme can be used directly with a
      * {@link CControl}.
      * @param control the controller for which this theme will be used.
      */
@@ -70,7 +70,7 @@ public class CSmoothTheme extends CDockTheme<SmoothTheme> {
         this( new SmoothTheme() );
         init( control );
     }
-    
+
     /**
      * Creates a new theme.
      * @param theme the delegate which will do most of the work
@@ -78,7 +78,7 @@ public class CSmoothTheme extends CDockTheme<SmoothTheme> {
     private CSmoothTheme( SmoothTheme theme ){
         super( theme, new NoStackTheme( theme ) );
     }
-    
+
     /**
      * Initializes the properties of this theme.
      * @param control the controller for which this theme will be used
@@ -99,30 +99,30 @@ public class CSmoothTheme extends CDockTheme<SmoothTheme> {
             }
         });
         putColorBridgeFactory( TitleColor.KIND_FLAP_BUTTON_COLOR, new ColorBridgeFactory(){
-        	public ColorBridge create(ColorManager manager) {
-        		BasicButtonTitleTransmitter transmitter = new BasicButtonTitleTransmitter( manager );
-        		transmitter.setControl( control );
-        		return transmitter;
-        	}
+            public ColorBridge create(ColorManager manager) {
+                BasicButtonTitleTransmitter transmitter = new BasicButtonTitleTransmitter( manager );
+                transmitter.setControl( control );
+                return transmitter;
+            }
         });
         initDefaultFontBridges( control );
     }
-    
+
     @Override
     public void install( DockController controller ){
-    	super.install( controller );
-    	ActionViewConverter converter = controller.getActionViewConverter();
-    	converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.TITLE, new BasicPanelPopupGenerator());
-    	converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.MENU, new PanelMenuGenerator() );
-    	converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.DROP_DOWN, new PanelDropDownGenerator() );
+        super.install( controller );
+        ActionViewConverter converter = controller.getActionViewConverter();
+        converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.TITLE, new BasicPanelPopupGenerator());
+        converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.MENU, new PanelMenuGenerator() );
+        converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.DROP_DOWN, new PanelDropDownGenerator() );
     }
-    
+
     @Override
     public void uninstall( DockController controller ){
-    	ActionViewConverter converter = controller.getActionViewConverter();
-    	converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.TITLE, null );
-    	converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.MENU, null );
-    	converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.DROP_DOWN, null );
-    	super.uninstall( controller );
+        ActionViewConverter converter = controller.getActionViewConverter();
+        converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.TITLE, null );
+        converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.MENU, null );
+        converter.putTheme( CPanelPopup.PANEL_POPUP, ViewTarget.DROP_DOWN, null );
+        super.uninstall( controller );
     }
 }

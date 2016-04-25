@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -47,27 +47,27 @@ import bibliothek.paint.model.ShapeFactory;
  */
 public class Page extends JPanel implements PictureListener {
     /** the size a page has when its zoomfactor is set to 1.0 */
-    private static final Dimension ORIGINAL_SIZE = new Dimension( 800, 600 ); 
-	
+    private static final Dimension ORIGINAL_SIZE = new Dimension( 800, 600 );
+
     /** the picture which is painted on this panel */
-	private Picture picture;
-    
-	/** the factory which is used to create a new {@link Shape} when the user wants to insert a new one */
+    private Picture picture;
+
+    /** the factory which is used to create a new {@link Shape} when the user wants to insert a new one */
     private ShapeFactory factory;
     /** the <code>Shape</code> the user is currently inserting */
     private Shape current;
     /** the <code>Color</code> each new <code>Shape</code> will have */
     private Color color = Color.BLACK;
-    
+
     /** the zoomfactor, each coordinate will be multiplied with this factor */
     private double zoom = 1.0;
-    
+
     /**
      * Creates a new page.
      */
     public Page(){
         setFocusable( true );
-        
+
         addMouseListener( new MouseAdapter(){
             @Override
             public void mousePressed( MouseEvent e ) {
@@ -80,7 +80,7 @@ public class Page extends JPanel implements PictureListener {
                     repaint();
                 }
             }
-            
+
             @Override
             public void mouseReleased( MouseEvent e ) {
                 if( current != null ){
@@ -89,7 +89,7 @@ public class Page extends JPanel implements PictureListener {
                 }
             }
         });
-        
+
         addMouseMotionListener( new MouseMotionAdapter(){
             @Override
             public void mouseDragged( MouseEvent e ) {
@@ -99,38 +99,38 @@ public class Page extends JPanel implements PictureListener {
                 }
             }
         });
-        
+
         setZoom( 1.0 );
     }
-    
+
     /**
      * Sets the <code>Color</code> which is used to paint any new {@link Shape}
      * the user wants to insert.
      * @param color the new color
      */
     public void setColor( Color color ){
-		this.color = color;
-	}
-    
+        this.color = color;
+    }
+
     /**
      * Sets the zoom-factory. Each coordinate will be multiplied by this factor.
      * @param zoom a value greater than 0
      */
     public void setZoom( double zoom ){
-		this.zoom = zoom;
-		setPreferredSize( new Dimension( (int)(ORIGINAL_SIZE.width * zoom), (int)(ORIGINAL_SIZE.height * zoom) ) );
-		revalidate();
-		repaint();
-	}
-    
+        this.zoom = zoom;
+        setPreferredSize( new Dimension( (int)(ORIGINAL_SIZE.width * zoom), (int)(ORIGINAL_SIZE.height * zoom) ) );
+        revalidate();
+        repaint();
+    }
+
     /**
      * Gets the current zoom-factor.
      * @return the factor
      */
     public double getZoom(){
-		return zoom;
-	}
-    
+        return zoom;
+    }
+
     /**
      * Divides each coordinate of <code>point</code> with the zoomfactor
      * of this <code>Page</code>.
@@ -138,9 +138,9 @@ public class Page extends JPanel implements PictureListener {
      * @return a point with the divided coordinates
      */
     private Point unstretch( Point point ){
-    	return new Point( (int)(point.x / zoom), (int)(point.y / zoom) );
+        return new Point( (int)(point.x / zoom), (int)(point.y / zoom) );
     }
-    
+
     /**
      * Gets the factory which is used to fetch new {@link Shape}s when the
      * user wants to insert a new <code>Shape</code>.
@@ -149,7 +149,7 @@ public class Page extends JPanel implements PictureListener {
     public ShapeFactory getFactory() {
         return factory;
     }
-    
+
     /**
      * Sets the factory which is used to fetch new {@link Shape}s when the
      * user wants to insert new ones.
@@ -166,7 +166,7 @@ public class Page extends JPanel implements PictureListener {
     public Picture getPicture() {
         return picture;
     }
-    
+
     /**
      * Sets the <code>Picture</code> which is painted on this page.
      * @param picture the picture to paint, can be <code>null</code>
@@ -174,20 +174,20 @@ public class Page extends JPanel implements PictureListener {
     public void setPicture( Picture picture ) {
         if( this.picture != null )
             this.picture.removeListener( this );
-        
+
         this.picture = picture;
-        
+
         if( this.picture != null ){
             this.picture.addListener( this );
         }
-        
+
         repaint();
     }
-    
+
     public void pictureChanged() {
         repaint();
     }
-    
+
     @Override
     protected void paintComponent( Graphics g ) {
         g.setColor( Color.WHITE );

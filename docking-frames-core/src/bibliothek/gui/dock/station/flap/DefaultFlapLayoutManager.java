@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -57,11 +57,11 @@ public class DefaultFlapLayoutManager extends AbstractFlapLayoutManager implemen
             station.removeDockStationListener( properties );
         }
     }
-    
+
     public int getSize( FlapDockStation station, Dockable dockable ) {
         return stations.get( station ).size;
     }
-    
+
     public boolean isHold( FlapDockStation station, Dockable dockable ) {
         return Boolean.TRUE.equals( stations.get( station ).hold.get( dockable ) );
     }
@@ -75,13 +75,13 @@ public class DefaultFlapLayoutManager extends AbstractFlapLayoutManager implemen
     }
 
     public boolean isHoldSwitchable( FlapDockStation station, Dockable dockable ){
-    	Boolean result = stations.get( station ).switchable.get( dockable );
-    	if( result == null ){
-    		return true;
-    	}
-    	return result;
+        Boolean result = stations.get( station ).switchable.get( dockable );
+        if( result == null ){
+            return true;
+        }
+        return result;
     }
-    
+
     /**
      * Sets the result of {@link #isHoldSwitchable(FlapDockStation, Dockable)}. The result will be
      * reset to <code>true</code> if <code>dockable</code> is removed from <code>station</code>.
@@ -90,10 +90,10 @@ public class DefaultFlapLayoutManager extends AbstractFlapLayoutManager implemen
      * @param switchable whether the hold property of <code>dockable</code> is switchable
      */
     public void setHoldSwitchable( FlapDockStation station, Dockable dockable, boolean switchable ){
-    	stations.get( station ).switchable.put( dockable, switchable );
-    	fireHoldSwitchableChanged( station, dockable );
+        stations.get( station ).switchable.put( dockable, switchable );
+        fireHoldSwitchableChanged( station, dockable );
     }
-    
+
     /**
      * A set of properties used for one {@link FlapDockStation}
      * @author Benjamin Sigg
@@ -103,10 +103,10 @@ public class DefaultFlapLayoutManager extends AbstractFlapLayoutManager implemen
         public Map<Dockable, Boolean> hold = new HashMap<Dockable, Boolean>();
         /** the result of {@link DefaultFlapLayoutManager#isHoldSwitchable(FlapDockStation, Dockable)} */
         public Map<Dockable, Boolean> switchable = new HashMap<Dockable, Boolean>();
-        
+
         /** the size of the station */
         public int size;
-        
+
         @Override
         public void dockableRemoved( DockStation station, Dockable dockable ) {
             hold.remove( dockable );

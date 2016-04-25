@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2013 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -39,52 +39,52 @@ import bibliothek.gui.dock.StackDockStation;
  * @author Benjamin Sigg
  */
 public class DefaultDndAutoSelectStrategyRequest implements DndAutoSelectStrategyRequest{
-	/** the station that detected the event */
-	private StackDockStation station;
-	
-	/** the {@link Dockable} beneath the mouse */
-	private Dockable dockable;
-	
-	/** additional information about the event */
-	private TransferSupport transferSupport;
-	
-	/**
-	 * Creates a new request object.
-	 * @param station the source of the event
-	 * @param dockable the dockable beneath the mouse
-	 * @param transferSupport additional information about the event
-	 */
-	public DefaultDndAutoSelectStrategyRequest( StackDockStation station, Dockable dockable, TransferSupport transferSupport ){
-		this.station = station;
-		this.dockable = dockable;
-		this.transferSupport = transferSupport;
-	}
+    /** the station that detected the event */
+    private StackDockStation station;
 
-	@Override
-	public StackDockStation getStation(){
-		return station;
-	}
+    /** the {@link Dockable} beneath the mouse */
+    private Dockable dockable;
 
-	@Override
-	public Dockable getDockable(){
-		return dockable;
-	}
+    /** additional information about the event */
+    private TransferSupport transferSupport;
 
-	@Override
-	public DataFlavor[] getDataFlavors(){
-		return transferSupport.getDataFlavors();
-	}
+    /**
+     * Creates a new request object.
+     * @param station the source of the event
+     * @param dockable the dockable beneath the mouse
+     * @param transferSupport additional information about the event
+     */
+    public DefaultDndAutoSelectStrategyRequest( StackDockStation station, Dockable dockable, TransferSupport transferSupport ){
+        this.station = station;
+        this.dockable = dockable;
+        this.transferSupport = transferSupport;
+    }
 
-	@Override
-	public Transferable getTransferable(){
-		return transferSupport.getTransferable();
-	}
+    @Override
+    public StackDockStation getStation(){
+        return station;
+    }
 
-	@Override
-	public void toFront(){
-		DockController controller = dockable.getController();
-		if( controller != null ){
-			controller.setFocusedDockable( dockable, false );
-		}
-	}
+    @Override
+    public Dockable getDockable(){
+        return dockable;
+    }
+
+    @Override
+    public DataFlavor[] getDataFlavors(){
+        return transferSupport.getDataFlavors();
+    }
+
+    @Override
+    public Transferable getTransferable(){
+        return transferSupport.getTransferable();
+    }
+
+    @Override
+    public void toFront(){
+        DockController controller = dockable.getController();
+        if( controller != null ){
+            controller.setFocusedDockable( dockable, false );
+        }
+    }
 }

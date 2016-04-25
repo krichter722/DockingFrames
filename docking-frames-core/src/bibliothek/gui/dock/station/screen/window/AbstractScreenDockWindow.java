@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -91,66 +91,66 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
 
     /** whether a drag and drop operation currently removes the child of this window */
     private boolean removal = false;
-    
+
     /** the explicit set icon */
     private Icon titleIcon = null;
-    
+
     /** the explicit set text */
     private String titleText = null;
-    
+
     /** the background algorithm for this window */
     private BackgroundAlgorithm background;
-    
+
     /** the panel which paints the background */
     private BackgroundPanel contentBackground;
-    
+
     /** the default border of this window */
     private ScreenDockWindowBorder border;
-    
+
     /** the current modifier of the border */
     private WindowBorder borderModifier;
-    
+
     /** responsible for updating the shape of this window */
     private ScreenWindowShapeAdapter shape;
-    
+
     /** a listener added to the <code>Dockable</code> of this window, updates icon and title text */
     private DockableListener listener = new DockableAdapter(){
         @Override
         public void titleIconChanged( Dockable dockable, Icon oldIcon, Icon newIcon ) {
             updateTitleIcon();
         }
-        
+
         @Override
         public void titleTextChanged( Dockable dockable, String oldTitle, String newTitle ) {
             updateTitleText();
         }
     };
-    
-    /** a listener added to this window, will inform other listeners about a changed fullscreen mode when this window is resized */ 
+
+    /** a listener added to this window, will inform other listeners about a changed fullscreen mode when this window is resized */
     private ScreenDockWindowListener windowListener = new ScreenDockWindowListener() {
-    	/** the last remembered state */
-    	private boolean remembered = false;
-    	
-    	public void visibilityChanged( ScreenDockWindow window ) {
-			if( isFullscreen() != remembered ){
-				fireFullscreenChanged();
-			}
-		}
-		
-		public void shapeChanged( ScreenDockWindow window ) {
-			if( isFullscreen() != remembered ){
-				fireFullscreenChanged();
-			}
-		}
-		
-		public void fullscreenStateChanged( ScreenDockWindow window ) {
-			remembered = isFullscreen();
-		}
-		
-		public void windowClosing( ScreenDockWindow window ){
-			// ignore
-		}
-	};
+        /** the last remembered state */
+        private boolean remembered = false;
+
+        public void visibilityChanged( ScreenDockWindow window ) {
+            if( isFullscreen() != remembered ){
+                fireFullscreenChanged();
+            }
+        }
+
+        public void shapeChanged( ScreenDockWindow window ) {
+            if( isFullscreen() != remembered ){
+                fireFullscreenChanged();
+            }
+        }
+
+        public void fullscreenStateChanged( ScreenDockWindow window ) {
+            remembered = isFullscreen();
+        }
+
+        public void windowClosing( ScreenDockWindow window ){
+            // ignore
+        }
+    };
 
     /**
      * Creates a new window. Subclasses must call {@link #init(Component, Container, WindowConfiguration, boolean)}
@@ -161,9 +161,9 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
     protected AbstractScreenDockWindow( ScreenDockStation station, WindowConfiguration configuration ){
         super( station, configuration );
     }
-    
+
     /**
-     * Creates a new window. 
+     * Creates a new window.
      * @param station the owner of this window
      * @param configuration the configuration to apply during creation of this window
      * @param window the root component of this window
@@ -192,21 +192,23 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
      * subclass.
      */
     protected void init( Component window, Container contentParent, WindowConfiguration configuration, boolean borderAllowed ){
-        if( window == null )
+        if( window == null ) {
             throw new IllegalArgumentException( "window must not be null" );
-        
-        if( contentParent == null )
+        }
+
+        if( contentParent == null ) {
             throw new IllegalArgumentException( "contentParent must not be null" );
-        
+        }
+
         this.window = window;
-        
+
         content = createContent( configuration );
         content.setController( getController() );
         if( configuration.isResizeable() ){
-        	contentParent.setLayout( new GridLayout( 1, 1 ) );
+            contentParent.setLayout( new GridLayout( 1, 1 ) );
         }
         else{
-        	contentParent.setLayout( new ResizingLayoutManager( this, window ) );
+            contentParent.setLayout( new ResizingLayoutManager( this, window ) );
         }
         contentParent.add( content );
 
@@ -215,11 +217,11 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
 
         if( (configuration.isResizeable() || configuration.isMoveOnBorder()) && borderAllowed ){
             if( parent instanceof JComponent && configuration.getBorderFactory() != null ){
-            	border = configuration.getBorderFactory().create( this, (JComponent)parent );
-            	border.setController( getController() );
-            	borderModifier = new WindowBorder( (JComponent)parent );
-            	borderModifier.setBorder( border );
-            	borderModifier.setController( getController() );
+                border = configuration.getBorderFactory().create( this, (JComponent)parent );
+                border.setController( getController() );
+                borderModifier = new WindowBorder( (JComponent)parent );
+                borderModifier.setBorder( border );
+                borderModifier.setController( getController() );
             }
 
             Listener listener = new Listener();
@@ -227,44 +229,44 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
             parent.addMouseMotionListener( listener );
             parent.addComponentListener( listener );
         }
-        
+
         window.addComponentListener( new ComponentAdapter() {
-        	@Override
-        	public void componentResized( ComponentEvent e ) {
-	        	fireShapeChanged();
-        	}
-        	
-        	@Override
-        	public void componentMoved( ComponentEvent e ) {
-        		fireShapeChanged();
-        	}
-		});
-        
+            @Override
+            public void componentResized( ComponentEvent e ) {
+                fireShapeChanged();
+            }
+
+            @Override
+            public void componentMoved( ComponentEvent e ) {
+                fireShapeChanged();
+            }
+        });
+
         addScreenDockWindowListener( windowListener );
     }
-    
+
     @Override
     protected WindowMover createTitleMover(){
-    	return new WindowMover( this ){
-    		@Override
-    		protected void convertPointToScreen( Point point, Component component ){
-    			AbstractScreenDockWindow.this.convertPointToScreen( point, component );
-    		}
-    	};
+        return new WindowMover( this ){
+            @Override
+            protected void convertPointToScreen( Point point, Component component ){
+                AbstractScreenDockWindow.this.convertPointToScreen( point, component );
+            }
+        };
     }
-    
+
     @Override
     public void setController( DockController controller ){
-    	super.setController( controller );
-    	content.setController( controller );
-    	if( border != null ){
-    		border.setController( controller );
-    	}
-    	if( borderModifier != null ){
-    		borderModifier.setController( controller );
-    	}
+        super.setController( controller );
+        content.setController( controller );
+        if( border != null ){
+            border.setController( controller );
+        }
+        if( borderModifier != null ){
+            borderModifier.setController( controller );
+        }
     }
-    
+
     /**
      * Sets the algorithm which is responsible for updating the shape of this window. The algorithm remains
      * active until {@link #destroy()} is called.<br>
@@ -273,30 +275,30 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
      * @param shape the algorithm defining the new shape
      */
     protected void setShape( Window window, ScreenWindowShape shape ){
-    	if( Workarounds.getDefault().supportsTransparency( window )){
-    		if( this.shape != null ){
-    			this.shape.disable();
-    			this.shape = null;
-    		}
-    		if( shape != null ){
-    			this.shape = new ScreenWindowShapeAdapter( this, window );
-    			this.shape.setShape( shape );
-    		}
-    	}
+        if( Workarounds.getDefault().supportsTransparency( window )){
+            if( this.shape != null ){
+                this.shape.disable();
+                this.shape = null;
+            }
+            if( shape != null ){
+                this.shape = new ScreenWindowShapeAdapter( this, window );
+                this.shape.setShape( shape );
+            }
+        }
     }
 
     @Override
     protected Component getWindowComponent() {
         return window;
     }
-    
+
     @Override
     protected void setBackground( BackgroundAlgorithm background ){
-	    this.background = background;
-	    if( contentBackground != null ){
-	    	contentBackground.setBackground( background );
-	    }
-	    window.repaint();
+        this.background = background;
+        if( contentBackground != null ){
+            contentBackground.setBackground( background );
+        }
+        window.repaint();
     }
 
     @Override
@@ -305,17 +307,17 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
         if( old != null ){
             old.removeDockableListener( listener );
         }
-        
+
         super.setDockable( dockable );
-        
+
         if( dockable != null ){
             dockable.addDockableListener( listener );
         }
-        
+
         updateTitleIcon();
         updateTitleText();
     }
-    
+
     @Override
     protected void showDisplayer( DockableDisplayer displayer ) {
         if( this.displayer != displayer ){
@@ -342,22 +344,24 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
         this.titleIcon = titleIcon;
         updateTitleIcon();
     }
-    
+
     /**
      * Gets the icon which should be used in the title.
      * @return the icon
      */
     protected Icon getTitleIcon(){
-        if( titleIcon != null )
+        if( titleIcon != null ) {
             return titleIcon;
-        
+        }
+
         Dockable dockable = getDockable();
-        if( dockable == null )
+        if( dockable == null ) {
             return null;
-        
+        }
+
         return dockable.getTitleIcon();
     }
-    
+
     /**
      * Called when the icon of the title should be updated.
      * @see #getTitleIcon()
@@ -365,7 +369,7 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
     protected void updateTitleIcon(){
         // nothing to do
     }
-    
+
     /**
      * Explicitly sets the text of the title.
      * @param titleText the new text or <code>null</code> to use
@@ -375,60 +379,62 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
         this.titleText = titleText;
         updateTitleText();
     }
-    
+
     /**
      * Gets the text which should be used in the title.
      * @return the text, might be <code>null</code>
      */
     protected String getTitleText(){
-        if( titleText != null )
+        if( titleText != null ) {
             return titleText;
-        
+        }
+
         Dockable dockable = getDockable();
-        if( dockable == null )
+        if( dockable == null ) {
             return null;
-        
+        }
+
         return dockable.getTitleText();
     }
-    
+
     /**
      * Called when the text of the title should be updated.
      * @see #getTitleText()
-     */    
+     */
     protected void updateTitleText(){
         // nothing to do
     }
-    
+
     public Rectangle getWindowBounds() {
         return window.getBounds();
     }
-    
+
     public Component getComponent() {
-    	return window;
+        return window;
     }
 
     public void setPaintCombining( CombinerTarget target ){
-        this.combination = target; 
+        this.combination = target;
         window.repaint();
     }
-    
+
     public void setPaintRemoval( boolean removal ){
-    	this.removal = removal;
-    	window.repaint();
+        this.removal = removal;
+        window.repaint();
     }
 
     public void setVisible( boolean visible ) {
-    	if( visible != isVisible() ){
-	        window.setVisible( visible );
-	        fireVisibilityChanged();
-	        checkWindowBoundsAsync();
-    	}
+        if( visible != isVisible() ){
+            window.setVisible( visible );
+            fireVisibilityChanged();
+            checkWindowBoundsAsync();
+        }
     }
-    
+
     public boolean isVisible() {
-	    return window.isVisible();
+        return window.isVisible();
     }
-    
+
     /**
      * Sets the boundaries of this window. If the boundaries are not valid, then this method tries to ensure that
      * the edge or side <i>opposite</i> to <code>position</code> gets at the intended position. This is a convenient
@@ -437,72 +443,72 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
      * @param position the <i>opposite</i> of the edge or side that is fixed
      */
     public void setWindowBounds( Rectangle bounds, Position position ){
-    	Rectangle valid = getStation().getBoundaryRestriction().check( this, bounds );
-    	if( valid == null ){
-    		setWindowBounds( bounds );
-    	}
-    	else{
-    		switch( position ){
-    			case E:
-    				bounds = new Rectangle( bounds.x, valid.y, valid.width, valid.height );
-    				break;
-    			case N:
-    				bounds = new Rectangle( valid.x, bounds.y + bounds.height - valid.height, valid.width, valid.height );
-    				break;
-    			case S:
-    				bounds = new Rectangle( valid.x, bounds.y, valid.width, valid.height );
-    				break;
-    			case W:
-    				bounds = new Rectangle( bounds.x + bounds.width - valid.width, bounds.y, valid.width, valid.height );
-    				break;
-    			case NE:
-    				bounds = new Rectangle( bounds.x, bounds.y + bounds.height - valid.height, valid.width, valid.height );
-    				break;
-    			case NW:
-    				bounds = new Rectangle( bounds.x + bounds.width - valid.width, bounds.y + bounds.height - valid.height, valid.width, valid.height );
-    				break;
-    			case SE:
-    				bounds = new Rectangle( bounds.x, bounds.y, valid.width, valid.height );
-    				break;
-    			case SW:
-    				bounds = new Rectangle( bounds.x + bounds.width - valid.width, bounds.y, valid.width, valid.height );
-    				break;
-    			default:
-    				bounds = valid;
-    				break;
-    		}
-    		setWindowBounds( bounds );
-    	}
+        Rectangle valid = getStation().getBoundaryRestriction().check( this, bounds );
+        if( valid == null ){
+            setWindowBounds( bounds );
+        }
+        else{
+            switch( position ){
+                case E:
+                    bounds = new Rectangle( bounds.x, valid.y, valid.width, valid.height );
+                    break;
+                case N:
+                    bounds = new Rectangle( valid.x, bounds.y + bounds.height - valid.height, valid.width, valid.height );
+                    break;
+                case S:
+                    bounds = new Rectangle( valid.x, bounds.y, valid.width, valid.height );
+                    break;
+                case W:
+                    bounds = new Rectangle( bounds.x + bounds.width - valid.width, bounds.y, valid.width, valid.height );
+                    break;
+                case NE:
+                    bounds = new Rectangle( bounds.x, bounds.y + bounds.height - valid.height, valid.width, valid.height );
+                    break;
+                case NW:
+                    bounds = new Rectangle( bounds.x + bounds.width - valid.width, bounds.y + bounds.height - valid.height, valid.width, valid.height );
+                    break;
+                case SE:
+                    bounds = new Rectangle( bounds.x, bounds.y, valid.width, valid.height );
+                    break;
+                case SW:
+                    bounds = new Rectangle( bounds.x + bounds.width - valid.width, bounds.y, valid.width, valid.height );
+                    break;
+                default:
+                    bounds = valid;
+                    break;
+            }
+            setWindowBounds( bounds );
+        }
     }
-    
+
     public void setWindowBounds( Rectangle bounds ){
         Rectangle valid = getStation().getBoundaryRestriction().check( this, bounds );
 
         if( valid != null ){
-        	bounds = valid;
+            bounds = valid;
         }
 
         if( !window.getBounds().equals( bounds )){
-        	window.setBounds( bounds );
-        	invalidate();
-        	validate();
+            window.setBounds( bounds );
+            invalidate();
+            validate();
         }
     }
 
     /**
-     * Adds an event into the EDT that calls {@link #checkWindowBounds()} at a later time, 
+     * Adds an event into the EDT that calls {@link #checkWindowBounds()} at a later time,
      * the boundaries will only be checked if this window is visible.
      */
     public void checkWindowBoundsAsync(){
-    	SwingUtilities.invokeLater( new Runnable() {
-			public void run() {
-				if( isVisible() ){
-					checkWindowBounds();
-				}
-			}
-		});
+        SwingUtilities.invokeLater( new Runnable() {
+            public void run() {
+                if( isVisible() ){
+                    checkWindowBounds();
+                }
+            }
+        });
     }
-    
+
     public void checkWindowBounds() {
         Rectangle valid = getStation().getBoundaryRestriction().check( this );
         if( valid != null ){
@@ -530,7 +536,7 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
     protected void setCursor( Cursor cursor ){
         window.setCursor( cursor );
     }
-    
+
     /**
      * Converts <code>point</code> which is relative to <code>component</code> to a point on the screen.
      * @param point the point to modify
@@ -538,7 +544,7 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
      * @see SwingUtilities#convertPointToScreen(Point, Component)
      */
     protected void convertPointToScreen( Point point, Component component ){
-    	SwingUtilities.convertPointToScreen( point, component );
+        SwingUtilities.convertPointToScreen( point, component );
     }
 
     /**
@@ -549,8 +555,9 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
     public Insets getDockableInsets(){
         Container parent = getDisplayerParent();
         Insets parentInsets = parent.getInsets();
-        if( parentInsets == null )
+        if( parentInsets == null ) {
             parentInsets = new Insets( 0, 0, 0, 0 );
+        }
 
         Point zero = new Point( 0, 0 );
         zero = SwingUtilities.convertPoint( parent, zero, window );
@@ -560,8 +567,9 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
         parentInsets.right += window.getWidth() - parent.getWidth() - zero.x;
         parentInsets.bottom += window.getHeight() - parent.getHeight() - zero.y;
 
-        if( displayer == null )
+        if( displayer == null ) {
             return parentInsets;
+        }
 
         Insets insets = displayer.getDockableInsets();
         parentInsets.top += insets.top;
@@ -573,85 +581,85 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
     }
 
     /**
-     * Creates the component that will be used as 
+     * Creates the component that will be used as
      * {@link JDialog#setContentPane(Container) content-pane}.
      * This method is invoked by the constructor.
      * @param configuration the configuration of this window
      * @return the new content pane
      */
     protected SecureContainer createContent( WindowConfiguration configuration ){
-    	if( configuration.isTransparent() ){
-    		contentBackground = new BackgroundPanel( Transparency.TRANSPARENT ){
-    			@Override
-    			protected void configure( Transparency transparency ){
-    				setTransparency( transparency );
-    			}
-    			@Override
-    			protected void setupRenderingHints( Graphics g ) {
-    				// ignore
-    			}
-    		};
-    	}
-    	else{
-	    	contentBackground = new BackgroundPanel( Transparency.DEFAULT ){
-	    		@Override
-	    		protected void configure( Transparency transparency ){
-	    			// does not support transparency as this is a root component
-	    		}
-    			@Override
-    			protected void setupRenderingHints( Graphics g ) {
-    				// ignore
-    			}
-	    	};
-    	}
-    	contentBackground.setBackground( background );
-    	
-    	SecureContainer panel = new SecureContainer(){
+        if( configuration.isTransparent() ){
+            contentBackground = new BackgroundPanel( Transparency.TRANSPARENT ){
+                @Override
+                protected void configure( Transparency transparency ){
+                    setTransparency( transparency );
+                }
+                @Override
+                protected void setupRenderingHints( Graphics g ) {
+                    // ignore
+                }
+            };
+        }
+        else{
+            contentBackground = new BackgroundPanel( Transparency.DEFAULT ){
+                @Override
+                protected void configure( Transparency transparency ){
+                    // does not support transparency as this is a root component
+                }
+                @Override
+                protected void setupRenderingHints( Graphics g ) {
+                    // ignore
+                }
+            };
+        }
+        contentBackground.setBackground( background );
+
+        SecureContainer panel = new SecureContainer(){
             @Override
             protected void paintOverlay( Graphics g ) {
-            	boolean removal = AbstractScreenDockWindow.this.removal;
-            	if( isMoveOnTitleGrab() ){
-            		removal = false;
-            	}
-            	
-            	if( combination != null || removal ){
+                boolean removal = AbstractScreenDockWindow.this.removal;
+                if( isMoveOnTitleGrab() ){
+                    removal = false;
+                }
+
+                if( combination != null || removal ){
                     ScreenDockStation station = getStation();
                     StationPaint paint = station.getPaint().get();
                     if( paint != null ){
-	                    Insets insets = getInsets();
-	
-	                    Rectangle bounds = new Rectangle( 0, 0, getWidth(), getHeight() );
-	                    Rectangle insert = new Rectangle( 2*insets.left, 2*insets.top, 
-	                            getWidth() - 2*(insets.left+insets.right),
-	                            getHeight() - 2*(insets.top+insets.bottom ));
-	
-	                    if( combination != null ){
-	                    	combination.paint( g, contentBackground, paint, bounds, insert );
-	                    }
-	                    else if( removal ){
-	                    	paint.drawRemoval( g, station, bounds, insert );
-	                    }
+                        Insets insets = getInsets();
+
+                        Rectangle bounds = new Rectangle( 0, 0, getWidth(), getHeight() );
+                        Rectangle insert = new Rectangle( 2*insets.left, 2*insets.top,
+                                getWidth() - 2*(insets.left+insets.right),
+                                getHeight() - 2*(insets.top+insets.bottom ));
+
+                        if( combination != null ){
+                            combination.paint( g, contentBackground, paint, bounds, insert );
+                        }
+                        else if( removal ){
+                            paint.drawRemoval( g, station, bounds, insert );
+                        }
                     }
                 }
             }
         };
-        
+
         if( configuration.isTransparent() ){
-        	panel.setSolid( false );
+            panel.setSolid( false );
         }
         panel.setContentPane( contentBackground );
         panel.getBasePane().setLayout( new BorderLayout(){
-        	private Dimension lastMinimumSize;
-        	
-        	@Override
-        	public void layoutContainer( Container target ){
-        		Dimension minimumSize = minimumLayoutSize( target );
-        		if( lastMinimumSize == null || !lastMinimumSize.equals( minimumSize )){
-        			lastMinimumSize = minimumSize;
-        			checkWindowBounds();
-        		}
-        		super.layoutContainer( target );
-        	}
+            private Dimension lastMinimumSize;
+
+            @Override
+            public void layoutContainer( Container target ){
+                Dimension minimumSize = minimumLayoutSize( target );
+                if( lastMinimumSize == null || !lastMinimumSize.equals( minimumSize )){
+                    lastMinimumSize = minimumSize;
+                    checkWindowBounds();
+                }
+                super.layoutContainer( target );
+            }
         } );
         panel.getBasePane().add( contentBackground, BorderLayout.CENTER );
 
@@ -674,25 +682,25 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
     public DockableDisplayer getDisplayer() {
         return displayer;
     }
-    
+
     public void destroy(){
-	    if( shape != null ){
-	    	shape.disable();
-	    }
+        if( shape != null ){
+            shape.disable();
+        }
     }
-    
+
     /**
      * Represents the border of this window
      * @author Benjamin Sigg
      */
     private class WindowBorder extends BorderForwarder implements ScreenDockWindowDockBorder{
-    	public WindowBorder( JComponent target ){
-    		super( ScreenDockWindowDockBorder.KIND, ThemeManager.BORDER_MODIFIER + ".screen.window", target );
-    	}
-    	
-    	public ScreenDockWindow getWindow(){
-    		return AbstractScreenDockWindow.this;
-    	}
+        public WindowBorder( JComponent target ){
+            super( ScreenDockWindowDockBorder.KIND, ThemeManager.BORDER_MODIFIER + ".screen.window", target );
+        }
+
+        public ScreenDockWindow getWindow(){
+            return AbstractScreenDockWindow.this;
+        }
     }
 
     private class Listener implements MouseListener, MouseMotionListener, ComponentListener{
@@ -704,69 +712,69 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
         private MagnetizedOperation attraction;
 
         private void updateBorder(){
-        	if( border != null ){
-        		if( pressed ){
-        			border.setMousePressed( position );
-        			border.setMouseOver( null );
-        		}
-        		else{
-        			border.setMousePressed( null );
-        			border.setMouseOver( position );
-        		}
-        		
-            	border.setCornerSize( corner() );
-            	WindowConfiguration configuration = getConfiguration();
-            	if( configuration == null ){
-            		border.setMoveable( false );
-            		border.setResizeable( false );
-            		
-            		border.setMoveSize( 0 );
-            		border.setCornerSize( 0 );
-            	}
-            	else{
-            		border.setMoveable( configuration.isMoveOnBorder() );
-            		border.setResizeable( configuration.isResizeable() );
-            		
-            		if( configuration.isMoveOnBorder() ){
-            			border.setMoveSize( getDisplayerParent().getWidth()/3 );	
-            		}
-            		else{
-            			border.setMoveSize( 0 );
-            		}
-            	}
-        	}
+            if( border != null ){
+                if( pressed ){
+                    border.setMousePressed( position );
+                    border.setMouseOver( null );
+                }
+                else{
+                    border.setMousePressed( null );
+                    border.setMouseOver( position );
+                }
+
+                border.setCornerSize( corner() );
+                WindowConfiguration configuration = getConfiguration();
+                if( configuration == null ){
+                    border.setMoveable( false );
+                    border.setResizeable( false );
+
+                    border.setMoveSize( 0 );
+                    border.setCornerSize( 0 );
+                }
+                else{
+                    border.setMoveable( configuration.isMoveOnBorder() );
+                    border.setResizeable( configuration.isResizeable() );
+
+                    if( configuration.isMoveOnBorder() ){
+                        border.setMoveSize( getDisplayerParent().getWidth()/3 );
+                    }
+                    else{
+                        border.setMoveSize( 0 );
+                    }
+                }
+            }
         }
-        
+
         public void componentHidden( ComponentEvent e ){
-        	// ignore
+            // ignore
         }
-        
+
         public void componentMoved( ComponentEvent e ){
-        	// ignore
+            // ignore
         }
         public void componentResized( ComponentEvent e ){
-        	updateBorder();
+            updateBorder();
         }
         public void componentShown( ComponentEvent e ){
-	        // ignore	
+            // ignore
         }
-        
+
         private int corner(){
-        	WindowConfiguration configuration = getConfiguration();
-        	if( configuration == null || !configuration.isResizeable() ){
-        		return 0;
-        	}
-        	
+            WindowConfiguration configuration = getConfiguration();
+            if( configuration == null || !configuration.isResizeable() ){
+                return 0;
+            }
+
             Container component = getDisplayerParent();
             Insets insets = component.getInsets();
 
-        	int corner = Math.max( Math.max( insets.top, insets.bottom ), Math.max( insets.left, insets.right ) ) * 5;
-        	corner = Math.max( 25, Math.min( 50, corner ) );
-        	
-        	corner = Math.min( Math.min( component.getHeight()/2, component.getWidth()/3 ), corner );
-        	return corner;
+            int corner = Math.max( Math.max( insets.top, insets.bottom ), Math.max( insets.left, insets.right ) ) * 5;
+            corner = Math.max( 25, Math.min( 50, corner ) );
+
+            corner = Math.min( Math.min( component.getHeight()/2, component.getWidth()/3 ), corner );
+            return corner;
         }
-        
+
         public void mouseClicked( MouseEvent e ) {
             // do nothing
         }
@@ -835,13 +843,15 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
                 }
                 if( position == Position.E || position == Position.NE || position == Position.SE ){
                     bounds.width += dx;
-                    if( bounds.width < min )
+                    if( bounds.width < min ) {
                         bounds.width = min;
+                    }
                 }
                 if( position == Position.S || position == Position.SE || position == Position.SW ){
                     bounds.height += dy;
-                    if( bounds.height < min )
+                    if( bounds.height < min ) {
                         bounds.height = min;
+                    }
                 }
                 if( position == Position.W || position == Position.SW || position == Position.NW ){
                     bounds.width -= dx;
@@ -858,7 +868,7 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
                 }
 
                 bounds = attraction.attract( bounds );
-                
+
                 setWindowBounds( bounds, position );
                 updateBorder();
                 invalidate();
@@ -867,8 +877,9 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
         }
 
         public void mouseMoved( MouseEvent e ) {
-            if( !pressed && e.getButton() == MouseEvent.NOBUTTON )
+            if( !pressed && e.getButton() == MouseEvent.NOBUTTON ) {
                 updateCursor( e );
+            }
         }
 
 
@@ -877,66 +888,66 @@ public abstract class AbstractScreenDockWindow extends DisplayerScreenDockWindow
             Insets insets = component.getInsets();
 
             boolean valid = e.getComponent() == component && e.getY() <= insets.top || e.getY() >= component.getHeight() - insets.bottom ||
-            	e.getX() <= insets.left || e.getX() >= component.getWidth() - insets.right;
+                e.getX() <= insets.left || e.getX() >= component.getWidth() - insets.right;
 
             if( valid ){
-            	WindowConfiguration configuration = getConfiguration();
-            	if( configuration.isMoveOnBorder() && !configuration.isResizeable()){
-            		setCursor( Cursor.getPredefinedCursor( Cursor.MOVE_CURSOR ));
-            		position = Position.MOVE;
-            	}
-            	else{
-	            	int corner = corner();
-	            	
-	                boolean top = e.getY() <= corner;
-	                boolean left = e.getX() <= corner;
-	                boolean bottom = e.getY() >= component.getHeight() - corner;
-	                boolean right = e.getX() >= component.getWidth() - corner;
-	
-	                if( top && left ){
-	                    setCursor( Cursor.getPredefinedCursor( Cursor.NW_RESIZE_CURSOR ) );
-	                    position = Position.NW;
-	                }
-	                else if( top && right ){
-	                    setCursor( Cursor.getPredefinedCursor( Cursor.NE_RESIZE_CURSOR ) );
-	                    position = Position.NE;
-	                }
-	                else if( bottom && right ){
-	                    setCursor( Cursor.getPredefinedCursor( Cursor.SE_RESIZE_CURSOR ) );
-	                    position = Position.SE;
-	                }
-	                else if( bottom && left ){
-	                    setCursor( Cursor.getPredefinedCursor( Cursor.SW_RESIZE_CURSOR ) );
-	                    position = Position.SW;
-	                }
-	                else if( top ){
-	                    int width = component.getWidth();
-	                    if( configuration.isMoveOnBorder() && e.getX() > width / 3 && e.getX() < width / 3 * 2 ){
-	                        setCursor( Cursor.getPredefinedCursor( Cursor.MOVE_CURSOR ));
-	                        position = Position.MOVE;
-	                    }
-	                    else{
-	                        setCursor( Cursor.getPredefinedCursor( Cursor.N_RESIZE_CURSOR ) );
-	                        position = Position.N;
-	                    }
-	                }
-	                else if( bottom ){
-	                    setCursor( Cursor.getPredefinedCursor( Cursor.S_RESIZE_CURSOR ) );
-	                    position = Position.S;
-	                }
-	                else if( left ){
-	                    setCursor( Cursor.getPredefinedCursor( Cursor.W_RESIZE_CURSOR ) );
-	                    position = Position.W;
-	                }
-	                else if( right ){
-	                    setCursor( Cursor.getPredefinedCursor( Cursor.E_RESIZE_CURSOR ) );
-	                    position = Position.E;
-	                }
-	                else{
-	                    setCursor( Cursor.getDefaultCursor() );
-	                    position = Position.NOTHING;
-	                }
-            	}
+                WindowConfiguration configuration = getConfiguration();
+                if( configuration.isMoveOnBorder() && !configuration.isResizeable()){
+                    setCursor( Cursor.getPredefinedCursor( Cursor.MOVE_CURSOR ));
+                    position = Position.MOVE;
+                }
+                else{
+                    int corner = corner();
+
+                    boolean top = e.getY() <= corner;
+                    boolean left = e.getX() <= corner;
+                    boolean bottom = e.getY() >= component.getHeight() - corner;
+                    boolean right = e.getX() >= component.getWidth() - corner;
+
+                    if( top && left ){
+                        setCursor( Cursor.getPredefinedCursor( Cursor.NW_RESIZE_CURSOR ) );
+                        position = Position.NW;
+                    }
+                    else if( top && right ){
+                        setCursor( Cursor.getPredefinedCursor( Cursor.NE_RESIZE_CURSOR ) );
+                        position = Position.NE;
+                    }
+                    else if( bottom && right ){
+                        setCursor( Cursor.getPredefinedCursor( Cursor.SE_RESIZE_CURSOR ) );
+                        position = Position.SE;
+                    }
+                    else if( bottom && left ){
+                        setCursor( Cursor.getPredefinedCursor( Cursor.SW_RESIZE_CURSOR ) );
+                        position = Position.SW;
+                    }
+                    else if( top ){
+                        int width = component.getWidth();
+                        if( configuration.isMoveOnBorder() && e.getX() > width / 3 && e.getX() < width / 3 * 2 ){
+                            setCursor( Cursor.getPredefinedCursor( Cursor.MOVE_CURSOR ));
+                            position = Position.MOVE;
+                        }
+                        else{
+                            setCursor( Cursor.getPredefinedCursor( Cursor.N_RESIZE_CURSOR ) );
+                            position = Position.N;
+                        }
+                    }
+                    else if( bottom ){
+                        setCursor( Cursor.getPredefinedCursor( Cursor.S_RESIZE_CURSOR ) );
+                        position = Position.S;
+                    }
+                    else if( left ){
+                        setCursor( Cursor.getPredefinedCursor( Cursor.W_RESIZE_CURSOR ) );
+                        position = Position.W;
+                    }
+                    else if( right ){
+                        setCursor( Cursor.getPredefinedCursor( Cursor.E_RESIZE_CURSOR ) );
+                        position = Position.E;
+                    }
+                    else{
+                        setCursor( Cursor.getDefaultCursor() );
+                        position = Position.NOTHING;
+                    }
+                }
             }
             else{
                 setCursor( Cursor.getDefaultCursor() );

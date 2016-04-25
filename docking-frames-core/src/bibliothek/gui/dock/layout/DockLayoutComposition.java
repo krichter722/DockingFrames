@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -45,7 +45,7 @@ public class DockLayoutComposition {
     private List<DockLayoutComposition> children;
     /** tells that the children of this station should be ignored */
     private boolean ignoreChildren;
-    
+
     /**
      * Creates a new composition.
      * @param layout the content of the element that is represented by this composition,
@@ -55,15 +55,16 @@ public class DockLayoutComposition {
      * @param ignoreChildren whether the children should be ignored or not
      */
     public DockLayoutComposition( DockLayoutInfo layout, List<DockLayout<?>> adjacent, List<DockLayoutComposition> children, boolean ignoreChildren ){
-        if( children == null )
+        if( children == null ) {
             throw new IllegalArgumentException( "children must not be null" );
-        
+        }
+
         this.layout = layout;
         this.adjacent = adjacent;
         this.children = children;
         this.ignoreChildren = ignoreChildren;
     }
-    
+
     /**
      * Gets the layout which describes the element of this composition.
      * @return the layout, can be <code>null</code> to indicate that this composition
@@ -72,7 +73,7 @@ public class DockLayoutComposition {
     public DockLayoutInfo getLayout() {
         return layout;
     }
-    
+
     /**
      * Gets the additional information about the element.
      * @return the additional information or <code>null</code>
@@ -80,23 +81,23 @@ public class DockLayoutComposition {
     public List<DockLayout<?>> getAdjacent() {
         return adjacent;
     }
-    
+
     /**
      * Searches for the {@link DockLayout} whose factory is set to <code>factoryId</code>.
      * @param factoryId the name of some {@link AdjacentDockFactory}.
      * @return the matching layout or <code>null</code> if not found
      */
     public DockLayout<?> getAdjacent( String factoryId ){
-    	if( adjacent != null ){
-	    	for( DockLayout<?> layout : adjacent ){
-	    		if( layout.getFactoryID().equals( factoryId )){
-	    			return layout;
-	    		}
-	    	}
-    	}
-    	return null;
+        if( adjacent != null ){
+            for( DockLayout<?> layout : adjacent ){
+                if( layout.getFactoryID().equals( factoryId )){
+                    return layout;
+                }
+            }
+        }
+        return null;
     }
-    
+
     /**
      * Gets the list of all known children of this composition.
      * @return the list of children
@@ -104,7 +105,7 @@ public class DockLayoutComposition {
     public List<DockLayoutComposition> getChildren() {
         return children;
     }
-    
+
     /**
      * Tells that the children of this composition were ignored.
      * @return <code>true</code> if the children are to be ignored

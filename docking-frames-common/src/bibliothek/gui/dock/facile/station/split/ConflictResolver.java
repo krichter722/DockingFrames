@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -32,7 +32,7 @@ package bibliothek.gui.dock.facile.station.split;
  * @author Benjamin Sigg
  */
 public interface ConflictResolver<T> {
-    
+
     /**
      * Combines the two request <code>left</code> and <code>right</code> into
      * a new request.
@@ -43,7 +43,7 @@ public interface ConflictResolver<T> {
      * or <code>null</code> to cancel the requests
      */
     public ResizeRequest requestHorizontal( ResizeRequest left, ResizeRequest right, ResizeNode<T> node );
-    
+
     /**
      * Combines the two requests <code>top</code> and <code>bottom</code> into
      * a new request.
@@ -54,7 +54,7 @@ public interface ConflictResolver<T> {
      * or <code>null</code> to cancel the requests
      */
     public ResizeRequest requestVertical( ResizeRequest top, ResizeRequest bottom, ResizeNode<T> node );
-    
+
     /**
      * Called whenever a node has to grant two resize requests at the same time.
      * @param node the node at which a conflict occurred
@@ -65,7 +65,7 @@ public interface ConflictResolver<T> {
      * @return how much the divider should be moved
      */
     public double resolveHorizontal( ResizeNode<T> node, ResizeRequest left, double deltaLeft, ResizeRequest right, double deltaRight );
-    
+
     /**
      * Called whenever a node has to grant two resize requests at the same time.
      * @param node the node at which a conflict occurred

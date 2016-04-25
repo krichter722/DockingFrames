@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,9 +40,9 @@ import bibliothek.util.Path;
  * @author Benjamin Sigg
  */
 public class DockStationDelegate {
-    
+
     /**
-     * Can be called by {@link DockStation#aside(AsideRequest)} if <code>request</code> contains a 
+     * Can be called by {@link DockStation#aside(AsideRequest)} if <code>request</code> contains a
      * location that points toward <code>item</code>. The method first tries to call
      * {@link DockStation#aside(AsideRequest)} of the {@link Dockable} represented by
      * <code>item</code>, and if that fails it tries to call {@link Combiner#aside(AsideRequest)}.
@@ -51,22 +51,22 @@ public class DockStationDelegate {
      * @param request information about the location to create
      */
     public <T extends PlaceholderListItem<Dockable>> void combine( DockablePlaceholderList<T>.Item item, Combiner combiner, AsideRequest request ){
-    	PlaceholderListItem<Dockable> handle = item.getDockable();
-    	Path placeholder = request.getPlaceholder();
-    	if( placeholder != null ){
-    		item.add( placeholder );
-    	}
-    	if( handle != null ){
-    		DockStation station = handle.asDockable().asDockStation();
-    		if( station != null ){
-    			request.forward( station );
-    			return;
-    		}
-    	}    		
-    	PlaceholderMap childLayout = item.getPlaceholderMap();
-    	AsideAnswer answer = request.forward( combiner, childLayout );
-    	if( !answer.isCanceled() ){
-    		item.setPlaceholderMap( answer.getLayout() );
-    	}
+        PlaceholderListItem<Dockable> handle = item.getDockable();
+        Path placeholder = request.getPlaceholder();
+        if( placeholder != null ){
+            item.add( placeholder );
+        }
+        if( handle != null ){
+            DockStation station = handle.asDockable().asDockStation();
+            if( station != null ){
+                request.forward( station );
+                return;
+            }
+        }
+        PlaceholderMap childLayout = item.getPlaceholderMap();
+        AsideAnswer answer = request.forward( combiner, childLayout );
+        if( !answer.isCanceled() ){
+            item.setPlaceholderMap( answer.getLayout() );
+        }
     }
 }

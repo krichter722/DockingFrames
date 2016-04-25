@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,7 +46,7 @@ import bibliothek.util.Workarounds;
  */
 public class ScreenDockFrame extends AbstractScreenDockWindow {
     private JFrame frame;
-        
+
     /**
      * Creates a new dialog. Note that the constructors with
      * an owner window are preferred.
@@ -59,29 +59,29 @@ public class ScreenDockFrame extends AbstractScreenDockWindow {
         this.frame = new JFrame();
         init( undecorated, configuration );
     }
-        
+
     private void init( boolean undecorated, WindowConfiguration configuration ){
         if( undecorated ){
             frame.setUndecorated( true );
             frame.getRootPane().setWindowDecorationStyle( JRootPane.NONE );
         }
-        
+
         frame.setDefaultCloseOperation( JDialog.DO_NOTHING_ON_CLOSE );
         frame.addWindowListener( new WindowAdapter(){
-        	@Override
-        	public void windowClosing( WindowEvent e ){
-        		fireWindowClosing();
-        	}
-		});
-        
+            @Override
+            public void windowClosing( WindowEvent e ){
+                fireWindowClosing();
+            }
+        });
+
         init( frame, frame.getContentPane(), configuration, undecorated );
-        
+
         boolean translucency = false;
         if( configuration.isTransparent() ){
-        	translucency = Workarounds.getDefault().setTranslucent( frame );
+            translucency = Workarounds.getDefault().setTranslucent( frame );
         }
         if( !translucency && configuration.getShape() != null ){
-        	setShape( frame, configuration.getShape() );
+            setShape( frame, configuration.getShape() );
         }
     }
 
@@ -92,9 +92,9 @@ public class ScreenDockFrame extends AbstractScreenDockWindow {
     public JFrame getFrame() {
         return frame;
     }
-    
+
     public void destroy() {
-    	super.destroy();
+        super.destroy();
         frame.dispose();
     }
 
@@ -106,11 +106,11 @@ public class ScreenDockFrame extends AbstractScreenDockWindow {
     protected void updateTitleText() {
         frame.setTitle( getTitleText() );
     }
-    
+
     public void setPreventFocusStealing( boolean prevent ){
-    	frame.setFocusableWindowState( !prevent );
+        frame.setFocusableWindowState( !prevent );
     }
-    
+
     @Override
     protected void updateTitleIcon() {
         Icon icon = getTitleIcon();

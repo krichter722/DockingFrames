@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -39,7 +39,7 @@ public class DockableSelectionEvent {
     private DockStation station;
     private Dockable oldSelected;
     private Dockable newSelected;
-    
+
     /**
      * Creates a new event.
      * @param controller the controller in whose realm the change occurred
@@ -53,7 +53,7 @@ public class DockableSelectionEvent {
         this.oldSelected = oldSelected;
         this.newSelected = newSelected;
     }
-    
+
     /**
      * Gets the controller in whose realm the selection change occurred.
      * @return the controller
@@ -61,7 +61,7 @@ public class DockableSelectionEvent {
     public DockController getController() {
         return controller;
     }
-    
+
     /**
      * Gets the station whose selected {@link Dockable} changed.
      * @return the parent of the old and new selected {@link Dockable}
@@ -69,7 +69,7 @@ public class DockableSelectionEvent {
     public DockStation getStation() {
         return station;
     }
-    
+
     /**
      * Gets the element that was selected before the change.
      * @return the old selected element, can be <code>null</code>
@@ -77,9 +77,9 @@ public class DockableSelectionEvent {
     public Dockable getOldSelected() {
         return oldSelected;
     }
-    
+
     /**
-     * Gets the element that is selected after the change. 
+     * Gets the element that is selected after the change.
      * @return the newly selected element, can be <code>null</code>
      */
     public Dockable getNewSelected() {

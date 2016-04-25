@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,8 +46,8 @@ import bibliothek.util.Workarounds;
  * @author Benjamin Sigg
  */
 public class ScreenDockDialog extends AbstractScreenDockWindow {
-	private JDialog dialog;
-        
+    private JDialog dialog;
+
     /**
      * Creates a new dialog. Note that the constructors with
      * an owner window are preferred.
@@ -60,7 +60,7 @@ public class ScreenDockDialog extends AbstractScreenDockWindow {
         this.dialog = new JDialog();
         init( undecorated, configuration );
     }
-    
+
     /**
      * Creates a new dialog.
      * @param station the station to which this dialog is responsible
@@ -86,41 +86,41 @@ public class ScreenDockDialog extends AbstractScreenDockWindow {
         this.dialog = new JDialog( dialog );
         init( undecorated, configuration );
     }
-    
+
     private void init( boolean undecorated, WindowConfiguration configuration ){
         if( undecorated ){
             dialog.setUndecorated( true );
             dialog.getRootPane().setWindowDecorationStyle( JRootPane.NONE );
         }
-        
+
         dialog.setDefaultCloseOperation( JDialog.DO_NOTHING_ON_CLOSE );
         dialog.setModal( false );
         dialog.addWindowListener( new WindowAdapter(){
-        	@Override
-        	public void windowClosing( WindowEvent e ){
-        		fireWindowClosing();
-        	}
-		});
-        
+            @Override
+            public void windowClosing( WindowEvent e ){
+                fireWindowClosing();
+            }
+        });
+
         boolean translucency = false;
-        
+
         if( configuration.isTransparent() ){
-    		JPanel panel = new JPanel();
-    		panel.setOpaque( false );
-    		dialog.setContentPane( panel );
-    		
-        	translucency = Workarounds.getDefault().setTranslucent( dialog );
+            JPanel panel = new JPanel();
+            panel.setOpaque( false );
+            dialog.setContentPane( panel );
+
+            translucency = Workarounds.getDefault().setTranslucent( dialog );
         }
         init( dialog, dialog.getContentPane(), configuration, undecorated );
         if( !translucency && configuration.getShape() != null ){
-        	setShape( dialog, configuration.getShape() );
+            setShape( dialog, configuration.getShape() );
         }
     }
-    
+
     public void setPreventFocusStealing( boolean prevent ){
-    	dialog.setFocusableWindowState( !prevent );
+        dialog.setFocusableWindowState( !prevent );
     }
-    
+
     /**
      * Gets the dialog which represents the window.
      * @return the window
@@ -130,14 +130,14 @@ public class ScreenDockDialog extends AbstractScreenDockWindow {
     }
 
     public void destroy() {
-    	super.destroy();
+        super.destroy();
         dialog.dispose();
     }
 
     public void toFront() {
         dialog.toFront();
     }
-    
+
     @Override
     protected void updateTitleText() {
         dialog.setTitle( getTitleText() );

@@ -26,9 +26,9 @@ public @interface Content {
         /** the encoding is specified by the client */
         CUSTOM
     }
-    
-    /** 
-     * the value of the property {@link Entry#getType() Entry.type} 
+
+    /**
+     * the value of the property {@link Entry#getType() Entry.type}
      */
     public String type();
 

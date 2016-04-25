@@ -19,16 +19,16 @@ import bibliothek.chess.model.Player;
  *
  */
 public class Utils {
-	/** The icon of the application */
+    /** The icon of the application */
     public static final BufferedImage APPLICATION;
     /** A screenshot of the application */
     public static final BufferedImage IMAGE;
-    
+
     static{
         APPLICATION = image( "/data/bibliothek/chess/icons/Chess_klt16.png" );
         IMAGE = image( "/data/bibliothek/chess/image.png" );
     }
-    
+
     /**
      * Loads an image directly through the classloader
      * @param path the path to the image
@@ -46,12 +46,12 @@ public class Utils {
         }
         return image;
     }
-    
+
     /**
      * A map containing all icons which are used to display figures
      */
     private static Map<String, Icon> chessIcons = new HashMap<String, Icon>();
-    
+
     /**
      * Gets an icon to display a figure.
      * @param name the name of the icon

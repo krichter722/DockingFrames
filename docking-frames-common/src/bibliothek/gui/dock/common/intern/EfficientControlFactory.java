@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -45,27 +45,27 @@ import bibliothek.gui.dock.util.WindowProvider;
  * @author Benjamin Sigg
  */
 public class EfficientControlFactory implements CControlFactory {
-	public DockController createController( CControl owner ){
-		return new CDockController( owner );
-	}
+    public DockController createController( CControl owner ){
+        return new CDockController( owner );
+    }
 
-	public CDockFrontend createFrontend( CControlAccess owner, DockController controller ){
-		return new CDockFrontend( owner, controller );
-	}
+    public CDockFrontend createFrontend( CControlAccess owner, DockController controller ){
+        return new CDockFrontend( owner, controller );
+    }
 
-	public MutableCControlRegister createRegister( CControl owner ){
-		return new DefaultCControlRegister( owner );
-	}
+    public MutableCControlRegister createRegister( CControl owner ){
+        return new DefaultCControlRegister( owner );
+    }
 
-	public CommonDockStation<FlapDockStation, CFlapDockStation> createFlapDockStation( Component expansion, CommonStationDelegate<CFlapDockStation> delegate ){
-		return new CFlapDockStation( expansion, delegate );
-	}
+    public CommonDockStation<FlapDockStation, CFlapDockStation> createFlapDockStation( Component expansion, CommonStationDelegate<CFlapDockStation> delegate ){
+        return new CFlapDockStation( expansion, delegate );
+    }
 
-	public CommonDockStation<ScreenDockStation, CScreenDockStation> createScreenDockStation( WindowProvider owner, CommonStationDelegate<CScreenDockStation> delegate ){
-		return new CScreenDockStation( owner, delegate );
-	}
+    public CommonDockStation<ScreenDockStation, CScreenDockStation> createScreenDockStation( WindowProvider owner, CommonStationDelegate<CScreenDockStation> delegate ){
+        return new CScreenDockStation( owner, delegate );
+    }
 
-	public CommonDockStation<SplitDockStation, CSplitDockStation> createSplitDockStation( CommonStationDelegate<CSplitDockStation> delegate ){
-		return new CSplitDockStation( delegate );
-	}
+    public CommonDockStation<SplitDockStation, CSplitDockStation> createSplitDockStation( CommonStationDelegate<CSplitDockStation> delegate ){
+        return new CSplitDockStation( delegate );
+    }
 }

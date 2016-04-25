@@ -1,3 +1,29 @@
+/*
+ * Bibliothek - DockingFrames
+ * Library built on Java/Swing, allows the user to "drag and drop"
+ * panels containing any Swing-Component the developer likes to add.
+ *
+ * Copyright (C) 2007 Benjamin Sigg
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Benjamin Sigg
+ * benjamin_sigg@gmx.ch
+ * CH - Switzerland
+ */
+
 package bibliothek.extension.gui.dock.theme.eclipse.stack.tab;
 
 import java.awt.Color;
@@ -19,7 +45,7 @@ import bibliothek.gui.dock.themes.color.TabColor;
 import bibliothek.gui.dock.util.color.ColorCodes;
 
 /**
- * Default implementation of an {@link InvisibleTab}, this 
+ * Default implementation of an {@link InvisibleTab}, this
  * implementation tells an {@link InvisibleTabPane} to use different borders
  * for their children depending on whether they are focused and selected.
  * @author Benjamin Sigg
@@ -30,119 +56,127 @@ public class DefaultInvisibleTab implements InvisibleTab{
     protected final TabColor colorStackTabBorderSelected;
     protected final TabColor colorStackTabBorderSelectedFocused;
     protected final TabColor colorStackTabBorderSelectedFocusLost;
-    
+
     private WindowActiveObserver observer = new WindowActiveObserver();
-	
+
     private InvisibleTabPane pane;
     private Dockable dockable;
     private DockController controller;
-    
+
     private Color oldColor;
-    
+
     private DockableFocusListener focusListener = new DockableFocusListener(){
-    	public void dockableFocused( DockableFocusEvent event ){
-	    	if( event.getOldFocusOwner() == dockable || event.getNewFocusOwner() == dockable ){	
-	    		updateBorder();
-	    	}
-    	}
+        public void dockableFocused( DockableFocusEvent event ){
+            if( event.getOldFocusOwner() == dockable || event.getNewFocusOwner() == dockable ){
+                updateBorder();
+            }
+        }
     };
-    
+
     /**
      * Creates a new tab.
      * @param pane the owner
      * @param dockable the element this tab represents
      */
     public DefaultInvisibleTab( InvisibleTabPane pane, Dockable dockable ){
-    	if( pane == null )
-    		throw new IllegalArgumentException( "pane must not be null" );
-    	
-    	if( dockable == null )
-    		throw new IllegalArgumentException( "dockable must not be null" );
-    	
-    	this.pane = pane;
-    	this.dockable = dockable;
-    	
-    	colorStackTabBorder = new InvisibleTabColor( "stack.tab.border" );
-    	colorStackTabBorderSelected = new InvisibleTabColor( "stack.tab.border.selected" );
-    	colorStackTabBorderSelectedFocused = new InvisibleTabColor( "stack.tab.border.selected.focused" );
-    	colorStackTabBorderSelectedFocusLost = new InvisibleTabColor( "stack.tab.border.selected.focuslost" );
-    	
-    	updateBorder();
+        if( pane == null ) {
+            throw new IllegalArgumentException( "pane must not be null" );
+        }
+
+        if( dockable == null ) {
+            throw new IllegalArgumentException( "dockable must not be null" );
+        }
+
+        this.pane = pane;
+        this.dockable = dockable;
+
+        colorStackTabBorder = new InvisibleTabColor( "stack.tab.border" );
+        colorStackTabBorderSelected = new InvisibleTabColor( "stack.tab.border.selected" );
+        colorStackTabBorderSelectedFocused = new InvisibleTabColor( "stack.tab.border.selected.focused" );
+        colorStackTabBorderSelectedFocusLost = new InvisibleTabColor( "stack.tab.border.selected.focuslost" );
+
+        updateBorder();
     }
-    
+
     public void setController( DockController controller ){
-    	if( this.controller != null )
-    		this.controller.removeDockableFocusListener( focusListener );
-    	
-    	this.controller = controller;
-    	
-    	if( controller != null )
-    		controller.addDockableFocusListener( focusListener );
-    	
-    	colorStackTabBorder.connect( controller );
-    	colorStackTabBorderSelected.connect( controller );
-    	colorStackTabBorderSelectedFocused.connect( controller );
-    	colorStackTabBorderSelectedFocusLost.connect( controller );
-    	
-    	if( controller == null || dockable == null )
-    		observer.observe( null );
-    	else
-    		observer.observe( dockable.getComponent() );
-    	
-    	updateBorder();
+        if( this.controller != null ) {
+            this.controller.removeDockableFocusListener( focusListener );
+        }
+
+        this.controller = controller;
+
+        if( controller != null ) {
+            controller.addDockableFocusListener( focusListener );
+        }
+
+        colorStackTabBorder.connect( controller );
+        colorStackTabBorderSelected.connect( controller );
+        colorStackTabBorderSelectedFocused.connect( controller );
+        colorStackTabBorderSelectedFocusLost.connect( controller );
+
+        if( controller == null || dockable == null ) {
+            observer.observe( null );
+        } else {
+            observer.observe( dockable.getComponent() );
+        }
+
+        updateBorder();
     }
-    
-	private void updateBorder(){
-		if( controller != null ){
-			Color color;
 
-			Window window = observer.getWindow();
-			boolean focusTemporarilyLost = false;
+    private void updateBorder(){
+        if( controller != null ){
+            Color color;
 
-			if( window != null ){
-				focusTemporarilyLost = !window.isActive();
-			}
+            Window window = observer.getWindow();
+            boolean focusTemporarilyLost = false;
 
-			if( pane.getSelectedDockable() == dockable ){
-				if( controller.getFocusedDockable() == dockable ){
-					if( focusTemporarilyLost )
-						color = colorStackTabBorderSelectedFocusLost.value();
-					else
-						color = colorStackTabBorderSelectedFocused.value();
-				}
-				else
-					color = colorStackTabBorderSelected.value();
-			}
-			else
-				color = colorStackTabBorder.value();
+            if( window != null ){
+                focusTemporarilyLost = !window.isActive();
+            }
 
-			if( !color.equals( oldColor )){
-				oldColor = color;
-				pane.setBorder( dockable, new MatteBorder( 2, 2, 2, 2, color) );
-			}
-		}
-	}
-	
-	/**
-	 * This {@link TabColor} calls {@link DefaultInvisibleTab#updateBorder()}
-	 * if its color changes.
-	 * @author Benjamin Sigg
-	 */
-	private class InvisibleTabColor extends TabColor{
-		/**
-		 * Creates a new color
-		 * @param id the identifier of this color
-		 */
-		public InvisibleTabColor( String id ){
-			super( id, pane.getStation(), dockable, Color.BLACK );
-		}
-		
-		@Override
-		protected void changed( Color oldValue, Color newValue ){
-			updateBorder();
-		}
-	}
-	
+            if( pane.getSelectedDockable() == dockable ){
+                if( controller.getFocusedDockable() == dockable ){
+                    if( focusTemporarilyLost ) {
+                        color = colorStackTabBorderSelectedFocusLost.value();
+                    } else {
+                        color = colorStackTabBorderSelectedFocused.value();
+                    }
+                }
+                else {
+                    color = colorStackTabBorderSelected.value();
+                }
+            }
+            else {
+                color = colorStackTabBorder.value();
+            }
+
+            if( !color.equals( oldColor )){
+                oldColor = color;
+                pane.setBorder( dockable, new MatteBorder( 2, 2, 2, 2, color) );
+            }
+        }
+    }
+
+    /**
+     * This {@link TabColor} calls {@link DefaultInvisibleTab#updateBorder()}
+     * if its color changes.
+     * @author Benjamin Sigg
+     */
+    private class InvisibleTabColor extends TabColor{
+        /**
+         * Creates a new color
+         * @param id the identifier of this color
+         */
+        public InvisibleTabColor( String id ){
+            super( id, pane.getStation(), dockable, Color.BLACK );
+        }
+
+        @Override
+        protected void changed( Color oldValue, Color newValue ){
+            updateBorder();
+        }
+    }
+
     /**
      * Listens to the window ancestor of a {@link Component} and calls
      * {@link DefaultInvisibleTab#updateBorder()} if the activation state
@@ -152,62 +186,62 @@ public class DefaultInvisibleTab implements InvisibleTab{
     private class WindowActiveObserver extends WindowAdapter implements HierarchyListener{
         private Window window;
         private Component component;
-        
+
         /**
          * Sets the component which needs to be observed
          * @param component the observed component
          */
         public void observe( Component component ){
-        	if( this.component != component ){
-        		if( this.component != null ){
-        			if( window != null ){
-        				window.removeWindowListener( this );
-        				window = null;
-        			}
-        			this.component.removeHierarchyListener( this );
-        		}
-        		
-        		this.component = component;
-        		if( this.component != null ){
-        			this.component.addHierarchyListener( this );
-        			window = SwingUtilities.getWindowAncestor( component );
-        			if( window != null ){
-        				window.addWindowListener( this );
-        			}
-        		}
-        	}
+            if( this.component != component ){
+                if( this.component != null ){
+                    if( window != null ){
+                        window.removeWindowListener( this );
+                        window = null;
+                    }
+                    this.component.removeHierarchyListener( this );
+                }
+
+                this.component = component;
+                if( this.component != null ){
+                    this.component.addHierarchyListener( this );
+                    window = SwingUtilities.getWindowAncestor( component );
+                    if( window != null ){
+                        window.addWindowListener( this );
+                    }
+                }
+            }
         }
-        
+
         /**
          * Gets the currently observed window.
          * @return the window, can be <code>null</code>
          */
         public Window getWindow(){
-			return window;
-		}
-        
+            return window;
+        }
+
         public void hierarchyChanged( HierarchyEvent e ){
             Window newWindow = SwingUtilities.getWindowAncestor(component);
 
             long lFlags = e.getChangeFlags();
             // update current found window only if parent has changed
             if (window != newWindow && (lFlags & HierarchyEvent.PARENT_CHANGED) != 0) {
-               if (window != null) {
-                  window.removeWindowListener(this);
-               }
-               if (newWindow != null) {
-                  newWindow.addWindowListener(this);
-                  updateBorder();
-               }
-               window = newWindow;
+                if (window != null) {
+                    window.removeWindowListener(this);
+                }
+                if (newWindow != null) {
+                    newWindow.addWindowListener(this);
+                    updateBorder();
+                }
+                window = newWindow;
             }
         }
-        
+
         @Override
         public void windowActivated( WindowEvent e ){
             updateBorder();
         }
-        
+
         @Override
         public void windowDeactivated( WindowEvent e ){
             updateBorder();

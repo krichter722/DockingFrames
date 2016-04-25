@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,25 +42,28 @@ import bibliothek.gui.dock.support.lookandfeel.ComponentCollector;
 public class DockableCollector implements ComponentCollector {
     /** the source of Components */
     private DockFrontend frontend;
-    
+
     /**
      * Creates a new collector
      * @param frontend the source of all {@link Component}s
      */
     public DockableCollector( DockFrontend frontend ){
-        if( frontend == null )
+        if( frontend == null ) {
             throw new NullPointerException( "frontend must not be null" );
+        }
         this.frontend = frontend;
     }
-    
+
     public Collection<Component> listComponents() {
         Set<Component> set = new HashSet<Component>();
-        for( Dockable dockable : frontend.listDockables() )
+        for( Dockable dockable : frontend.listDockables() ) {
             set.add( dockable.getComponent() );
-        
-        for( Dockable dockable : frontend.getController().getRegister().listDockables() )
+        }
+
+        for( Dockable dockable : frontend.getController().getRegister().listDockables() ) {
             set.add( dockable.getComponent() );
-        
+        }
+
         return set;
     }
 }

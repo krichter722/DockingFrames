@@ -13,7 +13,7 @@ import com.sun.javadoc.Type;
 public class EntryableClass extends AbstractEntryable {
     /** the documentation of the class */
     private ClassDoc doc;
-    
+
     /**
      * Creates a new <code>Entryable</code>
      * @param doc the documentation to transform
@@ -39,7 +39,7 @@ public class EntryableClass extends AbstractEntryable {
         add( new EntryableFieldList( doc ));
         add( new EntryableConstructorList( doc ));
         add( new EntryableMethodList( doc ));
-       
+
         println();
         bold( true );
         println( "Inherits:" );
@@ -52,7 +52,7 @@ public class EntryableClass extends AbstractEntryable {
             print( type );
             println();
         }
-        
+
         if( doc.commentText() != null ){
             println();
             bold( true );
@@ -61,7 +61,7 @@ public class EntryableClass extends AbstractEntryable {
             println( doc.commentText() );
         }
     }
-    
+
     public Entry toEntry() {
         return new Entry( "class", doc.qualifiedName(), "Class " + doc.qualifiedName(), content(),
                 "constructor-list:" + doc.qualifiedName(),

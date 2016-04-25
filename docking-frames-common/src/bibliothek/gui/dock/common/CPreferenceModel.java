@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -57,7 +57,7 @@ public class CPreferenceModel extends PreferenceTreeModel{
     public CPreferenceModel( CControl control ){
         this( control, PathCombiner.SECOND );
     }
-    
+
     /**
      * Creates a new model.
      * @param control the control whose settings can be changed by this model
@@ -72,79 +72,79 @@ public class CPreferenceModel extends PreferenceTreeModel{
         putLinked( new Path( "layout.BubbleTheme" ), "theme.bubble", new BubbleThemePreferenceModel( controller.getProperties() ));
         putLinked( new Path( "layout.EclipseTheme" ), "theme.eclipse", new EclipseThemePreferenceModel( controller.getProperties() ));
     }
-    
+
     /**
      * Grants access to the preferences concerning the global {@link KeyStroke}s.
      * @return the model, not <code>null</code>
      * @throws IllegalStateException if the model was removed or replaced by the client
      */
     public CKeyStrokePreferenceModel getKeyStrokePreferences(){
-    	PreferenceModel model = getModel( new Path( "shortcuts" ) );
-    	if( model instanceof CKeyStrokePreferenceModel ){
-    		return (CKeyStrokePreferenceModel)model;
-    	}
-    	else{
-    		throw new IllegalStateException( "this model has been removed" );
-    	}
+        PreferenceModel model = getModel( new Path( "shortcuts" ) );
+        if( model instanceof CKeyStrokePreferenceModel ){
+            return (CKeyStrokePreferenceModel)model;
+        }
+        else{
+            throw new IllegalStateException( "this model has been removed" );
+        }
     }
-    
+
     /**
      * Grants access to the preferences concerning layout options like "where are the tabs placed?".
      * @return the model, not <code>null</code>
      * @throws IllegalStateException if the model was removed or replaced by the client
      */
     public CLayoutPreferenceModel getLayoutPreferences(){
-    	PreferenceModel model = getModel( new Path( "layout" ) );
-    	if( model instanceof CLayoutPreferenceModel ){
-    		return (CLayoutPreferenceModel)model;
-    	}
-    	else{
-    		throw new IllegalStateException( "this model has been removed" );
-    	}
+        PreferenceModel model = getModel( new Path( "layout" ) );
+        if( model instanceof CLayoutPreferenceModel ){
+            return (CLayoutPreferenceModel)model;
+        }
+        else{
+            throw new IllegalStateException( "this model has been removed" );
+        }
     }
-    
+
     /**
      * Grants access to the preferences concerning the {@link ButtonContent}.
      * @return the model, not <code>null</code>
      * @throws IllegalStateException if the model was removed or replaced by the client
      */
     public ButtonContentPreferenceModel getButtonContent(){
-    	PreferenceModel model = getModel( new Path( "buttonContent" ) );
-    	if( model instanceof ButtonContentPreferenceModel ){
-    		return (ButtonContentPreferenceModel)model;
-    	}
-    	else{
-    		throw new IllegalStateException( "this model has been removed" );
-    	}
+        PreferenceModel model = getModel( new Path( "buttonContent" ) );
+        if( model instanceof ButtonContentPreferenceModel ){
+            return (ButtonContentPreferenceModel)model;
+        }
+        else{
+            throw new IllegalStateException( "this model has been removed" );
+        }
     }
-    
+
     /**
      * Grants access to the preferences concerning the {@link BubbleTheme}.
      * @return the model, not <code>null</code>
      * @throws IllegalStateException if the model was removed or replaced by the client
      */
     public BubbleThemePreferenceModel getBubbleThemePreferences(){
-    	PreferenceModel model = getModel( new Path( "layout.BubbleTheme" ) );
-    	if( model instanceof BubbleThemePreferenceModel ){
-    		return (BubbleThemePreferenceModel)model;
-    	}
-    	else{
-    		throw new IllegalStateException( "this model has been removed" );
-    	}
+        PreferenceModel model = getModel( new Path( "layout.BubbleTheme" ) );
+        if( model instanceof BubbleThemePreferenceModel ){
+            return (BubbleThemePreferenceModel)model;
+        }
+        else{
+            throw new IllegalStateException( "this model has been removed" );
+        }
     }
-    
+
     /**
      * Grants access to the preferences concerning the {@link EclipseTheme}.
      * @return the model, not <code>null</code>
      * @throws IllegalStateException if the model was removed or replaced by the client
      */
     public EclipseThemePreferenceModel getEclipseThemePreferences(){
-    	PreferenceModel model = getModel( new Path( "layout.EclipseTheme" ) );
-    	if( model instanceof EclipseThemePreferenceModel ){
-    		return (EclipseThemePreferenceModel)model;
-    	}
-    	else{
-    		throw new IllegalStateException( "this model has been removed" );
-    	}
+        PreferenceModel model = getModel( new Path( "layout.EclipseTheme" ) );
+        if( model instanceof EclipseThemePreferenceModel ){
+            return (EclipseThemePreferenceModel)model;
+        }
+        else{
+            throw new IllegalStateException( "this model has been removed" );
+        }
     }
 }

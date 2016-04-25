@@ -8,6 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Tutorial {
-	String title();
-	String id();
+    String title();
+    String id();
 }

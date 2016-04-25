@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,14 +35,14 @@ import bibliothek.gui.dock.station.split.Node;
 public class ResizeNode<T> extends ResizeElement<T>{
     /** the node that is represented by this node-element */
     private Node node;
-    
+
     /** size of the divider before the resize */
     private double dividerSize;
-    
+
     /** the two children of this node */
     @SuppressWarnings("unchecked")
     private ResizeElement<T>[] children = new ResizeElement[2];
-    
+
     /**
      * Creates a new node-element.
      * @param layout the layout that uses this node
@@ -55,7 +55,7 @@ public class ResizeNode<T> extends ResizeElement<T>{
         children[0] = layout.toElement( this, node.getLeft() );
         children[1] = layout.toElement( this, node.getRight() );
     }
-    
+
     /**
      * Gets the node that is represented by this element
      * @return the node
@@ -63,7 +63,7 @@ public class ResizeNode<T> extends ResizeElement<T>{
     public Node getNode() {
         return node;
     }
-    
+
     /**
      * Gets the left or top child of this node
      * @return the left or top child
@@ -71,7 +71,7 @@ public class ResizeNode<T> extends ResizeElement<T>{
     public ResizeElement<T> getLeft() {
         return children[0];
     }
-    
+
     /**
      * Gets the right or bottom child of this node
      * @return the left or bottom child
@@ -79,21 +79,22 @@ public class ResizeNode<T> extends ResizeElement<T>{
     public ResizeElement<T> getRight() {
         return children[1];
     }
-    
+
     @Override
     protected ResizeElement<T>[] getChildren() {
         return children;
     }
-    
+
     @Override
     public void prepareResize() {
         super.prepareResize();
-        if( node.getOrientation() == Orientation.HORIZONTAL )
+        if( node.getOrientation() == Orientation.HORIZONTAL ) {
             dividerSize = getDividerWidth();
-        else
+        } else {
             dividerSize = getDividerHeight();
+        }
     }
-    
+
     /**
      * Gets the space that a divider needs in the width.
      * @return the width of a divider
@@ -101,7 +102,7 @@ public class ResizeNode<T> extends ResizeElement<T>{
     public double getDividerWidth(){
         return node.getStation().getDividerSize() / node.getRoot().getWidthFactor();
     }
-    
+
     /**
      * Gets the space that a divider needs in the height.
      * @return the height of a divider
@@ -115,12 +116,13 @@ public class ResizeNode<T> extends ResizeElement<T>{
      * @return the space the divider occupies now
      */
     public double getNewDividerSize(){
-        if( node.getOrientation() == Orientation.HORIZONTAL )
+        if( node.getOrientation() == Orientation.HORIZONTAL ) {
             return getDividerWidth();
-        else
+        } else {
             return getDividerHeight();
+        }
     }
-    
+
     /**
      * Gets the space the divider needed before the resize.
      * @return the old size needed by the divider
@@ -128,41 +130,45 @@ public class ResizeNode<T> extends ResizeElement<T>{
     public double getOldDividerSize(){
         return dividerSize;
     }
-    
+
     @Override
     protected ResizeRequest createRequest() {
-         ResizeRequest alpha = getLeft().getRequest();
-         ResizeRequest beta = getRight().getRequest();
-         boolean horizontal = node.getOrientation() == Orientation.HORIZONTAL;
-         
-         if( horizontal ){
-             return getLayout().getConflictResolver().requestHorizontal( alpha, beta, this );
-         }
-         else{
-             return getLayout().getConflictResolver().requestVertical( alpha, beta, this );
-         }
+        ResizeRequest alpha = getLeft().getRequest();
+        ResizeRequest beta = getRight().getRequest();
+        boolean horizontal = node.getOrientation() == Orientation.HORIZONTAL;
+
+        if( horizontal ){
+            return getLayout().getConflictResolver().requestHorizontal( alpha, beta, this );
+        }
+        else{
+            return getLayout().getConflictResolver().requestVertical( alpha, beta, this );
+        }
     }
-    
+
     @Override
     public void adapt( double deltaWidth, double deltaHeight ) {
         ResizeRequest alpha = getLeft().getRequest();
         ResizeRequest beta = getRight().getRequest();
-        
+
         boolean horizontal = node.getOrientation() == Orientation.HORIZONTAL;
-        
+
         if( horizontal ){
-            if( alpha != null && alpha.getFractionWidth() == -1 )
+            if( alpha != null && alpha.getFractionWidth() == -1 ) {
                 alpha = null;
-            if( beta != null && beta.getFractionWidth() == -1 )
+            }
+            if( beta != null && beta.getFractionWidth() == -1 ) {
                 beta = null;
+            }
         }
         else{
-            if( alpha != null && alpha.getFractionHeight() == -1 )
+            if( alpha != null && alpha.getFractionHeight() == -1 ) {
                 alpha = null;
-            if( beta != null && beta.getFractionHeight() == -1 )
+            }
+            if( beta != null && beta.getFractionHeight() == -1 ) {
                 beta = null;
+            }
         }
-     
+
         if( alpha == null && beta == null ){
             if( horizontal ){
                 getLeft().adapt( deltaWidth * node.getDivider(), deltaHeight );
@@ -176,15 +182,15 @@ public class ResizeNode<T> extends ResizeElement<T>{
         else if( horizontal ){
             double divider = node.getDivider();
             double width = node.getWidth();
-            
+
             double dividerWidth = getDividerWidth();
-            
+
             double leftBefore = width * divider - dividerWidth / 2.0;
             double rightBefore = width * (1-divider) - dividerWidth / 2.0;
             double delta;
-            
+
             width += deltaWidth;
-            
+
             if( beta == null ){ // alpha != null
                 double request = alpha.getDeltaWidth() / alpha.getFractionWidth();
                 request -= deltaWidth * divider;
@@ -198,39 +204,39 @@ public class ResizeNode<T> extends ResizeElement<T>{
             else{
                 double requestLeft = alpha.getDeltaWidth() / alpha.getFractionWidth();
                 double requestRight = beta.getDeltaWidth() / beta.getFractionWidth();
-                
+
                 requestLeft -= deltaWidth * divider;
                 requestRight -= deltaWidth * (1-divider);
-                
+
                 double deltaLeft = width <= 0.0 ? 0.0 : requestLeft / width;
                 double deltaRight = width <= 0.0 ? 0.0 : -requestRight / width;
-                
+
                 delta = getLayout().getConflictResolver().resolveHorizontal( this, alpha, deltaLeft, beta, deltaRight );
             }
-            
+
             divider += delta;
             divider = Math.min( 1.0, Math.max( 0.0, divider ) );
-            
+
             node.setDivider( divider );
-            
+
             double leftAfter = width * divider - dividerWidth / 2.0;
             double rightAfter = width * (1-divider) - dividerWidth / 2.0;
-            
+
             getLeft().adapt( leftAfter - leftBefore, deltaHeight );
             getRight().adapt( rightAfter - rightBefore, deltaHeight );
         }
         else{ // vertical
             double divider = node.getDivider();
             double height = node.getHeight();
-            
+
             double dividerHeight = getDividerHeight();
-            
+
             double topBefore = height * divider - dividerHeight / 2.0;
             double bottomBefore = height * (1-divider) - dividerHeight / 2.0;
             double delta;
-            
+
             height += deltaHeight;
-            
+
             if( beta == null ){ // alpha != null
                 double request = alpha.getDeltaHeight() / alpha.getFractionHeight();
                 request -= deltaHeight * divider;
@@ -244,24 +250,24 @@ public class ResizeNode<T> extends ResizeElement<T>{
             else{
                 double requestTop = alpha.getDeltaHeight() / alpha.getFractionHeight();
                 double requestBottom = beta.getDeltaHeight() / beta.getFractionHeight();
-                
+
                 requestTop -= deltaHeight * divider;
                 requestBottom -= deltaHeight * (1-divider);
-                
+
                 double deltaTop = height <= 0.0 ? 0.0 : requestTop / height;
                 double deltaBottom = height <= 0.0 ? 0.0 : -requestBottom / height;
 
                 delta = getLayout().getConflictResolver().resolveVertical( this, alpha, deltaTop, beta, deltaBottom );
             }
-            
+
             divider += delta;
             divider = Math.min( 1.0, Math.max( 0.0, divider ) );
-            
+
             node.setDivider( divider );
-            
+
             double topAfter = height * divider - dividerHeight / 2.0;
             double bottomAfter = height * (1-divider) - dividerHeight / 2.0;
-            
+
             getLeft().adapt( deltaWidth, topAfter - topBefore );
             getRight().adapt( deltaWidth, bottomAfter - bottomBefore );
         }

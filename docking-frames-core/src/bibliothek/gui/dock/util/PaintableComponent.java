@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,7 +35,7 @@ import java.awt.Graphics;
  * paint some parts automatically if the appropriate method is not called. The usual
  * order in which the paint methods should be executed is:
  * <ol>
- * 	<li> {@link #paintBackground(Graphics)} </li>
+ *     <li> {@link #paintBackground(Graphics)} </li>
  *  <li> {@link #paintForeground(Graphics)} </li>
  *  <li> {@link #paintBorder(Graphics)} </li>
  *  <li> {@link #paintChildren(Graphics)} </li>
@@ -44,55 +44,55 @@ import java.awt.Graphics;
  * @author Benjamin Sigg
  */
 public interface PaintableComponent {
-	/**
-	 * Gets the {@link Component} which is to be painted.
-	 * @return the item to paint
-	 */
-	public Component getComponent();
-	
-	/**
-	 * Tells how much of this component is actually painted.
-	 * @return the transparency effects of this component, not <code>null</code>
-	 */
-	public Transparency getTransparency();
-	
-	/**
-	 * Invokes the standard algorithm that paints the background
-	 * of the component. This method should be called at most once. 
-	 * @param g the graphics context to use, <code>null</code> to just inform
-	 * this component that the background should not be painted automatically
-	 */
-	public void paintBackground( Graphics g );
-	
-	/**
-	 * Invokes the standard algorithm that paints the foreground
-	 * of the component. This method should be called at most once.
-	 * @param g the graphics context to use, <code>null</code> to just inform
-	 * this component that the foreground should not be painted automatically
-	 */
-	public void paintForeground( Graphics g );
+    /**
+     * Gets the {@link Component} which is to be painted.
+     * @return the item to paint
+     */
+    public Component getComponent();
 
-	/**
-	 * Invokes the standard algorithm that paints the border
-	 * of the component. This method should be called at most once. 
-	 * @param g the graphics context to use, <code>null</code> to just inform
-	 * this component that the background should not be painted automatically
-	 */
-	public void paintBorder( Graphics g );
-	
-	/**
-	 * Invokes the standard algorithm that paints the children
-	 * of the component. This method should be called at most once. 
-	 * @param g the graphics context to use, <code>null</code> to just inform
-	 * this component that the background should not be painted automatically
-	 */
-	public void paintChildren( Graphics g );
-	
-	/**
-	 * Invokes the standard algorithm that paints an overlay over the children
-	 * of the component. This method should be called at most once. 
-	 * @param g the graphics context to use, <code>null</code> to just inform
-	 * this component that the background should not be painted automatically
-	 */
-	public void paintOverlay( Graphics g );
+    /**
+     * Tells how much of this component is actually painted.
+     * @return the transparency effects of this component, not <code>null</code>
+     */
+    public Transparency getTransparency();
+
+    /**
+     * Invokes the standard algorithm that paints the background
+     * of the component. This method should be called at most once.
+     * @param g the graphics context to use, <code>null</code> to just inform
+     * this component that the background should not be painted automatically
+     */
+    public void paintBackground( Graphics g );
+
+    /**
+     * Invokes the standard algorithm that paints the foreground
+     * of the component. This method should be called at most once.
+     * @param g the graphics context to use, <code>null</code> to just inform
+     * this component that the foreground should not be painted automatically
+     */
+    public void paintForeground( Graphics g );
+
+    /**
+     * Invokes the standard algorithm that paints the border
+     * of the component. This method should be called at most once.
+     * @param g the graphics context to use, <code>null</code> to just inform
+     * this component that the background should not be painted automatically
+     */
+    public void paintBorder( Graphics g );
+
+    /**
+     * Invokes the standard algorithm that paints the children
+     * of the component. This method should be called at most once.
+     * @param g the graphics context to use, <code>null</code> to just inform
+     * this component that the background should not be painted automatically
+     */
+    public void paintChildren( Graphics g );
+
+    /**
+     * Invokes the standard algorithm that paints an overlay over the children
+     * of the component. This method should be called at most once.
+     * @param g the graphics context to use, <code>null</code> to just inform
+     * this component that the background should not be painted automatically
+     */
+    public void paintOverlay( Graphics g );
 }

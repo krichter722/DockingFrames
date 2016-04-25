@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,19 +35,19 @@ import bibliothek.gui.dock.extension.css.transition.types.TransitionalIntegerPro
  * @author Benjamin Sigg
  */
 public class IntegerType implements CssType<Integer>{
-	@Override
-	public Integer convert( CssDeclarationValue value ){
-		try{
-			return Integer.valueOf( value.getSingleValue() );
-		}
-		catch( NumberFormatException ex ){
-			ex.printStackTrace();
-			return null;
-		}
-	}
+    @Override
+    public Integer convert( CssDeclarationValue value ){
+        try{
+            return Integer.valueOf( value.getSingleValue() );
+        }
+        catch( NumberFormatException ex ){
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
-	@Override
-	public TransitionalCssProperty<Integer> createTransition(){
-		return new TransitionalIntegerProperty();
-	}
+    @Override
+    public TransitionalCssProperty<Integer> createTransition(){
+        return new TransitionalIntegerProperty();
+    }
 }

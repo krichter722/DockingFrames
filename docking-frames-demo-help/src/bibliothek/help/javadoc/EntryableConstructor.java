@@ -16,14 +16,14 @@ import bibliothek.help.model.Entry;
 public class EntryableConstructor extends AbstractEntryable {
     /** the full documentation of a constructor */
     private ConstructorDoc doc;
-    
+
     /**
      * Creates a new collection of data.
      * @param doc a constructor
      */
     public EntryableConstructor( ConstructorDoc doc ){
         this.doc = doc;
-        
+
         bold( true );
         println( "Containing: " );
         bold( false );
@@ -45,7 +45,7 @@ public class EntryableConstructor extends AbstractEntryable {
             print( args[i].name() );
         }
         println( ")" );
-        
+
         if( doc.thrownExceptionTypes().length > 0 ){
             println();
             bold( true );
@@ -56,7 +56,7 @@ public class EntryableConstructor extends AbstractEntryable {
                 println();
             }
         }
-        
+
         if( doc.commentText() != null ){
             println();
             bold( true );
@@ -68,7 +68,7 @@ public class EntryableConstructor extends AbstractEntryable {
 
     public Entry toEntry() {
         return new Entry( "constructor", doc.qualifiedName() + doc.signature(),
-        		"Constructor " + doc.qualifiedName() + doc.signature(), content(), 
+                "Constructor " + doc.qualifiedName() + doc.signature(), content(),
                 "class:" + doc.containingClass().qualifiedName() );
     }
 }

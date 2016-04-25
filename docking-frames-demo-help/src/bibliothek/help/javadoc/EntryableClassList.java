@@ -21,7 +21,7 @@ import com.sun.javadoc.RootDoc;
 public class EntryableClassList extends AbstractEntryable{
     /** the package whose elements are listed, might be <code>null</code> */
     private PackageDoc doc;
-    
+
     /**
      * Creates a new list containing all elements.
      * @param doc the root of the documentation
@@ -35,21 +35,21 @@ public class EntryableClassList extends AbstractEntryable{
             add( new EntryableHierarchyClass( clazz ));
         }
     }
-    
+
     /**
      * Creates a new list containing the elements of a single package.
      * @param doc the package
      */
     public EntryableClassList( PackageDoc doc ){
         this.doc = doc;
-        
+
         print( "Enums", doc.enums() );
         print( "Interfaces", doc.interfaces() );
         print( "Classes", doc.ordinaryClasses() );
         print( "Exceptions", doc.exceptions() );
         print( "Errors", doc.errors() );
     }
-    
+
     /**
      * Prints a bold title <code>name</code> and then creates
      * links to each element found in <code>docs</code>. Does nothing
@@ -79,13 +79,13 @@ public class EntryableClassList extends AbstractEntryable{
     private void sort( ClassDoc[] docs ){
         Arrays.sort( docs, new Comparator<ClassDoc>(){
             private Collator collator = Collator.getInstance();
-            
+
             public int compare( ClassDoc o1, ClassDoc o2 ) {
                 return collator.compare( o1.name(), o2.name() );
             }
         });
     }
-    
+
     public Entry toEntry() {
         if( doc == null )
             return new Entry( "class-list", ".all", "All classes", content());

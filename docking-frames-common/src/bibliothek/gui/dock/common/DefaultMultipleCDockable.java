@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -48,10 +48,10 @@ import bibliothek.util.ClientOnly;
 public class DefaultMultipleCDockable extends DefaultCDockable implements MultipleCDockable{
     /** a factory needed to store or load this dockable */
     private MultipleCDockableFactory<?,?> factory;
-    
+
     /** whether to remove this dockable from the controller when closing or not */
     private boolean removeOnClose = true;
-    
+
     /**
      * Creates a new dockable
      * @param factory the factory which created or could create this
@@ -62,7 +62,7 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, CAction... actions ){
         this( factory, null, IconHandling.REPLACE_NULL_ICON, null, null, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -75,7 +75,7 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, Component content, CAction... actions ){
         this( factory, null, IconHandling.REPLACE_NULL_ICON, null, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -89,7 +89,7 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, String title, Component content, CAction... actions ){
         this( factory, null, IconHandling.REPLACE_NULL_ICON, title, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -103,7 +103,7 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, Icon icon, Component content, CAction... actions ){
         this( factory, icon, IconHandling.KEEP_NULL_ICON, null, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -118,7 +118,7 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, Icon icon, String title, Component content, CAction... actions ){
         this( factory, icon, IconHandling.KEEP_NULL_ICON, title, content, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -130,7 +130,7 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, String title, CAction... actions ){
         this( factory, null, IconHandling.REPLACE_NULL_ICON, title, null, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -142,7 +142,7 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, Icon icon, CAction... actions ){
         this( factory, icon, IconHandling.KEEP_NULL_ICON, null, null, null, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -170,9 +170,9 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
      * A separator is inserted for every entry that is <code>null</code> of this array.
      */
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, Icon icon, String title, Component content, Permissions permissions, CAction... actions ){
-    	this( factory, icon, IconHandling.KEEP_NULL_ICON, title, content, permissions, actions );
+        this( factory, icon, IconHandling.KEEP_NULL_ICON, title, content, permissions, actions );
     }
-    
+
     /**
      * Creates a new dockable.
      * @param factory the factory which created or could create this
@@ -190,10 +190,10 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public DefaultMultipleCDockable( MultipleCDockableFactory<?,?> factory, Icon icon, IconHandling iconHandling, String title, Component content, Permissions permissions, CAction... actions ){
         super( permissions == null ? Permissions.DEFAULT : permissions );
         if( factory == null ){
-        	factory = NullMultipleCDockableFactory.NULL;
+            factory = NullMultipleCDockableFactory.NULL;
         }
         this.factory = factory;
-        
+
         setTitleIconHandling( iconHandling );
         setTitleIcon( icon );
         if( title != null ){
@@ -205,14 +205,15 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
         }
         if( actions != null ){
             for( CAction action : actions ){
-                if( action != null )
+                if( action != null ) {
                     addAction( action );
-                else
+                } else {
                     addSeparator();
+                }
             }
         }
     }
-    
+
     /**
      * Gets the factory that created this dockable.
      * @return the factory, not <code>null</code>
@@ -220,20 +221,21 @@ public class DefaultMultipleCDockable extends DefaultCDockable implements Multip
     public MultipleCDockableFactory<?,?> getFactory(){
         return factory;
     }
-    
+
     @Override
     public void setControlAccess( CControlAccess control ){
         super.setControlAccess( control );
-        if( control == null )
+        if( control == null ) {
             intern().setFactoryID( DefaultDockableFactory.ID );
-        else
+        } else {
             intern().setFactoryID( control.getFactoryId( factory ));
+        }
     }
-    
+
     public boolean isRemoveOnClose() {
         return removeOnClose;
     }
-    
+
     /**
      * Sets whether this dockable will be removed from the {@link CControl} when
      * made invisible.

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,10 +40,10 @@ public abstract class SimpleDropDownItemAction extends SimpleDockAction implemen
 
     /** Whether this action can be selected in a {@link DropDownAction} or not. */
     private boolean dropDownSelectable = true;
-    
+
     /** Whether this action can be triggered when shown on a {@link DropDownAction} or not if it is selected */
     private boolean dropDownTriggerableSelected = true;
-    
+
     /** Whether this action can be triggered when shown on a {@link DropDownAction} or not if it is not selected */
     private boolean dropDownTriggerableNotSelected = true;
 
@@ -52,41 +52,42 @@ public abstract class SimpleDropDownItemAction extends SimpleDockAction implemen
      * @param monitorDisabling whether to monitor the current {@link DisablingStrategy}
      */
     public SimpleDropDownItemAction( boolean monitorDisabling ){
-    	super( monitorDisabling );
+        super( monitorDisabling );
     }
-    
+
     public void setDropDownSelectable( boolean dropDownSelectable ){
-		this.dropDownSelectable = dropDownSelectable;
-	}
-    
+        this.dropDownSelectable = dropDownSelectable;
+    }
+
     public boolean isDropDownSelectable( Dockable dockable ){
-    	return dropDownSelectable;
+        return dropDownSelectable;
     }
-    
+
     public boolean isDropDownSelectable(){
-    	return dropDownSelectable;
+        return dropDownSelectable;
     }
-    
+
     public void setDropDownTriggerableSelected( boolean dropDownTriggerableSelected ){
-		this.dropDownTriggerableSelected = dropDownTriggerableSelected;
-	}
-    
+        this.dropDownTriggerableSelected = dropDownTriggerableSelected;
+    }
+
     public boolean isDropDownTriggerableSelected(){
-		return dropDownTriggerableSelected;
-	}
+        return dropDownTriggerableSelected;
+    }
 
     public void setDropDownTriggerableNotSelected( boolean dropDownTriggerableNotSelected ){
-		this.dropDownTriggerableNotSelected = dropDownTriggerableNotSelected;
-	}
+        this.dropDownTriggerableNotSelected = dropDownTriggerableNotSelected;
+    }
 
     public boolean isDropDownTriggerableNotSelected(){
-		return dropDownTriggerableNotSelected;
-	}
-    
+        return dropDownTriggerableNotSelected;
+    }
+
     public boolean isDropDownTriggerable( Dockable dockable, boolean selected ){
-    	if( selected )
-    		return dropDownTriggerableSelected;
-    	else
-    		return dropDownTriggerableNotSelected;
+        if( selected ) {
+            return dropDownTriggerableSelected;
+        } else {
+            return dropDownTriggerableNotSelected;
+        }
     }
 }

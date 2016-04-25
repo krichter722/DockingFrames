@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -47,16 +47,16 @@ import bibliothek.gui.dock.event.StandardDockActionListener;
 public abstract class AbstractMenuHandler<I extends JMenuItem, D extends StandardDockAction> implements MenuViewItem<JComponent>{
     /** the visual representation of the action, may be <code>null</code> */
     protected I item;
-    
+
     /** the Dockable for which actions are dispatched */
     protected Dockable dockable;
-    
+
     /** the action shown by the item of this handler, may be <code>null</code> */
     protected D action;
-    
+
     /** a listener to the action, changes text, icon, etc.. of the item */
     private Listener listener;
-    
+
     /**
      * Creates a new handler with predefined item.
      * @param action the action to observe
@@ -69,7 +69,7 @@ public abstract class AbstractMenuHandler<I extends JMenuItem, D extends Standar
         this.dockable = dockable;
         this.item = item;
     }
-    
+
     /**
      * Gets the element for which actions are dispatched.
      * @return the element
@@ -77,7 +77,7 @@ public abstract class AbstractMenuHandler<I extends JMenuItem, D extends Standar
     public Dockable getDockable() {
         return dockable;
     }
-    
+
     /**
      * Gets the action that is observed by this handler.
      * @return the action, may be <code>null</code>
@@ -85,7 +85,7 @@ public abstract class AbstractMenuHandler<I extends JMenuItem, D extends Standar
     public D getAction() {
         return action;
     }
-    
+
     /**
      * Gets the item whose values are updated by this handler.
      * @return the item, may be <code>null</code>
@@ -93,7 +93,7 @@ public abstract class AbstractMenuHandler<I extends JMenuItem, D extends Standar
     public JMenuItem getItem(){
         return item;
     }
-    
+
     /**
      * Connects this handler to its action.
      */
@@ -101,34 +101,35 @@ public abstract class AbstractMenuHandler<I extends JMenuItem, D extends Standar
         if( action != null ){
             if( listener == null ){
                 action.bind( dockable );
-                
+
                 listener = new Listener();
                 action.addDockActionListener( listener );
 
                 if( item != null ){
-                	item.setEnabled( action.isEnabled( dockable ));
+                    item.setEnabled( action.isEnabled( dockable ));
                     item.setIcon( getIcon( ActionContentModifier.NONE_HORIZONTAL ) );
                     item.setDisabledIcon( action.getIcon( dockable, ActionContentModifier.DISABLED ) );
                     item.setText( action.getText( dockable ));
                     item.setToolTipText( action.getTooltipText( dockable ));
                 }
             }
-            else
+            else {
                 throw new IllegalStateException( "Handler is already bound" );
+            }
         }
     }
-    
+
     private Icon getIcon( ActionContentModifier modifier ){
-    	while( modifier != null ){
-    		Icon icon = action.getIcon( dockable, modifier );
-    		if( icon != null ){
-    			return icon;
-    		}
-    		modifier = modifier.getBackup();
-    	}
-    	return null;
+        while( modifier != null ){
+            Icon icon = action.getIcon( dockable, modifier );
+            if( icon != null ){
+                return icon;
+            }
+            modifier = modifier.getBackup();
+        }
+        return null;
     }
-    
+
     /**
      * Disconnects this handler from its action
      */
@@ -139,11 +140,12 @@ public abstract class AbstractMenuHandler<I extends JMenuItem, D extends Standar
                 action.removeDockActionListener( listener );
                 listener = null;
             }
-            else
+            else {
                 throw new IllegalStateException( "Handler is already unbound" );
+            }
         }
     }
-    
+
     /**
      * A listener to an action, changes the values of the item of the
      * enclosing handler.
@@ -151,39 +153,39 @@ public abstract class AbstractMenuHandler<I extends JMenuItem, D extends Standar
      */
     private class Listener implements StandardDockActionListener{
         public void actionEnabledChanged( StandardDockAction action, Set<Dockable> dockables ) {
-        	if( item != null ){
-        		item.setEnabled( action.isEnabled( dockable ));
-        	}
+            if( item != null ){
+                item.setEnabled( action.isEnabled( dockable ));
+            }
         }
 
         public void actionIconChanged( StandardDockAction action, ActionContentModifier modifier, Set<Dockable> dockables ){
-        	if( item != null ){
-	        	if( modifier == null || modifier == ActionContentModifier.NONE_HORIZONTAL ){
-	        		item.setIcon( getIcon( ActionContentModifier.NONE_HORIZONTAL ) );
-	        	}
-	        	else if( modifier == null || modifier == ActionContentModifier.NONE ){
-	        		item.setIcon( getIcon( ActionContentModifier.NONE_HORIZONTAL ) );
-	        	}
-	        	if( modifier == null || modifier == ActionContentModifier.DISABLED ){
-	        		item.setDisabledIcon( action.getIcon( dockable, ActionContentModifier.DISABLED ) );
-	        	}
-        	}
+            if( item != null ){
+                if( modifier == null || modifier == ActionContentModifier.NONE_HORIZONTAL ){
+                    item.setIcon( getIcon( ActionContentModifier.NONE_HORIZONTAL ) );
+                }
+                else if( modifier == null || modifier == ActionContentModifier.NONE ){
+                    item.setIcon( getIcon( ActionContentModifier.NONE_HORIZONTAL ) );
+                }
+                if( modifier == null || modifier == ActionContentModifier.DISABLED ){
+                    item.setDisabledIcon( action.getIcon( dockable, ActionContentModifier.DISABLED ) );
+                }
+            }
         }
 
         public void actionTextChanged( StandardDockAction action, Set<Dockable> dockables ) {
-        	if( item != null ){
-        		item.setText( action.getText( dockable ));
-        	}
+            if( item != null ){
+                item.setText( action.getText( dockable ));
+            }
         }
 
         public void actionTooltipTextChanged( StandardDockAction action, Set<Dockable> dockables ) {
-        	if( item != null ){
-        		item.setToolTipText( action.getTooltipText( dockable ));
-        	}
+            if( item != null ){
+                item.setToolTipText( action.getTooltipText( dockable ));
+            }
         }
-        
+
         public void actionRepresentativeChanged( StandardDockAction action, Set<Dockable> dockables ){
-	        // ignore	
+            // ignore
         }
     }
 }

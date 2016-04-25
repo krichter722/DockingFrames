@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2013 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,16 +35,16 @@ import bibliothek.gui.dock.station.screen.ScreenDockWindow;
  * @author Benjamin Sigg
  */
 public interface ScreenWindowShapeCallback {
-	/**
-	 * Gets the window which is modified by this callback.
-	 * @return the window, not <code>null</code>
-	 */
-	public ScreenDockWindow getWindow();
-		
-	/**
-	 * Sets the shape of {@link #getWindow() the window}, a value of <code>null</code> indicates
-	 * that the entire window should be visible.
-	 * @param shape the visible part of the window, or <code>null</code>
-	 */
-	public void setShape( Shape shape );
+    /**
+     * Gets the window which is modified by this callback.
+     * @return the window, not <code>null</code>
+     */
+    public ScreenDockWindow getWindow();
+
+    /**
+     * Sets the shape of {@link #getWindow() the window}, a value of <code>null</code> indicates
+     * that the entire window should be visible.
+     * @param shape the visible part of the window, or <code>null</code>
+     */
+    public void setShape( Shape shape );
 }

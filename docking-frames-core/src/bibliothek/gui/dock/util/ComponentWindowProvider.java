@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -39,10 +39,10 @@ import javax.swing.SwingUtilities;
 public class ComponentWindowProvider extends AbstractWindowProvider{
     /** the child of the window to provide */
     private Component component;
-    
+
     /** the current window of {@link #component} */
     private Window window;
-    
+
     private HierarchyListener listener = new HierarchyListener(){
         public void hierarchyChanged( HierarchyEvent e ) {
             Window oldWindow = window;
@@ -52,7 +52,7 @@ public class ComponentWindowProvider extends AbstractWindowProvider{
             }
         }
     };
-    
+
     /**
      * Creates a new provider
      * @param component the component whose ancestor will be provided, <code>null</code>
@@ -61,7 +61,7 @@ public class ComponentWindowProvider extends AbstractWindowProvider{
     public ComponentWindowProvider( Component component ){
         this.component = component;
     }
-    
+
     @Override
     public void addWindowProviderListener( WindowProviderListener listener ) {
         int previous = listeners.size();
@@ -71,17 +71,17 @@ public class ComponentWindowProvider extends AbstractWindowProvider{
             window = getWindowAncestor( component );
         }
     }
-    
+
     @Override
     public void removeWindowProviderListener( WindowProviderListener listener ) {
         int previous = listeners.size();
         super.removeWindowProviderListener( listener );
-        
+
         if( previous > 0 && listeners.size() == 0 && component != null ){
             component.removeHierarchyListener( this.listener );
         }
     }
-    
+
     /**
      * Gets the {@link Component} whose ancestor window is provided.
      * @return the component or <code>null</code>
@@ -89,7 +89,7 @@ public class ComponentWindowProvider extends AbstractWindowProvider{
     public Component getComponent() {
         return component;
     }
-    
+
     /**
      * Sets the component whose ancestor window will be provided.
      * @param component the component or <code>null</code>
@@ -99,14 +99,16 @@ public class ComponentWindowProvider extends AbstractWindowProvider{
             this.component = component;
         }
         else{
-            if( this.component != null )
+            if( this.component != null ) {
                 this.component.removeHierarchyListener( listener );
-            
+            }
+
             this.component = component;
-            
-            if( this.component != null )
+
+            if( this.component != null ) {
                 this.component.addHierarchyListener( listener );
-            
+            }
+
             Window oldWindow = window;
             window = component == null ? null : getWindowAncestor( component );
             if( oldWindow != window ){
@@ -114,21 +116,24 @@ public class ComponentWindowProvider extends AbstractWindowProvider{
             }
         }
     }
-    
+
     public Window searchWindow() {
-        if( component == null )
+        if( component == null ) {
             return null;
-        
-        if( listeners.size() == 0 )
+        }
+
+        if( listeners.size() == 0 ) {
             return getWindowAncestor( component );
-        
+        }
+
         return window;
     }
-    
+
     private Window getWindowAncestor( Component component ){
-        if( component instanceof Window )
+        if( component instanceof Window ) {
             return (Window)component;
-        
+        }
+
         return SwingUtilities.getWindowAncestor( component );
     }
 }

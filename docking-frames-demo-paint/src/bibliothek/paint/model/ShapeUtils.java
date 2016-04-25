@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -45,14 +45,14 @@ import bibliothek.util.xml.XElement;
 public class ShapeUtils {
     /** factories for different types of shapes */
     private static final Map<String, ShapeFactory> FACTORIES;
-    
+
     static{
         FACTORIES = new HashMap<String, ShapeFactory>();
         FACTORIES.put( RectangleShape.class.getCanonicalName(), RectangleShape.FACTORY );
         FACTORIES.put( LineShape.class.getCanonicalName(), LineShape.FACTORY );
         FACTORIES.put( OvalShape.class.getCanonicalName(), OvalShape.FACTORY );
     }
-    
+
     /**
      * Gets a list of all {@link ShapeFactory}s which are used in this application.
      * @return the collection of factories
@@ -60,7 +60,7 @@ public class ShapeUtils {
     public static Collection<ShapeFactory> getFactories(){
         return Collections.unmodifiableCollection( FACTORIES.values() );
     }
-    
+
     /**
      * Writes the contents of <code>shape</code> into <code>out</code>.
      * @param shape the shape to write
@@ -76,7 +76,7 @@ public class ShapeUtils {
         out.writeInt( shape.getPointB().x );
         out.writeInt( shape.getPointB().y );
     }
-    
+
     /**
      * Writes the contents of <code>shape</code> in xml format.
      * @param shape the shape to write
@@ -88,7 +88,7 @@ public class ShapeUtils {
         element.addElement( "point" ).addInt( "x", shape.getPointA().x ).addInt( "y", shape.getPointA().y );
         element.addElement( "point" ).addInt( "x", shape.getPointB().x ).addInt( "y", shape.getPointB().y );
     }
-    
+
     /**
      * Reads a {@link Shape} from the stream <code>in</code>.
      * @param in the stream to read from
@@ -103,7 +103,7 @@ public class ShapeUtils {
         shape.setPointB( new Point( in.readInt(), in.readInt() ) );
         return shape;
     }
-    
+
     /**
      * Reads a {@link Shape} from <code>element</code>.
      * @param element the element to read from

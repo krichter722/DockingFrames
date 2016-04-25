@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -143,8 +143,8 @@ public abstract class AbstractBubbleDockTitle extends AbstractDockTitle{
      * Sets up the animation such that it can be started at any time.
      */
     private void initAnimation(){
-    	setTransparency( Transparency.DEFAULT );
-    	
+        setTransparency( Transparency.DEFAULT );
+
         animation = new BubbleColorAnimation();
 
         updateAnimation();
@@ -171,13 +171,13 @@ public abstract class AbstractBubbleDockTitle extends AbstractDockTitle{
             updateAnimation();
         }
     }
-    
+
     @Override
     protected void setDisabled( boolean disabled ){
-    	if( isDisabled() != disabled ){
-    		super.setDisabled( disabled );
-    		updateAnimation();
-    	}
+        if( isDisabled() != disabled ){
+            super.setDisabled( disabled );
+            updateAnimation();
+        }
     }
 
     /**
@@ -213,9 +213,9 @@ public abstract class AbstractBubbleDockTitle extends AbstractDockTitle{
      * @return the current color or <code>null</code> if not present
      */
     protected Color getColor( String animationKey ){
-    	return animation.getColor( animationKey );
+        return animation.getColor( animationKey );
     }
-    
+
     /**
      * Called every time when the colors of the animation have been changed.
      */
@@ -238,7 +238,7 @@ public abstract class AbstractBubbleDockTitle extends AbstractDockTitle{
             default: return super.getInnerInsets();
         }
     }
-    
+
     @Override
     protected void paintBackground( Graphics g, JComponent component ) {
         Graphics2D g2 = (Graphics2D)g.create();
@@ -246,15 +246,15 @@ public abstract class AbstractBubbleDockTitle extends AbstractDockTitle{
         doPaintBackground( g2, component );
         g2.dispose();
     }
-    
+
     /**
      * Actually paints the background with a graphics context that has special settings.
      * @param g the graphics context to use
      * @param component the component that is painted
      */
     protected void doPaintBackground( Graphics g, JComponent component ){
-    	Graphics2D g2 = (Graphics2D)g;
-    	
+        Graphics2D g2 = (Graphics2D)g;
+
         Insets insets = getInsets();
         int x = 0, y = 0;
         int w = component.getWidth();
@@ -271,19 +271,20 @@ public abstract class AbstractBubbleDockTitle extends AbstractDockTitle{
         Color bottom = animation.getColor( ANIMATION_KEY_BACKGROUND_BOTTOM );
 
         if( top != null && bottom != null ){
-            if( getOrientation().isHorizontal() )
+            if( getOrientation().isHorizontal() ) {
                 g2.setPaint( new GradientPaint( 0, 0, top, 0, h, bottom ));
-            else
+            } else {
                 g2.setPaint( new GradientPaint( 0, 0, top, w, 0, bottom ));
+            }
 
             // draw
             drawRoundRect( g2, x, y, w, h );
-        }    	
+        }
     }
-    
+
     @Override
     public void paintOverlay( Graphics g ){
-    	 // draw horizon
+         // draw horizon
         Graphics2D g2 = (Graphics2D)g.create();
 
         Insets insets = getInsets();

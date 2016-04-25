@@ -33,7 +33,7 @@ public class CTestPanel extends JPanel {
 
    /**
     * This method initializes this
-    * 
+    *
     * @return void
     */
    private void initialize () {
@@ -46,9 +46,9 @@ public class CTestPanel extends JPanel {
    }
 
    /**
-    * This method initializes jPanel	
-    * 	
-    * @return javax.swing.JPanel	
+    * This method initializes jPanel
+    *
+    * @return javax.swing.JPanel
     */
    private JPanel getJPanel () {
       if (jPanel == null) {
@@ -95,9 +95,9 @@ public class CTestPanel extends JPanel {
    }
 
    /**
-    * This method initializes jScrollPane	
-    * 	
-    * @return javax.swing.JScrollPane	
+    * This method initializes jScrollPane
+    *
+    * @return javax.swing.JScrollPane
     */
    @SuppressWarnings("unused")
 private JScrollPane getJScrollPane () {
@@ -109,9 +109,9 @@ private JScrollPane getJScrollPane () {
    }
 
    /**
-    * This method initializes jTable	
-    * 	
-    * @return javax.swing.JTable	
+    * This method initializes jTable
+    *
+    * @return javax.swing.JTable
     */
    private JTable getJTable () {
       if (jTable == null) {

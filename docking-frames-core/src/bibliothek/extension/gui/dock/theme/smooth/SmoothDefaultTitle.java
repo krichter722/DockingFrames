@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -43,28 +43,28 @@ import bibliothek.util.Colors;
  * @author Benjamin Sigg
  */
 public class SmoothDefaultTitle extends BasicDockTitle{
-	private final int ACTIVE_STATE = 0;
-	private final int INACTIVE_STATE = 1;
-	private final int DISABLED_STATE = 2;
-	
+    private static final int ACTIVE_STATE = 0;
+    private static final int INACTIVE_STATE = 1;
+    private static final int DISABLED_STATE = 2;
+
     /** The current state of the transition */
     private int[] current = null;
-    
+
     /** a trigger for the animation */
     private SmoothChanger changer = new SmoothChanger( 3 ){
-    	@Override
-    	protected int destination() {
-    		if( isDisabled() ){
-    			return DISABLED_STATE;
-    		}
-    		else if( isActive() ){
-    			return ACTIVE_STATE;
-    		}
-    		else{
-    			return INACTIVE_STATE;
-    		}
-    	}
-    	
+        @Override
+        protected int destination() {
+            if( isDisabled() ){
+                return DISABLED_STATE;
+            }
+            else if( isActive() ){
+                return ACTIVE_STATE;
+            }
+            else{
+                return INACTIVE_STATE;
+            }
+        }
+
         @Override
         protected void repaint( int[] current ) {
             SmoothDefaultTitle.this.current = current;
@@ -72,7 +72,7 @@ public class SmoothDefaultTitle extends BasicDockTitle{
             SmoothDefaultTitle.this.repaint();
         }
     };
-    
+
     /**
      * Constructs a new title
      * @param dockable the owner of this title
@@ -81,7 +81,7 @@ public class SmoothDefaultTitle extends BasicDockTitle{
     public SmoothDefaultTitle( Dockable dockable, DockTitleVersion origin ) {
         super(dockable, origin);
     }
-    
+
     /**
      * Gets the number of milliseconds needed for one transition from
      * active to passive.
@@ -90,7 +90,7 @@ public class SmoothDefaultTitle extends BasicDockTitle{
     public int getDuration() {
         return changer.getDuration();
     }
-    
+
     /**
      * Sets the duration of the animation in milliseconds.
      * @param duration the duration
@@ -98,45 +98,47 @@ public class SmoothDefaultTitle extends BasicDockTitle{
     public void setDuration( int duration ) {
         changer.setDuration( duration );
     }
-    
+
     @Override
     public void setActive( boolean active ) {
         super.setActive(active);
-        
-        if( changer != null )
+
+        if( changer != null ) {
             changer.trigger();
+        }
     }
-    
+
     @Override
     protected void setDisabled( boolean disabled ){
-    	super.setDisabled( disabled );
-    	
-    	if( changer != null )
-    		changer.trigger();
+        super.setDisabled( disabled );
+
+        if( changer != null ) {
+            changer.trigger();
+        }
     }
-    
+
     @Override
     protected void updateColors() {
-    	super.updateColors();
-    	updateForegroundColor();
+        super.updateColors();
+        updateForegroundColor();
     }
-    
+
     /**
      * Updates the foreground color.
      */
     protected void updateForegroundColor(){
         boolean done = false;
-        
+
         if( changer != null && current != null ){
             int duration = getDuration();
-            
+
             if( (isActive() && current[ACTIVE_STATE] != duration) || (!isActive() && current[ACTIVE_STATE] != 0 )){
                 double ratio = current[ACTIVE_STATE] / (double)duration;
-                
+
                 setForeground( Colors.between( getInactiveTextColor(), getActiveTextColor(), ratio ));
                 done = true;
             }
-            
+
             if( !done ){
                 if( isActive() ){
                     setForeground( getActiveTextColor() );
@@ -147,24 +149,25 @@ public class SmoothDefaultTitle extends BasicDockTitle{
             }
         }
     }
-    
+
     @Override
     protected void paintBackground( Graphics g, JComponent component ) {
         if( changer.isRunning() && current != null ){
             Color left = get( getActiveLeftColor(), getInactiveLeftColor(), getDisabledLeftColor() );
             Color right = get( getActiveRightColor(), getInactiveRightColor(), getDisabledRightColor() );
-            
+
             GradientPaint gradient = getGradient( left, right, component );
             Graphics2D g2 = (Graphics2D)g;
-            
+
             g2.setPaint( gradient );
             g2.fillRect( 0, 0, component.getWidth(), component.getHeight() );
         }
-        else
+        else {
             super.paintBackground( g, component );
+        }
     }
-    
+
     private Color get( Color active, Color inactive, Color disabled ){
-    	return Colors.between( active, current[ACTIVE_STATE], inactive, current[INACTIVE_STATE], disabled, current[DISABLED_STATE] );
+        return Colors.between( active, current[ACTIVE_STATE], inactive, current[INACTIVE_STATE], disabled, current[DISABLED_STATE] );
     }
 }

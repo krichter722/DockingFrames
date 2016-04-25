@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2011 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,41 +37,41 @@ import bibliothek.util.FrameworkOnly;
  */
 @FrameworkOnly
 public interface SharingDropDownDockAction extends SharingStandardDockAction, DropDownAction{
-	/**
-	 * Adds an action to the menu.
-	 * @param action the action to add
-	 */
-	public void add( DockAction action );
-	
-	/**
-	 * Inserts an action into the menu.
-	 * @param index the location of the action
-	 * @param action the new action
-	 */
-	public void insert( int index, DockAction action );
-	
-	/**
-	 * Inserts a list of actions into the menu.
-	 * @param index the location of the first action
-	 * @param action the actions to add
-	 */
-	public void insert( int index, DockAction... action );
-	
-	/**
-	 * Removes an action from the menu.
-	 * @param index the location of the action
-	 */
-	public void remove( int index );
-	
-	/**
-	 * Gets the number of actions shown in the menu.
-	 * @return the number of actions
-	 */
-	public int size();
-	
-	/**
-	 * Removes <code>action</code> from the menu.
-	 * @param action the action to remove
-	 */
-	public void remove( DockAction action );
+    /**
+     * Adds an action to the menu.
+     * @param action the action to add
+     */
+    public void add( DockAction action );
+
+    /**
+     * Inserts an action into the menu.
+     * @param index the location of the action
+     * @param action the new action
+     */
+    public void insert( int index, DockAction action );
+
+    /**
+     * Inserts a list of actions into the menu.
+     * @param index the location of the first action
+     * @param action the actions to add
+     */
+    public void insert( int index, DockAction... action );
+
+    /**
+     * Removes an action from the menu.
+     * @param index the location of the action
+     */
+    public void remove( int index );
+
+    /**
+     * Gets the number of actions shown in the menu.
+     * @return the number of actions
+     */
+    public int size();
+
+    /**
+     * Removes <code>action</code> from the menu.
+     * @param action the action to remove
+     */
+    public void remove( DockAction action );
 }

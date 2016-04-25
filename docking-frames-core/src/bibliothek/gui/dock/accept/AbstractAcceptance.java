@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -53,9 +53,9 @@ public abstract class AbstractAcceptance implements DockAcceptance {
     public DockAcceptance andAccept( DockAcceptance other ){
         return new CombinatoryAcceptance( Combination.AND, this, other );
     }
-    
+
     /**
-     * Combines this acceptance with the <code>other</code> acceptance in 
+     * Combines this acceptance with the <code>other</code> acceptance in
      * a logical "OR" operation.
      * @param other The other acceptance
      * @return An acceptance that returns <code>true</code> if this or
@@ -64,7 +64,7 @@ public abstract class AbstractAcceptance implements DockAcceptance {
     public DockAcceptance orAccept( DockAcceptance other ){
         return new CombinatoryAcceptance( Combination.OR, this, other );
     }
-    
+
     /**
      * Combines this acceptance with the <code>other</code> acceptance
      * in a logical "XOR" relation.
@@ -76,11 +76,11 @@ public abstract class AbstractAcceptance implements DockAcceptance {
     public DockAcceptance xorAccept( DockAcceptance other ){
         return new CombinatoryAcceptance( Combination.XOR, this, other );
     }
-    
+
     /**
      * Combines this acceptance with the <code>other</code> acceptance
      * in a logical "<->" operation.
-     * @param other The other acceptance 
+     * @param other The other acceptance
      * @return An acceptance that returns <code>true</code> if
      * this and the <code>other</code> acceptance returned the
      * same value.
@@ -88,7 +88,7 @@ public abstract class AbstractAcceptance implements DockAcceptance {
     public DockAcceptance equalAccept( DockAcceptance other ){
         return new CombinatoryAcceptance( Combination.EQUAL, this, other );
     }
-    
+
     /**
      * Combines this acceptance with the <code>other</code> acceptance
      * such that the result is a logical implication of the form
@@ -101,14 +101,14 @@ public abstract class AbstractAcceptance implements DockAcceptance {
     public DockAcceptance impliesAccept( DockAcceptance other ){
         return new CombinatoryAcceptance( Combination.IMPLIES, this, other );
     }
-    
+
     /**
      * Combines this acceptance with the <code>other</code> acceptance
      * such that the result is a logical implication of the form
      * "other -&gt; this".
      * @param other The other acceptance
      * @return An acceptance that returns <code>true</code> if
-     * this acceptance returned <code>true</code> or if the 
+     * this acceptance returned <code>true</code> or if the
      * <code>other</code> acceptance returned <code>false</code>
      */
     public DockAcceptance impliedAccept( DockAcceptance other ){

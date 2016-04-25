@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,25 +41,26 @@ import bibliothek.gui.dock.util.DockUtilities;
 public class VetoManager {
     /** the owner of this manager */
     private DockFrontend frontend;
-    
+
     /** the set of elements which are not yet shown but are expected to show up soon */
     private Set<Dockable> expectedToShow = new HashSet<Dockable>();
-    
+
     /** the set of elements which are not yet hidden but are expected to hide soon */
     private Set<Dockable> expectedToHide = new HashSet<Dockable>();
-    
+
     /** the set of elements which are shown */
     private Set<Dockable> dockables = new HashSet<Dockable>();
 
     /** A list of observers to be notified if a {@link Dockable} gets closed or opened */
     private List<VetoableDockFrontendListener> vetoableListeners = new ArrayList<VetoableDockFrontendListener>();
-    
+
     public VetoManager( DockFrontend frontend ){
-        if( frontend == null )
+        if( frontend == null ) {
             throw new IllegalArgumentException( "Frontend must not be null" );
-        
+        }
+
         this.frontend = frontend;
-        
+
         frontend.addFrontendListener( new DockFrontendAdapter(){
             @Override
             public void shown( DockFrontend frontend, Dockable dockable ) {
@@ -68,7 +69,7 @@ public class VetoManager {
                     fireShown( dockable, expected );
                 }
             }
-            
+
             @Override
             public void hidden( DockFrontend fronend, Dockable dockable ) {
                 boolean expected = expectedToHide.remove( dockable );
@@ -78,7 +79,7 @@ public class VetoManager {
             }
         });
     }
-    
+
     /**
      * Gets the owner of this manager.
      * @return the owner
@@ -86,7 +87,7 @@ public class VetoManager {
     public DockFrontend getFrontend() {
         return frontend;
     }
-    
+
     /**
      * Marks all elements of the tree with root <code>dockable</code> to be expected to hide soon.
      * @param dockable the root of the elements which will be hidden
@@ -97,7 +98,7 @@ public class VetoManager {
     public boolean expectToHide( Dockable dockable, boolean cancelable ){
         return expectToHide( DockUtilities.listDockables( dockable, true ), cancelable );
     }
-    
+
     /**
      * Marks all elements of <code>dockables</code> to be expected to hide soon.
      * @param dockables the elements which will be hidden
@@ -110,7 +111,7 @@ public class VetoManager {
         if( cancel ){
             return false;
         }
-        
+
         expectedToHide.addAll( dockables );
         return true;
     }
@@ -126,7 +127,7 @@ public class VetoManager {
     public boolean expectToShow( Dockable dockable, boolean cancelable ){
         return expectToShow( DockUtilities.listDockables( dockable, true ), cancelable );
     }
-    
+
     /**
      * Marks all elements of <code>dockables</code> to be expected to show soon.
      * @param dockables the elements which will be shown
@@ -139,11 +140,11 @@ public class VetoManager {
         if( cancel ){
             return false;
         }
-        
+
         expectedToShow.addAll( dockables );
         return true;
     }
-    
+
     /**
      * Adds <code>listener</code> to this frontend. The listener will be notified
      * when a {@link Dockable} will be or is closed.
@@ -152,7 +153,7 @@ public class VetoManager {
     public void addVetoableListener( VetoableDockFrontendListener listener ){
         vetoableListeners.add( listener );
     }
-    
+
     /**
      * Removes <code>listener</code> from this frontend.
      * @param listener the listener to remove
@@ -160,7 +161,7 @@ public class VetoManager {
     public void removeVetoableListener( VetoableDockFrontendListener listener ){
         vetoableListeners.remove( listener );
     }
-    
+
     /**
      * Gets an independent array containing all currently registered
      * {@link VetoableDockFrontendListener}s.
@@ -169,7 +170,7 @@ public class VetoManager {
     protected VetoableDockFrontendListener[] vetoableListeners(){
         return vetoableListeners.toArray( new VetoableDockFrontendListener[ vetoableListeners.size() ] );
     }
- 
+
 
     /**
      * Calls the method {@link VetoableDockFrontendListener#hiding(VetoableDockFrontendEvent)}
@@ -180,14 +181,15 @@ public class VetoManager {
      * if not.
      */
     protected boolean fireAllHiding( Dockable dockable, final boolean cancelable ){
-        if( vetoableListeners.size() == 0 )
+        if( vetoableListeners.size() == 0 ) {
             return false;
-        
+        }
+
         List<Dockable> list = DockUtilities.listDockables( dockable, true );
         return fireAllHiding( list, cancelable );
     }
-    
-    
+
+
     /**
      * Calls the method {@link VetoableDockFrontendListener#hiding(VetoableDockFrontendEvent)}
      * for all elements in <code>dockables</code>
@@ -197,20 +199,22 @@ public class VetoManager {
      * if not.
      */
     protected boolean fireAllHiding( Collection<Dockable> dockables, final boolean cancelable ){
-        if( vetoableListeners.size() == 0 )
+        if( vetoableListeners.size() == 0 ) {
             return false;
-        
-        if( dockables.isEmpty() )
+        }
+
+        if( dockables.isEmpty() ) {
             return false;
-        
+        }
+
         VetoableDockFrontendEvent event = new VetoableDockFrontendEvent( frontend, cancelable, true, dockables.toArray( new Dockable[ dockables.size()] ));
-        
+
         for( VetoableDockFrontendListener listener : vetoableListeners() ){
             listener.hiding( event );
         }
         return event.isCanceled();
     }
-    
+
 
     /**
      * Invokes the method {@link VetoableDockFrontendListener#hidden(VetoableDockFrontendEvent)}
@@ -221,7 +225,7 @@ public class VetoManager {
     protected void fireAllHidden( Collection<Dockable> dockables, final boolean expected ){
         if( !dockables.isEmpty() ){
             VetoableDockFrontendEvent event = new VetoableDockFrontendEvent( frontend, false, expected, dockables.toArray( new Dockable[ dockables.size()] ));
-            
+
             for( VetoableDockFrontendListener listener : vetoableListeners() ){
                 listener.hidden( event );
             }
@@ -236,12 +240,13 @@ public class VetoManager {
      */
     protected void fireHidden( Dockable dockable, boolean expected ){
         VetoableDockFrontendEvent event = new VetoableDockFrontendEvent( frontend, false, expected, dockable );
-        for( VetoableDockFrontendListener listener : vetoableListeners() )
+        for( VetoableDockFrontendListener listener : vetoableListeners() ) {
             listener.hidden( event );
+        }
     }
 
 
-    
+
     /**
      * Invokes the method {@link VetoableDockFrontendListener#hidden(VetoableDockFrontendEvent)}
      * for all listeners for all elements of the tree with root <code>dockable</code>.
@@ -261,12 +266,13 @@ public class VetoManager {
      * if the operation can continue
      */
     protected boolean fireAllShowing( Dockable dockable, final boolean cancelable ){
-        if( vetoableListeners.size() == 0 )
+        if( vetoableListeners.size() == 0 ) {
             return false;
-        
+        }
+
         return fireAllShowing( DockUtilities.listDockables( dockable, true ), cancelable );
     }
-    
+
 
     /**
      * Calls {@link VetoableDockFrontendListener#showing(VetoableDockFrontendEvent)}
@@ -277,21 +283,23 @@ public class VetoManager {
      * if the operation can continue
      */
     protected boolean fireAllShowing( Collection<Dockable> dockables, final boolean cancelable ){
-        if( vetoableListeners.size() == 0 )
+        if( vetoableListeners.size() == 0 ) {
             return false;
+        }
 
-        if( dockables.isEmpty() )
+        if( dockables.isEmpty() ) {
             return false;
-        
+        }
+
         VetoableDockFrontendEvent event = new VetoableDockFrontendEvent( frontend, cancelable, true, dockables.toArray( new Dockable[ dockables.size()] ));
-        
+
         for( VetoableDockFrontendListener listener : vetoableListeners() ){
             listener.showing( event );
         }
-        
+
         return event.isCanceled();
     }
-    
+
     /**
      * Invokes the method {@link VetoableDockFrontendListener#shown(VetoableDockFrontendEvent)}
      * for all elements in the tree with root <code>dockable</code>.
@@ -299,13 +307,14 @@ public class VetoManager {
      * @param expected whether the event is expected or not
      */
     protected void fireAllShown( Dockable dockable, final boolean expected ){
-        if( vetoableListeners.size() == 0 )
+        if( vetoableListeners.size() == 0 ) {
             return;
+        }
 
         List<Dockable> list = DockUtilities.listDockables( dockable, true );
         fireAllShown( list, expected );
     }
-    
+
     /**
      * Invokes the method {@link VetoableDockFrontendListener#shown(VetoableDockFrontendEvent)}
      * for all elements in <code>dockables</code>.
@@ -313,8 +322,9 @@ public class VetoManager {
      * @param expected whether the event is expected or not
      */
     protected void fireAllShown( Collection<Dockable> dockables, final boolean expected ){
-        if( vetoableListeners.size() == 0 )
+        if( vetoableListeners.size() == 0 ) {
             return;
+        }
 
         if( !dockables.isEmpty() ){
             VetoableDockFrontendEvent event = new VetoableDockFrontendEvent( frontend, false, expected, dockables.toArray( new Dockable[ dockables.size()] ));
@@ -324,7 +334,7 @@ public class VetoManager {
             }
         }
     }
-    
+
     /**
      * Invokes the method {@link VetoableDockFrontendListener#shown(VetoableDockFrontendEvent)}
      * on all listeners.
@@ -333,7 +343,8 @@ public class VetoManager {
      */
     protected void fireShown( Dockable dockable, boolean expected ){
         VetoableDockFrontendEvent event = new VetoableDockFrontendEvent( frontend, false, expected, dockable );
-        for( VetoableDockFrontendListener listener : vetoableListeners() )
+        for( VetoableDockFrontendListener listener : vetoableListeners() ) {
             listener.shown( event );
+        }
     }
 }

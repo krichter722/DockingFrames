@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -40,27 +40,27 @@ import bibliothek.gui.dock.action.ButtonDockAction;
  *
  */
 public class ButtonMenuHandler extends AbstractMenuHandler<JMenuItem, ButtonDockAction> {
-	
-	/**
+
+    /**
      * Creates a new handler.
      * @param action the action to observe
      * @param dockable the dockable for which actions are dispatched
      */
     public ButtonMenuHandler( ButtonDockAction action, Dockable dockable ){
-    	super( action, dockable, new JMenuItem() );
-    	
+        super( action, dockable, new JMenuItem() );
+
         item.addActionListener( new ActionListener(){
             public void actionPerformed( ActionEvent e ) {
                 ButtonMenuHandler.this.action.action( ButtonMenuHandler.this.dockable );
             }
         });
     }
-    
+
     public void addActionListener( ActionListener listener ){
-    	item.addActionListener( listener );
+        item.addActionListener( listener );
     }
-    
+
     public void removeActionListener( ActionListener listener ){
-    	item.removeActionListener( listener );
+        item.removeActionListener( listener );
     }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Herve Guillaume, Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Herve Guillaume
  * rvguillaume@hotmail.com
  * FR - France
@@ -69,220 +69,220 @@ import bibliothek.gui.dock.themes.basic.BasicSpanFactory;
 import bibliothek.gui.dock.toolbar.expand.ExpandedState;
 
 public class TestToolbarGroupDockStation{
-	public static void main( String[] args ){
+    public static void main( String[] args ){
 //
-//		Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener(){
+//        Toolkit.getDefaultToolkit().addAWTEventListener(new AWTEventListener(){
 //
-//			@Override
-//			public void eventDispatched( AWTEvent event ){
-//				System.out.println(" - " + event);
-//			}
-//		}, MouseEvent.MOUSE_EVENT_MASK | MouseEvent.MOUSE_MOTION_EVENT_MASK);
-		
-//		try{
-//			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
-//				if ("GTK+".equals(info.getName())){
-//					UIManager.setLookAndFeel(info.getClassName());
-//					System.out.println("GTK+");
-//					break;
-//				}
-//				if ("Nimbus".equals(info.getName())){
-//					UIManager.setLookAndFeel(info.getClassName());
-//					System.out.println("Nimbus");
-//				}
-//			}
-//		} catch (Exception e){
-//		}
+//            @Override
+//            public void eventDispatched( AWTEvent event ){
+//                System.out.println(" - " + event);
+//            }
+//        }, MouseEvent.MOUSE_EVENT_MASK | MouseEvent.MOUSE_MOTION_EVENT_MASK);
 
-		
-		final JFrame frame = new JFrame();
-		final JPanel pane = new JPanel(new BorderLayout());
-		frame.add(pane);
+//        try{
+//            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+//                if ("GTK+".equals(info.getName())){
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    System.out.println("GTK+");
+//                    break;
+//                }
+//                if ("Nimbus".equals(info.getName())){
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    System.out.println("Nimbus");
+//                }
+//            }
+//        } catch (Exception e){
+//        }
 
-		final DockController controller = new DockController();
 
-		CustomizationButton customization = new CustomizationButton(controller);
-		CustomizationMenuContentVerticalBox customizationContent = new CustomizationMenuContentVerticalBox();
-		customization.setContent(customizationContent);
+        final JFrame frame = new JFrame();
+        final JPanel pane = new JPanel(new BorderLayout());
+        frame.add(pane);
 
-		GroupedCustomizationMenuContent customizationContentGrouped = new GroupedCustomizationMenuContent();		
-		customizationContent.add(customizationContentGrouped);
-		customizationContent.add(new CustomizationMenuItem(new JSeparator()));
-		customizationContent.add(new CustomizationMenuItem(new JMenuItem("Reset Toolbars...")));
-		JMenuBar bar = new JMenuBar();
-		JMenu menu = new JMenu("Icon size");
-		bar.add(menu);
-		JMenuItem item1 = new JMenuItem("1");
-		JMenuItem item2 = new JMenuItem("2");
-		menu.add(item1);
-		menu.add(item2);
-		customizationContent.add(new CustomizationMenuItem(bar));
-		
-		customization.setMenu(new DefaultCustomizationMenu());
-		
-		GroupedCustomizationMenuContent.Group groupA = customizationContentGrouped
-				.addGroup("Top group");
-		GroupedCustomizationMenuContent.Group groupB = customizationContentGrouped
-				.addGroup("Bottom group");
+        final DockController controller = new DockController();
 
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.BLUE), false)));
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.YELLOW), false)));
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.GREEN), false)));
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.WHITE), false)));
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.BLACK), false)));
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.CYAN), false)));
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.LIGHT_GRAY), false)));
-		groupA.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.MAGENTA), false)));
+        CustomizationButton customization = new CustomizationButton(controller);
+        CustomizationMenuContentVerticalBox customizationContent = new CustomizationMenuContentVerticalBox();
+        customization.setContent(customizationContent);
 
-		groupB.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.BLUE), false)));
-		groupB.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.YELLOW), false)));
-		groupB.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.GREEN), false)));
-		groupB.add(new EagerCustomizationToolbarButton(createDockable(
-				new ColorIcon(Color.WHITE), false)));
+        GroupedCustomizationMenuContent customizationContentGrouped = new GroupedCustomizationMenuContent();
+        customizationContent.add(customizationContentGrouped);
+        customizationContent.add(new CustomizationMenuItem(new JSeparator()));
+        customizationContent.add(new CustomizationMenuItem(new JMenuItem("Reset Toolbars...")));
+        JMenuBar bar = new JMenuBar();
+        JMenu menu = new JMenu("Icon size");
+        bar.add(menu);
+        JMenuItem item1 = new JMenuItem("1");
+        JMenuItem item2 = new JMenuItem("2");
+        menu.add(item1);
+        menu.add(item2);
+        customizationContent.add(new CustomizationMenuItem(bar));
 
-		controller.getProperties().set(ToolbarGroupDockStation.HEADER_FACTORY,
-				customization);
+        customization.setMenu(new DefaultCustomizationMenu());
 
-		controller.getProperties().set(DockTheme.SPAN_FACTORY,
-				new BasicSpanFactory(250, 250));
+        GroupedCustomizationMenuContent.Group groupA = customizationContentGrouped
+                .addGroup("Top group");
+        GroupedCustomizationMenuContent.Group groupB = customizationContentGrouped
+                .addGroup("Bottom group");
 
-		final ScreenDockStation screen = new ScreenDockStation(frame);
-		controller.add(screen);
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.BLUE), false)));
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.YELLOW), false)));
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.GREEN), false)));
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.WHITE), false)));
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.BLACK), false)));
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.CYAN), false)));
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.LIGHT_GRAY), false)));
+        groupA.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.MAGENTA), false)));
 
-		final ToolbarContainerDockStation west = new ToolbarContainerDockStation(
-				Orientation.VERTICAL, 5);
-		final ToolbarContainerDockStation east = new ToolbarContainerDockStation(
-				Orientation.VERTICAL, 5);
-		final ToolbarContainerDockStation north = new ToolbarContainerDockStation(
-				Orientation.HORIZONTAL, 5);
-		final ToolbarContainerDockStation south = new ToolbarContainerDockStation(
-				Orientation.HORIZONTAL, 5);
+        groupB.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.BLUE), false)));
+        groupB.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.YELLOW), false)));
+        groupB.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.GREEN), false)));
+        groupB.add(new EagerCustomizationToolbarButton(createDockable(
+                new ColorIcon(Color.WHITE), false)));
 
-		JPanel center = new JPanel();
-		center.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		frame.add(center, BorderLayout.CENTER);
+        controller.getProperties().set(ToolbarGroupDockStation.HEADER_FACTORY,
+                customization);
 
-		controller.add(west);
-		controller.add(east);
-		controller.add(north);
-		controller.add(south);
+        controller.getProperties().set(DockTheme.SPAN_FACTORY,
+                new BasicSpanFactory(250, 250));
 
-		frame.add(west.getComponent(), BorderLayout.WEST);
-		frame.add(east.getComponent(), BorderLayout.EAST);
-		frame.add(north.getComponent(), BorderLayout.NORTH);
-		frame.add(south.getComponent(), BorderLayout.SOUTH);
+        final ScreenDockStation screen = new ScreenDockStation(frame);
+        controller.add(screen);
 
-		final ToolbarGroupDockStation group = new ToolbarGroupDockStation();
+        final ToolbarContainerDockStation west = new ToolbarContainerDockStation(
+                Orientation.VERTICAL, 5);
+        final ToolbarContainerDockStation east = new ToolbarContainerDockStation(
+                Orientation.VERTICAL, 5);
+        final ToolbarContainerDockStation north = new ToolbarContainerDockStation(
+                Orientation.HORIZONTAL, 5);
+        final ToolbarContainerDockStation south = new ToolbarContainerDockStation(
+                Orientation.HORIZONTAL, 5);
 
-		Icon redIcon = new ColorIcon(Color.RED);
+        JPanel center = new JPanel();
+        center.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        frame.add(center, BorderLayout.CENTER);
 
-		group.drop(createToolbar(true, redIcon, redIcon, redIcon), 0, 0);
-		group.drop(createToolbar(true, redIcon, redIcon, redIcon), 0, 1);
-		group.drop(createToolbar(false, redIcon, redIcon), 1, 0);
-		group.drop(createToolbar(true, redIcon, redIcon), 1, 1);
+        controller.add(west);
+        controller.add(east);
+        controller.add(north);
+        controller.add(south);
 
-		group.drop(createToolbar(false, redIcon, redIcon),
-				new ToolbarGroupProperty(1, 0, null));
-		group.drop(createToolbar(false, redIcon, redIcon, redIcon),
-				new ToolbarGroupProperty(3, 2, null));
-		group.drop(createToolbar(true, redIcon, redIcon, redIcon),
-				new ToolbarGroupProperty(-1, 5, null));
+        frame.add(west.getComponent(), BorderLayout.WEST);
+        frame.add(east.getComponent(), BorderLayout.EAST);
+        frame.add(north.getComponent(), BorderLayout.NORTH);
+        frame.add(south.getComponent(), BorderLayout.SOUTH);
 
-		// Disable the expand state action button
-		// controller.getProperties().set(
-		// ExpandableToolbarItemStrategy.STRATEGY, new
-		// DefaultExpandableToolbarItemStrategy(){
-		// @Override
-		// public boolean isEnabled( Dockable item, ExpandedState state ){
-		// return false;
-		// }
-		// } );
-		// group.move( group.getDockable( 0 ), new ToolbarGroupProperty( 2, 1,
-		// null ) );
+        final ToolbarGroupDockStation group = new ToolbarGroupDockStation();
 
-		west.drop(group);
+        Icon redIcon = new ColorIcon(Color.RED);
 
-		frame.setBounds(20, 20, 400, 400);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		screen.setShowing(true);
-	}
+        group.drop(createToolbar(true, redIcon, redIcon, redIcon), 0, 0);
+        group.drop(createToolbar(true, redIcon, redIcon, redIcon), 0, 1);
+        group.drop(createToolbar(false, redIcon, redIcon), 1, 0);
+        group.drop(createToolbar(true, redIcon, redIcon), 1, 1);
 
-	private static ToolbarDockStation createToolbar( String ... buttons ){
-		final ToolbarDockStation toolbar = new ToolbarDockStation();
-		for (final String button : buttons){
-			toolbar.drop(createDockable(button.toLowerCase(),
-					button.toUpperCase()));
-		}
-		return toolbar;
-	}
+        group.drop(createToolbar(false, redIcon, redIcon),
+                new ToolbarGroupProperty(1, 0, null));
+        group.drop(createToolbar(false, redIcon, redIcon, redIcon),
+                new ToolbarGroupProperty(3, 2, null));
+        group.drop(createToolbar(true, redIcon, redIcon, redIcon),
+                new ToolbarGroupProperty(-1, 5, null));
 
-	private static ToolbarDockStation createToolbar( boolean largeText,
-			Icon ... icons ){
-		ToolbarDockStation toolbar = new ToolbarDockStation();
-		for (Icon icon : icons){
-			toolbar.drop(createDockable(icon, largeText));
-		}
-		return toolbar;
-	}
+        // Disable the expand state action button
+        // controller.getProperties().set(
+        // ExpandableToolbarItemStrategy.STRATEGY, new
+        // DefaultExpandableToolbarItemStrategy(){
+        // @Override
+        // public boolean isEnabled( Dockable item, ExpandedState state ){
+        // return false;
+        // }
+        // } );
+        // group.move( group.getDockable( 0 ), new ToolbarGroupProperty( 2, 1,
+        // null ) );
 
-	private static ToolbarItemDockable createDockable( String small, String large ){
-		final ToolbarItemDockable dockable = new ToolbarItemDockable();
-		dockable.setComponent(new JLabel(small), ExpandedState.SHRUNK);
-		dockable.setComponent(new JButton(large), ExpandedState.STRETCHED);
-		dockable.setComponent(new JScrollPane(new JTextArea(small + "\n\n"
-				+ large)), ExpandedState.EXPANDED);
-		return dockable;
-	}
+        west.drop(group);
 
-	private static ToolbarItemDockable createDockable( Icon icon,
-			boolean largeText ){
-		JButton button = new JButton(icon);
-		button.setBorder(new EmptyBorder(new Insets(4, 4, 4, 4)));
-		final ToolbarItemDockable dockable = new ToolbarItemDockable(button);
-		dockable.setTitleIcon(icon);
-		if (largeText){
-			dockable.setComponent(new JButton("a lot of text is written!!"),
-					ExpandedState.STRETCHED);
-		} else{
-			dockable.setComponent(new JButton("short text"),
-					ExpandedState.STRETCHED);
-		}
-		return dockable;
-	}
+        frame.setBounds(20, 20, 400, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        screen.setShowing(true);
+    }
 
-	private static class ColorIcon implements Icon{
-		private Color color;
+    private static ToolbarDockStation createToolbar( String ... buttons ){
+        final ToolbarDockStation toolbar = new ToolbarDockStation();
+        for (final String button : buttons){
+            toolbar.drop(createDockable(button.toLowerCase(),
+                    button.toUpperCase()));
+        }
+        return toolbar;
+    }
 
-		public ColorIcon( Color color ){
-			this.color = color;
-		}
+    private static ToolbarDockStation createToolbar( boolean largeText,
+            Icon ... icons ){
+        ToolbarDockStation toolbar = new ToolbarDockStation();
+        for (Icon icon : icons){
+            toolbar.drop(createDockable(icon, largeText));
+        }
+        return toolbar;
+    }
 
-		@Override
-		public void paintIcon( Component c, Graphics g, int x, int y ){
-			g.setColor(color);
-			g.fillOval(x, y, 40, 40);
-		}
+    private static ToolbarItemDockable createDockable( String small, String large ){
+        final ToolbarItemDockable dockable = new ToolbarItemDockable();
+        dockable.setComponent(new JLabel(small), ExpandedState.SHRUNK);
+        dockable.setComponent(new JButton(large), ExpandedState.STRETCHED);
+        dockable.setComponent(new JScrollPane(new JTextArea(small + "\n\n"
+                + large)), ExpandedState.EXPANDED);
+        return dockable;
+    }
 
-		@Override
-		public int getIconWidth(){
-			return 40;
-		}
+    private static ToolbarItemDockable createDockable( Icon icon,
+            boolean largeText ){
+        JButton button = new JButton(icon);
+        button.setBorder(new EmptyBorder(new Insets(4, 4, 4, 4)));
+        final ToolbarItemDockable dockable = new ToolbarItemDockable(button);
+        dockable.setTitleIcon(icon);
+        if (largeText){
+            dockable.setComponent(new JButton("a lot of text is written!!"),
+                    ExpandedState.STRETCHED);
+        } else{
+            dockable.setComponent(new JButton("short text"),
+                    ExpandedState.STRETCHED);
+        }
+        return dockable;
+    }
 
-		@Override
-		public int getIconHeight(){
-			return 40;
-		}
-	}
+    private static class ColorIcon implements Icon{
+        private Color color;
+
+        public ColorIcon( Color color ){
+            this.color = color;
+        }
+
+        @Override
+        public void paintIcon( Component c, Graphics g, int x, int y ){
+            g.setColor(color);
+            g.fillOval(x, y, 40, 40);
+        }
+
+        @Override
+        public int getIconWidth(){
+            return 40;
+        }
+
+        @Override
+        public int getIconHeight(){
+            return 40;
+        }
+    }
 }

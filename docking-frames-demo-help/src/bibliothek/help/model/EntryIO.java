@@ -31,10 +31,10 @@ public class EntryIO {
         for( String link : entry.getDetails() )
             out.writeUTF( link );
     }
-    
+
     /**
      * Transforms the tree with root <code>Entryable</code> into a list
-     * of {@link Entry}s, and then writes these <code>Entry</code>s into 
+     * of {@link Entry}s, and then writes these <code>Entry</code>s into
      * <code>out</code>.
      * @param entryable the root of a set of <code>Entryable</code>s
      * @param out stream to write into
@@ -48,9 +48,9 @@ public class EntryIO {
         for( Entry entry : list )
             write( entry, out );
     }
-    
+
     /**
-     * Calls {@link Entryable#toEntry()} and stores the {@link Entry} in 
+     * Calls {@link Entryable#toEntry()} and stores the {@link Entry} in
      * <code>entries</code>. The root of <code>Entryable</code>s is traversed
      * recursively.
      * @param entryable the root of a tree of <code>Entryable</code>s
@@ -61,7 +61,7 @@ public class EntryIO {
         for( Entryable child : entryable.children() )
             collect( child, entries );
     }
-    
+
     /**
      * Reads a list of {@link Entry}s, the list should have been written
      * by {@link #writeList(Entryable, DataOutputStream) writeList}.
@@ -77,7 +77,7 @@ public class EntryIO {
             result.add( read( in ) );
         return result;
     }
-    
+
     /**
      * Reads a single {@link Entry} from <code>in</code>. The <code>Entry</code>
      * should have been written by {@link #write(Entry, DataOutputStream) write}.

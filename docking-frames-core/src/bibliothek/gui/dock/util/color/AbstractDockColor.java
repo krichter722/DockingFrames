@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -51,7 +51,7 @@ public abstract class AbstractDockColor extends AbstractUIValue<Color, DockColor
     public AbstractDockColor( String id ){
         super( id );
     }
-    
+
     /**
      * Creates a new {@link DockColor}.
      * @param id the id of the color for which <code>this</code> should listen
@@ -60,7 +60,7 @@ public abstract class AbstractDockColor extends AbstractUIValue<Color, DockColor
     public AbstractDockColor( String id, Path kind ){
         super( id, kind );
     }
-    
+
     /**
      * Creates a new {@link DockColor}.
      * @param id the id of the color for which <code>this</code> should listen
@@ -70,21 +70,21 @@ public abstract class AbstractDockColor extends AbstractUIValue<Color, DockColor
     public AbstractDockColor( String id, Path kind, Color backup ){
         super( id, kind, backup );
     }
-    
+
     @Override
     protected DockColor me() {
         return this;
     }
-    
+
     /**
      * This method just calls {@link #setManager(UIProperties)} with the
-     * <code>controller</code>s {@link ColorManager}. 
+     * <code>controller</code>s {@link ColorManager}.
      * @param controller the owner of this {@link DockColor} or <code>null</code>
      */
     public void connect( DockController controller ){
         setManager( controller == null ? null : controller.getColors() );
     }
-    
+
     /**
      * Gets the first non-<code>null</code> value of the list
      * <code>override</code>, <code>value</code>, <code>backup</code>.

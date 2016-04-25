@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,7 +44,7 @@ public interface MultipleCDockableFactory<F extends MultipleCDockable, L extends
      * @return the layout that has been written
      */
     public L write( F dockable );
-    
+
     /**
      * Creates a {@link MultipleCDockable} that gets its layout from <code>layout</code>.
      * @param layout the set of properties that can be used to create the new
@@ -52,7 +52,7 @@ public interface MultipleCDockableFactory<F extends MultipleCDockable, L extends
      * @return the new dockable or <code>null</code> if the layout can't be read
      */
     public F read( L layout );
-    
+
     /**
      * Tells whether the meta-data <code>layout</code> belongs to <code>dockable</code>, meaning
      * <code>write( dockable )</code> would produce <code>layout</code> and <code>read( layout )</code>
@@ -71,7 +71,7 @@ public interface MultipleCDockableFactory<F extends MultipleCDockable, L extends
      * @return <code>true</code> if <code>dockable</code> would be produced by {@link #read(MultipleCDockableLayout) read(layout)}.
      */
     public boolean match( F dockable, L layout );
-    
+
     /**
      * Creates a new, empty layout. The contents of the layout will be set
      * using one of the <code>read</code>-methods of {@link MultipleCDockableLayout}.

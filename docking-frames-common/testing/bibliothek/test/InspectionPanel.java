@@ -15,54 +15,54 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
 public class InspectionPanel extends JPanel {
-	private JTree tree;
-	private JTextPane console;
-	private InspectionTree model;
+    private JTree tree;
+    private JTextPane console;
+    private InspectionTree model;
 
-	public InspectionPanel( Object root, InspectionGraph graph ){
-		setLayout( new BorderLayout() );
-		
-		JSplitPane split = new JSplitPane( JSplitPane.VERTICAL_SPLIT );
-		add( split, BorderLayout.CENTER );
-		
-		model = new InspectionTree( graph.getNode( root ), graph );
-		tree = new JTree( model );
-		console = new JTextPane();
-		
-		split.setTopComponent( new JScrollPane( tree ));
-		split.setBottomComponent( new JScrollPane( console ));
-		
-		tree.setEditable( false );
-		console.setEditable( false );
-		
-		tree.addTreeSelectionListener( new TreeSelectionListener() {
-			public void valueChanged( TreeSelectionEvent e ){
-				updateText();
-			}
-		});
-		
-		tree.setSelectionRow( 0 );
-		
-		Timer timer = new Timer( 500, new ActionListener() {
-			public void actionPerformed( ActionEvent e ){
-				model.update( true );
-				updateText();
-			}
-		});
-		timer.setRepeats( true );
-		timer.start();
-	}
-	
-	private void updateText(){
-		TreePath path = tree.getSelectionPath();
-		if( path == null ){
-			console.setText( "" );
-		}
-		else{
-			String text = String.valueOf( path.getLastPathComponent() );
-			if( !text.equals( console.getText() )){
-				console.setText( text );
-			}
-		}
-	}
+    public InspectionPanel( Object root, InspectionGraph graph ){
+        setLayout( new BorderLayout() );
+
+        JSplitPane split = new JSplitPane( JSplitPane.VERTICAL_SPLIT );
+        add( split, BorderLayout.CENTER );
+
+        model = new InspectionTree( graph.getNode( root ), graph );
+        tree = new JTree( model );
+        console = new JTextPane();
+
+        split.setTopComponent( new JScrollPane( tree ));
+        split.setBottomComponent( new JScrollPane( console ));
+
+        tree.setEditable( false );
+        console.setEditable( false );
+
+        tree.addTreeSelectionListener( new TreeSelectionListener() {
+            public void valueChanged( TreeSelectionEvent e ){
+                updateText();
+            }
+        });
+
+        tree.setSelectionRow( 0 );
+
+        Timer timer = new Timer( 500, new ActionListener() {
+            public void actionPerformed( ActionEvent e ){
+                model.update( true );
+                updateText();
+            }
+        });
+        timer.setRepeats( true );
+        timer.start();
+    }
+
+    private void updateText(){
+        TreePath path = tree.getSelectionPath();
+        if( path == null ){
+            console.setText( "" );
+        }
+        else{
+            String text = String.valueOf( path.getLastPathComponent() );
+            if( !text.equals( console.getText() )){
+                console.setText( text );
+            }
+        }
+    }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -60,8 +60,9 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
      * <code>getComponentBefore( getComponentAfter( x )) == x</code>.
      */
     public DockFocusTraversalPolicy( SimplifiedFocusTraversalPolicy policy, boolean circle ){
-        if( policy == null )
+        if( policy == null ) {
             throw new IllegalArgumentException( "policy must not be null" );
+        }
 
         this.policy = policy;
         this.circle = circle;
@@ -92,30 +93,35 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
             Component next = after( component );
 
             while( true ){
-                if( next == component )
+                if( next == component ) {
                     return null;
+                }
 
-                if( next == null )
+                if( next == null ) {
                     return null;
+                }
 
                 if( next instanceof Container ){
                     Container nextContainer = (Container)next;
                     if( !nextContainer.isFocusCycleRoot() && nextContainer.isFocusTraversalPolicyProvider() ){
                         Component selected;
-                        if( circle )
+                        if( circle ) {
                             selected = nextContainer.getFocusTraversalPolicy().getFirstComponent( nextContainer );
-                        else
+                        } else {
                             selected = nextContainer.getFocusTraversalPolicy().getDefaultComponent( nextContainer );
+                        }
 
-                        if( selected == next )
+                        if( selected == next ) {
                             return next;
+                        }
                         next = selected;
                         continue;
                     }
                 }
 
-                if( accept( next ))
+                if( accept( next )) {
                     return next;
+                }
 
                 next = after( next );
             }
@@ -134,12 +140,14 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
      */
     protected Component after( Component component ){
         Container provider = getRootOrProvider( component );
-        if( provider == null )
+        if( provider == null ) {
             return null;
+        }
 
         FocusTraversalPolicy providerPolicy = getFocusTraversalPolicy( provider );
-        if( providerPolicy == null )
+        if( providerPolicy == null ) {
             return null;
+        }
 
         Component result = providerPolicy.getComponentAfter( provider, component );
 
@@ -157,8 +165,9 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
                     result = after( provider );
                 }
             }
-            if( result == component )
-            	return null;
+            if( result == component ) {
+                return null;
+            }
             return result;
         }
     }
@@ -174,30 +183,35 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
             Component previous = before( component );
 
             while( true ){
-                if( previous == component )
+                if( previous == component ) {
                     return null;
+                }
 
-                if( previous == null )
+                if( previous == null ) {
                     return null;
+                }
 
                 if( previous instanceof Container ){
                     Container previousContainer = (Container)previous;
                     if( !previousContainer.isFocusCycleRoot() && previousContainer.isFocusTraversalPolicyProvider() ){
                         Component selected;
-                        if( circle )
+                        if( circle ) {
                             selected = previousContainer.getFocusTraversalPolicy().getLastComponent( previousContainer );
-                        else
+                        } else {
                             selected = previousContainer.getFocusTraversalPolicy().getDefaultComponent( previousContainer );
+                        }
 
-                        if( selected == previous )
+                        if( selected == previous ) {
                             return previous;
+                        }
                         previous = selected;
                         continue;
                     }
                 }
 
-                if( accept( previous ))
+                if( accept( previous )) {
                     return previous;
+                }
 
                 previous = after( previous );
             }
@@ -235,8 +249,9 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
                     result = before( provider );
                 }
             }
-            if( result == component )
-            	return null;
+            if( result == component ) {
+                return null;
+            }
             return result;
         }
     }
@@ -251,16 +266,18 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
 
             FocusTraversalPolicy providerPolicy = getFocusTraversalPolicy( container );
             Component component = providerPolicy.getDefaultComponent( container );
-            
-            if( component == container )
+
+            if( component == container ) {
                 return component;
+            }
 
             if( component instanceof Container ){
                 Container ccontainer = (Container)component;
                 if( ccontainer.isFocusCycleRoot() || ccontainer.isFocusTraversalPolicyProvider() ){
                     Component result = getDefaultComponent( ccontainer );
-                    if( result != null )
+                    if( result != null ) {
                         return result;
+                    }
                 }
             }
 
@@ -274,18 +291,20 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
     @Override
     public Component getFirstComponent( Container container ) {
         FocusTraversalPolicy providerPolicy = getFocusTraversalPolicy( container );
-        
+
         Component component = providerPolicy.getDefaultComponent( container );
 
-        if( component == container )
+        if( component == container ) {
             return component;
+        }
 
         if( component instanceof Container ){
             Container ccontainer = (Container)component;
             if( ccontainer.isFocusCycleRoot() || ccontainer.isFocusTraversalPolicyProvider() ){
                 Component result = getFirstComponent( ccontainer );
-                if( result != null )
+                if( result != null ) {
                     return result;
+                }
             }
         }
 
@@ -297,15 +316,17 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
         FocusTraversalPolicy providerPolicy = getFocusTraversalPolicy( container );
         Component component = providerPolicy.getDefaultComponent( container );
 
-        if( component == container )
+        if( component == container ) {
             return component;
+        }
 
         if( component instanceof Container ){
             Container ccontainer = (Container)component;
             if( ccontainer.isFocusCycleRoot() || ccontainer.isFocusTraversalPolicyProvider() ){
                 Component result = getLastComponent( ccontainer );
-                if( result != null )
+                if( result != null ) {
                     return result;
+                }
             }
         }
 
@@ -323,8 +344,9 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
         Container container = component.getParent();
 
         while( container != null ){
-            if( container.isFocusCycleRoot() || container.isFocusTraversalPolicyProvider() )
+            if( container.isFocusCycleRoot() || container.isFocusTraversalPolicyProvider() ) {
                 return container;
+            }
 
             container = container.getParent();
         }
@@ -336,7 +358,7 @@ public class DockFocusTraversalPolicy extends FocusTraversalPolicy {
      * Searches the {@link FocusTraversalPolicy} which should be used by
      * <code>provider</code>. This method searches for a focus cycle root or
      * policy provider whose traversal policy is {@link Container#isFocusTraversalPolicySet() set}.
-     * @param provider a focus cycle root or policy provider whose 
+     * @param provider a focus cycle root or policy provider whose
      * {@link SimplifiedFocusTraversalPolicy} is searched.
      * @return the policy of <code>provider</code> or <code>null</code>
      */

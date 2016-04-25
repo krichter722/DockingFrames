@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,7 +42,7 @@ import bibliothek.util.FrameworkOnly;
  */
 @FrameworkOnly
 public abstract class AbstractResizeRequestHandler implements ResizeRequestListener{
-    
+
     /**
      * Searches the size request of <code>dockable</code>.
      * @param dockable some element
@@ -52,21 +52,22 @@ public abstract class AbstractResizeRequestHandler implements ResizeRequestListe
         if( dockable instanceof CommonDockable ){
             CDockable cdock = ((CommonDockable)dockable).getDockable();
             RequestDimension result = cdock.getAndClearResizeRequest();
-            if( result == null )
+            if( result == null ) {
                 return null;
-            
+            }
+
             return result.clone();
         }
         if( dockable instanceof StackDockStation ){
             RequestDimension max = new RequestDimension();
             StackDockStation station = (StackDockStation)dockable;
-            
+
             for( int i = 0, n = station.getDockableCount(); i<n; i++ ){
                 RequestDimension check = getAndClearResizeRequest( station.getDockable( i ) );
                 if( check != null ){
                     Dimension sizeDockable = station.getDockable( i ).getComponent().getSize();
                     Dimension sizeStation = station.getComponent().getSize();
-                    
+
                     if( check.isWidthSet() ){
                         max.setWidth( Math.max( max.getWidth(), check.getWidth() + sizeStation.width - sizeDockable.width  ) );
                     }
@@ -75,9 +76,10 @@ public abstract class AbstractResizeRequestHandler implements ResizeRequestListe
                     }
                 }
             }
-            
-            if( max.isHeightSet() || max.isWidthSet() )
+
+            if( max.isHeightSet() || max.isWidthSet() ) {
                 return max;
+            }
         }
         return null;
     }

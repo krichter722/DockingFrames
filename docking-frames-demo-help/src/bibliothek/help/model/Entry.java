@@ -9,14 +9,14 @@ import bibliothek.help.view.text.HelpDocument;
  * Every <code>Entry</code> has fields for identification, a small
  * description (the title) and a set of links to other <code>Entries</code>
  * which contain more detailed or additional information to the content
- * of this <code>Entry</code>. 
+ * of this <code>Entry</code>.
  * @author Benjamin Sigg
  *
  */
 public class Entry {
     /** an array of length 0 */
     private static final String[] EMPTY = new String[0];
-    
+
     /**
      * The general type, tells who and how this {@link Entry} can be shown.
      * The exact meaning depends on the client.
@@ -30,7 +30,7 @@ public class Entry {
     private String content;
     /** links to other <code>Entries</code> */
     private String[] details;
-    
+
     /**
      * Creates a new entry
      * @param type the type of the entry
@@ -46,13 +46,13 @@ public class Entry {
         this.id = id;
         this.title = title;
         this.content = content;
-        
+
         if( details == null || details.length == 0 )
             details = EMPTY;
-        
+
         this.details = details;
     }
-    
+
     /**
      * Tells who and how this <code>Entry</code> will be presented to the
      * user. The exact meaning of this property depends on the client.
@@ -61,7 +61,7 @@ public class Entry {
     public String getType() {
         return type;
     }
-    
+
     /**
      * Gets an identifier which is unique for all <code>Entries</code>
      * with the same {@link #getType() type}.
@@ -70,15 +70,15 @@ public class Entry {
     public String getId() {
         return id;
     }
-    
+
     /**
      * Gets a small description of this <code>Entry</code>.
      * @return a small text
      */
     public String getTitle(){
-		return title;
-	}
-    
+        return title;
+    }
+
     /**
      * Gets the data that will be presented to the user. Some content
      * is encoded and must be processed further before presenting.
@@ -87,7 +87,7 @@ public class Entry {
     public String getContent() {
         return content;
     }
-    
+
     /**
      * Gets a set of links to other <code>Entries</code>. The other
      * <code>Entries</code> contain more information related to the
@@ -97,7 +97,7 @@ public class Entry {
     public String[] getDetails() {
         return details;
     }
-    
+
     /**
      * Decodes the content of this <code>Entry</code> and produces a tree.
      * @return the tree
@@ -105,16 +105,16 @@ public class Entry {
     public HierarchyNode toSubHierarchy(){
         Token t;
         Reader reader = new Reader();
-        
+
         LinkedList<Intermediate> classes = new LinkedList<Intermediate>();
         LinkedList<Intermediate> interfaceStack = new LinkedList<Intermediate>();
-        
+
         Intermediate current = null;
-        
+
         while( (t = reader.next()) != null ){
             if( t.mode ){
                 if( t.content[0].equals( "class" )){
-                    
+
                     current = new Intermediate();
                     current.type = t.content[1];
                     current.name = t.content[2];
@@ -144,13 +144,13 @@ public class Entry {
                 }
             }
         }
-        
+
         if( classes.isEmpty() )
-        	return null;
-        
+            return null;
+
         return classes.getLast().toNode();
     }
-    
+
     /**
      * A class used to create the resulting tree of {@link Entry#toSubHierarchy()}.
      * @author Benjamin Sigg
@@ -162,7 +162,7 @@ public class Entry {
         public String type;
         /** the text of the node */
         public String name;
-        
+
         /**
          * Transforms this <code>Intermediate</code> in an {@link HierarchyNode},
          * transforms also the children of this node.
@@ -172,11 +172,11 @@ public class Entry {
             HierarchyNode[] subs = new HierarchyNode[ children.size() ];
             for( int i = 0; i < subs.length; i++ )
                 subs[i] = children.get( i ).toNode();
-            
+
             return new HierarchyNode( name, type, subs );
         }
     }
-    
+
     /**
      * Tries to read the content of this Entry as document.
      * @param destination the document to write into, can be <code>null</code>
@@ -185,11 +185,11 @@ public class Entry {
     public HelpDocument toDocument( HelpDocument destination ){
         if( destination == null )
             destination = new HelpDocument();
-        
+
         Set<String> modes = new HashSet<String>();
         Reader reader = new Reader();
         Token token;
-        
+
         while( (token = reader.next()) != null ){
             if( token.mode ){
                 if( token.content[0].equals( "link" )){
@@ -206,12 +206,12 @@ public class Entry {
             else
                 destination.appendText( token.content[0], modes );
         }
-        
+
         return destination;
     }
-    
+
     /**
-     * A token is some text or tag that is read from the encoded 
+     * A token is some text or tag that is read from the encoded
      * {@link Entry#content} of the enclosing {@link Entry}.
      * @author Benjamin Sigg
      */
@@ -221,10 +221,10 @@ public class Entry {
         /** the entries of a tag or if {@link #mode} is <code>false</code> the text between tags */
         public String[] content;
     }
-    
+
     /**
      * A <code>Reader</code> decodes the {@link Entry#content} of an {@link Entry}
-     * and produces a stream of {@link Entry.Token}s. 
+     * and produces a stream of {@link Entry.Token}s.
      * @author Benjamin Sigg
      *
      */
@@ -233,12 +233,12 @@ public class Entry {
         private int offset = 0;
         /** buffer used to collect single chars */
         private StringBuilder builder = new StringBuilder();
-        
+
         /** whether the next {@link Entry.Token} is expected to be a tag or not */
         private boolean mode = false;
-        
+
         /**
-         * Reads the next {@link Token} from the {@link Entry#content}. The 
+         * Reads the next {@link Token} from the {@link Entry#content}. The
          * <code>Token</code> is either a tag or a text.
          * @return the token or <code>null</code> if the end of the stream
          * is reached
@@ -250,15 +250,15 @@ public class Entry {
                     t = nextMode();
                 else
                     t = nextText();
-                
+
                 mode = !mode;
-                
+
                 if( t != null )
                     return t;
             }
             return null;
         }
-        
+
         /**
          * Decodes the text between two tags.
          * @return the text or <code>null</code> if there is nothing to read
@@ -267,20 +267,20 @@ public class Entry {
             offset = next( offset );
             if( builder.length() == 0 )
                 return null;
-            
+
             Token t = new Token();
             t.mode = false;
             t.content = new String[]{ builder.toString() };
             return t;
         }
-        
+
         /**
          * Decodes the next tag.
          * @return the tag
          */
         private Token nextMode(){
             List<String> list = new ArrayList<String>();
-            while( offset < content.length() && 
+            while( offset < content.length() &&
                     ( offset == 0 || content.charAt( offset-1 ) != ']' )){
                 offset = next( offset );
                 list.add( builder.toString() );
@@ -290,7 +290,7 @@ public class Entry {
             t.content = list.toArray( new String[ list.size() ] );
             return t;
         }
-        
+
         /**
          * Reads char from the {@link Entry#content} until the end
          * is reached, or a single character '[', '|' or ']' is found.<br>
@@ -303,18 +303,18 @@ public class Entry {
             int n = content.length();
             boolean armed = false;
             char last = 0;
-            
+
             while( offset < n ){
                 char c = content.charAt( offset );
                 offset++;
-                
+
                 if( c == '|' || c == '[' || c == ']'){
                     if( armed && c != last )
                         return offset-1;
-                    
+
                     if( armed )
                         builder.append( c );
-                    
+
                     armed = !armed;
                 }
                 else if( armed ){
@@ -322,10 +322,10 @@ public class Entry {
                 }
                 else
                     builder.append( c );
-                
+
                 last = c;
             }
-            
+
             return offset;
         }
     }

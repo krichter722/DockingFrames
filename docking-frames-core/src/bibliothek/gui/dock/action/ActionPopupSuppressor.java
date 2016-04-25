@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,7 +42,7 @@ public interface ActionPopupSuppressor {
             return false;
         }
     };
-    
+
     /**
      * Never allows a popup to appear.
      */
@@ -51,24 +51,26 @@ public interface ActionPopupSuppressor {
             return true;
         }
     };
-    
+
     /**
      * Allows a popup only to appear if there are no titles for a {@link Dockable}
      * or if more than one action would be shown.
      */
     public static final ActionPopupSuppressor BALANCED = new ActionPopupSuppressor(){
         public boolean suppress( Dockable dockable, DockActionSource source ) {
-            if( source.getDockActionCount() > 1 )
+            if( source.getDockActionCount() > 1 ) {
                 return false;
-            
+            }
+
             DockTitle[] titles = dockable.listBoundTitles();
-            if( titles == null || titles.length == 0 )
+            if( titles == null || titles.length == 0 ) {
                 return false;
-            
+            }
+
             return true;
         }
     };
-    
+
     /**
      * Tells whether to suppress or to allow a popup for <code>source</code>.
      * @param dockable the Dockable for which the popup would be shown

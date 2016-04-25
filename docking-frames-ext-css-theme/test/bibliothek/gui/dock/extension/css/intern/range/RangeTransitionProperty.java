@@ -6,12 +6,12 @@ import bibliothek.gui.dock.extension.css.CssType;
 import bibliothek.gui.dock.extension.css.transition.CssContainerTransitionProperty;
 
 public abstract class RangeTransitionProperty extends CssContainerTransitionProperty<Range>{
-	public RangeTransitionProperty( CssScheme scheme, CssItem item ){
-		super( scheme, item );
-	}
+    public RangeTransitionProperty( CssScheme scheme, CssItem item ){
+        super( scheme, item );
+    }
 
-	@Override
-	public CssType<Range> getType( CssScheme scheme ){
-		return scheme.getConverter( Range.class );
-	}
+    @Override
+    public CssType<Range> getType( CssScheme scheme ){
+        return scheme.getConverter( Range.class );
+    }
 }

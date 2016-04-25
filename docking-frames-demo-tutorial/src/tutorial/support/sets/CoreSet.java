@@ -7,9 +7,9 @@ import tutorial.support.Tutorial;
 
 @Tutorial(title="Core API", id="CoreAPI")
 public class CoreSet extends TutorialSet{
-	public CoreSet(){
-		super(BasicCoreSet.class,
-				BasicDockFrontendSet.class,
-				GuideCoreSet.class);
-	}
+    public CoreSet(){
+        super(BasicCoreSet.class,
+                BasicDockFrontendSet.class,
+                GuideCoreSet.class);
+    }
 }

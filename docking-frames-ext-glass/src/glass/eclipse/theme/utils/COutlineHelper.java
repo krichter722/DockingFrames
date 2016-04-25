@@ -75,9 +75,9 @@ public class COutlineHelper {
     * Creates the shape of an unselected tab for clipping and for border painting.
     * If the tab is left of the selected, it will have a rounded edge left. Otherwise
     * right.
-    * 
+    *
     * If the shape is not for clipping, only the needed border path is created.
-    * 
+    *
     * before selected:
     *    _________________________________________
     *  /
@@ -86,7 +86,7 @@ public class COutlineHelper {
     * |
     * |
     * |
-    * 
+    *
     * after selected:
     *  _________________________________________
     *                                            \

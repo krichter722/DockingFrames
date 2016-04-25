@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -49,7 +49,7 @@ public interface CControlRegister {
      * @return the number of dockables
      */
     public int getDockableCount();
-    
+
     /**
      * Gets the index'th dockable that is registered
      * @param index the index of the element
@@ -64,7 +64,7 @@ public interface CControlRegister {
      * @return an unmodifiable list of elements
      */
     public List<CDockable> getDockables();
-    
+
     /**
      * Gets an unmodifiable list of all {@link SingleCDockable}s which are known to
      * this register. The list might or might not be updated when the contents
@@ -72,15 +72,15 @@ public interface CControlRegister {
      * @return an unmodifiable list of elements
      */
     public List<SingleCDockable> getSingleDockables();
-    
+
     /**
      * Gets an unmodifiable list of all {@link MultipleCDockable}s which are known to
      * this register. The list might or might not be updated when the contents
      * of this register change.
      * @return an unmodifiable list of elements
-     */    
+     */
     public List<MultipleCDockable> getMultipleDockables();
-    
+
     /**
      * Gets an unmodifiable list of all {@link CStation}s which are known to
      * this register. The list might or might not be updated when the content
@@ -96,14 +96,14 @@ public interface CControlRegister {
      * @return the unmodifiable map of factories
      */
     public Map<String, MultipleCDockableFactory<?,?>> getFactories();
-    
+
     /**
      * Searches the factory with identifier <code>id</code>.
      * @param id the id of the factory
      * @return  the factory or <code>null</code>
      */
     public MultipleCDockableFactory<?, ?> getFactory( String id );
-    
+
     /**
      * Gets a list of keys for all {@link SingleCDockableFactory}s which
      * are currently registered.
@@ -117,9 +117,9 @@ public interface CControlRegister {
      * @return the list of factories
      */
     public Set<String> listMultipleDockableFactories();
-    
+
     /**
-     * Gets a list of all {@link MultipleCDockable}s that are registered at this 
+     * Gets a list of all {@link MultipleCDockable}s that are registered at this
      * control and whose {@link MultipleCDockable#getFactory()} method returns
      * <code>factory</code>.
      * @param factory the factory to look out for
@@ -133,38 +133,38 @@ public interface CControlRegister {
      * @return the list of <code>CDockable</code>s
      */
     public List<CDockable> listDockablesInMode( ExtendedMode mode );
-    
+
     /**
      * Gets a list of all identifiers of {@link SingleCDockable} for which
      * the control has location information within the current {@link CControl#load(String) setting}.
      * @return the list of ids, never <code>null</code>
      */
     public Set<String> listSingleDockables();
-    
+
     /**
-     * Gets an unmodifiable list of all {@link CStationContainer}s known 
+     * Gets an unmodifiable list of all {@link CStationContainer}s known
      * to this register. The list might or might not be updated when the contents
      * of this register change.
      * @return the unmodifiable list
      */
     public List<CStationContainer> getStationContainers();
-    
+
     /**
      * Searches the {@link CStationContainer} which contains <code>child</code>.
      * @param child the child whose parent is searched
      * @return the parent of <code>child</code> or <code>null</code>
      */
     public CStationContainer getContainer( CStation<?> child );
-    
+
     /**
      * Transforms an identifier to an identifier for a {@link SingleCDockable}.<br>
-     * Note that this method must never create an identifier that passes 
+     * Note that this method must never create an identifier that passes
      * {@link #isMultiId(String)}.
      * @param id some identifier
      * @return an identifier marked as being for a {@link SingleCDockable}
      */
     public String toSingleId( String id );
-    
+
     /**
      * Checks whether <code>id</code> could be created by {@link #toSingleId(String)}.
      * @param id the id to check
@@ -172,7 +172,7 @@ public interface CControlRegister {
      * that would result in <code>id</code>
      */
     public boolean isSingleId( String id );
-    
+
     /**
      * Undoes the changes of {@link #toSingleId(String)}. It must be <code>true</code>
      * that <code>singleToNormalId( toSingleId( id )) = id</code>. The behavior
@@ -182,16 +182,16 @@ public interface CControlRegister {
      * @return the original id
      */
     public String singleToNormalId( String id );
-    
+
     /**
      * Transforms an identifier to an identifier for a {@link MultipleCDockable}.<br>
-     * Note that this method must never create an identifier that passes 
+     * Note that this method must never create an identifier that passes
      * {@link #isSingleId(String)}.
      * @param id some identifier
      * @return an identifier marked as being for a {@link MultipleCDockable}
      */
     public String toMultiId( String id );
-    
+
     /**
      * Checks whether <code>id</code> could be created by {@link #toMultiId(String)}.
      * @param id the id to check
@@ -199,7 +199,7 @@ public interface CControlRegister {
      * that would result in <code>id</code>
      */
     public boolean isMultiId( String id );
-    
+
     /**
      * Undoes the changes of {@link #toMultiId(String)}. It must be <code>true</code>
      * that <code>multiToNormalId( toMultiId( id )) = id</code>. The behavior

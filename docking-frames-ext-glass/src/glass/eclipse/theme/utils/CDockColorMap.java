@@ -15,15 +15,15 @@ public class CDockColorMap {
    public Color colUnSelectedGlassCenter;
    public Color colUnSelectedGlassBoundary;
    public Color colUnSelectedGlassLight;
-   
+
    public Color colDisabledGlassCenter;
    public Color colDisabledGlassBoundary;
    public Color colDisabledGlassLight;
 
-/* Rather strange constructors... if someone was using them and now is reading this text: 
- * use the default constructor and re-assign the fields you really need. 
- * Beni */ 
-   
+/* Rather strange constructors... if someone was using them and now is reading this text:
+ * use the default constructor and re-assign the fields you really need.
+ * Beni */
+
 //   public CDockColorMap (Color... colors) {
 //      if (colors == null || colors.length < 9) {
 //         initDefaultMap();
@@ -69,7 +69,7 @@ public class CDockColorMap {
       colUnSelectedGlassCenter = new Color(222, 222, 222, 64);
       colUnSelectedGlassLight = new Color(222, 222, 222, 64);
       colUnSelectedGlassBoundary = new Color(128, 128, 128, 64);
-      
+
       colDisabledGlassCenter = new Color(200, 200, 200);
       colDisabledGlassLight = new Color(200, 200, 200);
       colDisabledGlassBoundary = new Color(150, 150, 150);

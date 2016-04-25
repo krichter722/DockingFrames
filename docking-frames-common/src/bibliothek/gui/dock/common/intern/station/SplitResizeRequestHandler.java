@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -45,7 +45,7 @@ import bibliothek.gui.dock.station.split.SplitLayoutManager;
 public class SplitResizeRequestHandler extends AbstractResizeRequestHandler{
     /** the station which will be updated by this handler */
     private SplitDockStation station;
-    
+
     /**
      * Creates a new handler.
      * @param station the station which will be updated by this handler
@@ -53,7 +53,7 @@ public class SplitResizeRequestHandler extends AbstractResizeRequestHandler{
     public SplitResizeRequestHandler( SplitDockStation station ){
         this.station = station;
     }
-    
+
     public void handleResizeRequest( CControl control ) {
         SplitLayoutManager oldManager = station.getSplitLayoutManager();
         LayoutManager layout = new LayoutManager();
@@ -67,7 +67,7 @@ public class SplitResizeRequestHandler extends AbstractResizeRequestHandler{
             station.setSplitLayoutManager( oldManager );
         }
     }
-    
+
     /**
      * A layout manager that respects the result of {@link CDockable#getAndClearResizeRequest()}.
      * @author Benjamin Sigg
@@ -82,16 +82,18 @@ public class SplitResizeRequestHandler extends AbstractResizeRequestHandler{
             RequestDimension request = getAndClearResizeRequest( leaf.getDockable() );
             if( request != null ){
                 Insets insets = leaf.getDisplayer().getDockableInsets();
-                
-                if( request.isWidthSet() )
+
+                if( request.isWidthSet() ) {
                     request.setWidth( request.getWidth() + insets.left + insets.right );
-                
-                if( request.isHeightSet() )
+                }
+
+                if( request.isHeightSet() ) {
                     request.setHeight( request.getHeight() + insets.top + insets.bottom );
-                
+                }
+
                 return request;
             }
-            
+
             return super.prepareResize( leaf );
         }
     }

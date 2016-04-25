@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,20 +37,20 @@ import bibliothek.gui.dock.util.property.ConstantPropertyFactory;
  * A DockAction is an object that represents an action which can be triggered by the user. Every
  * DockAction has a graphical representation which is shown at many places, for example
  * on a {@link DockTitle} or in a popupmenu.<br>
- * A DockAction may choose its own graphical representation, or use the 
+ * A DockAction may choose its own graphical representation, or use the
  * {@link ActionViewConverter} to get the default-representations.<br>
  * Every DockAction is associated with some Dockables. The {@link #bind(Dockable)}-method will be invoked
  * before a representation is shown, and the {@link #unbind(Dockable)} when a representation is no
  * longer shown.
- * 
+ *
  * @author Benjamin Sigg
  */
 public interface DockAction {
-	/**
-	 * The {@link ButtonContentFilter} decides whether text is shown on buttons that represent {@link DockAction}s.
-	 */
-	public static final PropertyKey<ButtonContentFilter> BUTTON_CONTENT_FILTER = new PropertyKey<ButtonContentFilter>( "dock.buttonContentFilter", new ConstantPropertyFactory<ButtonContentFilter>( ButtonContentFilter.NEVER ), true );
-	
+    /**
+     * The {@link ButtonContentFilter} decides whether text is shown on buttons that represent {@link DockAction}s.
+     */
+    public static final PropertyKey<ButtonContentFilter> BUTTON_CONTENT_FILTER = new PropertyKey<ButtonContentFilter>( "dock.buttonContentFilter", new ConstantPropertyFactory<ButtonContentFilter>( ButtonContentFilter.NEVER ), true );
+
     /**
      * Creates a view for this action, for the platform <code>target</code> and
      * with help of <code>converter</code>. Clients might use their own
@@ -65,7 +65,7 @@ public interface DockAction {
      * @return a new view
      */
     public <V> V createView( ViewTarget<V> target, ActionViewConverter converter, Dockable dockable );
-    
+
     /**
      * Informs this DockAction that icons, text, and other stuff like that,
      * will be requested from this DockAction. This method should be called
@@ -78,13 +78,13 @@ public interface DockAction {
     /**
      * Invoked only if the <code>dockable</code> was {@link #bind(Dockable) bound}
      * to this DockAction, and if the <code>dockable</code> will no longer be
-     * used for any method calls (except {@link #bind(Dockable) bind}) on 
+     * used for any method calls (except {@link #bind(Dockable) bind}) on
      * this DockAction.
      * @param dockable The {@link Dockable} that will never be seen again, except
      * it is maybe {@link #bind(Dockable) bind} again.
      */
     public void unbind( Dockable dockable );
-    
+
     /**
      * Does the appropriate action that can be done respecting the current
      * state of this action.

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -49,7 +49,7 @@ public class FontChooser extends JComponent {
             GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames() );
 
     private JSpinner numberField;
-    private SpinnerNumberModel numberFieldModel;  
+    private SpinnerNumberModel numberFieldModel;
 
     private JCheckBox boxBold = new JCheckBox ("Bold");
     private JCheckBox boxItalic = new JCheckBox ("Italic");
@@ -167,11 +167,11 @@ public class FontChooser extends JComponent {
         gbc.fill = GridBagConstraints.BOTH;
         return gbc;
     }
-    
+
     public static Font showDialog( Component owner, String title, Font font ){
         return showDialog ( owner, title, font, "AaBbCcDd" );
     }
-    
+
     public static Font showDialog( Component owner, String title, Font font, String exampleString ){
         FontChooser chooser = new FontChooser();
         chooser.setChoosedFont( font );
@@ -231,14 +231,14 @@ public class FontChooser extends JComponent {
     public void setFontSize ( int size ){
         numberFieldModel.setValue( new Integer( size ) );
     }
-    
+
     protected void updateCurrentFont (){
         if ( !setting ){
             font = createCurrentFont ();
             fontLabel.setFont( font );
         }
     }
-    
+
     protected Font createCurrentFont (){
         String name = (String)list.getSelectedValue();
 
@@ -250,9 +250,9 @@ public class FontChooser extends JComponent {
 
         return new Font( name, style, getFontSize() );
     }
-    
+
     protected void setCurrentFont (){
-        setting = true; 
+        setting = true;
 
         if( font == null ){
             font = new Font( (String)list.getModel().getElementAt( 0 ), 0, 12 );
@@ -306,24 +306,24 @@ public class FontChooser extends JComponent {
 
         private void init(){
             setLayout( new GridBagLayout());
-            add( chooser, new GridBagConstraints( 0, 0, 1, 1, 100.0, 100.0, 
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH, 
+            add( chooser, new GridBagConstraints( 0, 0, 1, 1, 100.0, 100.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets( 2, 2, 2, 2 ), 0, 0));
-            
+
             JPanel buttonPanel = new JPanel( new GridLayout( 1, 2 ));
             JButton buttonOk = new JButton( "Ok" );
             getRootPane().setDefaultButton( buttonOk );
-            
+
             JButton buttonCancel = new JButton( "Cancel" );
             buttonPanel.add( buttonOk );
             buttonPanel.add( buttonCancel );
-            
-            add( buttonPanel, new GridBagConstraints( 0, 1, 1, 1, 1.0, 1.0, 
-                    GridBagConstraints.LAST_LINE_END, GridBagConstraints.NONE, 
+
+            add( buttonPanel, new GridBagConstraints( 0, 1, 1, 1, 1.0, 1.0,
+                    GridBagConstraints.LAST_LINE_END, GridBagConstraints.NONE,
                     new Insets( 2, 2, 2, 2 ), 0, 0));
 
             pack();
-            
+
             buttonOk.addActionListener( new ActionListener(){
                 public void actionPerformed( ActionEvent e ) {
                     ok();

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,27 +44,28 @@ public class BasicDisplayerFactory implements DisplayerFactory {
     private DockableDisplayer.Location dockableLocation = DockableDisplayer.Location.TOP;
     /** The location of the title if a {@link DockStation} is sent to the factory */
     private DockableDisplayer.Location stationLocation = DockableDisplayer.Location.LEFT;
-    
+
     public void request( DisplayerRequest request ){
-    	Dockable dockable = request.getTarget();
-    	DockStation station = request.getParent();
-    	DockTitle title = request.getTitle();
-    	
-    	BasicDockableDisplayer displayer;
-    	
-        if( dockable instanceof DockStation )
+        Dockable dockable = request.getTarget();
+        DockStation station = request.getParent();
+        DockTitle title = request.getTitle();
+
+        BasicDockableDisplayer displayer;
+
+        if( dockable instanceof DockStation ) {
             displayer = create( station, dockable, title, stationLocation );
-        else
+        } else {
             displayer = create( station, dockable, title, dockableLocation );
-        
+        }
+
         displayer.setDefaultBorderHint( true );
         displayer.setRespectBorderHint( true );
         displayer.setSingleTabShowInnerBorder( true );
         displayer.setSingleTabShowOuterBorder( true );
-        
+
         request.answer( displayer );
     }
-    
+
     /**
      * Creates a new displayer.
      * @param station the station for which this displayer is needed
@@ -76,7 +77,7 @@ public class BasicDisplayerFactory implements DisplayerFactory {
     protected BasicDockableDisplayer create( DockStation station, Dockable dockable, DockTitle title, Location location ){
         return new BasicDockableDisplayer( station, dockable, title, location );
     }
-    
+
     /**
      * Gets the location where the {@link DockTitle} will be shown on the
      * {@link DockableDisplayer}, if a {@link Dockable} is used as child.
@@ -86,7 +87,7 @@ public class BasicDisplayerFactory implements DisplayerFactory {
     public DockableDisplayer.Location getDockableLocation() {
         return dockableLocation;
     }
-    
+
     /**
      * Sets the location where the {@link DockTitle} will be shown on a
      * {@link DockableDisplayer} if a {@link Dockable} is used as child.
@@ -95,7 +96,7 @@ public class BasicDisplayerFactory implements DisplayerFactory {
     public void setDockableLocation( DockableDisplayer.Location dockableLocation ) {
         this.dockableLocation = dockableLocation;
     }
-    
+
     /**
      * Gets the location where the {@link DockTitle} will be shown on the
      * {@link DockableDisplayer}, if a {@link DockStation} is used as child.
@@ -105,7 +106,7 @@ public class BasicDisplayerFactory implements DisplayerFactory {
     public DockableDisplayer.Location getStationLocation() {
         return stationLocation;
     }
-    
+
     /**
      * Sets the location where the {@link DockTitle} will be shown on a
      * {@link DockableDisplayer} if a {@link DockStation} is used as child.

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,53 +42,55 @@ import bibliothek.util.ClientOnly;
  */
 @ClientOnly
 public class ReplaceActionGuard implements ActionGuard {
-	/** The source that is added to dockables */
-	private DefaultDockActionSource source;
-	/** The action used to replace stations */
-	private ReplaceAction action;
-	
-	/**
-	 * Creates a new guard
-     * @param controller The controller for which actions are created.
-	 */
-	public ReplaceActionGuard( DockController controller ){
-        if( controller == null )
-            throw new IllegalArgumentException( "Controller should not be null" );
-        
-		action = new ReplaceAction( controller );
-		source = new DefaultDockActionSource();
-		
-		source.setHint( new LocationHint( LocationHint.ACTION_GUARD, LocationHint.LEFT ));
-		setVisible( true );
-	}
-	
-	/**
-	 * Sets the visibility of the action. The visibility can be changed at any
-	 * time and has effect on all occurrences of the action.
-	 * @param visible the new state
-	 */
-	public void setVisible( boolean visible ){
-		if( visible != isVisible() ){
-			if( visible )
-				source.add( action );
-			else
-				source.remove( 0, source.getDockActionCount() );
-		}
-	}
-	
-	/**
-	 * Tells whether the action of this guard can be seen or not
-	 * @return <code>true</code> if the action can be seen
-	 */
-	public boolean isVisible(){
-		return source.getDockActionCount() > 0;
-	}
-	
-	public DockActionSource getSource( Dockable dockable ){
-		return source;
-	}
+    /** The source that is added to dockables */
+    private DefaultDockActionSource source;
+    /** The action used to replace stations */
+    private ReplaceAction action;
 
-	public boolean react( Dockable dockable ){
-		return dockable.asDockStation() != null;
-	}
+    /**
+     * Creates a new guard
+     * @param controller The controller for which actions are created.
+     */
+    public ReplaceActionGuard( DockController controller ){
+        if( controller == null ) {
+            throw new IllegalArgumentException( "Controller should not be null" );
+        }
+
+        action = new ReplaceAction( controller );
+        source = new DefaultDockActionSource();
+
+        source.setHint( new LocationHint( LocationHint.ACTION_GUARD, LocationHint.LEFT ));
+        setVisible( true );
+    }
+
+    /**
+     * Sets the visibility of the action. The visibility can be changed at any
+     * time and has effect on all occurrences of the action.
+     * @param visible the new state
+     */
+    public void setVisible( boolean visible ){
+        if( visible != isVisible() ){
+            if( visible ) {
+                source.add( action );
+            } else {
+                source.remove( 0, source.getDockActionCount() );
+            }
+        }
+    }
+
+    /**
+     * Tells whether the action of this guard can be seen or not
+     * @return <code>true</code> if the action can be seen
+     */
+    public boolean isVisible(){
+        return source.getDockActionCount() > 0;
+    }
+
+    public DockActionSource getSource( Dockable dockable ){
+        return source;
+    }
+
+    public boolean react( Dockable dockable ){
+        return dockable.asDockStation() != null;
+    }
 }

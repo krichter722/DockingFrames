@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2009 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -36,15 +36,15 @@ import bibliothek.gui.dock.support.mode.Mode;
  * @author Benjamin Sigg
  */
 public interface ModeAreaListener {
-	/**
-	 * To be called if a set of {@link Dockable}s, which are children of the
-	 * {@link ModeArea} <code>source</code>, changed their location such that
-	 * their {@link Mode} might change.</br>
-	 * <b>Note:</b> this method gets only called if {@link Dockable#getDockParent()}
-	 * did not change. Only {@link ModeArea}s which represent more than one
-	 * {@link Mode} are required to call this listener.
-	 * @param source the source of the event
-	 * @param dockables all the element which might have changed their mode
-	 */
-	public void internalLocationChange( ModeArea source, Set<Dockable> dockables );
+    /**
+     * To be called if a set of {@link Dockable}s, which are children of the
+     * {@link ModeArea} <code>source</code>, changed their location such that
+     * their {@link Mode} might change.</br>
+     * <b>Note:</b> this method gets only called if {@link Dockable#getDockParent()}
+     * did not change. Only {@link ModeArea}s which represent more than one
+     * {@link Mode} are required to call this listener.
+     * @param source the source of the event
+     * @param dockables all the element which might have changed their mode
+     */
+    public void internalLocationChange( ModeArea source, Set<Dockable> dockables );
 }

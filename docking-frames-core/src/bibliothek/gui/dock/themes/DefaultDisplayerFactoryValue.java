@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -39,26 +39,26 @@ import bibliothek.gui.dock.themes.basic.BasicDisplayerFactory;
  * @author Benjamin Sigg
  */
 public class DefaultDisplayerFactoryValue extends StationThemeItemValue<DisplayerFactory> implements DisplayerFactoryValue {
-	/**
-	 * Creates a new object.
-	 * @param id the identifier used for retrieving a resource of {@link ThemeManager}
-	 * @param station the owner of this object, not <code>null</code>
-	 */
-	public DefaultDisplayerFactoryValue( String id, DockStation station ){
-		super( id, KIND_DISPLAYER_FACTORY, ThemeManager.DISPLAYER_FACTORY_TYPE, station );
-	}
-	
-	/**
-	 * Creates a new {@link DockableDisplayer} and answers to <code>request</code>. This method does always create
-	 * a new {@link DockableDisplayer}.
-	 * @param request the request to answer
-	 */
-	public void request( DisplayerRequest request ){
-		DisplayerFactory factory = get();
-		if( factory == null ){
-    		factory = new BasicDisplayerFactory();
-    	}
-    	
-		factory.request( request );
+    /**
+     * Creates a new object.
+     * @param id the identifier used for retrieving a resource of {@link ThemeManager}
+     * @param station the owner of this object, not <code>null</code>
+     */
+    public DefaultDisplayerFactoryValue( String id, DockStation station ){
+        super( id, KIND_DISPLAYER_FACTORY, ThemeManager.DISPLAYER_FACTORY_TYPE, station );
+    }
+
+    /**
+     * Creates a new {@link DockableDisplayer} and answers to <code>request</code>. This method does always create
+     * a new {@link DockableDisplayer}.
+     * @param request the request to answer
+     */
+    public void request( DisplayerRequest request ){
+        DisplayerFactory factory = get();
+        if( factory == null ){
+            factory = new BasicDisplayerFactory();
+        }
+
+        factory.request( request );
     }
 }

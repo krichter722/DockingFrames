@@ -24,17 +24,17 @@ import bibliothek.test.inspect.SplitPlaceholderInspectable;
 import bibliothek.test.inspect.StackDockStationInspectable;
 
 public class PlaceholderInspection extends InspectionGraph{
-	public PlaceholderInspection(){
-		putInspectableAdapter( CControl.class, CControlInspectable.class );
-		putInspectableAdapter( SingleCDockable.class, SingleCDockableInspectable.class );
-		putInspectableAdapter( FlapDockStation.class, FlapDockStationInspectable.class );
-		putInspectableAdapter( SplitDockStation.class, SplitDockStationInspectable.class );
-		putInspectableAdapter( ScreenDockStation.class, ScreenDockStationInspectable.class );
-		putInspectableAdapter( Leaf.class, SplitLeafInspectable.class );
-		putInspectableAdapter( Node.class, SplitNodeInspectable.class );
-		putInspectableAdapter( Placeholder.class, SplitPlaceholderInspectable.class );
-		putInspectableAdapter( StackDockStation.class, StackDockStationInspectable.class );
-		putInspectableAdapter( PlaceholderMap.class, PlaceholderMapInspectable.class );
-		putInspectableAdapter( Key.class, KeyInspectable.class );
-	}
+    public PlaceholderInspection(){
+        putInspectableAdapter( CControl.class, CControlInspectable.class );
+        putInspectableAdapter( SingleCDockable.class, SingleCDockableInspectable.class );
+        putInspectableAdapter( FlapDockStation.class, FlapDockStationInspectable.class );
+        putInspectableAdapter( SplitDockStation.class, SplitDockStationInspectable.class );
+        putInspectableAdapter( ScreenDockStation.class, ScreenDockStationInspectable.class );
+        putInspectableAdapter( Leaf.class, SplitLeafInspectable.class );
+        putInspectableAdapter( Node.class, SplitNodeInspectable.class );
+        putInspectableAdapter( Placeholder.class, SplitPlaceholderInspectable.class );
+        putInspectableAdapter( StackDockStation.class, StackDockStationInspectable.class );
+        putInspectableAdapter( PlaceholderMap.class, PlaceholderMapInspectable.class );
+        putInspectableAdapter( Key.class, KeyInspectable.class );
+    }
 }

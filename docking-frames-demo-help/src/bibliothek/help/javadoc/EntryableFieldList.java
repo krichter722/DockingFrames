@@ -15,14 +15,14 @@ import bibliothek.help.model.Entry;
 public class EntryableFieldList extends AbstractEntryable {
     /** the class whose fields are listed up */
     private ClassDoc doc;
-    
+
     /**
      * Collects all fields of the class <code>doc</code>.
      * @param doc a class whose fields are listed up
      */
     public EntryableFieldList( ClassDoc doc ){
         this.doc = doc;
-        
+
         for( FieldDoc field : doc.fields() ){
             print( field.type() );
             print( " " );
@@ -32,7 +32,7 @@ public class EntryableFieldList extends AbstractEntryable {
             add( new EntryableField( field ) );
         }
     }
-    
+
     public Entry toEntry() {
         return new Entry( "field-list", doc.qualifiedName(), "Fields of " + doc.qualifiedName(), content());
     }

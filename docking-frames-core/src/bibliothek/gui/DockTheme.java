@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -59,7 +59,7 @@ import bibliothek.gui.dock.util.property.DynamicPropertyFactory;
 import bibliothek.util.FrameworkOnly;
 
 /**
- * A theme describes how a {@link DockStation} looks like, which {@link DockTitle} are selected, and other behavior. 
+ * A theme describes how a {@link DockStation} looks like, which {@link DockTitle} are selected, and other behavior.
  * A theme needs only to support one {@link DockController} at a time.<br>
  * Most of the methods of this interface should not be called by the client. Instead the {@link ThemeManager} and
  * the {@link DockProperties} should be used. To request a value from the {@link ThemeManager} the method
@@ -70,45 +70,45 @@ import bibliothek.util.FrameworkOnly;
  * @author Benjamin Sigg
  */
 public interface DockTheme {
-	/**
-	 * A unique identifier for the {@link DockProperties} to access the current {@link BackgroundPaint}.
-	 */
-	public static final PropertyKey<BackgroundPaint> BACKGROUND_PAINT = new PropertyKey<BackgroundPaint>( "dock.background" );
-	
-	/**
-	 * A unique identifier for the {@link DockProperties} to access the current {@link BorderModifier}.
-	 */
-	public static final PropertyKey<BorderModifier> BORDER_MODIFIER = new PropertyKey<BorderModifier>( "dock.borderModifier" );
-	
-	/** The factory creating {@link Span}s and ultimatively deciding how the animation looks like when dropping a {@link Dockable} */
-	public static final PropertyKey<SpanFactory> SPAN_FACTORY = new PropertyKey<SpanFactory>( "span factory", new ConstantPropertyFactory<SpanFactory>( new DefaultSpanFactory() ), true );
-	
-	/**
+    /**
+     * A unique identifier for the {@link DockProperties} to access the current {@link BackgroundPaint}.
+     */
+    public static final PropertyKey<BackgroundPaint> BACKGROUND_PAINT = new PropertyKey<BackgroundPaint>( "dock.background" );
+
+    /**
+     * A unique identifier for the {@link DockProperties} to access the current {@link BorderModifier}.
+     */
+    public static final PropertyKey<BorderModifier> BORDER_MODIFIER = new PropertyKey<BorderModifier>( "dock.borderModifier" );
+
+    /** The factory creating {@link Span}s and ultimatively deciding how the animation looks like when dropping a {@link Dockable} */
+    public static final PropertyKey<SpanFactory> SPAN_FACTORY = new PropertyKey<SpanFactory>( "span factory", new ConstantPropertyFactory<SpanFactory>( new DefaultSpanFactory() ), true );
+
+    /**
      * Install this theme at <code>controller</code>. The theme
      * may change any properties it likes.
      * @param controller the controller
      * @param extensions a set of extensions specifically for this theme
      */
     public void install( DockController controller, DockThemeExtension[] extensions );
-    
+
     /**
      * Uninstalls this theme from <code>controller</code>. The theme
-     * has to remove all listeners it added. 
+     * has to remove all listeners it added.
      * @param controller the controller
      */
     public void uninstall( DockController controller );
-    
-    /** 
+
+    /**
      * A unique identifier for the {@link DockProperties} to access the current {@link Combiner}. The default
-     * value will be derived from the current {@link DockTheme}. 
+     * value will be derived from the current {@link DockTheme}.
      */
     public static final PropertyKey<Combiner> COMBINER = new PropertyKey<Combiner>( "dock.combiner",
-    		new DynamicPropertyFactory<Combiner>(){
-    			public Combiner getDefault( PropertyKey<Combiner> key, DockProperties properties ){
-    				return new ThemeCombiner( properties.getController() );
-    			}
-			}, true );
-    
+            new DynamicPropertyFactory<Combiner>(){
+                public Combiner getDefault( PropertyKey<Combiner> key, DockProperties properties ){
+                    return new ThemeCombiner( properties.getController() );
+                }
+            }, true );
+
     /**
      * Gets the Combiner for <code>station</code>.<br>
      * This method should not be used directly, instead an {@link UIValue} of type {@link StationCombinerValue} should
@@ -123,13 +123,13 @@ public interface DockTheme {
      * A unique identifier for the {@link DockProperties} to access the current {@link StationPaint}. The default
      * value will be derived from the current {@link DockTheme}.
      */
-    public static final PropertyKey<StationPaint> STATION_PAINT = new PropertyKey<StationPaint>( "dock.paint", 
-    		new DynamicPropertyFactory<StationPaint>(){
-    			public StationPaint getDefault( PropertyKey<StationPaint> key, DockProperties properties ){
-    				return new ThemeStationPaint( properties.getController() );
-    			}
-			}, true );
-    
+    public static final PropertyKey<StationPaint> STATION_PAINT = new PropertyKey<StationPaint>( "dock.paint",
+            new DynamicPropertyFactory<StationPaint>(){
+                public StationPaint getDefault( PropertyKey<StationPaint> key, DockProperties properties ){
+                    return new ThemeStationPaint( properties.getController() );
+                }
+            }, true );
+
     /**
      * Gets the paint which is used to draw things onto <code>station</code>.<br>
      * This method should not be used directly, instead an {@link UIValue} of type {@link DefaultStationPaintValue} should
@@ -139,18 +139,18 @@ public interface DockTheme {
      */
     @FrameworkOnly
     public StationPaint getPaint( DockStation station );
-    
+
     /**
      * A unique identifier for the {@link DockProperties} to access the current {@link DisplayerFactory}. The default
      * value will be derived from the current {@link DockTheme}.
      */
     public static final PropertyKey<DisplayerFactory> DISPLAYER_FACTORY = new PropertyKey<DisplayerFactory>( "dock.displayerFactory",
-    		new DynamicPropertyFactory<DisplayerFactory>(){
-    			public DisplayerFactory getDefault( PropertyKey<DisplayerFactory> key, DockProperties properties ){
-    				return new ThemeDisplayerFactory( properties.getController() );
-    			}
-			}, true );
-    
+            new DynamicPropertyFactory<DisplayerFactory>(){
+                public DisplayerFactory getDefault( PropertyKey<DisplayerFactory> key, DockProperties properties ){
+                    return new ThemeDisplayerFactory( properties.getController() );
+                }
+            }, true );
+
     /**
      * Gets a displayer factory for <code>station</code>.<br>
      * This method should not be used directly, instead an {@link UIValue} of type {@link DefaultDisplayerFactoryValue} should
@@ -161,7 +161,7 @@ public interface DockTheme {
      */
     @FrameworkOnly
     public DisplayerFactory getDisplayFactory( DockStation station );
-    
+
     /**
      * Gets the default {@link DockTitleFactory} which is used if no other factory is set.<br>
      * The result of this method is installed in the {@link DockTitleManager} using
@@ -171,18 +171,18 @@ public interface DockTheme {
      * @return the factory
      */
     public DockTitleFactory getTitleFactory( DockController controller );
-    
+
     /**
-     * Identifier for the {@link DockableMovingImageFactory} that is used to show an image during 
+     * Identifier for the {@link DockableMovingImageFactory} that is used to show an image during
      * drag and drop operations.
      */
-    public static final PropertyKey<DockableMovingImageFactory> DOCKABLE_MOVING_IMAGE_FACTORY = new PropertyKey<DockableMovingImageFactory>( "dock.movingImageFactory", 
-    		new DynamicPropertyFactory<DockableMovingImageFactory>(){
-		    	public DockableMovingImageFactory getDefault( PropertyKey<DockableMovingImageFactory> key, DockProperties properties ){
-			    	return new DefaultDockableMovingImageFactory( properties.getController() );
-		    	}
-			} , true );
-    
+    public static final PropertyKey<DockableMovingImageFactory> DOCKABLE_MOVING_IMAGE_FACTORY = new PropertyKey<DockableMovingImageFactory>( "dock.movingImageFactory",
+            new DynamicPropertyFactory<DockableMovingImageFactory>(){
+                public DockableMovingImageFactory getDefault( PropertyKey<DockableMovingImageFactory> key, DockProperties properties ){
+                    return new DefaultDockableMovingImageFactory( properties.getController() );
+                }
+            } , true );
+
     /**
      * Gets a factory for images which are moved around by the user.<br>
      * This method should not be invoked directly, instead the property key {@link #DOCKABLE_MOVING_IMAGE_FACTORY}
@@ -192,18 +192,18 @@ public interface DockTheme {
      */
     @FrameworkOnly
     public DockableMovingImageFactory getMovingImageFactory( DockController controller );
- 
+
     /**
      * Identifier for the {@link DockableSelection}, a panel that is shown to select a {@link Dockable}
      * using only the keyboard.
      */
     public static final PropertyKey<DockableSelection> DOCKABLE_SELECTION = new PropertyKey<DockableSelection>( "dock.dockableSelection",
-    		new DynamicPropertyFactory<DockableSelection>(){
-    			public DockableSelection getDefault( PropertyKey<DockableSelection> key, DockProperties properties ){
-    				return new ThemeDockableSelection( properties.getController() );
-    			}
-			}, true );
-    
+            new DynamicPropertyFactory<DockableSelection>(){
+                public DockableSelection getDefault( PropertyKey<DockableSelection> key, DockProperties properties ){
+                    return new ThemeDockableSelection( properties.getController() );
+                }
+            }, true );
+
     /**
      * Gets a selector for {@link Dockable}s. This method should not be invoked directly, instead
      * the property key {@link #DOCKABLE_SELECTION} should be used.

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -29,12 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Old version of {@link ScreenDockStationLayout}, kept for backwards compatibility. Should not 
+ * Old version of {@link ScreenDockStationLayout}, kept for backwards compatibility. Should not
  * be used by clients.
  * @author Benjamin Sigg
  */
 public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
-	private List<Entry> entries = new ArrayList<Entry>();
+    private List<Entry> entries = new ArrayList<Entry>();
 
     /**
      * Adds a new entry to this layout.
@@ -53,7 +53,7 @@ public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
         entry.height = height;
         entries.add( entry );
     }
-    
+
     /**
      * Gets the number of entries in this layout.
      * @return the number of entries
@@ -61,7 +61,7 @@ public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
     public int size(){
         return entries.size();
     }
-    
+
     /**
      * Gets the id of the index'th entry.
      * @param index the index of the entry
@@ -79,7 +79,7 @@ public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
     public int x( int index ){
         return entries.get( index ).x;
     }
-    
+
     /**
      * Gets the y coordinate of the index'th entry.
      * @param index the index of the entry
@@ -88,7 +88,7 @@ public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
     public int y( int index ){
         return entries.get( index ).y;
     }
-    
+
     /**
      * Gets the width of the index'th entry.
      * @param index the index of the entry
@@ -97,7 +97,7 @@ public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
     public int width( int index ){
         return entries.get( index ).width;
     }
-    
+
     /**
      * Gets the height of the index'th entry.
      * @param index the index of the entry
@@ -106,7 +106,7 @@ public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
     public int height( int index ){
         return entries.get( index ).height;
     }
-    
+
     /**
      * An entry of this layout
      * @author Benjamin Sigg
@@ -114,7 +114,7 @@ public class RetroScreenDockStationLayout extends ScreenDockStationLayout {
     private static class Entry{
         /** the id of the entry */
         public int id;
-        
+
         /** x-coordinate */
         public int x;
         /** y-coordinate */

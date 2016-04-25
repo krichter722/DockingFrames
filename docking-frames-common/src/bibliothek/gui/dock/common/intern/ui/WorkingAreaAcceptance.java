@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -55,7 +55,7 @@ import bibliothek.util.FrameworkOnly;
 public class WorkingAreaAcceptance implements DockAcceptance {
     /** access to the inner parts of the {@link CControl} */
     private CControlAccess control;
-    
+
     /**
      * Creates a new acceptance
      * @param control access to the {@link CControl}
@@ -65,43 +65,44 @@ public class WorkingAreaAcceptance implements DockAcceptance {
     }
 
     public boolean accept( DockStation parent, Dockable child, Dockable next ) {
-    	if( accept( parent, next ) ){
-    		return getWorkingArea( child ) == getWorkingArea( next );
-    	}
-    	else {
-    		return false;
-    	}
+        if( accept( parent, next ) ){
+            return getWorkingArea( child ) == getWorkingArea( next );
+        }
+        else {
+            return false;
+        }
     }
-    
+
     public boolean accept( DockStation parent, Dockable child ) {
-    	CLocationModeManager manager = control.getLocationManager();
-    	if( manager.isOnTransaction() ){
-    		CGroupMovement action = manager.getCurrentAction();
-    		if( action == null || action.forceAccept( parent, child )){
-    			return true;
-    		}
-    	}
-    	
-    	ExtendedMode extendedMode = manager.childsExtendedMode( parent );
-    	if( extendedMode == null ){
-    		extendedMode = manager.getMode( child );	
-    		if( extendedMode == null ){
-    			return true;
-    		}
-    	}
-    	
-    	CLocationMode mode = manager.getMode( extendedMode.getModeIdentifier() );
-    	if( mode == null )
-    		return true;
-    	
-    	if( !mode.respectWorkingAreas( parent ) ){
-    		return true;
-    	}
-    	
-    	CStation<?> area = searchArea( parent );
-    	return match( area, child );
+        CLocationModeManager manager = control.getLocationManager();
+        if( manager.isOnTransaction() ){
+            CGroupMovement action = manager.getCurrentAction();
+            if( action == null || action.forceAccept( parent, child )){
+                return true;
+            }
+        }
+
+        ExtendedMode extendedMode = manager.childsExtendedMode( parent );
+        if( extendedMode == null ){
+            extendedMode = manager.getMode( child );
+            if( extendedMode == null ){
+                return true;
+            }
+        }
+
+        CLocationMode mode = manager.getMode( extendedMode.getModeIdentifier() );
+        if( mode == null ) {
+            return true;
+        }
+
+        if( !mode.respectWorkingAreas( parent ) ){
+            return true;
+        }
+
+        CStation<?> area = searchArea( parent );
+        return match( area, child );
     }
-    
+
     /**
      * Searches the first {@link CStation} with the woking-area property set to <code>true</code> in the path to the root.
      * @param element some element
@@ -111,20 +112,21 @@ public class WorkingAreaAcceptance implements DockAcceptance {
     private CStation<?> searchArea( DockElement element ){
         DockStation station = element.asDockStation();
         Dockable dockable = element.asDockable();
-        
+
         while( dockable != null || station != null ){
             if( station != null && station instanceof CommonDockStation<?, ?>){
-            	CStation<?> cstation = ((CommonDockStation<?,?>)station).getStation();
-                if( cstation.isWorkingArea() )
+                CStation<?> cstation = ((CommonDockStation<?,?>)station).getStation();
+                if( cstation.isWorkingArea() ) {
                     return cstation;
+                }
             }
-            
+
             dockable = station == null ? null : station.asDockable();
             station = dockable == null ? null : dockable.getDockParent();
         }
         return null;
     }
-    
+
     /**
      * Checks all {@link CDockable}s and compares their
      * {@link CDockable#getWorkingArea() working area}
@@ -136,52 +138,54 @@ public class WorkingAreaAcceptance implements DockAcceptance {
      */
     private boolean match( CStation<?> area, Dockable dockable ){
         if( dockable instanceof CommonDockable ){
-        	CStation<?> expectedWorkingArea = getWorkingArea( dockable );
-        	CDockable self = ((CommonDockable)dockable).getDockable();
-        	
-			if( expectedWorkingArea != area && expectedWorkingArea != self )
-				// if we are moving a CWorkingArea around, then 'exectedWorkingArea == self'
+            CStation<?> expectedWorkingArea = getWorkingArea( dockable );
+            CDockable self = ((CommonDockable)dockable).getDockable();
+
+            if( expectedWorkingArea != area && expectedWorkingArea != self ) {
+                // if we are moving a CWorkingArea around, then 'exectedWorkingArea == self'
                 return false;
+            }
         }
-        
+
         DockStation station = dockable.asDockStation();
         if( station != null ){
-        	if( dockable instanceof CommonDockable ){
-        		CStation<?> cstation = ((CommonDockable)dockable).getStation();
-        		if( cstation != null && cstation.isWorkingArea() ){
-        			return true;
-        		}
-        	}
-        	
+            if( dockable instanceof CommonDockable ){
+                CStation<?> cstation = ((CommonDockable)dockable).getStation();
+                if( cstation != null && cstation.isWorkingArea() ){
+                    return true;
+                }
+            }
+
             return match( area, station );
         }
-        else
+        else {
             return true;
+        }
     }
-    
+
     private CStation<?> getWorkingArea( Dockable dockable ){
-    	final Set<CStation<?>> workingAreas = new HashSet<CStation<?>>();
-    	
-    	DockUtilities.visit( dockable, new DockVisitor() {
-    		@Override
-    		public void handleDockable( Dockable dockable ) {
-    			if( dockable instanceof CommonDockable ){
-    		    	CDockable fdockable = ((CommonDockable)dockable).getDockable();
-    		    	CStation<?> workingArea = fdockable.getWorkingArea();
-    		    	if( workingArea != null ){
-    		    		workingAreas.add( workingArea );
-    		    	}
-    	    	}
-    		}
-		});
-    	if( workingAreas.size() == 1 ){
-    		return workingAreas.iterator().next();
-    	}
-    	else{
-    		return null;
-    	}
+        final Set<CStation<?>> workingAreas = new HashSet<CStation<?>>();
+
+        DockUtilities.visit( dockable, new DockVisitor() {
+            @Override
+            public void handleDockable( Dockable dockable ) {
+                if( dockable instanceof CommonDockable ){
+                    CDockable fdockable = ((CommonDockable)dockable).getDockable();
+                    CStation<?> workingArea = fdockable.getWorkingArea();
+                    if( workingArea != null ){
+                        workingAreas.add( workingArea );
+                    }
+                }
+            }
+        });
+        if( workingAreas.size() == 1 ){
+            return workingAreas.iterator().next();
+        }
+        else{
+            return null;
+        }
     }
-    
+
     /**
      * Checks all {@link CDockable}s and compares their
      * {@link CDockable#getWorkingArea() working area}
@@ -194,8 +198,9 @@ public class WorkingAreaAcceptance implements DockAcceptance {
     private boolean match( CStation<?> area, DockStation station ){
         for( int i = 0, n = station.getDockableCount(); i < n; i++ ){
             boolean result = match( area, station.getDockable( i ));
-            if( !result )
+            if( !result ) {
                 return false;
+            }
         }
         return true;
     }

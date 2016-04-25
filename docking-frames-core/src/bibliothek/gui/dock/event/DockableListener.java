@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,7 +44,7 @@ public interface DockableListener {
      * @param title the new title
      */
     public void titleBound( Dockable dockable, DockTitle title );
-    
+
     /**
      * Will be invoked when a {@link DockTitle} was {@link Dockable#unbind(DockTitle) unbound}
      * from a {@link Dockable}.
@@ -52,7 +52,7 @@ public interface DockableListener {
      * @param title the remove title
      */
     public void titleUnbound( Dockable dockable, DockTitle title );
-    
+
     /**
      * Invoked when the title of a {@link Dockable} has changed.
      * @param dockable the <code>Dockable</code> whose title is changed
@@ -60,7 +60,7 @@ public interface DockableListener {
      * @param newTitle the title after the change
      */
     public void titleTextChanged( Dockable dockable, String oldTitle, String newTitle );
-    
+
     /**
      * Invoked when the title-icon of a {@link Dockable} has changed
      * @param dockable the <code>Dockable</code> whose title is changed
@@ -68,7 +68,7 @@ public interface DockableListener {
      * @param newIcon the new icon, may be <code>null</code>
      */
     public void titleIconChanged( Dockable dockable, Icon oldIcon, Icon newIcon );
-    
+
     /**
      * Called when the tooltip of a {@link Dockable} changed.
      * @param dockable the dockable whose tooltip changed
@@ -76,11 +76,11 @@ public interface DockableListener {
      * @param newToolTip the new value
      */
     public void titleToolTipChanged( Dockable dockable, String oldToolTip, String newToolTip );
-    
+
     /**
      * Invoked when the properties of a {@link Dockable} have a so dramatically
-     * changed, that the {@link DockTitle} <code>title</code> is no longer 
-     * considered a good title and should be replaced. The one element which shows 
+     * changed, that the {@link DockTitle} <code>title</code> is no longer
+     * considered a good title and should be replaced. The one element which shows
      * <code>title</code> should unbind it, and request a new title.
      * @param dockable the source of the event
      * @param title the title that should be discarded, can be <code>null</code>

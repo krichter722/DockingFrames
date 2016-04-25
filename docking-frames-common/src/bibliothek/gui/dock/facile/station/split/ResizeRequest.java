@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -38,7 +38,7 @@ public class ResizeRequest{
     private int fractionWidth;
     /** how much of the mismatch should be spend by the parent of the element which requested this, -1 if this should be ignored */
     private int fractionHeight;
-    
+
     /**
      * Creates a new size request with fraction-width/height set to 1.
      * @param deltaWidth the amount of space that is missing in width
@@ -47,7 +47,7 @@ public class ResizeRequest{
     public ResizeRequest( double deltaWidth, double deltaHeight ){
         this( deltaWidth, deltaHeight, 1, 1 );
     }
-    
+
     /**
      * Creates a new size request.
      * @param deltaWidth the amount of space that is missing in width
@@ -65,7 +65,7 @@ public class ResizeRequest{
         this.fractionWidth = fractionWidth;
         this.fractionHeight = fractionHeight;
     }
-    
+
     /**
      * Gets the mismatch in width this request represents.
      * @return the mismatch
@@ -73,7 +73,7 @@ public class ResizeRequest{
     public double getDeltaWidth() {
         return deltaWidth;
     }
-    
+
     /**
      * Gets the mismatch in height this request represents.
      * @return the mismatch
@@ -81,7 +81,7 @@ public class ResizeRequest{
     public double getDeltaHeight() {
         return deltaHeight;
     }
-    
+
     /**
      * Gets the fraction of the mismatch the parent of the element that issued
      * this request should provide. A value of -1 indicates that this request
@@ -91,7 +91,7 @@ public class ResizeRequest{
     public int getFractionWidth() {
         return fractionWidth;
     }
-    
+
     /**
      * Gets the fraction of the mismatch the parent of the element that issued
      * this request should provide. A value of -1 indicates that this request

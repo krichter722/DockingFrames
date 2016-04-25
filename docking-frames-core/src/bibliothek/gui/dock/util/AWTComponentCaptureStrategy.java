@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -43,7 +43,7 @@ import bibliothek.gui.dock.util.property.ConstantPropertyFactory;
 
 /**
  * Used to capture an image of a {@link Component} which either is from AWT,
- * or has children from AWT. 
+ * or has children from AWT.
  * @author Benjamin Sigg
  */
 public interface AWTComponentCaptureStrategy {
@@ -54,16 +54,19 @@ public interface AWTComponentCaptureStrategy {
     public static final AWTComponentCaptureStrategy SCREEN_CAPTURE_STRATEGY = new AWTComponentCaptureStrategy(){
         public BufferedImage createCapture( DockController controller, Component component ){
             try {
-                if( !component.isShowing() )
+                if( !component.isShowing() ) {
                     return null;
+                }
 
                 GraphicsConfiguration configuration = component.getGraphicsConfiguration();
-                if( configuration == null )
+                if( configuration == null ) {
                     return null;
+                }
 
                 GraphicsDevice device = configuration.getDevice();
-                if( device == null )
+                if( device == null ) {
                     return null;
+                }
 
                 Robot deviceRobot = new Robot( device );
 
@@ -82,7 +85,7 @@ public interface AWTComponentCaptureStrategy {
             }
         }
     };
-    
+
     /**
      * This strategy calls {@link Component#paintAll(Graphics)} recursively
      * on all {@link Component}s.
@@ -90,7 +93,7 @@ public interface AWTComponentCaptureStrategy {
     public static final AWTComponentCaptureStrategy RECURSIVE_PAINT_STRATEGY = new AWTComponentCaptureStrategy(){
         public BufferedImage createCapture( DockController controller,
                 Component component ) {
-         
+
             BufferedImage image = new BufferedImage( component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_ARGB );
             Graphics g = image.createGraphics();
             forcePaint( component, g );
@@ -98,7 +101,7 @@ public interface AWTComponentCaptureStrategy {
             return image;
 
         }
-        
+
         /**
          * Forces <code>component</code> and each of its children to be painted.
          * @param component the component to paint
@@ -121,7 +124,7 @@ public interface AWTComponentCaptureStrategy {
             }
         }
     };
-    
+
 
     /**
      * This strategy calls {@link Component#paintAll(Graphics)} on the given component.
@@ -129,7 +132,7 @@ public interface AWTComponentCaptureStrategy {
     public static final AWTComponentCaptureStrategy PAINT_ALL_STRATEGY = new AWTComponentCaptureStrategy(){
         public BufferedImage createCapture( DockController controller,
                 Component component ) {
-         
+
             BufferedImage image = new BufferedImage( component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_ARGB );
             Graphics g = image.createGraphics();
             component.paintAll( g );
@@ -138,15 +141,15 @@ public interface AWTComponentCaptureStrategy {
 
         }
     };
-    
+
     /**
      * The {@link PropertyKey} for a {@link AWTComponentCaptureStrategy}.
      */
-    public static final PropertyKey<AWTComponentCaptureStrategy> STRATEGY = 
+    public static final PropertyKey<AWTComponentCaptureStrategy> STRATEGY =
         new PropertyKey<AWTComponentCaptureStrategy>( "dock.AWTComponentCaptureStrategy",
-        		new ConstantPropertyFactory<AWTComponentCaptureStrategy>( PAINT_ALL_STRATEGY ), true );
-    
-    
+                new ConstantPropertyFactory<AWTComponentCaptureStrategy>( PAINT_ALL_STRATEGY ), true );
+
+
     /**
      * Creates a new image that has the same size as <code>component</code> and
      * contains all the things painted on <code>component</code>.

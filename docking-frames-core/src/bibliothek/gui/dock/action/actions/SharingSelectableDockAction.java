@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2011 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,15 +46,15 @@ public interface SharingSelectableDockAction extends SharingDropDownItemAction, 
      * @see #setSelected(boolean)
      */
     public boolean isSelected();
-	
+
     /**
      * Sets the state of this action. The action will notify all listeners
      * about the new state.
      * @param selected the new state
      */
-	public void setSelected( boolean selected );
-	
-	/**
+    public void setSelected( boolean selected );
+
+    /**
      * Gets the icon that is shown when this action is selected.
      * @param modifier tells in which context the icon is used
      * @return The selected-icon, may be <code>null</code>
@@ -62,7 +62,7 @@ public interface SharingSelectableDockAction extends SharingDropDownItemAction, 
      * @see #isSelected()
      */
     public Icon getSelectedIcon( ActionContentModifier modifier );
-    
+
     /**
      * Sets the icon that will be shown, when this action is selected.
      * @param modifier tells in which context <code>icon</code> will be used

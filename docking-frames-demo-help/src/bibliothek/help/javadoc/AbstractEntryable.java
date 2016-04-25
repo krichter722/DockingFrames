@@ -19,7 +19,7 @@ public abstract class AbstractEntryable implements Entryable{
     protected List<Entryable> entries = new LinkedList<Entryable>();
     /** the text that will be the content of the {@link Entry} of this {@link Entryable} */
     private StringBuilder builder = new StringBuilder();
-    
+
     /**
      * Adds a new child.
      * @param entryable the new child
@@ -27,11 +27,11 @@ public abstract class AbstractEntryable implements Entryable{
     protected void add( Entryable entryable ){
         entries.add( entryable );
     }
-    
+
     public Entryable[] children() {
         return entries.toArray( new Entryable[ entries.size() ] );
     }
-    
+
     /**
      * Gets the text for an {@link Entry}. The result of this method
      * is intended to be used for the {@link Entry#getContent() content}-property
@@ -43,7 +43,7 @@ public abstract class AbstractEntryable implements Entryable{
     protected String content(){
         return builder.toString();
     }
-    
+
     /**
      * Inserts a tag in the text that is used to indicate the beginning or end
      * of some mode. The information is encoded into {@link #content() the content}.<br>
@@ -59,7 +59,7 @@ public abstract class AbstractEntryable implements Entryable{
         builder.append( mode );
         builder.append( "]" );
     }
-    
+
     /**
      * Inserts a tag that contains client specific meta information. The
      * tag is inserted into {@link #content() the content}.<br>
@@ -73,12 +73,12 @@ public abstract class AbstractEntryable implements Entryable{
         for( int i = 0; i < content.length; i++ ){
             if( i > 0 )
                 builder.append( '|' );
-            
+
             print( content[i] );
         }
         builder.append( ']' );
     }
-    
+
     /**
      * Starts or ends the "bold" mode. This method does nothing else
      * than invoking <code>mode( "b", enabled )</code>.
@@ -98,11 +98,11 @@ public abstract class AbstractEntryable implements Entryable{
     public void italic( boolean enabled ){
         mode( "i", enabled );
     }
-    
+
     /**
      * This either just prints the {@link Type#typeName()} of <code>type</code>
      * if <code>type</code> is a primitive, or adds a link to
-     * {@link #content() the content} elsewhere. If a link is added, the 
+     * {@link #content() the content} elsewhere. If a link is added, the
      * type of the link is set to "class" and the target of the link is
      * the {@link Type#qualifiedTypeName()}.
      * @param type the type whose name should be printed
@@ -116,7 +116,7 @@ public abstract class AbstractEntryable implements Entryable{
             link( type.typeName(), "class", type.qualifiedTypeName() );
         }
     }
-    
+
     /**
      * Adds some text to {@link #content() the content}. The characters
      * '[', '|' and ']' are written twice. This ensures that these characters
@@ -128,11 +128,11 @@ public abstract class AbstractEntryable implements Entryable{
             char c = text.charAt( i );
             if( c == '|' || c == '[' || c == ']' )
                 builder.append( c );
-            
+
             builder.append( c );
         }
     }
-    
+
     /**
      * Adds some text using {@link #print(String)}, and then inserts
      * an "newline" to {@link #content() the content}.
@@ -142,14 +142,14 @@ public abstract class AbstractEntryable implements Entryable{
         print( text );
         println();
     }
-    
+
     /**
      * Adds a newline to {@link #content() the content}
      */
     public void println(){
         print( "\n" );
     }
-    
+
     /**
      * Adds a link-tag to {@link #content() the content}. The new
      * tag has the form <code>[link|type:id|text]</code>.
@@ -166,7 +166,7 @@ public abstract class AbstractEntryable implements Entryable{
         print( text );
         builder.append( ']' );
     }
- 
+
     /**
      * Adds a link-tag and a newline to {@link #content() the content}.
      * @param text the text of the link, what the user will see

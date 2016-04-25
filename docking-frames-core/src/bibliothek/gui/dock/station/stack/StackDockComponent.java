@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,7 +42,7 @@ import bibliothek.gui.dock.station.stack.tab.layouting.TabPlacement;
 /**
  * A <code>StackDockComponent</code> is a {@link Component} that can show other {@link Component Components}.
  * <code>StackDockComponent</code>s are used by {@link StackDockStation}s to display their children.<br>
- * The component has one child which is "selected" (assuming there is at 
+ * The component has one child which is "selected" (assuming there is at
  * least one child). This one child should be visible, the other children
  * should be hidden. The user must have an interface to change the
  * selection at any time.<br>
@@ -55,12 +55,12 @@ import bibliothek.gui.dock.station.stack.tab.layouting.TabPlacement;
  * @see javax.swing.JTabbedPane
  */
 public interface StackDockComponent {
-	/**
-	 * Adds a listener to this component, it will be called if the selection changes.
-	 * @param listener the new listener, not <code>null</code>
-	 */
+    /**
+     * Adds a listener to this component, it will be called if the selection changes.
+     * @param listener the new listener, not <code>null</code>
+     */
     public void addStackDockComponentListener( StackDockComponentListener listener );
-    
+
     /**
      * Removes <code>listener</code> from this component.
      * @param listener the listener to remove
@@ -87,7 +87,7 @@ public interface StackDockComponent {
      * if the element is not directly visible
      */
     public Rectangle getBoundsAt(int index);
-    
+
     /**
      * Gets the index of the tab that is beneath <code>mouseLocation</code>.
      * @param mouseLocation the location of the mouse on {@link #getComponent() the component}
@@ -96,9 +96,9 @@ public interface StackDockComponent {
     public int getIndexOfTabAt( Point mouseLocation );
 
     /**
-     * Adds a new child at an unspecified location. 
+     * Adds a new child at an unspecified location.
      * @param title the title of the child
-     * @param icon an icon to display for the child or <code>null</code> 
+     * @param icon an icon to display for the child or <code>null</code>
      * @param comp the new child to display
      * @param dockable the Dockable for which the tab is used
      */
@@ -110,30 +110,30 @@ public interface StackDockComponent {
      * @param destination the target destination
      */
     public void moveTab( int source, int destination );
-    
+
     /**
      * Adds a new child at the location <code>index</code>.
      * @param title the title of the child
-     * @param icon an icon to display for the child or <code>null</code> 
+     * @param icon an icon to display for the child or <code>null</code>
      * @param comp the new child to display
      * @param dockable the Dockable for which the tab is used
      * @param index the index that the new child should have
      */
     public void insertTab( String title, Icon icon, Component comp, Dockable dockable, int index );
-    
+
     /**
      * Gets the number of children that are added to this StackDockComponent.
      * @return the number of children
      */
     public int getTabCount();
-    
+
     /**
      * Gets the {@link Dockable} which was placed at the <code>index</code>'th position.
      * @param index the position of the element
      * @return the element
      */
     public Dockable getDockableAt( int index );
-    
+
     /**
      * Gets an element representing the tab of the {@link Dockable} at <code>index</code>.
      * @param index the index of some child of this stack
@@ -165,7 +165,7 @@ public interface StackDockComponent {
      * @param newTooltip the new tooltip, can be <code>null</code>
      */
     public void setTooltipAt( int index, String newTooltip );
-    
+
     /**
      * Sets the icon of the child at location <code>index</code>.
      * @param index the index of the child
@@ -173,7 +173,7 @@ public interface StackDockComponent {
      * should be displayed
      */
     public void setIconAt(int index, Icon newIcon);
-    
+
     /**
      * Sets the component which should be shown at tab <code>index</code>.
      * @param index the index where to show <code>component</code>
@@ -186,27 +186,27 @@ public interface StackDockComponent {
      * @param tabSide the side, not <code>null</code>
      */
     public void setDockTabPlacement( TabPlacement tabSide );
-    
+
     /**
      * Tells at which side tabs should be displayer.
      * @return the placement, not <code>null</code>
      * @see #setDockTabPlacement(TabPlacement)
      */
     public TabPlacement getDockTabPlacement();
-    
+
     /**
      * Gets a {@link Component} on which the children of this
      * <code>StackDockComponent</code> will be displayed.
      * @return the {@link Component}
      */
     public Component getComponent();
-    
+
     /**
      * Sets the controller for which this component manages its children.
      * @param controller the controller or <code>null</code>
      */
     public void setController( DockController controller );
-    
+
     /**
      * Whether this kind of component already has a border.
      * @return <code>true</code> if this has a border, <code>false</code>
@@ -215,18 +215,18 @@ public interface StackDockComponent {
     public boolean hasBorder();
 
     /**
-     * Tells whether this {@link StackDockComponent} should be shown even if 
+     * Tells whether this {@link StackDockComponent} should be shown even if
      * the {@link StackDockStation} has only one child.
      * @return <code>true</code> if this component should always be shown
      */
-	public boolean isSingleTabComponent();
-	
-	/**
-	 * Creates and returns a new {@link DockElementRepresentative} representing <code>target</code>,
-	 * the new representation is to be used to cover all the empty areas on this <code>StackDockComponent</code>.
-	 * @param target the target for the new representative, may or may not be a child of this component, not <code>null</code>
-	 * @return the new representation, can be <code>null</code> if this <code>StackDockComponent</code> does not allow to
-	 * use its free spaces
-	 */
-	public DockElementRepresentative createDefaultRepresentation( DockElement target );
+    public boolean isSingleTabComponent();
+
+    /**
+     * Creates and returns a new {@link DockElementRepresentative} representing <code>target</code>,
+     * the new representation is to be used to cover all the empty areas on this <code>StackDockComponent</code>.
+     * @param target the target for the new representative, may or may not be a child of this component, not <code>null</code>
+     * @return the new representation, can be <code>null</code> if this <code>StackDockComponent</code> does not allow to
+     * use its free spaces
+     */
+    public DockElementRepresentative createDefaultRepresentation( DockElement target );
 }

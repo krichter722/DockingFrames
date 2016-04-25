@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -79,7 +79,7 @@ public abstract class AbstractDockFont extends AbstractUIValue<FontModifier, Doc
     protected DockFont me() {
         return this;
     }
-    
+
     /**
      * Makes sure that this {@link DockFont} reads its values from the
      * {@link FontManager} of <code>controller</code>.<br>
@@ -89,7 +89,7 @@ public abstract class AbstractDockFont extends AbstractUIValue<FontModifier, Doc
     public void connect( DockController controller ){
         setManager( controller == null ? null : controller.getFonts() );
     }
-    
+
     /**
      * Gets the {@link FontModifier} which is currently represented by this {@link DockFont}.
      * @return the modifier, can be <code>null</code>
@@ -97,7 +97,7 @@ public abstract class AbstractDockFont extends AbstractUIValue<FontModifier, Doc
     public FontModifier font(){
         return value();
     }
-    
+
     /**
      * Gets a modified version of <code>font</code>
      * @param font some font to modify
@@ -105,8 +105,9 @@ public abstract class AbstractDockFont extends AbstractUIValue<FontModifier, Doc
      */
     public Font font( Font font ){
         FontModifier modifier = value();
-        if( modifier == null )
+        if( modifier == null ) {
             return null;
+        }
         return modifier.modify( font );
     }
 }

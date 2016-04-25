@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -48,61 +48,61 @@ import bibliothek.util.xml.XElement;
  *
  */
 public class MaximizedModeSetting implements ModeSetting<Location>{
-	/** factory creating new {@link MaximizedModeSetting}s */
-	public static ModeSettingFactory<Location> FACTORY = new ModeSettingFactory<Location>(){
-		public ModeSetting<Location> create(){
-			return new MaximizedModeSetting();
-		}
-		public Path getModeId(){
-			return MaximizedMode.IDENTIFIER;
-		}
-	};
-	
-	/** the mode in which some dockable with id=key was before maximizing */
-	private HashMap<String, Path> lastMaximizedMode = new HashMap<String, Path>();
-	
-	/** the location some dockable had before maximizing */
-	private HashMap<String, Location> lastMaximizedLocation = new HashMap<String, Location>();
-	
-	public Path getModeId(){
-		return MaximizedMode.IDENTIFIER;
-	}
+    /** factory creating new {@link MaximizedModeSetting}s */
+    public static final ModeSettingFactory<Location> FACTORY = new ModeSettingFactory<Location>(){
+        public ModeSetting<Location> create(){
+            return new MaximizedModeSetting();
+        }
+        public Path getModeId(){
+            return MaximizedMode.IDENTIFIER;
+        }
+    };
 
-	/**
-	 * Sets the location of {@link Dockable}s that are maximized. This method makes a copy
-	 * of the map.
-	 * @param lastMaximizedLocation the map that is going to be copied 
-	 */
-	public void setLastMaximizedLocation( Map<String, Location> lastMaximizedLocation ){
-		this.lastMaximizedLocation = new HashMap<String, Location>( lastMaximizedLocation );
-	}
-	
-	/**
-	 * Sets the mode of {@link Dockable}s that are maximized. This method makes a copy
-	 * of the map.
-	 * @param lastMaximizedMode the map that is going to be copied
-	 */
-	public void setLastMaximizedMode( Map<String, Path> lastMaximizedMode ){
-		this.lastMaximizedMode = new HashMap<String, Path>( lastMaximizedMode );
-	}
-	
-	/**
-	 * Gets the location of {@link Dockable}s that are currently maximized.
-	 * @return an unmodifiable map
-	 */
-	public Map<String, Location> getLastMaximizedLocation(){
-		return Collections.unmodifiableMap( lastMaximizedLocation );
-	}
-	
-	/**
-	 * Gets the modes of {@link Dockable}s that are currently maximized.
-	 * @return an unmodifiable map
-	 */
-	public Map<String, Path> getLastMaximizedMode(){
-		return Collections.unmodifiableMap( lastMaximizedMode );
-	}
-	
-	public <B> void write( DataOutputStream out, ModeSettingsConverter<Location, B> converter ) throws IOException{
+    /** the mode in which some dockable with id=key was before maximizing */
+    private HashMap<String, Path> lastMaximizedMode = new HashMap<String, Path>();
+
+    /** the location some dockable had before maximizing */
+    private HashMap<String, Location> lastMaximizedLocation = new HashMap<String, Location>();
+
+    public Path getModeId(){
+        return MaximizedMode.IDENTIFIER;
+    }
+
+    /**
+     * Sets the location of {@link Dockable}s that are maximized. This method makes a copy
+     * of the map.
+     * @param lastMaximizedLocation the map that is going to be copied
+     */
+    public void setLastMaximizedLocation( Map<String, Location> lastMaximizedLocation ){
+        this.lastMaximizedLocation = new HashMap<String, Location>( lastMaximizedLocation );
+    }
+
+    /**
+     * Sets the mode of {@link Dockable}s that are maximized. This method makes a copy
+     * of the map.
+     * @param lastMaximizedMode the map that is going to be copied
+     */
+    public void setLastMaximizedMode( Map<String, Path> lastMaximizedMode ){
+        this.lastMaximizedMode = new HashMap<String, Path>( lastMaximizedMode );
+    }
+
+    /**
+     * Gets the location of {@link Dockable}s that are currently maximized.
+     * @return an unmodifiable map
+     */
+    public Map<String, Location> getLastMaximizedLocation(){
+        return Collections.unmodifiableMap( lastMaximizedLocation );
+    }
+
+    /**
+     * Gets the modes of {@link Dockable}s that are currently maximized.
+     * @return an unmodifiable map
+     */
+    public Map<String, Path> getLastMaximizedMode(){
+        return Collections.unmodifiableMap( lastMaximizedMode );
+    }
+
+    public <B> void write( DataOutputStream out, ModeSettingsConverter<Location, B> converter ) throws IOException{
         Version.write( out, Version.VERSION_1_0_8 );
         if( lastMaximizedMode == null ){
             out.writeInt( 0 );
@@ -143,7 +143,7 @@ public class MaximizedModeSetting implements ModeSetting<Location>{
                 }
             }
         }
-	}
+    }
 
     public <B> void read( DataInputStream in, ModeSettingsConverter<Location, B> converter ) throws IOException {
         Version version = Version.read( in );
@@ -154,16 +154,16 @@ public class MaximizedModeSetting implements ModeSetting<Location>{
 
         int count = in.readInt();
         for( int i = 0; i < count; i++ ){
-        	String key = in.readUTF();
-        	String value = in.readUTF();
-        	lastMaximizedMode.put( key, new Path( value ));
+            String key = in.readUTF();
+            String value = in.readUTF();
+            lastMaximizedMode.put( key, new Path( value ));
         }
 
         count = in.readInt();
         for( int i = 0; i < count; i++ ){
-        	String key = in.readUTF();
-        	Location location = converter.convertToWorld( converter.readProperty( in ) );
-        	lastMaximizedLocation.put( key, location );
+            String key = in.readUTF();
+            Location location = converter.convertToWorld( converter.readProperty( in ) );
+            lastMaximizedLocation.put( key, location );
         }
     }
 
@@ -190,7 +190,7 @@ public class MaximizedModeSetting implements ModeSetting<Location>{
                         xitem.addElement( "mode" ).setString( mode.toString() );
                     }
                     if( location != null ){
-                    	converter.writePropertyXML( converter.convertToSetting( location ), xitem.addElement( "location" ) );
+                        converter.writePropertyXML( converter.convertToSetting( location ), xitem.addElement( "location" ) );
                     }
                 }
             }
@@ -198,25 +198,25 @@ public class MaximizedModeSetting implements ModeSetting<Location>{
     }
 
     public <B> void read( XElement element, ModeSettingsConverter<Location, B> converter ) {
-    	lastMaximizedLocation = new HashMap<String, Location>();
-    	lastMaximizedMode = new HashMap<String, Path>();
+        lastMaximizedLocation = new HashMap<String, Location>();
+        lastMaximizedMode = new HashMap<String, Path>();
 
-    	XElement xmaximized = element.getElement( "maximized" );
+        XElement xmaximized = element.getElement( "maximized" );
 
-    	if( xmaximized != null ){
-    		for( XElement xitem : xmaximized.getElements( "item" )){
-    			String key = xitem.getString( "id" );
+        if( xmaximized != null ){
+            for( XElement xitem : xmaximized.getElements( "item" )){
+                String key = xitem.getString( "id" );
 
-    			XElement xmode = xitem.getElement( "mode" );
-    			if( xmode != null ){
-    				lastMaximizedMode.put( key, new Path( xmode.getString() ));
-    			}
+                XElement xmode = xitem.getElement( "mode" );
+                if( xmode != null ){
+                    lastMaximizedMode.put( key, new Path( xmode.getString() ));
+                }
 
-    			XElement xlocation = xitem.getElement( "location" );
-    			if( xlocation != null ){
-    				lastMaximizedLocation.put( key, converter.convertToWorld( converter.readPropertyXML( xlocation ) ) );
-    			}
-    		}
-    	}
+                XElement xlocation = xitem.getElement( "location" );
+                if( xlocation != null ){
+                    lastMaximizedLocation.put( key, converter.convertToWorld( converter.readPropertyXML( xlocation ) ) );
+                }
+            }
+        }
     }
 }

@@ -11,16 +11,16 @@ import bibliothek.gui.dock.station.toolbar.ToolbarItemDockableFactory;
  * @author Benjamin Sigg
  */
 public class FrontendToolbarItemPerspective extends FrontendDockablePerspective{
-	/**
-	 * Creates a new item.
-	 * @param id the unique identifier of this item
-	 */
-	public FrontendToolbarItemPerspective( String id ){
-		super( id );
-	}
+    /**
+     * Creates a new item.
+     * @param id the unique identifier of this item
+     */
+    public FrontendToolbarItemPerspective( String id ){
+        super( id );
+    }
 
-	@Override
-	public String getFactoryID(){
-		return ToolbarItemDockableFactory.ID;
-	}
+    @Override
+    public String getFactoryID(){
+        return ToolbarItemDockableFactory.ID;
+    }
 }

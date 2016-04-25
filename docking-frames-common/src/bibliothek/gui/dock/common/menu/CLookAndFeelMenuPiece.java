@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,13 +44,13 @@ import bibliothek.util.xml.XElement;
 
 /**
  * A menupiece that shows an entry for each available {@link LookAndFeel}. The
- * user can select a LookAndFeel which will be set immediately. 
+ * user can select a LookAndFeel which will be set immediately.
  * @author Benjamin Sigg
  */
 public class CLookAndFeelMenuPiece extends LookAndFeelMenuPiece implements DestroyHook{
     /** a collector collecting all {@link Dockable}s */
     private ComponentCollector dockableCollector;
-    
+
     /**
      * Creates a new menu.
      * @param control needed to load the last {@link LookAndFeel}
@@ -58,7 +58,7 @@ public class CLookAndFeelMenuPiece extends LookAndFeelMenuPiece implements Destr
     public CLookAndFeelMenuPiece( CControl control ){
         this( control, LookAndFeelList.getDefaultList() );
     }
-    
+
     /**
      * Creates a new menu.
      * @param control needed to access the list of dockables
@@ -93,23 +93,23 @@ public class CLookAndFeelMenuPiece extends LookAndFeelMenuPiece implements Destr
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public void bind(){
-    	if( !isBound() ){
-    		super.bind();
-    		getList().addComponentCollector( dockableCollector );
-    	}
+        if( !isBound() ){
+            super.bind();
+            getList().addComponentCollector( dockableCollector );
+        }
     }
-    
+
     @Override
     public void unbind(){
-    	if( isBound() ){
-    		super.unbind();
-    		getList().removeComponentCollector( dockableCollector );
-    	}
+        if( isBound() ){
+            super.unbind();
+            getList().removeComponentCollector( dockableCollector );
+        }
     }
-    
+
     @Deprecated
     @Override
     public void destroy() {

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,12 +35,12 @@ import bibliothek.util.Path;
  * @author Benjamin Sigg
  */
 public interface DisplayerBackgroundComponent extends BackgroundComponent{
-	/** the kind of {@link UIValue} this is */
-	public static final Path KIND = BackgroundComponent.KIND.append( "displayer" );
-	
-	/**
-	 * Gets the displayer which is represented by this component.
-	 * @return the displayer, not <code>null</code>
-	 */
-	public DockableDisplayer getDisplayer();
+    /** the kind of {@link UIValue} this is */
+    public static final Path KIND = BackgroundComponent.KIND.append( "displayer" );
+
+    /**
+     * Gets the displayer which is represented by this component.
+     * @return the displayer, not <code>null</code>
+     */
+    public DockableDisplayer getDisplayer();
 }

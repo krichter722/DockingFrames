@@ -1,3 +1,29 @@
+/*
+ * Bibliothek - DockingFrames
+ * Library built on Java/Swing, allows the user to "drag and drop"
+ * panels containing any Swing-Component the developer likes to add.
+ *
+ * Copyright (C) 2007 Benjamin Sigg
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * Benjamin Sigg
+ * benjamin_sigg@gmx.ch
+ * CH - Switzerland
+ */
+
 package bibliothek.gui.dock.support.lookandfeel;
 
 import java.awt.Component;
@@ -15,56 +41,59 @@ import javax.swing.SwingUtilities;
  * @author Benjamin Sigg
  */
 public class LookAndFeelUtilities {
-	/**
-	 * Updates the look and feel for all windows that can be found through
-	 * the collection of components.
-	 * @param components a set of known components
-	 */
-	public static void updateUI( Collection<Component> components ){
-		Set<Component> visit = new HashSet<Component>();
-		
-		for( Component component : components ){
-		    component = getAncestor( component );
-			Window window = SwingUtilities.getWindowAncestor( component );
-			if( window != null )
-				change( window, visit );
-			else
-				change( component, visit );
-		}
-	}
-	
-	/**
-	 * Gets the one parent of <code>component</code> which does not have a
-	 * parent itself.
-	 * @param component some component
-	 * @return a parent of <code>component</code> or <code>component</code> itself.
-	 */
-	private static Component getAncestor( Component component ){
-	    Container parent = component.getParent();
-	    if( parent == null )
-	        return component;
-	    
-	    return getAncestor( parent );
-	}
-	
-	/**
-	 * Updates the look and feel of <code>base</code> and all its
-	 * children. Recursively goes through all {@link Window}s that
-	 * are owned by <code>base</code> (assuming <code>base</code>
-	 * is itself a <code>Window</code>).<br>
-	 * @param base the root of a component-tree
-	 * @param visit the set of roots that were already visited, <code>base</code>
-	 * is added to this set and if <code>base</code> was already in the set,
-	 * then this method returns immediately
-	 */
+    /**
+     * Updates the look and feel for all windows that can be found through
+     * the collection of components.
+     * @param components a set of known components
+     */
+    public static void updateUI( Collection<Component> components ){
+        Set<Component> visit = new HashSet<Component>();
+
+        for( Component component : components ){
+            component = getAncestor( component );
+            Window window = SwingUtilities.getWindowAncestor( component );
+            if( window != null ) {
+                change( window, visit );
+            } else {
+                change( component, visit );
+            }
+        }
+    }
+
+    /**
+     * Gets the one parent of <code>component</code> which does not have a
+     * parent itself.
+     * @param component some component
+     * @return a parent of <code>component</code> or <code>component</code> itself.
+     */
+    private static Component getAncestor( Component component ){
+        Container parent = component.getParent();
+        if( parent == null ) {
+            return component;
+        }
+
+        return getAncestor( parent );
+    }
+
+    /**
+     * Updates the look and feel of <code>base</code> and all its
+     * children. Recursively goes through all {@link Window}s that
+     * are owned by <code>base</code> (assuming <code>base</code>
+     * is itself a <code>Window</code>).<br>
+     * @param base the root of a component-tree
+     * @param visit the set of roots that were already visited, <code>base</code>
+     * is added to this set and if <code>base</code> was already in the set,
+     * then this method returns immediately
+     */
     private static void change( Component base, Set<Component> visit ){
         if( visit.add( base )){
             SwingUtilities.updateComponentTreeUI( base );
             if( base instanceof Window ){
                 Window window = (Window)base;
-                
-                for( Window child : window.getOwnedWindows() )
+
+                for( Window child : window.getOwnedWindows() ) {
                     change( child, visit );
+                }
             }
         }
     }

@@ -37,7 +37,7 @@ public class CTestMain {
       //
       //         public void run () {
       // TODO Auto-generated method stub
-//	   UIManager.put("Panel.background", Color.BLACK);  
+//       UIManager.put("Panel.background", Color.BLACK);
 
       JFrame frame = new JFrame();
 
@@ -94,11 +94,11 @@ public class CTestMain {
    }
 
    public static SingleCDockable create2 (final String title, Color color,CControl cControl) {
-	      DefaultSingleCDockable d = new DefaultSingleCDockable(title, title,new CGlassConfig(cControl));
-	      d.setMaximizable(true);
-	      return d;
-	   }   
-   
+          DefaultSingleCDockable d = new DefaultSingleCDockable(title, title,new CGlassConfig(cControl));
+          d.setMaximizable(true);
+          return d;
+       }
+
    /**
     * Sets icons, colors and tab painter.
     */

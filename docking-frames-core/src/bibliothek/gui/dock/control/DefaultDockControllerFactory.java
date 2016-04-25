@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -54,7 +54,7 @@ public class DefaultDockControllerFactory implements DockControllerFactory {
 
     public ActionViewConverter createActionViewConverter(
             DockController controller, ControllerSetupCollection setup ) {
-        
+
         return new ActionViewConverter();
     }
 
@@ -64,59 +64,59 @@ public class DefaultDockControllerFactory implements DockControllerFactory {
 
     public DoubleClickController createDoubleClickController(
             DockController controller, ControllerSetupCollection setup ) {
-        
+
         return new DoubleClickController( setup );
     }
 
     public DockRegisterListener createVisibilityFocusObserver( DockController controller, ControllerSetupCollection setup ){
         return new VisibilityFocusObserver( controller );
     }
-    
+
     public FocusController createFocusController( DockController controller, ControllerSetupCollection setup ){
-    	final DefaultFocusController focus = new DefaultFocusController( controller );
-    	
-    	setup.add( new ControllerSetupListener(){
-			public void done( DockController controller ){
-				focus.setStrategy( new DefaultFocusStrategy( controller ) );
-			}
-		});
-	    
-    	return focus;
+        final DefaultFocusController focus = new DefaultFocusController( controller );
+
+        setup.add( new ControllerSetupListener(){
+            public void done( DockController controller ){
+                focus.setStrategy( new DefaultFocusStrategy( controller ) );
+            }
+        });
+
+        return focus;
     }
 
     public FocusHistory createFocusHistory( DockController controller, ControllerSetupCollection setup ){
-    	final DefaultFocusHistory history = new DefaultFocusHistory();
-    	
-    	setup.add( new ControllerSetupListener(){
-			public void done( DockController controller ){
-				history.setController( controller );
-			}
-		});
-    	
-    	return history;
+        final DefaultFocusHistory history = new DefaultFocusHistory();
+
+        setup.add( new ControllerSetupListener(){
+            public void done( DockController controller ){
+                history.setController( controller );
+            }
+        });
+
+        return history;
     }
-    
+
     public DockableSelector createDockableSelector( DockController controller, ControllerSetupCollection setup ) {
         final DockableSelector selector = new DockableSelector();
-        
+
         setup.add( new ControllerSetupListener(){
             public void done( DockController controller ) {
                 selector.setController( controller );
             }
         });
-        
+
         return selector;
     }
-    
+
     public KeyboardController createKeyboardController(
             DockController controller, ControllerSetupCollection setup ) {
-        
+
         return new DefaultKeyboardController( controller, setup );
     }
 
     public MouseFocusObserver createMouseFocusObserver(
             DockController controller, ControllerSetupCollection setup ) {
-        
+
         return new DefaultMouseFocusObserver( controller, setup );
     }
 
@@ -135,16 +135,16 @@ public class DefaultDockControllerFactory implements DockControllerFactory {
     public SingleParentRemover createSingleParentRemover( DockController controller, ControllerSetupCollection setup ) {
         return new SingleParentRemover();
     }
-    
+
     public GlobalMouseDispatcher createGlobalMouseDispatcher( DockController controller, ControllerSetupCollection setup ){
-    	return new DefaultGlobalMouseDispatcher( controller, setup );
+        return new DefaultGlobalMouseDispatcher( controller, setup );
     }
-    
+
     public ExtensionManager createExtensionManager( DockController controller, ControllerSetupCollection setup ){
-    	return new ExtensionManager( controller );
+        return new ExtensionManager( controller );
     }
-    
+
     public DockComponentManager createDockComponentManager(DockController dockController, ControllerSetupCollection setup) {
-    	return new DefaultDockComponentManager();
+        return new DefaultDockComponentManager();
     }
 }

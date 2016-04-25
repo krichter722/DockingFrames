@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -39,7 +39,7 @@ public class PriorityValue<T> {
     private T valueTheme;
     /** the value set by the client */
     private T valueClient;
-    
+
     /**
      * Sets the value for a given priority.
      * @param priority the priority of <code>value</code>
@@ -49,7 +49,7 @@ public class PriorityValue<T> {
      */
     public boolean set( Priority priority, T value ){
         T old = get();
-        
+
         switch( priority ){
             case DEFAULT:
                 valueDefault = value;
@@ -61,13 +61,13 @@ public class PriorityValue<T> {
                 valueClient = value;
                 break;
         }
-        
+
         return old != get();
     }
-    
+
     /**
      * Gets the value for a given priority.
-     * @param priority the priority for which the value is requested 
+     * @param priority the priority for which the value is requested
      * @return the value that was {@link #set(Priority, Object)} for <code>priority</code>
      */
     public T get( Priority priority ){
@@ -81,18 +81,20 @@ public class PriorityValue<T> {
         }
         return null;
     }
-    
+
     /**
      * Gets the current value with the highest priority.
      * @return the value or <code>null</code>
      */
     public T get(){
-        if( valueClient != null )
+        if( valueClient != null ) {
             return valueClient;
-        
-        if( valueTheme != null )
+        }
+
+        if( valueTheme != null ) {
             return valueTheme;
-        
+        }
+
         return valueDefault;
     }
 }

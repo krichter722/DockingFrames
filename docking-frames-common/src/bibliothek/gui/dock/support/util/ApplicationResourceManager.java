@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,17 +41,17 @@ import bibliothek.util.xml.XElement;
  * stream of bytes belongs to which resource. If data is loaded, the byte-streams
  * for missing resources will be stored in a buffer that is read as soon as
  * a missing resource is registered. Additional resources are ignored.<br>
- * Note that there is no order how the resources are stored in the file. 
+ * Note that there is no order how the resources are stored in the file.
  * @author Benjamin Sigg
  *
  */
 public class ApplicationResourceManager {
     /** the map of all resources known to this manager */
     private Map<String, ApplicationResource> resources = new HashMap<String, ApplicationResource>();
-    
+
     /** buffer for streams which are not yet read */
     private Map<String, Object> buffer = new HashMap<String, Object>();
-    
+
     /**
      * Stores a resource that might be read or written at any time. If a stream
      * was already read by this manager, and if there was an entry in that stream
@@ -65,11 +65,13 @@ public class ApplicationResourceManager {
      * will be stored in this manager even if an exception occurs
      */
     public void put( String name, ApplicationResource resource ) throws IOException{
-        if( name == null )
+        if( name == null ) {
             throw new NullPointerException( "name must not be null" );
-        if( resource == null )
+        }
+        if( resource == null ) {
             throw new NullPointerException( "resource must not be null" );
-        
+        }
+
         resources.put( name, resource );
         Object buffered = buffer.get( name );
         if( buffered != null ){
@@ -84,7 +86,7 @@ public class ApplicationResourceManager {
             }
         }
     }
-    
+
     /**
      * Removes a resources that was earlier added to this manager.
      * @param name the name of the resource to remove
@@ -92,7 +94,7 @@ public class ApplicationResourceManager {
     public void remove( String name ){
         resources.remove( name );
     }
-    
+
     /**
      * Writes all currently known {@link ApplicationResource}s into
      * <code>out</code>.
@@ -102,25 +104,25 @@ public class ApplicationResourceManager {
     public void writeStream( DataOutputStream out ) throws IOException{
         // version
         Version.write( out, Version.VERSION_1_0_4 );
-        
+
         // number of elements
         out.writeInt( resources.size() );
-        
+
         // elements
         for( Map.Entry<String, ApplicationResource> resource : resources.entrySet() ){
             out.writeUTF( resource.getKey() );
-            
+
             ByteArrayOutputStream array = new ByteArrayOutputStream();
             DataOutputStream data = new DataOutputStream( array );
             resource.getValue().write( data );
             data.close();
-            
+
             // write out the array
             out.writeInt( array.size() );
             array.writeTo( out );
         }
     }
-    
+
     /**
      * Lets all {@link ApplicationResource}s read from <code>in</code>.
      * @param in the stream to read from
@@ -129,11 +131,11 @@ public class ApplicationResourceManager {
     public void readStream( DataInputStream in ) throws IOException{
         Version version = Version.read( in );
         version.checkCurrent();
-        
+
         int size = in.readInt();
         for( int i = 0; i < size; i++ ){
             String key = in.readUTF();
-            
+
             int length = in.readInt();
             byte[] input = new byte[ length ];
             in.readFully( input );
@@ -144,11 +146,12 @@ public class ApplicationResourceManager {
                 resource.read( data );
                 data.close();
             }
-            else
+            else {
                 buffer.put( key, input );
+            }
         }
     }
-    
+
     /**
      * Writes the content of this manager in xml format.
      * @param element the element to write into, the attributes of this
@@ -161,7 +164,7 @@ public class ApplicationResourceManager {
             resource.getValue().writeXML( xresource );
         }
     }
-    
+
     /**
      * Reads the contents of this manager from a xml element.
      * @param element the element to read
@@ -173,11 +176,12 @@ public class ApplicationResourceManager {
             if( resource != null ){
                 resource.readXML( xresource );
             }
-            else
+            else {
                 buffer.put( name, xresource );
+            }
         }
     }
-    
+
     /**
      * Writes the contents of this manager into <code>file</code>.
      * @param file the file to write into
@@ -192,7 +196,7 @@ public class ApplicationResourceManager {
             out.close();
         }
     }
-    
+
     /**
      * Reads the contents of this manager from <code>file</code>.
      * @param file the file to read
@@ -207,7 +211,7 @@ public class ApplicationResourceManager {
             in.close();
         }
     }
-    
+
     /**
      * Writes the contents of this manager into an array of bytes.
      * @return the contents as stream of bytes
@@ -220,7 +224,7 @@ public class ApplicationResourceManager {
         data.close();
         return out.toByteArray();
     }
-    
+
     /**
      * Reads the contents of this manager from an array of bytes.
      * @param array the content as stream of bytes
@@ -232,7 +236,7 @@ public class ApplicationResourceManager {
         readStream( data );
         data.close();
     }
-    
+
     /**
      * Writes the contents of this manager into the {@link Preferences} which
      * represent the package of {@link ApplicationResourceManager}.
@@ -242,7 +246,7 @@ public class ApplicationResourceManager {
         Preferences preference = Preferences.userNodeForPackage( ApplicationResourceManager.class );
         preference.putByteArray( "content", writeArray() );
     }
-    
+
     /**
      * Reads the content of this manager from the {@link Preferences} that
      * represent the package of {@link ApplicationResourceManager}.
@@ -251,8 +255,9 @@ public class ApplicationResourceManager {
     public void readPreferences() throws IOException{
         Preferences preference = Preferences.userNodeForPackage( ApplicationResourceManager.class );
         byte[] array = preference.getByteArray( "content", null );
-        if( array != null )
+        if( array != null ) {
             readArray( array );
+        }
     }
 }
 

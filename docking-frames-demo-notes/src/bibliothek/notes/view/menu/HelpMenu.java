@@ -15,23 +15,23 @@ import bibliothek.notes.view.MainFrame;
  */
 public class HelpMenu extends JMenu{
     /** the main-frame of this application */
-	private MainFrame frame;
-	
-	/**
-	 * Creates a new menu.
-	 * @param frame the main-frame of this application
-	 */
-	public HelpMenu( MainFrame frame ){
-		this.frame = frame;
-		
-		setText( "About" );
-		
-		JMenuItem about = new JMenuItem( "About" );
-		add( about );
-		about.addActionListener( new ActionListener(){
-			public void actionPerformed( ActionEvent e ){
-				HelpMenu.this.frame.getAbout( true ).setVisible( true );
-			}
-		});
-	}
+    private MainFrame frame;
+
+    /**
+     * Creates a new menu.
+     * @param frame the main-frame of this application
+     */
+    public HelpMenu( MainFrame frame ){
+        this.frame = frame;
+
+        setText( "About" );
+
+        JMenuItem about = new JMenuItem( "About" );
+        add( about );
+        about.addActionListener( new ActionListener(){
+            public void actionPerformed( ActionEvent e ){
+                HelpMenu.this.frame.getAbout( true ).setVisible( true );
+            }
+        });
+    }
 }

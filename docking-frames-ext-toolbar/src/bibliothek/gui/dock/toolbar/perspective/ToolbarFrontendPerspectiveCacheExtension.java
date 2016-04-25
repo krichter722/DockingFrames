@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Herve Guillaume, Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Herve Guillaume
  * rvguillaume@hotmail.com
  * FR - France
@@ -46,25 +46,25 @@ import bibliothek.gui.dock.station.toolbar.ToolbarGroupDockPerspective;
  * @author Benjamin Sigg
  */
 public class ToolbarFrontendPerspectiveCacheExtension implements FrontendPerspectiveCacheExtension{
-	@Override
-	public PerspectiveElement get( String id, DockElement element, boolean isRootStation ){
-		if( element instanceof ToolbarContainerDockStation ){
-			return new ToolbarContainerDockPerspective();
-		}
-		if( element instanceof ToolbarGroupDockStation ){
-			return new ToolbarGroupDockPerspective();
-		}
-		if( element instanceof ToolbarDockStation ){
-			return new ToolbarDockPerspective();
-		}
-		if( element instanceof ToolbarItemDockable ){
-			return new FrontendToolbarItemPerspective( id );
-		}
-		return null;
-	}
-	
-	@Override
-	public String get( PerspectiveElement element ){
-		return null;
-	}
+    @Override
+    public PerspectiveElement get( String id, DockElement element, boolean isRootStation ){
+        if( element instanceof ToolbarContainerDockStation ){
+            return new ToolbarContainerDockPerspective();
+        }
+        if( element instanceof ToolbarGroupDockStation ){
+            return new ToolbarGroupDockPerspective();
+        }
+        if( element instanceof ToolbarDockStation ){
+            return new ToolbarDockPerspective();
+        }
+        if( element instanceof ToolbarItemDockable ){
+            return new FrontendToolbarItemPerspective( id );
+        }
+        return null;
+    }
+
+    @Override
+    public String get( PerspectiveElement element ){
+        return null;
+    }
 }

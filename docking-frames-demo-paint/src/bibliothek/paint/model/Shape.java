@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,13 +37,13 @@ import java.awt.Point;
 public abstract class Shape {
     /** the color used to paint this shape */
     private Color color = Color.BLACK;
-    
+
     /** the first location of this shape */
     private Point pointA;
-    
+
     /** the second location of this shape */
     private Point pointB;
-    
+
     /**
      * Gets the color which is used to paint this shape
      * @return the color
@@ -51,7 +51,7 @@ public abstract class Shape {
     public Color getColor() {
         return color;
     }
-    
+
     /**
      * Sets the color which is used to paint this shape
      * @param color the color
@@ -59,7 +59,7 @@ public abstract class Shape {
     public void setColor( Color color ) {
         this.color = color;
     }
-    
+
     /**
      * Gets the first point of the boundaries of this shape.
      * @return one edge of the boundaries
@@ -67,7 +67,7 @@ public abstract class Shape {
     public Point getPointA() {
         return pointA;
     }
-    
+
     /**
      * Sets the first point of the boundaries of this shape.
      * @param pointA
@@ -75,7 +75,7 @@ public abstract class Shape {
     public void setPointA( Point pointA ) {
         this.pointA = pointA;
     }
-    
+
     /**
      * Gets the second point of the boundaries of this shape.
      * @return one edge of the boundaries
@@ -83,7 +83,7 @@ public abstract class Shape {
     public Point getPointB() {
         return pointB;
     }
-    
+
     /**
      * Sets the second point of boundaries of this shape.
      * @param pointB the second point
@@ -91,14 +91,14 @@ public abstract class Shape {
     public void setPointB( Point pointB ) {
         this.pointB = pointB;
     }
-    
+
     /**
      * Paints this shape
      * @param g graphics context
      * @param stretch a value with which each coordinate has to be multiplied
      */
     public abstract void paint( Graphics g, double stretch );
-    
+
     /**
      * Multiplies <code>coordinate</code> with <code>stretch</code> and
      * returns a rounded value.
@@ -107,6 +107,6 @@ public abstract class Shape {
      * @return the new coordinate
      */
     protected int stretch( int coordinate, double stretch ){
-    	return (int)( coordinate * stretch );
+        return (int)( coordinate * stretch );
     }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -48,62 +48,62 @@ import bibliothek.gui.dock.title.DockTitle;
  * @author Benjamin Sigg
  */
 public class CDisablingStrategy implements DisablingStrategy{
-	/** listener added to the {@link CControl} */
-	private CDockablePropertyListener propertyListener = new CDockableAdapter(){
-		public void enabledChanged( CDockable dockable ){
-			Dockable item = dockable.intern();
-			
-			for( DisablingStrategyListener listener : listeners.toArray( new DisablingStrategyListener[ listeners.size() ] )){
-				listener.changed( item );
-			}
-		}
-	};
-	
-	/** all the listeners that were added to this strategy */
-	private List<DisablingStrategyListener> listeners = new ArrayList<DisablingStrategyListener>();
-	
-	/**
-	 * Creates a new strategy, this constructor will add a listener to <code>control</code>.
-	 * @param control the control in whose realm this strategy will operate
-	 */
-	public CDisablingStrategy( CControl control ){
-		control.addPropertyListener( propertyListener );
-	}
+    /** listener added to the {@link CControl} */
+    private CDockablePropertyListener propertyListener = new CDockableAdapter(){
+        public void enabledChanged( CDockable dockable ){
+            Dockable item = dockable.intern();
 
-	public void addDisablingStrategyListener( DisablingStrategyListener listener ){
-		listeners.add( listener );
-	}
+            for( DisablingStrategyListener listener : listeners.toArray( new DisablingStrategyListener[ listeners.size() ] )){
+                listener.changed( item );
+            }
+        }
+    };
 
-	public void removeDisablingStrategyListener( DisablingStrategyListener listener ){
-		listeners.remove( listener );
-	}
+    /** all the listeners that were added to this strategy */
+    private List<DisablingStrategyListener> listeners = new ArrayList<DisablingStrategyListener>();
 
-	public boolean isDisabled( DockElement item ){
-		Dockable dockable = item.asDockable();
-		if( dockable != null && dockable instanceof CommonDockable ){
-			return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.SELF );
-		}
-		return false;
-	}
+    /**
+     * Creates a new strategy, this constructor will add a listener to <code>control</code>.
+     * @param control the control in whose realm this strategy will operate
+     */
+    public CDisablingStrategy( CControl control ){
+        control.addPropertyListener( propertyListener );
+    }
 
-	public boolean isDisabled( Dockable dockable, DockAction item ){
-		if( dockable != null && dockable instanceof CommonDockable ){
-			return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.ACTIONS );
-		}
-		return false;
-	}
+    public void addDisablingStrategyListener( DisablingStrategyListener listener ){
+        listeners.add( listener );
+    }
 
-	public boolean isDisabled( Dockable dockable, DockTitle item ){
-		if( dockable != null && dockable instanceof CommonDockable ){
-			return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.TITLES );
-		}
-		return false;
-	}
+    public void removeDisablingStrategyListener( DisablingStrategyListener listener ){
+        listeners.remove( listener );
+    }
 
-	public boolean isTabDisabled( Dockable dockable ){
-		if( dockable != null && dockable instanceof CommonDockable ){
-			return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.TABS );
-		}
-		return false;
-	}
+    public boolean isDisabled( DockElement item ){
+        Dockable dockable = item.asDockable();
+        if( dockable != null && dockable instanceof CommonDockable ){
+            return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.SELF );
+        }
+        return false;
+    }
+
+    public boolean isDisabled( Dockable dockable, DockAction item ){
+        if( dockable != null && dockable instanceof CommonDockable ){
+            return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.ACTIONS );
+        }
+        return false;
+    }
+
+    public boolean isDisabled( Dockable dockable, DockTitle item ){
+        if( dockable != null && dockable instanceof CommonDockable ){
+            return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.TITLES );
+        }
+        return false;
+    }
+
+    public boolean isTabDisabled( Dockable dockable ){
+        if( dockable != null && dockable instanceof CommonDockable ){
+            return !((CommonDockable)dockable).getDockable().isEnabled( EnableableItem.TABS );
+        }
+        return false;
+    }
 }

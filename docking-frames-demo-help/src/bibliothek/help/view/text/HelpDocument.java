@@ -25,14 +25,14 @@ public class HelpDocument extends DefaultStyledDocument{
      */
     public HelpDocument(){
         Style root = addStyle( "root", null );
-        
+
         addStyle( "text", root );
         Style link = addStyle( "link", root );
-        
+
         StyleConstants.setForeground( link, Color.BLUE );
         StyleConstants.setUnderline( link, true );
     }
-    
+
     /**
      * Adds some text at the end of the document.
      * @param text the text
@@ -46,7 +46,7 @@ public class HelpDocument extends DefaultStyledDocument{
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Adds some link at the end of the document.
      * @param text the text to display
@@ -61,9 +61,9 @@ public class HelpDocument extends DefaultStyledDocument{
         }
         catch( BadLocationException e ) {
             e.printStackTrace();
-        }        
+        }
     }
-    
+
     /**
      * Gets a style that represents the given modes.
      * @param prefix the type of style, the original document uses
@@ -76,13 +76,13 @@ public class HelpDocument extends DefaultStyledDocument{
         Style style = getStyle( id );
         if( style == null ){
             style = addStyle( id, getStyle( prefix ) );
-            
+
             StyleConstants.setBold( style, modes.contains( "b" ));
             StyleConstants.setItalic(  style, modes.contains( "i" ));
         }
         return style;
     }
-    
+
     /**
      * Creates an id that is unique for the given prefix
      * and set of modes.
@@ -94,13 +94,13 @@ public class HelpDocument extends DefaultStyledDocument{
         StringBuilder result = new StringBuilder();
         result.append( prefix );
         result.append( " " );
-        
+
         if( modes.contains( "b" ))
             result.append( "b" );
-        
+
         if( modes.contains( "i" ))
             result.append( "i" );
-        
+
         return result.toString();
     }
 }

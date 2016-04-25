@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -45,13 +45,13 @@ import bibliothek.gui.dock.common.intern.CDockable;
 public class CloseActionSource extends AbstractDockActionSource{
     /** the element which is observed */
     private CDockable dockable;
-    
+
     /** the access that is used to communicate with {@link CControl} */
     private CControlAccess control;
-    
+
     /** the action that closes {@link #dockable} */
     private DockAction action;
-    
+
     /**
      * Creates a new source
      * @param dockable the element which will be observed for changes
@@ -69,7 +69,7 @@ public class CloseActionSource extends AbstractDockActionSource{
             }
         });
     }
-    
+
     /**
      * Grants access to the {@link CControl} and allows to create the default
      * action.
@@ -79,7 +79,7 @@ public class CloseActionSource extends AbstractDockActionSource{
         this.control = control;
         update();
     }
-    
+
     /**
      * Called when the content of this source needs to be updated.
      */
@@ -88,19 +88,20 @@ public class CloseActionSource extends AbstractDockActionSource{
         if( control != null ){
             if( dockable.isCloseable() ){
                 CAction cnext = dockable.getAction( CDockable.ACTION_KEY_CLOSE );
-                if( cnext != null )
+                if( cnext != null ) {
                     next = cnext.intern();
-                else
+                } else {
                     next = control.createCloseAction( dockable );
+                }
             }
         }
-        
+
         if( next != action ){
             if( action != null ){
                 action = null;
                 fireRemoved( 0, 0 );
             }
-            
+
             if( next != null ){
                 action = next;
                 fireAdded( 0, 0 );
@@ -109,17 +110,19 @@ public class CloseActionSource extends AbstractDockActionSource{
     }
 
     public DockAction getDockAction( int index ) {
-        if( index == 0 && action != null )
+        if( index == 0 && action != null ) {
             return action;
-        else
+        } else {
             throw new ArrayIndexOutOfBoundsException( index );
+        }
     }
 
     public int getDockActionCount() {
-        if( action == null )
+        if( action == null ) {
             return 0;
-        else
+        } else {
             return 1;
+        }
     }
 
     public LocationHint getLocationHint() {
@@ -129,15 +132,16 @@ public class CloseActionSource extends AbstractDockActionSource{
     public Iterator<DockAction> iterator() {
         return new Iterator<DockAction>(){
             private DockAction action = CloseActionSource.this.action;
-            
+
             public boolean hasNext() {
                 return action != null;
             }
 
             public DockAction next() {
-                if( action == null )
+                if( action == null ) {
                     throw new NoSuchElementException();
-                
+                }
+
                 DockAction result = action;
                 action = null;
                 return result;

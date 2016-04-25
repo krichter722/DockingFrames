@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,18 +46,18 @@ import bibliothek.gui.dock.util.property.ConstantPropertyFactory;
  */
 public interface DockRelocatorMode {
     /** the modifiers that must be pressed to activate the {@link #SCREEN_ONLY} relocator mode */
-    public static final PropertyKey<ModifierMask> SCREEN_MASK = 
-        new PropertyKey<ModifierMask>( "DockRelocatorMode screen mask", 
-                new ConstantPropertyFactory<ModifierMask>( 
-                		new ModifierMask(InputEvent.SHIFT_DOWN_MASK )), 
+    public static final PropertyKey<ModifierMask> SCREEN_MASK =
+        new PropertyKey<ModifierMask>( "DockRelocatorMode screen mask",
+                new ConstantPropertyFactory<ModifierMask>(
+                        new ModifierMask(InputEvent.SHIFT_DOWN_MASK )),
                 false );
-    
+
     /**
      * Ensures that a {@link Dockable} can be dragged only onto a {@link ScreenDockStation}.
      * This mode is installed automatically by the {@link DockController}.
      */
     public static DockRelocatorMode SCREEN_ONLY = new AcceptanceDockRelocatorMode( 0, 0 ){
-        
+
         public boolean accept( DockStation parent, Dockable child ) {
             return parent instanceof ScreenDockStation;
         }
@@ -65,20 +65,20 @@ public interface DockRelocatorMode {
         public boolean accept( DockStation parent, Dockable child, Dockable next ) {
             return parent instanceof ScreenDockStation;
         }
-        
+
         @Override
         public boolean shouldBeActive( DockController controller, int modifiers ) {
             ModifierMask mask = controller.getProperties().get( SCREEN_MASK );
             return mask != null && mask.matches( modifiers );
         }
     };
-    
+
     /** the modifiers that must be pressed to activate the {@link #NO_COMBINATION} relocator mode */
-    public static final PropertyKey<ModifierMask> NO_COMBINATION_MASK = 
-        new PropertyKey<ModifierMask>( "DockRelocatorMode no combination", 
+    public static final PropertyKey<ModifierMask> NO_COMBINATION_MASK =
+        new PropertyKey<ModifierMask>( "DockRelocatorMode no combination",
                 new ConstantPropertyFactory<ModifierMask>(
-                		new ModifierMask(InputEvent.ALT_DOWN_MASK )), false );
-    
+                        new ModifierMask(InputEvent.ALT_DOWN_MASK )), false );
+
     /**
      * Ensures that a {@link Dockable} can be dragged only if no combination results.
      * This mode is installed automatically by the {@link DockController}.
@@ -91,14 +91,14 @@ public interface DockRelocatorMode {
         public boolean accept( DockStation parent, Dockable child, Dockable next ) {
             return false;
         }
-        
+
         @Override
         public boolean shouldBeActive( DockController controller, int modifiers ) {
             ModifierMask mask = controller.getProperties().get( NO_COMBINATION_MASK );
             return mask != null && mask.matches( modifiers );
         }
     };
-    
+
     /**
      * Tells whether this mode should be activated because of the state of the
      * controller and the last {@link MouseEvent}.
@@ -108,9 +108,9 @@ public interface DockRelocatorMode {
      * otherwise
      */
     public boolean shouldBeActive( DockController controller, int modifiers );
-    
+
     /**
-     * Tells this mode whether it should have an influence of the 
+     * Tells this mode whether it should have an influence of the
      * behaviour or not.
      * @param controller the controller for which this mode is used
      * @param active <code>true</code> if this mode should change

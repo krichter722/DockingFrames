@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,7 +35,7 @@ import bibliothek.gui.dock.util.font.FontManager;
 
 /**
  * A {@link ListFontTransmitter} updates the fonts for
- * {@link DockFont#ID_TAB_FOCUSED}, {@link DockFont#ID_TAB_SELECTED} and 
+ * {@link DockFont#ID_TAB_FOCUSED}, {@link DockFont#ID_TAB_SELECTED} and
  * {@link DockFont#ID_TAB_UNSELECTED} using {@link FontMap#FONT_KEY_TAB},
  * {@link FontMap#FONT_KEY_TAB_FOCUSED} and {@link FontMap#FONT_KEY_TAB_SELECTED}.
  * @author Benjamin Sigg

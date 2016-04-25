@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,7 +41,7 @@ import java.awt.event.MouseEvent;
 public abstract class MouseOverListener extends MouseAdapter implements ContainerListener{
     /** whether the mouse is currently over the component */
     private boolean mouseover = false;
-    
+
     /**
      * Creates a new listener
      * @param parent the component to observe
@@ -49,7 +49,7 @@ public abstract class MouseOverListener extends MouseAdapter implements Containe
     public MouseOverListener( Component parent ){
         added( parent );
     }
-    
+
     @Override
     public void mouseEntered( MouseEvent e ) {
         mouseover = true;
@@ -60,12 +60,12 @@ public abstract class MouseOverListener extends MouseAdapter implements Containe
         mouseover = false;
         changed();
     }
-    
+
     /**
      * Called whenever the mouse-over state changed.
      */
     protected abstract void changed();
-    
+
     /**
      * Tells whether the mouse is currently over the base component.
      * @return <code>true</code> if the mouse is within the borders of the
@@ -74,11 +74,11 @@ public abstract class MouseOverListener extends MouseAdapter implements Containe
     public boolean isMouseOver() {
         return mouseover;
     }
-    
+
     public void componentAdded( ContainerEvent e ){
         added( e.getChild() );
     }
-    
+
     /**
      * Adds listeners to <code>component</code> and its children.
      * @param component the new component to observe
@@ -93,11 +93,11 @@ public abstract class MouseOverListener extends MouseAdapter implements Containe
             }
         }
     }
-    
+
     public void componentRemoved( ContainerEvent e ){
         removed( e.getChild() );
     }
-    
+
     /**
      * Removes listeners from <code>component</code> and its children.
      * @param component the component which should no longer be observed

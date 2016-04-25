@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -53,27 +53,27 @@ public class ComponentHierarchyObserver {
      * will not be removed implicitly.
      */
     private Set<Component> roots = new HashSet<Component>();
-    
+
     /** the currently known components */
     private Set<Component> components = new HashSet<Component>();
-    
+
     /** a listener to all {@link Container}s */
     private Listener listener = new Listener();
-    
+
     /** the controller in whose realm this observer works */
     private DockController controller;
-    
+
     /** the observers of this {@link ComponentHierarchyObserver} */
     private List<ComponentHierarchyObserverListener> listeners =
         new ArrayList<ComponentHierarchyObserverListener>();
-    
+
     /**
      * Creates a new observer.
      * @param controller the controller whose {@link Dockable}s will be observed.
      */
     public ComponentHierarchyObserver( DockController controller ){
         this.controller = controller;
-        
+
         controller.addRepresentativeListener( new DockControllerRepresentativeListener(){
             public void representativeAdded( DockController controller, DockElementRepresentative representative ) {
                 add( representative.getComponent() );
@@ -83,9 +83,9 @@ public class ComponentHierarchyObserver {
             }
         });
     }
-    
+
     /**
-     * Gets a {@link Set} containing all {@link Component}s which are 
+     * Gets a {@link Set} containing all {@link Component}s which are
      * used on {@link Dockable}s known in the realm of the {@link DockController}
      * of this observer.
      * @return the set of <code>Component</code>s.
@@ -93,7 +93,7 @@ public class ComponentHierarchyObserver {
     public Set<Component> getComponents() {
         return Collections.unmodifiableSet( components );
     }
-    
+
     /**
      * Gets the controller in whose realm this observer searches for
      * {@link Component}s.
@@ -102,17 +102,18 @@ public class ComponentHierarchyObserver {
     public DockController getController() {
         return controller;
     }
-    
+
     /**
      * Adds a listener to this observer.
      * @param listener the new listener, not <code>null</code>
      */
     public void addListener( ComponentHierarchyObserverListener listener ){
-        if( listener == null )
+        if( listener == null ) {
             throw new NullPointerException( "listener must not be null" );
+        }
         listeners.add( listener );
     }
-    
+
     /**
      * Removes a listener from this observer.
      * @param listener the listener to remove
@@ -120,7 +121,7 @@ public class ComponentHierarchyObserver {
     public void removeListener( ComponentHierarchyObserverListener listener ){
         listeners.remove( listener );
     }
-    
+
     /**
      * Gets an array containing all listeners that are registered at this
      * observer.
@@ -129,7 +130,7 @@ public class ComponentHierarchyObserver {
     protected ComponentHierarchyObserverListener[] listeners(){
         return listeners.toArray( new ComponentHierarchyObserverListener[ listeners.size() ] );
     }
-    
+
     /**
      * Adds <code>component</code> and all its children to the set of
      * known {@link Component}s. Components that are already known will
@@ -141,7 +142,7 @@ public class ComponentHierarchyObserver {
         roots.add( component );
         add( component, null );
     }
-    
+
     /**
      * Adds <code>component</code> and all children of it to the set of
      * known {@link Component}s. This will add <code>component</code> as a
@@ -154,9 +155,10 @@ public class ComponentHierarchyObserver {
      */
     private void add( Component component, List<Component> list ){
         boolean fire = list == null;
-        if( fire )
+        if( fire ) {
             list = new LinkedList<Component>();
-        
+        }
+
         if( components.add( component )){
             list.add( component );
             if( component instanceof Container ){
@@ -167,15 +169,16 @@ public class ComponentHierarchyObserver {
                 }
             }
         }
-        
+
         if( fire && !list.isEmpty() ){
             list = Collections.unmodifiableList( list );
             ComponentHierarchyObserverEvent event = new ComponentHierarchyObserverEvent( controller, list );
-            for( ComponentHierarchyObserverListener listener : listeners() )
+            for( ComponentHierarchyObserverListener listener : listeners() ) {
                 listener.added( event );
+            }
         }
     }
-    
+
     /**
      * Removes <code>component</code> and all its children from the set
      * of known {@link Component}s. If a child was added as a root, then
@@ -186,7 +189,7 @@ public class ComponentHierarchyObserver {
         roots.remove( component );
         remove( component, null );
     }
-    
+
     /**
      * Removes <code>component</code> and all its children from the set
      * of known {@link Component}s.
@@ -198,9 +201,10 @@ public class ComponentHierarchyObserver {
     private void remove( Component component, List<Component> list ){
         if( !roots.contains( component )){
             boolean fire = list == null;
-            if( fire )
+            if( fire ) {
                 list = new LinkedList<Component>();
-            
+            }
+
             if( components.remove( component )){
                 list.add( component );
                 if( component instanceof Container ){
@@ -211,16 +215,17 @@ public class ComponentHierarchyObserver {
                     }
                 }
             }
-            
+
             if( fire && !list.isEmpty() ){
                 list = Collections.unmodifiableList( list );
                 ComponentHierarchyObserverEvent event = new ComponentHierarchyObserverEvent( controller, list );
-                for( ComponentHierarchyObserverListener listener : listeners() )
+                for( ComponentHierarchyObserverListener listener : listeners() ) {
                     listener.removed( event );
+                }
             }
         }
     }
-    
+
     /**
      * A listener to {@link Container}s, triggered when {@link Component}s
      * are added or removed.

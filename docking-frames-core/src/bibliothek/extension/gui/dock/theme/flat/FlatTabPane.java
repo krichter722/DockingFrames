@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -45,7 +45,7 @@ import bibliothek.gui.dock.station.stack.StackDockComponentParent;
 public class FlatTabPane extends CombinedStackDockComponent<FlatTab, FlatMenu, FlatInfoComponent>{
     /** the station which uses this component */
     private StackDockComponentParent station;
-    
+
     /**
      * Creates a new {@link FlatTabPane}
      * @param parent the station which uses this component
@@ -54,58 +54,58 @@ public class FlatTabPane extends CombinedStackDockComponent<FlatTab, FlatMenu, F
         this.station = parent;
         setInfoComponent( new FlatInfoComponent( this ) );
     }
-    
+
     @Override
-	protected FlatTab newTab( Dockable dockable ){
-		return new FlatTab( this, dockable );
-	}
-	
+    protected FlatTab newTab( Dockable dockable ){
+        return new FlatTab( this, dockable );
+    }
+
     @Override
     protected void tabRemoved( FlatTab tab ){
-    	tab.setController( null );
+        tab.setController( null );
     }
-    
+
     @Override
     public FlatMenu newMenu(){
-    	FlatMenu menu = new FlatMenu( this );
-    	menu.setController( getController() );
-    	return menu;
+        FlatMenu menu = new FlatMenu( this );
+        menu.setController( getController() );
+        return menu;
     }
-    
+
     @Override
     protected void menuRemoved( FlatMenu menu ){
-	    menu.setController( null );	
+        menu.setController( null );
     }
-    
-	@Override
+
+    @Override
     public void setController( DockController controller ){
-		super.setController( controller );
-		for( FlatTab tab : getTabsList() ){
-			tab.setController( controller );
-		}
-		for( FlatMenu menu : getMenuList() ){
-			menu.setController( controller );
-		}
-	}
-	
-	@Override
-	public void setSelectedBounds( Rectangle bounds ){
-		super.setSelectedBounds( bounds );
-	    for( FlatTab tab : getTabsList() ){
+        super.setController( controller );
+        for( FlatTab tab : getTabsList() ){
+            tab.setController( controller );
+        }
+        for( FlatMenu menu : getMenuList() ){
+            menu.setController( controller );
+        }
+    }
+
+    @Override
+    public void setSelectedBounds( Rectangle bounds ){
+        super.setSelectedBounds( bounds );
+        for( FlatTab tab : getTabsList() ){
             tab.updateForeground();
             tab.updateFonts();
         }
-	}
-	
-	public boolean hasBorder() {
-	    return false;
-	}
-	
-	public boolean isSingleTabComponent(){
-		return false;
-	}
-	
-	public DockStation getStation(){
-		return station.getStackDockParent();
-	}
+    }
+
+    public boolean hasBorder() {
+        return false;
+    }
+
+    public boolean isSingleTabComponent(){
+        return false;
+    }
+
+    public DockStation getStation(){
+        return station.getStackDockParent();
+    }
 }

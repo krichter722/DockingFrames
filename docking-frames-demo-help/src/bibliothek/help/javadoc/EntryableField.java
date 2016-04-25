@@ -14,14 +14,14 @@ import bibliothek.help.model.Entry;
 public class EntryableField extends AbstractEntryable {
     /** the field */
     private FieldDoc doc;
-    
+
     /**
      * Collects detailed information about the field <code>doc</code>.
      * @param doc the field whose content will be presented
      */
     public EntryableField( FieldDoc doc ){
         this.doc = doc;
-        
+
         bold( true );
         println( "Containing class:" );
         bold( false );
@@ -35,7 +35,7 @@ public class EntryableField extends AbstractEntryable {
         print( doc.type() );
         print( " " );
         println( doc.name() );
-        
+
         if( doc.commentText() != null ){
             println();
             bold( true );
@@ -44,7 +44,7 @@ public class EntryableField extends AbstractEntryable {
             println( doc.commentText() );
         }
     }
-    
+
     public Entry toEntry() {
         return new Entry( "field", doc.qualifiedName(), "Field " + doc.qualifiedName(), content(),
                 "class:"+doc.containingClass().qualifiedName() );

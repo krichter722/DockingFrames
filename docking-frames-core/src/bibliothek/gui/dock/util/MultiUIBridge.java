@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,27 +41,28 @@ public class MultiUIBridge<V, U extends UIValue<V>> implements UIBridge<V, U> {
     /** the map of registered bridges */
     private Map<String, UIBridge<V, U>> bridges =
         new HashMap<String, UIBridge<V, U>>();
-    
+
     /**
-     * a map of {@link UIValue}s which are provided with resources by 
-     * this bridge. 
+     * a map of {@link UIValue}s which are provided with resources by
+     * this bridge.
      */
     private Map<String, List<U>> values = new HashMap<String, List<U>>();
-    
+
     /** the manager that delivers default resources when necessary */
     private UIProperties<V, U, ?> manager;
-    
+
     /**
      * Creates a new {@link MultiUIBridge}.
      * @param manager the manager from whom this provider will get default
      * colors when necessary
      */
     public MultiUIBridge( UIProperties<V, U, ?> manager ){
-        if( manager == null )
+        if( manager == null ) {
             throw new IllegalArgumentException( "Manager must not be null" );
+        }
         this.manager = manager;
     }
-    
+
     /**
      * Specifies a bridge that handles all calls regarding <code>id</code>.
      * @param id the key of the resource <code>bridge</code> should handle
@@ -69,19 +70,21 @@ public class MultiUIBridge<V, U extends UIValue<V>> implements UIBridge<V, U> {
      */
     public void put( String id, UIBridge<V, U> bridge ){
         UIBridge<V,U> old;
-        if( bridge == null )
+        if( bridge == null ) {
             old = bridges.remove( id );
-        else
+        } else {
             old = bridges.put( id, bridge );
-        
+        }
+
         if( old != null || bridge != null ){
             List<U> list = values.get( id );
             if( list != null ){
                 if( old != null ){
-                    for( U color : list )
+                    for( U color : list ) {
                         old.remove( id, color );
+                    }
                 }
-                
+
                 V original = manager.get( id );
                 if( bridge != null ){
                     for( U color : list ){
@@ -90,13 +93,14 @@ public class MultiUIBridge<V, U extends UIValue<V>> implements UIBridge<V, U> {
                     }
                 }
                 else{
-                    for( U color : list )
+                    for( U color : list ) {
                         color.set( original );
+                    }
                 }
             }
         }
     }
-    
+
     /**
      * Searches the bridge that handles resources with the key <code>id</code>.
      * @param id the key of the resources
@@ -105,12 +109,13 @@ public class MultiUIBridge<V, U extends UIValue<V>> implements UIBridge<V, U> {
     public UIBridge<V,U> getBridge( String id ){
         return bridges.get( id );
     }
-    
+
     public void add( String id, U uiValue ) {
         UIBridge<V, U> provider = bridges.get( id );
-        if( provider != null )
+        if( provider != null ) {
             provider.add( id, uiValue );
-        
+        }
+
         List<U> list = values.get( id );
         if( list == null ){
             list = new LinkedList<U>();
@@ -121,9 +126,10 @@ public class MultiUIBridge<V, U extends UIValue<V>> implements UIBridge<V, U> {
 
     public void remove( String id, U uiValue ) {
         UIBridge<V, U> provider = bridges.get( id );
-        if( provider != null )
+        if( provider != null ) {
             provider.remove( id, uiValue );
-        
+        }
+
         List<U> list = values.get( id );
         if( list != null ){
             list.remove( uiValue );
@@ -135,9 +141,10 @@ public class MultiUIBridge<V, U extends UIValue<V>> implements UIBridge<V, U> {
 
     public void set( String id, V value, U uiValue ) {
         UIBridge<V, U> bridge = bridges.get( id );
-        if( bridge != null )
+        if( bridge != null ) {
             bridge.set( id, value, uiValue );
-        else
+        } else {
             uiValue.set( value );
+        }
     }
 }

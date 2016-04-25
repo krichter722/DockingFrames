@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -47,14 +47,14 @@ public interface UIBridge<V, U extends UIValue<V>> {
      * @param uiValue a value that can be modified by this bride
      */
     public void add( String id, U uiValue );
-    
+
     /**
      * Removes a value from this bridge.
      * @param id the id of the resource the value needed
      * @param uiValue the value that is no longer in use
      */
     public void remove( String id, U uiValue );
-    
+
     /**
      * Called by the {@link UIProperties} when one resource or {@link UIValue}
      * has been exchanged. Normally an {@link UIBridge} can just

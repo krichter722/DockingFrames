@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -46,16 +46,16 @@ public class ScreenDockProperty extends AbstractDockableProperty {
     private int x, y, width, height;
     private boolean fullscreen;
     private Path placeholder;
-    
+
     public String getFactoryID() {
         return ScreenDockPropertyFactory.ID;
     }
-    
+
     /**
      * Constructs a new property
      */
     public ScreenDockProperty(){
-    	// do nothing
+        // do nothing
     }
 
     /**
@@ -66,9 +66,9 @@ public class ScreenDockProperty extends AbstractDockableProperty {
      * @param height the height of the dialog
      */
     public ScreenDockProperty( int x, int y, int width, int height ){
-    	this( x, y, width, height, null );
+        this( x, y, width, height, null );
     }
-    
+
     /**
      * Constructs a new property
      * @param x the x-coordinate of the dialog
@@ -78,9 +78,9 @@ public class ScreenDockProperty extends AbstractDockableProperty {
      * @param placeholder the name of this location, can be <code>null</code>
      */
     public ScreenDockProperty( int x, int y, int width, int height, Path placeholder ){
-    	this( x, y, width, height, placeholder, false );
+        this( x, y, width, height, placeholder, false );
     }
-    
+
     /**
      * Constructs a new property
      * @param x the x-coordinate of the dialog
@@ -98,7 +98,7 @@ public class ScreenDockProperty extends AbstractDockableProperty {
         this.placeholder = placeholder;
         this.fullscreen = fullscreen;
     }
-    
+
 
     public ScreenDockProperty copy() {
         ScreenDockProperty copy = new ScreenDockProperty( x, y, width, height, placeholder, fullscreen );
@@ -115,10 +115,10 @@ public class ScreenDockProperty extends AbstractDockableProperty {
         out.writeBoolean( fullscreen );
         out.writeBoolean( placeholder != null );
         if( placeholder != null ){
-        	out.writeUTF( placeholder.toString() );
+            out.writeUTF( placeholder.toString() );
         }
     }
-    
+
     public void store( XElement element ) {
         element.addElement( "x" ).setInt( x );
         element.addElement( "y" ).setInt( y );
@@ -126,7 +126,7 @@ public class ScreenDockProperty extends AbstractDockableProperty {
         element.addElement( "height" ).setInt( height );
         element.addElement( "fullscreen" ).setBoolean( fullscreen );
         if( placeholder != null ){
-        	element.addElement( "placeholder" ).setString( placeholder.toString() );
+            element.addElement( "placeholder" ).setString( placeholder.toString() );
         }
     }
 
@@ -137,15 +137,15 @@ public class ScreenDockProperty extends AbstractDockableProperty {
         y = in.readInt();
         width = in.readInt();
         height = in.readInt();
-        
+
         fullscreen = false;
         placeholder = null;
-        
+
         if( version.compareTo( Version.VERSION_1_0_8 ) >= 0 ){
-        	fullscreen = in.readBoolean();
-        	if( in.readBoolean() ){
-        		placeholder = new Path( in.readUTF() );
-        	}
+            fullscreen = in.readBoolean();
+            if( in.readBoolean() ){
+                placeholder = new Path( in.readUTF() );
+            }
         }
     }
 
@@ -154,21 +154,21 @@ public class ScreenDockProperty extends AbstractDockableProperty {
         y = element.getElement( "y" ).getInt();
         width = element.getElement( "width" ).getInt();
         height = element.getElement( "height" ).getInt();
-        
+
         fullscreen = false;
         placeholder = null;
-        
+
         XElement xfullscreen = element.getElement( "fullscreen" );
         if( xfullscreen != null ){
-        	fullscreen = xfullscreen.getBoolean();
+            fullscreen = xfullscreen.getBoolean();
         }
-        
+
         XElement xplaceholder = element.getElement( "placeholder" );
         if( xplaceholder != null ){
-        	placeholder = new Path( xplaceholder.getString() );
+            placeholder = new Path( xplaceholder.getString() );
         }
     }
-    
+
     /**
      * Gets the height of the dialog.
      * @return the height
@@ -236,81 +236,91 @@ public class ScreenDockProperty extends AbstractDockableProperty {
     public void setY( int y ) {
         this.y = y;
     }
-    
+
     /**
      * Tells whether this location describes an element that is in fullscreen mode.
      * @return the state
      */
     public boolean isFullscreen() {
-		return fullscreen;
-	}
-    
+        return fullscreen;
+    }
+
     /**
      * Sets the fullscreen mode
      * @param fullscreen the new state
      */
     public void setFullscreen( boolean fullscreen ) {
-		this.fullscreen = fullscreen;
-	}
-    
+        this.fullscreen = fullscreen;
+    }
+
     /**
      * Sets the name of this location.
      * @param placeholder the name, can be <code>null</code>
      */
     public void setPlaceholder( Path placeholder ) {
-		this.placeholder = placeholder;
-	}
-    
+        this.placeholder = placeholder;
+    }
+
     /**
      * Gets the name of this location.
      * @return the name, can be <code>null</code>
      */
     public Path getPlaceholder() {
-		return placeholder;
-	}
+        return placeholder;
+    }
 
     @Override
     public String toString(){
-	    return getClass().getName() + "[x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
+        return getClass().getName() + "[x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
     }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (fullscreen ? 1231 : 1237);
-		result = prime * result + height;
-		result = prime * result + ((placeholder == null) ? 0 : placeholder.hashCode());
-		result = prime * result + width;
-		result = prime * result + x;
-		result = prime * result + y;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + (fullscreen ? 1231 : 1237);
+        result = prime * result + height;
+        result = prime * result + ((placeholder == null) ? 0 : placeholder.hashCode());
+        result = prime * result + width;
+        result = prime * result + x;
+        result = prime * result + y;
+        return result;
+    }
 
-	@Override
-	public boolean equals( Object obj ) {
-		if( this == obj )
-			return true;
-		if( !super.equals( obj ) )
-			return false;
-		if( getClass() != obj.getClass() )
-			return false;
-		ScreenDockProperty other = (ScreenDockProperty) obj;
-		if( fullscreen != other.fullscreen )
-			return false;
-		if( height != other.height )
-			return false;
-		if( placeholder == null ) {
-			if( other.placeholder != null )
-				return false;
-		} else if( !placeholder.equals( other.placeholder ) )
-			return false;
-		if( width != other.width )
-			return false;
-		if( x != other.x )
-			return false;
-		if( y != other.y )
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals( Object obj ) {
+        if( this == obj ) {
+            return true;
+        }
+        if( !super.equals( obj ) ) {
+            return false;
+        }
+        if( getClass() != obj.getClass() ) {
+            return false;
+        }
+        ScreenDockProperty other = (ScreenDockProperty) obj;
+        if( fullscreen != other.fullscreen ) {
+            return false;
+        }
+        if( height != other.height ) {
+            return false;
+        }
+        if( placeholder == null ) {
+            if( other.placeholder != null ) {
+                return false;
+            }
+        } else if( !placeholder.equals( other.placeholder ) ) {
+            return false;
+        }
+        if( width != other.width ) {
+            return false;
+        }
+        if( x != other.x ) {
+            return false;
+        }
+        if( y != other.y ) {
+            return false;
+        }
+        return true;
+    }
 }

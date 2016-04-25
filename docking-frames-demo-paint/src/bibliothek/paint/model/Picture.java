@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -42,13 +42,13 @@ import bibliothek.util.xml.XElement;
 public class Picture {
     /** the shapes of this picture */
     private List<Shape> shapes = new ArrayList<Shape>();
-    
+
     /** the observers of this picture */
     private List<PictureListener> listeners = new ArrayList<PictureListener>();
-   
+
     /** the name of this picture */
     private String name;
-    
+
     /**
      * Creates a new picture.
      * @param name the name of this picture
@@ -56,12 +56,12 @@ public class Picture {
     public Picture( String name ){
         this.name = name;
     }
-    
+
     @Override
     public String toString() {
         return name;
     }
-    
+
     /**
      * Writes the contents of this picture.
      * @param out the stream to write into
@@ -74,7 +74,7 @@ public class Picture {
             ShapeUtils.write( shape, out );
         }
     }
-    
+
     /**
      * Writes the contents of this picture.
      * @param element the element to write into
@@ -86,7 +86,7 @@ public class Picture {
             ShapeUtils.writeXML( shape, xshapes.addElement( "shape" ) );
         }
     }
-    
+
     /**
      * Reads the contents of this picture from <code>in</code>.
      * @param in the stream to read from
@@ -98,26 +98,26 @@ public class Picture {
         for( int i = 0, n = in.readInt(); i<n; i++ ){
             shapes.add( ShapeUtils.read( in ) );
         }
-        
+
         for( PictureListener listener : listeners.toArray( new PictureListener[ listeners.size() ] ))
             listener.pictureChanged();
     }
-    
+
     public void readXML( XElement element ){
         name = element.getElement( "name" ).getString();
         XElement xshapes = element.getElement( "shapes" );
         shapes.clear();
-        
+
         for( XElement xshape : xshapes ){
             if( xshape.getName().equals( "shape" )){
                 shapes.add( ShapeUtils.readXML( xshape ));
             }
         }
-        
+
         for( PictureListener listener : listeners.toArray( new PictureListener[ listeners.size() ] ))
             listener.pictureChanged();
     }
-    
+
     /**
      * Adds a shape to the list of shapes.
      * @param shape the new shape
@@ -127,7 +127,7 @@ public class Picture {
         for( PictureListener listener : listeners.toArray( new PictureListener[ listeners.size() ] ))
             listener.pictureChanged();
     }
-    
+
     /**
      * Tells whether this picture has at least one {@link Shape}
      * or not.
@@ -136,7 +136,7 @@ public class Picture {
     public boolean isEmpty(){
         return shapes.isEmpty();
     }
-    
+
     /**
      * Deletes the newest {@link Shape} of this picture.
      */
@@ -145,7 +145,7 @@ public class Picture {
         for( PictureListener listener : listeners.toArray( new PictureListener[ listeners.size() ] ))
             listener.pictureChanged();
     }
-    
+
     /**
      * Adds an observer to this picture.
      * @param listener the new observer
@@ -153,7 +153,7 @@ public class Picture {
     public void addListener( PictureListener listener ){
         listeners.add( listener );
     }
-    
+
     /**
      * Removes an observer from this picture.
      * @param listener the listener to remove
@@ -161,7 +161,7 @@ public class Picture {
     public void removeListener( PictureListener listener ){
         listeners.remove( listener );
     }
-    
+
     /**
      * Gets the name of this picture.
      * @return the name
@@ -169,7 +169,7 @@ public class Picture {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Paints all shapes of this picture.
      * @param g the graphics context

@@ -17,25 +17,25 @@ public class King extends Behavior{
                 board.move( r, 7, r, 5 );
         }
     }
-    
+
     @Override
     public void attackable( Board board, Figure figure, CellVisitor visitor ) {
         reachable( board, figure, visitor, true );
     }
-    
+
     @Override
     public void reachable( Board board, Figure figure, CellVisitor visitor ) {
         reachable( board, figure, visitor, false );
     }
-    
+
     private void reachable( Board board, Figure figure, CellVisitor visitor, boolean ignoreAttack ){
         if( !ignoreAttack )
             visitor = createAttackVisitor( board, figure, visitor );
-        
+
         for( int i = 0; i < 8; i++ ){
             int r = figure.getRow();
             int c = figure.getColumn();
-            
+
             switch( i ){
                 case 0: r++; break;
                 case 1: r++; c++; break;
@@ -46,7 +46,7 @@ public class King extends Behavior{
                 case 6: r--; c++; break;
                 case 7: r--; c--; break;
             }
-            
+
             if( board.isValid( r, c ) ){
                 if( ignoreAttack ){
                     if( !board.visit( r, c, visitor ))
@@ -59,16 +59,16 @@ public class King extends Behavior{
                 }
             }
         }
-        
+
         if( !figure.isMoved() ){
             // Rochade
             if( board.isKingAttacked() )
                 return;
-            
+
             int r = figure.getRow();
             int c = figure.getColumn();
-            
-            if( board.isEmpty( r, c+1 ) && !board.isAttacked( r, c+1 ) && 
+
+            if( board.isEmpty( r, c+1 ) && !board.isAttacked( r, c+1 ) &&
                     board.isEmpty( r, c+2 ) && !board.isAttacked( r, c+2 ) ){
                 Figure rock = board.getFigure( r, c+3 );
                 if( rock != null && rock.getType() == Figure.Type.ROCK ){
@@ -77,9 +77,9 @@ public class King extends Behavior{
                             return;
                 }
             }
-            
-            if(  board.isEmpty( r, c-1 ) && !board.isAttacked( r, c-1 ) && 
-                    board.isEmpty( r, c-2 ) && !board.isAttacked( r, c-2 ) && 
+
+            if(  board.isEmpty( r, c-1 ) && !board.isAttacked( r, c-1 ) &&
+                    board.isEmpty( r, c-2 ) && !board.isAttacked( r, c-2 ) &&
                     board.isEmpty( r, c-3 ) ){
                 Figure rock = board.getFigure( r, c-4 );
                 if( rock != null && rock.getType() == Figure.Type.ROCK ){

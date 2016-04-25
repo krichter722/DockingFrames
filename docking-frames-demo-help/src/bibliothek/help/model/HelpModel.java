@@ -14,7 +14,7 @@ import java.util.Map;
 public class HelpModel {
     /** the <code>Entry</code>s known to this model */
     private Map<String, Entry> entries = new HashMap<String, Entry>();
-    
+
     /**
      * Creates a new model, reads a set of {@link Entry}s. The
      * <code>Entry</code>s are read using {@link EntryIO#readList(DataInputStream)}.
@@ -30,7 +30,7 @@ public class HelpModel {
         for( Entry entry : list )
             entries.put( entry.getType() + ":" + entry.getId(), entry );
     }
-    
+
     /**
      * Gets an {@link Entry} that is identified by its link.
      * @param link a string in the form <code>type:id</code>

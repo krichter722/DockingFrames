@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,27 +44,27 @@ import bibliothek.util.Path;
  * @author Benjamin Sigg
  */
 public class TextManager extends UIProperties<String, TextValue, TextBridge>{
-	/** Name of an {@link ExtensionName} to load additional {@link ResourceBundle}s */
-	public static final Path TEXT_EXTENSION = new Path( "dock.TextManager" );
-	
-	/** Key for a {@link Locale} that is associated with {@link #TEXT_EXTENSION} */
-	public static final String TEXT_EXTENSION_LOCALE = "locale";
-	
-	/**
-	 * Creates a new {@link TextManager}.
-	 * @param controller the owner of this manager
-	 */
-	public TextManager( DockController controller ){
-		super( controller );
-	}
+    /** Name of an {@link ExtensionName} to load additional {@link ResourceBundle}s */
+    public static final Path TEXT_EXTENSION = new Path( "dock.TextManager" );
 
-	/**
-	 * This method loads additional {@link ResourceBundle}s from {@link Extension}s using the name
-	 * {@link #TEXT_EXTENSION}.
-	 * @param locale the requested language
-	 * @return the loaded bundles, may be empty
-	 */
-	public List<ResourceBundle> loadExtensionBundles( Locale locale ){
-		return getController().getExtensions().load( new ExtensionName<ResourceBundle>( TEXT_EXTENSION, ResourceBundle.class, TEXT_EXTENSION_LOCALE, locale ) );
-	}
+    /** Key for a {@link Locale} that is associated with {@link #TEXT_EXTENSION} */
+    public static final String TEXT_EXTENSION_LOCALE = "locale";
+
+    /**
+     * Creates a new {@link TextManager}.
+     * @param controller the owner of this manager
+     */
+    public TextManager( DockController controller ){
+        super( controller );
+    }
+
+    /**
+     * This method loads additional {@link ResourceBundle}s from {@link Extension}s using the name
+     * {@link #TEXT_EXTENSION}.
+     * @param locale the requested language
+     * @return the loaded bundles, may be empty
+     */
+    public List<ResourceBundle> loadExtensionBundles( Locale locale ){
+        return getController().getExtensions().load( new ExtensionName<ResourceBundle>( TEXT_EXTENSION, ResourceBundle.class, TEXT_EXTENSION_LOCALE, locale ) );
+    }
 }

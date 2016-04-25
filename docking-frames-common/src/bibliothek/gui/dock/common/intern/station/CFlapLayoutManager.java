@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -72,7 +72,7 @@ public class CFlapLayoutManager extends AbstractFlapLayoutManager implements Fla
             }
         }
     };
-    
+
     /**
      * A listener added to each {@link CDockable}.
      */
@@ -92,29 +92,31 @@ public class CFlapLayoutManager extends AbstractFlapLayoutManager implements Fla
             }
         }
         public void stickySwitchableChanged( CDockable dockable ){
-        	DockStation parent = dockable.intern().getDockParent();
+            DockStation parent = dockable.intern().getDockParent();
             if( parent instanceof FlapDockStation ){
                 fireHoldSwitchableChanged( (FlapDockStation)parent, dockable.intern() );
             }
         }
     };
-    
+
     /** temporary storage of holds for non CommonDockables */
     private Map<Dockable, Boolean> holds = new HashMap<Dockable, Boolean>();
-    
+
     /** temporary storage of sizes for non CommonDockables */
     private Map<Dockable, Integer> sizes = new HashMap<Dockable, Integer>();
-    
+
     public void install( FlapDockStation station ) {
         station.addDockStationListener( stationListener );
-        for( int i = 0, n = station.getDockableCount(); i<n; i++ )
+        for( int i = 0, n = station.getDockableCount(); i<n; i++ ) {
             stationListener.dockableAdded( station, station.getDockable( i ) );
+        }
     }
 
     public void uninstall( FlapDockStation station ) {
         station.removeDockStationListener( stationListener );
-        for( int i = 0, n = station.getDockableCount(); i<n; i++ )
+        for( int i = 0, n = station.getDockableCount(); i<n; i++ ) {
             stationListener.dockableRemoved( station, station.getDockable( i ) );
+        }
     }
 
     public int getSize( FlapDockStation station, Dockable dockable ) {
@@ -122,22 +124,24 @@ public class CFlapLayoutManager extends AbstractFlapLayoutManager implements Fla
         int size = getMaxSize( dockable, direction == Direction.NORTH || direction == Direction.SOUTH );
         if( size < 0 ){
             Integer value = sizes.get( dockable );
-            if( value != null )
+            if( value != null ) {
                 return value.intValue();
-            
+            }
+
             return station.getDefaultWindowSize();
         }
         return size;
     }
-    
+
     private int getMaxSize( Dockable dockable, boolean horizontal ){
         if( dockable instanceof CommonDockable ){
             CDockable cdock = ((CommonDockable)dockable).getDockable();
             Dimension size = cdock.getMinimizedSize();
-            if( horizontal )
+            if( horizontal ) {
                 return size.height;
-            else
+            } else {
                 return size.width;
+            }
         }
         if( dockable instanceof StackDockStation ){
             StackDockStation station = (StackDockStation)dockable;
@@ -149,7 +153,7 @@ public class CFlapLayoutManager extends AbstractFlapLayoutManager implements Fla
         }
         return -1;
     }
-    
+
     public void setSize( FlapDockStation station, Dockable dockable, int size ) {
         if( dockable instanceof CommonDockable ){
             Direction direction = station.getDirection();
@@ -157,10 +161,10 @@ public class CFlapLayoutManager extends AbstractFlapLayoutManager implements Fla
             CDockable cdock = ((CommonDockable)dockable).getDockable();
             Dimension dimension = cdock.getMinimizedSize();
             if( horizontal ){
-            	cdock.setMinimizedSize( new Dimension( dimension.width, size ) );
+                cdock.setMinimizedSize( new Dimension( dimension.width, size ) );
             }
             else{
-            	cdock.setMinimizedSize( new Dimension( size, dimension.height ) );
+                cdock.setMinimizedSize( new Dimension( size, dimension.height ) );
             }
         }
         else{
@@ -185,13 +189,13 @@ public class CFlapLayoutManager extends AbstractFlapLayoutManager implements Fla
             holds.put( dockable, hold );
         }
     }
-    
+
     public boolean isHoldSwitchable( FlapDockStation station, Dockable dockable ){
-    	if( dockable instanceof CommonDockable ){
-    		return ((CommonDockable)dockable).getDockable().isStickySwitchable();
-    	}
-    	else{
-    		return true;
-    	}
+        if( dockable instanceof CommonDockable ){
+            return ((CommonDockable)dockable).getDockable().isStickySwitchable();
+        }
+        else{
+            return true;
+        }
     }
 }

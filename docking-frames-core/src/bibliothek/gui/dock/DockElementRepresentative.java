@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2008 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,14 +41,14 @@ import bibliothek.gui.dock.title.DockTitle;
  * a {@link DockElement}. For example a {@link DockTitle} would be a representation
  * of a {@link Dockable}. Or a small image in an overview-view might represent
  * any {@link DockElement}.<br>
- * If a <code>DockElementRepresentative</code> is 
+ * If a <code>DockElementRepresentative</code> is
  * {@link DockController#addRepresentative(DockElementRepresentative) added}
  * to a {@link DockController} then it may gain new abilities. Clicking on the
  * representative might open the {@link Dockable}s popup menu, dragging it will
  * drag the {@link Dockable}. However, events on the representative are
  * not automatically transfered to its <code>DockElement</code>, that step
  * is always performed by the module that observes the representative.
- * 
+ *
  * @author Benjamin Sigg
  */
 public interface DockElementRepresentative {
@@ -58,31 +58,31 @@ public interface DockElementRepresentative {
      * @return the component, never <code>null</code>
      */
     public Component getComponent();
-    
+
     /**
      * Gets the element which is represented by <code>this</code>.
      * The result of this method must not change.
      * @return the element, never <code>null</code>
      */
     public DockElement getElement();
-    
+
     /**
      * Tells whether this {@link DockElementRepresentative} is used as title.<br>
-     * Some modules grant more rights to titles than to non-titles, i.e. 
+     * Some modules grant more rights to titles than to non-titles, i.e.
      * a {@link DockRelocator} can allow drag &amp; drop only for titles.<br>
      * Normally a {@link Dockable} should have only one element that is a title,
      * so if in doubt return <code>false</code>.
      * @return <code>true</code> if this representative should be seen as title
      */
     public boolean isUsedAsTitle();
-    
+
     /**
      * Tells whether a click onto this component should transfer the focus either to this component or to the
      * {@link Dockable}.
      * @return <code>true</code> if clicking this component should influence focus
      */
     public boolean shouldFocus();
-    
+
     /**
      * Tells whether a click onto this component should transfer the focus to the {@link Dockable} or not. If this
      * object is a {@link Dockable}, then a result of <code>true</code> might change the currently focused item
@@ -90,7 +90,7 @@ public interface DockElementRepresentative {
      * @return whether to change the focused component or not
      */
     public boolean shouldTransfersFocus();
-    
+
     /**
      * Adds a listener to this representative, it is not defined what to do
      * with that listener, but most subclasses would just add the listener
@@ -98,13 +98,13 @@ public interface DockElementRepresentative {
      * @param listener the new listener
      */
     public void addMouseInputListener( MouseInputListener listener );
-    
+
     /**
      * Removes a listener from this representative.
      * @param listener the listener to remove
      */
     public void removeMouseInputListener( MouseInputListener listener );
-    
+
     /**
      * Tells whether a popup menu should be opened when the user clicks
      * at <code>click</code> with the mouse. If yes, then the top left edge

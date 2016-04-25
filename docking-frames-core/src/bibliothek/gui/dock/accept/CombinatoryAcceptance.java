@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,10 +37,10 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
     public static enum Combination{
         AND, OR, XOR, EQUAL, IMPLIES
     }
-    
+
     private Combination combination;
     private DockAcceptance first, second;
-    
+
     /**
      * Constructor, sets up all fields of this acceptance
      * @param combination How the two Acceptances <code>first</code> and
@@ -53,7 +53,7 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
         setFirst( first );
         setSecond( second );
     }
-    
+
     @Override
     public boolean accept( DockStation parent, Dockable child ) {
         return compare( first.accept( parent, child ), second.accept( parent, child ));
@@ -62,7 +62,7 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
     public boolean accept( DockStation parent, Dockable child, Dockable next ) {
         return compare( first.accept(parent, child, next), second.accept(parent, child, next));
     }
-    
+
     /**
      * Makes a logical operation with <code>first</code> and
      * <code>second</code> according to the operation specified
@@ -81,7 +81,7 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
             default: throw new IllegalStateException( "no combination" );
         }
     }
-    
+
     /**
      * Sets, how the two acceptances of this {@link CombinatoryAcceptance}
      * have to be combined
@@ -91,12 +91,13 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
      * @throws IllegalArgumentException if <code>combination</code> is <code>null</code>
      */
     public void setCombination( Combination combination ) {
-        if( combination == null )
+        if( combination == null ) {
             throw new IllegalArgumentException( "Combination must not be null" );
-        
+        }
+
         this.combination = combination;
     }
-    
+
     /**
      * Gets how the combination is calculated
      * @return The operand
@@ -105,7 +106,7 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
     public Combination getCombination() {
         return combination;
     }
-    
+
     /**
      * Sets the "left" operand of the combination
      * @param first The first acceptance whose opinion for an
@@ -113,11 +114,12 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
      * @throws IllegalArgumentException if the argument is <code>null</code>
      */
     public void setFirst( DockAcceptance first ) {
-        if( first == null )
+        if( first == null ) {
             throw new IllegalArgumentException( "First must not be null" );
+        }
         this.first = first;
     }
-    
+
     /**
      * Gets the "left" operand of the combination
      * @return The acceptance
@@ -126,19 +128,20 @@ public class CombinatoryAcceptance extends AbstractAcceptance {
     public DockAcceptance getFirst() {
         return first;
     }
-    
+
     /**
      * Sets the "right" operand of the combination
-     * @param second The second acceptance whose opinion for 
+     * @param second The second acceptance whose opinion for
      * {@link #accept(DockStation, Dockable)} will be asked.
      * @throws IllegalArgumentException if the argument is <code>null</code>
      */
     public void setSecond( DockAcceptance second ) {
-        if( second == null )
+        if( second == null ) {
             throw new IllegalArgumentException( "Second must not be null" );
+        }
         this.second = second;
     }
-    
+
     /**
      * Gets the "right" operand of the combination
      * @return The right operand

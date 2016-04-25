@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -39,17 +39,17 @@ import bibliothek.gui.dock.action.view.ViewItem;
  * @param <C> The type of component that represents this view
  */
 public interface MenuViewItem<C extends JComponent> extends ViewItem<C> {
-	/**
-	 * Adds a listener which will be called if this view is triggered. The
-	 * listener should only be called, if the user clicked directly onto
-	 * this view.
-	 * @param listener the new listener
-	 */
-	public void addActionListener( ActionListener listener );
-	
-	/**
-	 * Removes a listener from this view.
-	 * @param listener the listener to remove
-	 */
-	public void removeActionListener( ActionListener listener );
+    /**
+     * Adds a listener which will be called if this view is triggered. The
+     * listener should only be called, if the user clicked directly onto
+     * this view.
+     * @param listener the new listener
+     */
+    public void addActionListener( ActionListener listener );
+
+    /**
+     * Removes a listener from this view.
+     * @param listener the listener to remove
+     */
+    public void removeActionListener( ActionListener listener );
 }

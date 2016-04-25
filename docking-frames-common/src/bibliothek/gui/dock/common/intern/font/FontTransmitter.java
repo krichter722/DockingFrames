@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,13 +44,13 @@ import bibliothek.gui.dock.util.font.FontModifier;
 public abstract class FontTransmitter extends UITransmitter<FontModifier, DockFont> implements FontBridge{
     /** listens to a {@link FontMap} */
     private Listener listener = new Listener();
-    
+
     /** source of unspoiled values */
     private FontManager manager;
-    
+
     /** the observed keys */
     private String[] keys;
-    
+
     /**
      * Creates a new {@link FontTransmitter}.
      * @param manager the source of original values
@@ -61,7 +61,7 @@ public abstract class FontTransmitter extends UITransmitter<FontModifier, DockFo
         this.manager = manager;
         this.keys = keys;
     }
-    
+
     /**
      * Gets the first non- <code>null</code> color of <code>map</code> that
      * matches a given key.
@@ -72,22 +72,23 @@ public abstract class FontTransmitter extends UITransmitter<FontModifier, DockFo
     protected FontModifier getFirstNonNull( FontMap map, String...keys ){
         for( String key : keys ){
             FontModifier font = map.getFont( key );
-            if( font != null )
+            if( font != null ) {
                 return font;
+            }
         }
         return null;
     }
-    
+
     @Override
     protected void connect( CDockable dockable ) {
         dockable.getFonts().addListener( listener );
     }
-    
+
     @Override
     protected void disconnect( CDockable dockable ) {
         dockable.getFonts().removeListener( listener );
     }
-    
+
     @Override
     protected void update( CDockable dockable, String key, FontModifier value ) {
         if( isObservedMapKey( key )){
@@ -96,7 +97,7 @@ public abstract class FontTransmitter extends UITransmitter<FontModifier, DockFo
             }
         }
     }
-    
+
     /**
      * Tells whether <code>key</code> is one of the keys observed in
      * the {@link FontMap}.
@@ -105,7 +106,7 @@ public abstract class FontTransmitter extends UITransmitter<FontModifier, DockFo
      * result in a change of fonts
      */
     protected abstract boolean isObservedMapKey( String key );
-    
+
     /**
      * Transforms <code>value</code> into the form that should be used together
      * with <code>dockable</code>.
@@ -115,7 +116,7 @@ public abstract class FontTransmitter extends UITransmitter<FontModifier, DockFo
      * @return either <code>value</code> or a transformed version of <code>value</code>
      */
     protected abstract FontModifier get( FontModifier value, String id, CDockable dockable );
-    
+
     /**
      * A listener that gets informed when new maps join or some color in a map
      * changes.

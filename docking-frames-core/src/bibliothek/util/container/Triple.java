@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -37,48 +37,48 @@ package bibliothek.util.container;
  * @param <C> type of the third field
  */
 public class Triple<A, B, C> extends Tuple<A, B>{
-	private C c;
-	
-	public Triple(){
+    private C c;
+
+    public Triple(){
         // nothing to do
-	}
-	
-	public Triple( A a, B b, C c ){
-		super( a, b );
-		this.c = c;
-	}
-	
-	public void setC( C c ){
-		this.c = c;
-	}
-	
-	public C getC(){
-		return c;
-	}
-	
+    }
+
+    public Triple( A a, B b, C c ){
+        super( a, b );
+        this.c = c;
+    }
+
+    public void setC( C c ){
+        this.c = c;
+    }
+
+    public C getC(){
+        return c;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
-	public Triple<A, B, C> clone(){
-		return (Triple<A, B, C>)super.clone();
-	}
-	
+    public Triple<A, B, C> clone(){
+        return (Triple<A, B, C>)super.clone();
+    }
+
     @SuppressWarnings("unchecked")
-	@Override
-	public boolean equals( Object o ){
-		if( o instanceof Triple ){
-			Triple s = (Triple)o;
-			return super.equals( o ) && ( (s.c == null && c == null) || (s.c != null && s.c.equals( c )));
-		}
-		return false;
-	}
-	
     @Override
-	public int hashCode(){
-		return super.hashCode() ^ (c == null ? 0 : c.hashCode());
-	}
-	
+    public boolean equals( Object o ){
+        if( o instanceof Triple ){
+            Triple s = (Triple)o;
+            return super.equals( o ) && ( (s.c == null && c == null) || (s.c != null && s.c.equals( c )));
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return super.hashCode() ^ (c == null ? 0 : c.hashCode());
+    }
+
     @Override
     public String toString(){
-		return getClass().getName() + "[a=" + getA() + ", b=" + getB() + ", c=" + c + "]";
-	}
+        return getClass().getName() + "[a=" + getA() + ", b=" + getB() + ", c=" + c + "]";
+    }
 }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2011 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -44,14 +44,14 @@ public interface SharingDropDownItemAction extends SharingStandardDockAction, Dr
      * be selected
      */
     public void setDropDownSelectable( boolean dropDownSelectable );
-    
+
     /**
      * Tells whether this action can be selected.
      * @return <code>true</code> if it can be selected
      * @see #setDropDownSelectable(boolean)
      */
     public boolean isDropDownSelectable();
-    
+
     /**
      * Sets whether this action can be triggered when shown on, and selected by, a
      * {@link DropDownAction} or not.
@@ -59,24 +59,24 @@ public interface SharingDropDownItemAction extends SharingStandardDockAction, Dr
      * can be triggered
      */
     public void setDropDownTriggerableSelected( boolean dropDownTriggerableSelected );
-    
+
     /**
      * Tells whether this action can be triggered when shown on and selected by a
      * {@link DropDownAction} or not.
      * @return <code>true</code> if the action can be triggered
      */
     public boolean isDropDownTriggerableSelected();
-    
+
     /**
-     * Sets whether this action can be triggered when shown on, but not selected 
+     * Sets whether this action can be triggered when shown on, but not selected
      * by, a {@link DropDownAction} or not.
      * @param dropDownTriggerableNotSelected <code>true</code> if this action
      * can be triggered
      */
     public void setDropDownTriggerableNotSelected( boolean dropDownTriggerableNotSelected );
-    
+
     /**
-     * Tells whether this action can be triggered when shown on, but not selected 
+     * Tells whether this action can be triggered when shown on, but not selected
      * by, a {@link DropDownAction} or not.
      * @return <code>true</code> if the action can be triggered
      */

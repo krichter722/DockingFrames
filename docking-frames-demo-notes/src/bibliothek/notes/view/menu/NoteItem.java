@@ -16,50 +16,50 @@ import bibliothek.notes.view.panels.NoteView;
  */
 public class NoteItem extends UpdateableCheckBoxMenuItem implements NoteListener{
     /** a manager of the graphical representation of the {@link Note}s */
-	private NoteViewManager manager;
-	/** the <code>Note</code> whose visibility-state is represented by this item */
-	private Note note;
-	
-	/**
-	 * Creates a new item.
-	 * @param manager the manager of the {@link NoteView}s
-	 * @param note the <code>Note</code> whose visibility-state is represented
-	 * by this item
-	 */
-	public NoteItem( NoteViewManager manager, Note note ){
-		this.manager = manager;
-		this.note = note;
-		
-		note.addListener( this );
-		
-		titleChanged( note );
-		iconChanged( note );
-	}
-	
-	public void actionPerformed( ActionEvent e ){
-		boolean state = getState();
-		if( state )
-			manager.show( note );
-		else
-			manager.hide( note );
-	}
-	
-	public void titleChanged( Note note ){
-		String text = note.getTitle();
-		if( text == null || text.trim().length() == 0 )
-			text = " - ";
-		setText( text );
-	}
-	
-	public void iconChanged( Note note ){
-		setIcon( note.getIcon() );
-	}
-	
-	public void colorChanged( Note note ){
-		// ignore
-	}
-	
-	public void textChanged( Note note ){
-		// ignore
-	}
+    private NoteViewManager manager;
+    /** the <code>Note</code> whose visibility-state is represented by this item */
+    private Note note;
+
+    /**
+     * Creates a new item.
+     * @param manager the manager of the {@link NoteView}s
+     * @param note the <code>Note</code> whose visibility-state is represented
+     * by this item
+     */
+    public NoteItem( NoteViewManager manager, Note note ){
+        this.manager = manager;
+        this.note = note;
+
+        note.addListener( this );
+
+        titleChanged( note );
+        iconChanged( note );
+    }
+
+    public void actionPerformed( ActionEvent e ){
+        boolean state = getState();
+        if( state )
+            manager.show( note );
+        else
+            manager.hide( note );
+    }
+
+    public void titleChanged( Note note ){
+        String text = note.getTitle();
+        if( text == null || text.trim().length() == 0 )
+            text = " - ";
+        setText( text );
+    }
+
+    public void iconChanged( Note note ){
+        setIcon( note.getIcon() );
+    }
+
+    public void colorChanged( Note note ){
+        // ignore
+    }
+
+    public void textChanged( Note note ){
+        // ignore
+    }
 }

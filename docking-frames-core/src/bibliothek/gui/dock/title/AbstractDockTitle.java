@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -58,7 +58,7 @@ import bibliothek.gui.dock.util.swing.OrientedLabel;
  * background.<br>
  * Subclasses may override {@link #getInnerInsets()} to add a space between
  * border and contents of this title.
- * 
+ *
  * @author Benjamin Sigg
  *
  */
@@ -67,16 +67,16 @@ public class AbstractDockTitle extends AbstractMultiDockTitle {
     private ButtonPanel itemPanel;
     /** The actions that were suggested to this title */
     private DockActionSource suggestedSource;
-    
+
     /**
      * Constructs a new title
      * @param dockable the Dockable which is the owner of this title
      * @param origin the version which was used to create this title
      */
     public AbstractDockTitle( Dockable dockable, DockTitleVersion origin ){
-    	init( dockable, origin, true );
+        init( dockable, origin, true );
     }
-    
+
     /**
      * Standard constructor
      * @param dockable The Dockable whose title this will be
@@ -85,18 +85,18 @@ public class AbstractDockTitle extends AbstractMultiDockTitle {
      * should be shown, <code>false</code> if they should not be visible
      */
     public AbstractDockTitle( Dockable dockable, DockTitleVersion origin, boolean showMiniButtons ){
-    	init( dockable, origin, showMiniButtons );
+        init( dockable, origin, showMiniButtons );
     }
-    
+
     /**
      * Constructor which does not do anything. Subclasses should call
      * {@link #init(Dockable, DockTitleVersion, boolean)} to initialize
      * the title.
      */
     protected AbstractDockTitle(){
-    	// ignore 
+        // ignore
     }
-    
+
     /**
      * Initializer called by the constructor.
      * @param dockable The Dockable whose title this will be
@@ -105,68 +105,69 @@ public class AbstractDockTitle extends AbstractMultiDockTitle {
      * should be shown, <code>false</code> if they should not be visible
      */
     protected void init( Dockable dockable, DockTitleVersion origin, boolean showMiniButtons ){
-    	super.init( dockable, origin );
-    	setShowMiniButtons( showMiniButtons );
+        super.init( dockable, origin );
+        setShowMiniButtons( showMiniButtons );
     }
 
     /**
-     * Tells whether this titel is able to show any {@link DockAction}. 
+     * Tells whether this titel is able to show any {@link DockAction}.
      * @return <code>true</code> if {@link DockAction}s are enabled
      * @see #setShowMiniButtons(boolean)
      */
     public boolean isShowMiniButtons(){
-    	return itemPanel != null;
+        return itemPanel != null;
     }
-    
+
     /**
      * Enables or disables {@link DockAction}s for this title.
      * @param showMiniButtons whether to show actions or not
      */
     public void setShowMiniButtons( boolean showMiniButtons ){
-    	if( showMiniButtons ){
-    		if( itemPanel == null ){
-            	itemPanel = new ButtonPanel( true ){
-            		@Override
-            		protected BasicTitleViewItem<JComponent> createItemFor( DockAction action, Dockable dockable ){
-            			return AbstractDockTitle.this.createItemFor( action, dockable );
-            		}
-            	};
+        if( showMiniButtons ){
+            if( itemPanel == null ){
+                itemPanel = new ButtonPanel( true ){
+                    @Override
+                    protected BasicTitleViewItem<JComponent> createItemFor( DockAction action, Dockable dockable ){
+                        return AbstractDockTitle.this.createItemFor( action, dockable );
+                    }
+                };
                 itemPanel.setOpaque( false );
                 itemPanel.setOrientation( getOrientation() );
                 itemPanel.setToolTipText( getToolTipText() );
                 add( itemPanel );
-                
+
                 if( isBound() ){
-                	itemPanel.setController( getDockable().getController() );
-                	itemPanel.set( getDockable(), getActionSourceFor( getDockable() ) );
+                    itemPanel.setController( getDockable().getController() );
+                    itemPanel.set( getDockable(), getActionSourceFor( getDockable() ) );
                 }
-    		}
-    	}
-    	else{
-    		if( itemPanel != null ){
-    			itemPanel.set( null );
-    			remove( itemPanel );
-    		}
-    	}
+            }
+        }
+        else{
+            if( itemPanel != null ){
+                itemPanel.set( null );
+                remove( itemPanel );
+            }
+        }
     }
-    
+
     /**
      * Sets the tooltip that will be shown on this title.
      * @param text the new tooltip, can be <code>null</code>
      */
     protected void setTooltip( String text ){
-    	super.setToolTipText( text );
-        if( itemPanel != null )
+        super.setToolTipText( text );
+        if( itemPanel != null ) {
             itemPanel.setToolTipText( text );
+        }
     }
-    
+
     public void setOrientation( Orientation orientation ) {
         if( itemPanel != null ){
-        	itemPanel.setOrientation( orientation );
+            itemPanel.setOrientation( orientation );
         }
         super.setOrientation( orientation );
     }
-    
+
     @Override
     protected void doTitleLayout(){
         Insets insets = titleInsets();
@@ -174,154 +175,162 @@ public class AbstractDockTitle extends AbstractMultiDockTitle {
         int y = insets.top;
         int width = getWidth() - insets.left - insets.right;
         int height = getHeight() - insets.top - insets.bottom;
-        
+
         OrientedLabel label = getLabel();
         Orientation orientation = getOrientation();
         Icon icon = getIcon();
         int iconTextGap = getIconTextGap();
-        
+
         Dimension labelPreferred;
         String text = getText();
         if( text == null || text.length() == 0 ){
-        	labelPreferred = new Dimension( 5, 5 );
+            labelPreferred = new Dimension( 5, 5 );
         }
         else{
-        	labelPreferred = label.getPreferredSize();
+            labelPreferred = label.getPreferredSize();
         }
-        
+
         if( orientation.isHorizontal() ){
             if( icon != null ){
                 x += icon.getIconWidth() + iconTextGap;
                 width -= icon.getIconWidth() + iconTextGap;
             }
-            
+
             if( itemPanel != null && itemPanel.getItemCount() > 0 ){
-            	Dimension[] buttonPreferred = itemPanel.getPreferredSizes();
-            	
-            	int remaining = width - labelPreferred.width;
-            	int count = buttonPreferred.length-1;
-            	
-            	while( count > 0 && buttonPreferred[count].width > remaining )
-            		count--;
-            	
-            	itemPanel.setVisibleActions( count );
-            	
-            	int buttonWidth = buttonPreferred[count].width;
-            	int buttonX = width - buttonWidth;
-            	
+                Dimension[] buttonPreferred = itemPanel.getPreferredSizes();
+
+                int remaining = width - labelPreferred.width;
+                int count = buttonPreferred.length-1;
+
+                while( count > 0 && buttonPreferred[count].width > remaining ) {
+                    count--;
+                }
+
+                itemPanel.setVisibleActions( count );
+
+                int buttonWidth = buttonPreferred[count].width;
+                int buttonX = width - buttonWidth;
+
                 label.setBounds( x, y, buttonX, height );
                 itemPanel.setBounds( x + buttonX, y, width - buttonX, height );
             }
-            else
+            else {
                 label.setBounds( x, y, width, height );
+            }
         }
         else{
             if( icon != null ){
                 y += icon.getIconWidth() + iconTextGap;
                 height -= icon.getIconWidth() + iconTextGap;
             }
-            
+
             if( itemPanel != null && itemPanel.getItemCount() > 0 ){
-            	Dimension[] buttonPreferred = itemPanel.getPreferredSizes();
-            	
-            	int remaining = height - labelPreferred.height;
-            	int count = buttonPreferred.length-1;
-            	
-            	while( count > 0 && buttonPreferred[count].height > remaining )
-            		count--;
-            	
-            	itemPanel.setVisibleActions( count );
-            	
-            	int buttonHeight = buttonPreferred[count].height;
-            	int buttonY = height - buttonHeight;
-            	
+                Dimension[] buttonPreferred = itemPanel.getPreferredSizes();
+
+                int remaining = height - labelPreferred.height;
+                int count = buttonPreferred.length-1;
+
+                while( count > 0 && buttonPreferred[count].height > remaining ) {
+                    count--;
+                }
+
+                itemPanel.setVisibleActions( count );
+
+                int buttonHeight = buttonPreferred[count].height;
+                int buttonY = height - buttonHeight;
+
                 label.setBounds( x, y, width, buttonY );
                 itemPanel.setBounds( x, y + buttonY, width, height - buttonY );
             }
-            else
+            else {
                 label.setBounds( x, y, width, height );
+            }
         }
     }
-    
+
     public Point getPopupLocation( Point click, boolean popupTrigger ){
-        if( popupTrigger )
+        if( popupTrigger ) {
             return click;
-        
+        }
+
         boolean restrained = getText() == null || getText().length() == 0;
-        
+
         Rectangle icon = getIconBounds();
         if( icon != null ){
             if( icon.contains( click )){
-            	if( restrained ){
-            		// icon must not be the whole title
-            		int size = getWidth() * getHeight();
-            		if( itemPanel != null )
-            			size -= itemPanel.getWidth() * itemPanel.getHeight();
-            		
-            		if( size <= 2 * icon.width * icon.height )
-            			return null;
-            	}
-            	
-                if( getOrientation().isHorizontal() )
+                if( restrained ){
+                    // icon must not be the whole title
+                    int size = getWidth() * getHeight();
+                    if( itemPanel != null ) {
+                        size -= itemPanel.getWidth() * itemPanel.getHeight();
+                    }
+
+                    if( size <= 2 * icon.width * icon.height ) {
+                        return null;
+                    }
+                }
+
+                if( getOrientation().isHorizontal() ) {
                     return new Point( icon.x, icon.y + icon.height );
-                else
+                } else {
                     return new Point( icon.x + icon.width, icon.y );
+                }
             }
         }
-        
+
         return null;
     }
-    
+
     @Override
     public void changed( DockTitleEvent event ){
-    	super.changed( event );
-    	if( event instanceof ActionsDockTitleEvent ){
-    		suggestActions( ((ActionsDockTitleEvent)event).getSuggestions() );
-    	}
+        super.changed( event );
+        if( event instanceof ActionsDockTitleEvent ){
+            suggestActions( ((ActionsDockTitleEvent)event).getSuggestions() );
+        }
     }
-    
+
     @Override
     public Dimension getPreferredSize() {
-    	Dimension size = super.getPreferredSize();
-    	if( itemPanel != null ){
-    		Dimension items = itemPanel.getPreferredSize();
-    		
-    		Insets insets = titleInsets();
-    		
-    		if( getOrientation().isHorizontal() ){
-    			size.width += items.width;
-    			size.height = Math.max( size.height, items.height + insets.top + insets.bottom );
-    		}
-    		else{
-    			size.height += items.height;
-    			size.width = Math.max( size.width, items.width + insets.left + insets.right );
-    		}
-    	}
-    	
+        Dimension size = super.getPreferredSize();
+        if( itemPanel != null ){
+            Dimension items = itemPanel.getPreferredSize();
+
+            Insets insets = titleInsets();
+
+            if( getOrientation().isHorizontal() ){
+                size.width += items.width;
+                size.height = Math.max( size.height, items.height + insets.top + insets.bottom );
+            }
+            else{
+                size.height += items.height;
+                size.width = Math.max( size.width, items.width + insets.left + insets.right );
+            }
+        }
+
         if( size.width < 10 ){
             size.width = 10;
         }
-        
+
         if( size.height < 10 ){
             size.height = 10;
         }
-        
+
         return size;
     }
-    
+
     /**
      * Gets a list of all actions which will be shown on this title.
      * @param dockable the owner of the actions
      * @return the list of actions
      */
     protected DockActionSource getActionSourceFor( Dockable dockable ){
-    	if( suggestedSource != null ){
-    		return suggestedSource;
-    	}
-    	
+        if( suggestedSource != null ){
+            return suggestedSource;
+        }
+
         return dockable.getGlobalActionOffers();
     }
-    
+
     /**
      * Called if a module using the {@link DockTitle} suggests using a specific set of {@link DockAction}s. It is
      * up to the {@link DockTitle} to follow the suggestions or to ignore them. The default behavior of this
@@ -330,43 +339,43 @@ public class AbstractDockTitle extends AbstractMultiDockTitle {
      * @param actions the set of actions that should be used
      */
     protected void suggestActions( DockActionSource actions ){
-    	if( suggestedSource != actions ){
-	    	suggestedSource = actions;
-	    	if( isShowMiniButtons() ){
-	    		Dockable dockable = getDockable();
-	    		itemPanel.set( dockable, getActionSourceFor( dockable ) );
-	    	}
-    	}
+        if( suggestedSource != actions ){
+            suggestedSource = actions;
+            if( isShowMiniButtons() ){
+                Dockable dockable = getDockable();
+                itemPanel.set( dockable, getActionSourceFor( dockable ) );
+            }
+        }
     }
-    
+
     /**
      * Gets the {@link DockActionSource} that was {@link #suggestActions(DockActionSource) suggested} to this
      * title.
      * @return the source, can be <code>null</code>
      */
     protected DockActionSource getSuggestedSource(){
-		return suggestedSource;
-	}
-    
+        return suggestedSource;
+    }
+
     @Override
-    public void bind() {        
+    public void bind() {
         DockController controller = getDockable().getController();
         if( itemPanel != null ){
-        	Dockable dockable = getDockable();
-        	itemPanel.set( dockable, getActionSourceFor( dockable ) );
-        	itemPanel.setController( controller );
+            Dockable dockable = getDockable();
+            itemPanel.set( dockable, getActionSourceFor( dockable ) );
+            itemPanel.setController( controller );
         }
-        
+
         super.bind();
     }
 
     @Override
     public void unbind() {
         if( itemPanel != null ){
-        	itemPanel.set( null );
-        	itemPanel.setController( null );
+            itemPanel.set( null );
+            itemPanel.setController( null );
         }
-        
+
         super.unbind();
     }
 }

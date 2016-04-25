@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -41,7 +41,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
     private List<XAttribute> attributes = new ArrayList<XAttribute>();
     /** the children of this entry */
     private List<XElement> children = new ArrayList<XElement>();
-    
+
     /** the name of this attribute */
     private String name;
 
@@ -52,42 +52,45 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public XElement( String name ){
         setName( name );
     }
-    
+
     @Override
     public XElement copy() {
-    	XElement copy = new XElement( name );
-    	copy.copy( this );
-    	return copy;
+        XElement copy = new XElement( name );
+        copy.copy( this );
+        return copy;
     }
-    
+
     /**
      * Makes a copy of all the elements of <code>original</code>
      * and stores them in this container.
      * @param original the element to copy
      */
     public void copy( XElement original ){
-    	super.copy( original );
-    	
-    	attributes.clear();
-    	for( XAttribute attr : original.attributes )
-    		attributes.add( attr.copy() );
-    	
-    	children.clear();
-    	for( XElement child : original.children )
-    		children.add( child.copy() );
+        super.copy( original );
+
+        attributes.clear();
+        for( XAttribute attr : original.attributes ) {
+            attributes.add( attr.copy() );
+        }
+
+        children.clear();
+        for( XElement child : original.children ) {
+            children.add( child.copy() );
+        }
     }
-    
+
     /**
      * Sets the name of this attribute.
      * @param name the new name
      */
     public void setName( String name ) {
-        if( name == null )
+        if( name == null ) {
             throw new IllegalArgumentException( "name must not be null" );
-        
+        }
+
         this.name = name;
     }
-    
+
     /**
      * Gets the name of this attribute.
      * @return the name
@@ -95,11 +98,11 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public String getName() {
         return name;
     }
-    
+
     public Iterator<XElement> iterator() {
         return children.iterator();
     }
-    
+
     /**
      * Gets all attributes of this entry.
      * @return the attributes
@@ -107,7 +110,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public XAttribute[] attributes(){
         return attributes.toArray( new XAttribute[ attributes.size() ] );
     }
-    
+
     /**
      * Gets all children of this entry.
      * @return the children
@@ -115,47 +118,48 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public XElement[] children(){
         return children.toArray( new XElement[ children.size() ] );
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param attribute the new attribute
      * @return <code>this</code>
      */
     public XElement addAttribute( XAttribute attribute ){
-        if( attribute == null )
+        if( attribute == null ) {
             throw new NullPointerException( "attribute must not be null" );
-        
-        if( getAttribute( attribute.getName() ) != null ){
-        	throw new IllegalArgumentException( "attribute '" + attribute.getName() + "' has already been added to this element" );
         }
-        
+
+        if( getAttribute( attribute.getName() ) != null ){
+            throw new IllegalArgumentException( "attribute '" + attribute.getName() + "' has already been added to this element" );
+        }
+
         attributes.add( attribute );
         return this;
     }
-    
+
     /**
      * Removes the attribute with name <code>name</code> from this {@link XElement}.
      * @param name the name of the attribute to remove
      * @return the attribute that was removed, or <code>null</code> if not found
      */
     public XAttribute removeAttribute( String name ){
-    	for( int i = 0, n = attributes.size(); i<n; i++ ){
-    		if( attributes.get( i ).getName().equals( name ) ){
-    			return attributes.remove( i );
-    		}
-    	}
-    	return null;
+        for( int i = 0, n = attributes.size(); i<n; i++ ){
+            if( attributes.get( i ).getName().equals( name ) ){
+                return attributes.remove( i );
+            }
+        }
+        return null;
     }
-    
+
     /**
      * Removes the attribute <code>attribute</code> from this {@link XElement}.
      * @param attribute the attribute to remove
      * @return <code>true</code> if <code>attribute</code> was removed
      */
     public boolean removeAttribute( XAttribute attribute ){
-    	return attributes.remove( attribute );
+        return attributes.remove( attribute );
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -168,7 +172,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -181,7 +185,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -194,7 +198,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -207,7 +211,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -220,7 +224,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -233,7 +237,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -246,7 +250,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -259,7 +263,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -272,7 +276,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Adds a new attribute to this entry.
      * @param name the name of the attribute
@@ -285,7 +289,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addAttribute( attribute );
         return this;
     }
-    
+
     /**
      * Tells whether the attribute <code>name</code> exists.
      * @param name the name to search
@@ -294,7 +298,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public boolean attributeExists( String name ){
         return getAttribute( name ) != null;
     }
-    
+
     /**
      * Searches an attribute with the given name.
      * @param name the name of the attribute
@@ -302,12 +306,13 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public XAttribute getAttribute( String name ){
         for( XAttribute check : attributes ){
-            if( check.getName().equals( name ))
+            if( check.getName().equals( name )) {
                 return check;
+            }
         }
         return null;
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -318,11 +323,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public byte getByte( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getByte();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -333,11 +339,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public short getShort( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getShort();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -348,11 +355,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public int getInt( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getInt();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -363,11 +371,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public long getLong( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getLong();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -378,11 +387,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public float getFloat( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getFloat();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -393,11 +403,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public double getDouble( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getDouble();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -408,11 +419,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public char getChar( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getChar();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -423,11 +435,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public String getString( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getString();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -438,11 +451,12 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public boolean getBoolean( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getBoolean();
     }
-    
+
     /**
      * Gets the value of an attribute.
      * @param name the name of the attribute
@@ -453,30 +467,32 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public byte[] getByteArray( String name ){
         XAttribute attribute = getAttribute( name );
-        if( attribute == null )
+        if( attribute == null ) {
             throw new XException( "no attribute known with name: " + name );
+        }
         return attribute.getByteArray();
     }
-    
+
     /**
      * Removes the child <code>element</code> from this {@link XElement}.
      * @param element the element to remove
      * @return <code>true</code> if <code>element</code> was removed, <code>false</code> otherwise
      */
     public boolean removeElement( XElement element ){
-    	return children.remove( element );
+        return children.remove( element );
     }
-    
+
     /**
      * Adds a new element to this element.
      * @param element the new child
      */
     public void addElement( XElement element ){
-        if( element == null )
+        if( element == null ) {
             throw new NullPointerException( "element must not be null" );
+        }
         children.add( element );
     }
-   
+
     /**
      * Creates and adds a new element.
      * @param name the name of the new element
@@ -487,7 +503,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
         addElement( element );
         return element;
     }
-    
+
     /**
      * Gets the first element with the given name.
      * @param name the name of the element
@@ -495,13 +511,14 @@ public class XElement extends XContainer implements Iterable<XElement>{
      */
     public XElement getElement( String name ){
         for( XElement element : children ){
-            if( element.getName().equals( name ))
+            if( element.getName().equals( name )) {
                 return element;
+            }
         }
-        
+
         return null;
     }
-    
+
     /**
      * Gets the number of children this element has.
      * @return the number of children
@@ -509,7 +526,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public int getElementCount(){
         return children.size();
     }
-    
+
     /**
      * Gets the index'th child of this element.
      * @param index the index of the child
@@ -518,7 +535,7 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public XElement getElement( int index ){
         return children.get( index );
     }
-    
+
     /**
      * Gets all children with a given name.
      * @param name the name each child must have
@@ -527,35 +544,36 @@ public class XElement extends XContainer implements Iterable<XElement>{
     public XElement[] getElements( String name ){
         List<XElement> elements = new LinkedList<XElement>();
         for( XElement element : children ){
-            if( element.getName().equals( name ))
+            if( element.getName().equals( name )) {
                 elements.add( element );
+            }
         }
         return elements.toArray( new XElement[ elements.size() ] );
     }
-    
+
     /**
      * Searches all children which have one of the name <code>names</code>.
      * @param names the names to search
      * @return the array of children, ordered by their occurence within this element, might be empty
      */
     public XElement[] getElements( String... names ){
-    	List<XElement> elements = new LinkedList<XElement>();
+        List<XElement> elements = new LinkedList<XElement>();
         for( XElement element : children ){
-        	for( String name : names ){
-        		if( element.getName().equals( name )){
-        			elements.add( element );
-        			break;
-        		}
-        	}
+            for( String name : names ){
+                if( element.getName().equals( name )){
+                    elements.add( element );
+                    break;
+                }
+            }
         }
         return elements.toArray( new XElement[ elements.size() ] );
     }
-    
+
     @Override
     public void setString( String s ) {
-        if( s.length() == 0 )
+        if( s.length() == 0 ) {
             s = "[]";
-        else{
+        } else{
             if( Character.isWhitespace( s.charAt( 0 ) ) || Character.isWhitespace( s.charAt( s.length()-1 ) )){
                 s = "[" + s + "]";
             }
@@ -563,18 +581,19 @@ public class XElement extends XContainer implements Iterable<XElement>{
                 s = "[" + s + "]";
             }
         }
-        
+
         super.setString( s );
     }
-    
+
     @Override
     public String getString() {
         String s = super.getString();
-        if( s.startsWith( "[" ) && s.endsWith( "]" ))
+        if( s.startsWith( "[" ) && s.endsWith( "]" )) {
             return s.substring( 1, s.length()-1 );
+        }
         return s;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

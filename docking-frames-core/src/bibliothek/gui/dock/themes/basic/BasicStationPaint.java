@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -48,7 +48,7 @@ public class BasicStationPaint implements StationPaint {
             // ignore
         }
     };
-    
+
     /**
      * Gets the color that is used in this paint.
      * @return the color
@@ -58,7 +58,7 @@ public class BasicStationPaint implements StationPaint {
     public Color getColor() {
         return color.value();
     }
-    
+
     /**
      * Sets the color which is used in this paint.
      * @param color the color or <code>null</code> to use the default-color
@@ -69,24 +69,24 @@ public class BasicStationPaint implements StationPaint {
     public void setColor( Color color ) {
         this.color.setValue( color );
     }
-    
+
     public void drawDivider( Graphics g, DockStation station, Rectangle bounds ) {
         color.setId( "paint.divider" );
         color.connect( station.getController() );
-        
+
         g.setColor( color.value() );
         g.fillRect( bounds.x, bounds.y, bounds.width, bounds.height );
-        
+
         color.connect( null );
     }
-    
+
     public void drawInsertion( Graphics g, DockStation station, Rectangle stationBounds, Rectangle dockableBounds ) {
         color.setId( "paint.insertion" );
         color.connect( station.getController() );
-        
+
         g.setColor( color.value() );
         Graphics2D g2 = (Graphics2D)g;
-        
+
         Composite old = g2.getComposite();
         g2.setComposite( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 0.33f ));
 
@@ -94,27 +94,27 @@ public class BasicStationPaint implements StationPaint {
         int y = dockableBounds.y+1;
         int w = dockableBounds.width-3;
         int h = dockableBounds.height-3;
-        
+
         g2.fillRect( x, y, w, h );
-        
+
         g2.setComposite( old );
-        
+
         drawInsertionLine( g, station, x, y, x+w, y, false );
         drawInsertionLine( g, station, x, y, x, y+h, false );
         drawInsertionLine( g, station, x+w, y+h, x, y+h, false );
         drawInsertionLine( g, station, x+w, y+h, x+w, y, false );
-        
+
         color.connect( null );
     }
-    
-    public void drawRemoval( Graphics g, DockStation station, Rectangle stationBounds, Rectangle dockableBounds ){
-    	color.setId( "paint.removable" );
-    	color.connect( station.getController() );
-    	
-    	g.setColor( color.value() );
 
-    	Graphics2D g2 = (Graphics2D)g;
-        
+    public void drawRemoval( Graphics g, DockStation station, Rectangle stationBounds, Rectangle dockableBounds ){
+        color.setId( "paint.removable" );
+        color.connect( station.getController() );
+
+        g.setColor( color.value() );
+
+        Graphics2D g2 = (Graphics2D)g;
+
         Composite old = g2.getComposite();
         g2.setComposite( AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 0.33f ));
 
@@ -122,33 +122,33 @@ public class BasicStationPaint implements StationPaint {
         int y = dockableBounds.y;
         int w = dockableBounds.width;
         int h = dockableBounds.height;
-        
+
         g2.fillRect( x, y, w, h );
-        
+
         g2.setComposite( old );
         color.connect( null );
     }
-    
+
     public void drawInsertionLine( Graphics g, DockStation station, int x1, int x2, int y1, int y2 ) {
-    	drawInsertionLine( g, station, x1, x2, y1, y2, true );
+        drawInsertionLine( g, station, x1, x2, y1, y2, true );
     }
-    
+
     private void drawInsertionLine( Graphics g, DockStation station, int x1, int x2, int y1, int y2, boolean newColor ) {
-    	if( newColor ){
-	        color.setId( "paint.line" );
-	        color.connect( station.getController() );
-    	}
-        
+        if( newColor ){
+            color.setId( "paint.line" );
+            color.connect( station.getController() );
+        }
+
         g.setColor( color.value() );
         Graphics2D g2 = (Graphics2D)g;
-        
+
         Stroke old = g2.getStroke();
         g2.setStroke( new BasicStroke( 3f ));
         g2.drawLine( x1, x2, y1, y2 );
         g2.setStroke( old );
-        
+
         if( newColor ){
-        	color.connect( null );
+            color.connect( null );
         }
     }
 }

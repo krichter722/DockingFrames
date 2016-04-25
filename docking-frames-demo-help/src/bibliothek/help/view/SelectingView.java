@@ -36,7 +36,7 @@ public class SelectingView extends DefaultDockable implements HyperlinkListener,
     private LinkManager manager;
     /** the current content */
     private Entry entry;
-    
+
     /**
      * Creates a new view.
      * @param manager The set of all {@link Entry}s, this view will listen to
@@ -56,34 +56,34 @@ public class SelectingView extends DefaultDockable implements HyperlinkListener,
         manager.getUR().register( this );
         setTitleText( title );
         setTitleIcon( icon );
-        
+
         for( String type : types )
             this.types.add( type );
-        
+
         this.types.add( "empty" );
-        
+
         pane = new JTextPane();
         pane.setEditable( false );
         HelpLinker.connect( pane );
-        
+
         setLayout( new GridLayout( 1, 1 ) );
         add( new JScrollPane( pane ) );
-        
+
         pane.addHyperlinkListener( this );
     }
-    
+
     public Entry getCurrent(){
-    	return entry;
+        return entry;
     }
-    
+
     public void setCurrent( Entry entry ){
-    	if( this.entry != entry ){
-    		this.entry = entry;
-    		HelpDocument help = entry.toDocument( null );
-        	pane.setDocument( help );
-    	}
+        if( this.entry != entry ){
+            this.entry = entry;
+            HelpDocument help = entry.toDocument( null );
+            pane.setDocument( help );
+        }
     }
-    
+
     public void selected( List<Entry> list ){
         for( Entry entry : list ){
             if( types.contains( entry.getType() )){
@@ -92,7 +92,7 @@ public class SelectingView extends DefaultDockable implements HyperlinkListener,
             }
         }
     }
-    
+
     public void hyperlinkUpdate( HyperlinkEvent e ) {
         if( e.getEventType() == EventType.ACTIVATED ){
             String link = (String)e.getSourceElement().getAttributes().getAttribute( HelpLinker.LINK );

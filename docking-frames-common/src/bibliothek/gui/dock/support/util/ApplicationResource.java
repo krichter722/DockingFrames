@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -43,21 +43,21 @@ public interface ApplicationResource {
      * @throws IOException if the operation can't be completed
      */
     public void write( DataOutputStream out ) throws IOException;
-    
+
     /**
      * Reads the content of this resource from a stream of bytes.
      * @param in the stream to read from
      * @throws IOException if the operation can't be finished
      */
     public void read( DataInputStream in ) throws IOException;
-    
+
     /**
      * Writes the contents of this resource in xml format.
      * @param element the element to write into, the attributes of
      * <code>element</code> should not be changed.
      */
     public void writeXML( XElement element );
-    
+
     /**
      * Reads the contents of this resource from a xml element.
      * @param element the element to read from.

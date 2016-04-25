@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -53,26 +53,26 @@ public class LocationSettingConverter implements ModeSettingsConverter<Location,
      * @param controller the controller in whose realm settings need to be converted
      */
     public LocationSettingConverter( DockController controller ){
-    	transformer = new PropertyTransformer( controller );
+        transformer = new PropertyTransformer( controller );
     }
-    
+
     /**
      * Creates a new converter.
      * @param transformer transfomer used to read {@link DockableProperty}s.
      */
     public LocationSettingConverter( PropertyTransformer transformer ){
-    	this.transformer = transformer;
+        this.transformer = transformer;
     }
-    
+
     /**
      * Adds an additional factory to this converter, needed to read and write
      * {@link DockableProperty}s.
      * @param factory the additional factory
      */
     public void addFactory( DockablePropertyFactory factory ){
-    	transformer.addFactory( factory );
+        transformer.addFactory( factory );
     }
-    
+
     public Location convertToSetting( Location a ) {
         return a;
     }
@@ -95,57 +95,57 @@ public class LocationSettingConverter implements ModeSettingsConverter<Location,
         boolean version112 = version.equals( Version.VERSION_1_1_2 );
         Path mode = null;
         if( version108 ){
-        	mode = new Path( in.readUTF() );
+            mode = new Path( in.readUTF() );
         }
         String root = in.readUTF();
         boolean applicationDefined = false;
         if( version112 ){
-        	applicationDefined = in.readBoolean();
+            applicationDefined = in.readBoolean();
         }
         DockableProperty location = transformer.read( in );
         if( !version108 ){
-        	mode = guessMode( location );
+            mode = guessMode( location );
         }
         return new Location( mode, root, location, applicationDefined );
     }
-    
+
     private Path guessMode( DockableProperty location ){
-    	if( location instanceof FlapDockProperty ){
-    		return MinimizedMode.IDENTIFIER;
-    	}
-    	else if( location instanceof ScreenDockProperty ){
-    		return ExternalizedMode.IDENTIFIER; 
-    	}
-    	else{
-    		return NormalMode.IDENTIFIER;
-    	}
+        if( location instanceof FlapDockProperty ){
+            return MinimizedMode.IDENTIFIER;
+        }
+        else if( location instanceof ScreenDockProperty ){
+            return ExternalizedMode.IDENTIFIER;
+        }
+        else{
+            return NormalMode.IDENTIFIER;
+        }
     }
 
     public void writePropertyXML( Location b, XElement element ) {
-    	element.addElement( "mode" ).setString( b.getMode().toString() );
+        element.addElement( "mode" ).setString( b.getMode().toString() );
         element.addElement( "root" ).setString( b.getRoot() );
         element.addElement( "applicationDefined" ).setBoolean( b.isApplicationDefined() );
         transformer.writeXML( b.getLocation(), element.addElement( "location" ) );
     }
 
     public Location readPropertyXML( XElement element ) {
-    	XElement xmode = element.getElement( "mode" );
-    	Path mode = null;
-    	if( xmode != null ){
-    		mode = new Path( xmode.getString() );
-    	}
-    	String root = element.getElement( "root" ).getString();
-    	DockableProperty location = transformer.readXML( element.getElement( "location" ) );
-    	if( mode == null ){
-    		mode = guessMode( location );
-    	}
-    	
-    	boolean applicationDefined = false;
-    	XElement xapplicationDefined = element.getElement( "applicationDefined" );
-    	if( xapplicationDefined != null ){
-    		applicationDefined = xapplicationDefined.getBoolean();
-    	}
-    	
+        XElement xmode = element.getElement( "mode" );
+        Path mode = null;
+        if( xmode != null ){
+            mode = new Path( xmode.getString() );
+        }
+        String root = element.getElement( "root" ).getString();
+        DockableProperty location = transformer.readXML( element.getElement( "location" ) );
+        if( mode == null ){
+            mode = guessMode( location );
+        }
+
+        boolean applicationDefined = false;
+        XElement xapplicationDefined = element.getElement( "applicationDefined" );
+        if( xapplicationDefined != null ){
+            applicationDefined = xapplicationDefined.getBoolean();
+        }
+
         return new Location( mode, root, location, applicationDefined );
     }
 }

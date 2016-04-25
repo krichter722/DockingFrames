@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2012 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -32,7 +32,7 @@ import bibliothek.gui.dock.SplitDockStation.Orientation;
 /**
  * A {@link Divideable} offers the information needed to represent a dividier between two
  * {@link SplitNode}s. The {@link Divideable} may itself be a {@link SplitNode}. The location of a dividier
- * is encoded by a <code>double</code>, where <code>0</code> means top/left, and <code>1.0</code> means bottom/right. 
+ * is encoded by a <code>double</code>, where <code>0</code> means top/left, and <code>1.0</code> means bottom/right.
  * @author Benjamin Sigg
  */
 public interface Divideable {
@@ -44,7 +44,7 @@ public interface Divideable {
      * @return The value that the divider should have. This value might not
      * be valid if the coordinates of the point are too extreme.
      */
-	public double getDividerAt( int x, int y );
+    public double getDividerAt( int x, int y );
 
     /**
      * Calculates the location and the size of the area which represents the divider.
@@ -54,7 +54,7 @@ public interface Divideable {
      * @return Either <code>bounds</code> or a new {@link Rectangle} if <code>bounds</code>
      * was <code>null</code>
      */
-	public Rectangle getDividerBounds( double divider, Rectangle bounds );
+    public Rectangle getDividerBounds( double divider, Rectangle bounds );
 
     /**
      * Gets the orientation of this divideable. The orientation tells how to layout
@@ -62,33 +62,33 @@ public interface Divideable {
      * will be at the top and the other at the bottom.
      * @return the orientation
      */
-	public Orientation getOrientation();
+    public Orientation getOrientation();
 
     /**
      * Gets the location of the divider.
      * @return the divider
      * @see #setDivider(double)
      */
-	public double getDivider();
+    public double getDivider();
 
-	/**
-	 * Gets the {@link #getDivider() divider} as it is actually seen by the user. Usually this is equivalent
-	 * to <code>validateDivider( getDivider() )</code>, subclasses may however consider other restrictions.
-	 * @return the divider as seen by the user
-	 */
-	public double getActualDivider();
-	
+    /**
+     * Gets the {@link #getDivider() divider} as it is actually seen by the user. Usually this is equivalent
+     * to <code>validateDivider( getDivider() )</code>, subclasses may however consider other restrictions.
+     * @return the divider as seen by the user
+     */
+    public double getActualDivider();
+
     /**
      * Sets the location of the divider. The area of the left child is the area
-     * of the whole node multiplied with <code>divider</code>. 
+     * of the whole node multiplied with <code>divider</code>.
      * @param divider the dividier
      */
-	public void setDivider( double divider );
-	
-	/**
-	 * Validates the new location <code>divider</code>.
-	 * @param divider the new divider
-	 * @return a valid version of <code>divider</code>
-	 */
-	public double validateDivider( double divider );
+    public void setDivider( double divider );
+
+    /**
+     * Validates the new location <code>divider</code>.
+     * @param divider the new divider
+     * @return a valid version of <code>divider</code>
+     */
+    public double validateDivider( double divider );
 }

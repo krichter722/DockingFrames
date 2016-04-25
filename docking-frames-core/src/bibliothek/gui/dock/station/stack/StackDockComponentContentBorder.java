@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2010 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,12 +35,12 @@ import bibliothek.util.Path;
  * @author Benjamin Sigg
  */
 public interface StackDockComponentContentBorder extends StackDockComponentBorder{
-	/** The type of this {@link UIValue} */
-	public static final Path KIND = StackDockComponentBorder.KIND.append( "content" );
-	
-	/**
-	 * Gets the dockable which is associated with this border.
-	 * @return the dockable
-	 */
-	public Dockable getDockable();
+    /** The type of this {@link UIValue} */
+    public static final Path KIND = StackDockComponentBorder.KIND.append( "content" );
+
+    /**
+     * Gets the dockable which is associated with this border.
+     * @return the dockable
+     */
+    public Dockable getDockable();
 }

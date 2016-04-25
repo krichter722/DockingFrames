@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -48,9 +48,9 @@ import bibliothek.util.Path;
  * tells where the <code>CDockable</code>s and how big they are compared to the
  * other <code>entries</code>.<br>
  * A client first fills a <code>CGrid</code> with such entries. Then the client calls
- * {@link CGridArea#deploy(CGrid)}, {@link CWorkingArea#deploy(CGrid)} or 
+ * {@link CGridArea#deploy(CGrid)}, {@link CWorkingArea#deploy(CGrid)} or
  * {@link #toTree()}. This triggers the <code>CGrid</code> to convert its entries
- * into a tree of <code>Dockable</code>s. This tree can then be given to a 
+ * into a tree of <code>Dockable</code>s. This tree can then be given to a
  * {@link SplitDockStation}. The <code>CGrid</code> can be trashed after it created
  * the tree - changes to the grid will not be forwarded to the tree.<br>
  * <br>
@@ -63,10 +63,10 @@ import bibliothek.util.Path;
 public class CGrid {
     /** the internal representation of this grid */
     private SplitDockGrid grid = new SplitDockGrid();
-    
+
     /** the control for which this grid is used */
     private CControl control;
-    
+
     /**
      * Creates a new grid.
      * @deprecated Use {@link #CGrid(CControl)} with an argument of <code>null</code> instead. This
@@ -76,7 +76,7 @@ public class CGrid {
     public CGrid(){
         // do nothing
     }
-    
+
     /**
      * Creates a new grid. If {@link CDockable}s is not <code>null</code>, then new {@link CDockable}s
      * will be registered at <code>control</code>. While a value of <code>null</code> is valid,
@@ -88,7 +88,7 @@ public class CGrid {
     public CGrid( CControl control ){
         this.control = control;
     }
-    
+
     /**
      * Creates and returns a tree which contains the {@link CommonDockable}s
      * of this {@link CGrid}. The branches of the tree are put in a way, that
@@ -99,7 +99,7 @@ public class CGrid {
     public DockableSplitDockTree toTree(){
         return grid.toTree();
     }
-    
+
     /**
      * Adds a new set of {@link CDockable}s to this grid. The {@link CDockable}s
      * are also added to the {@link CControl} of this <code>CGrid</code>.
@@ -118,23 +118,23 @@ public class CGrid {
                     control.addDockable( (SingleCDockable)dockable );
                 }
                 else if( dockable instanceof MultipleCDockable ){
-                	if( dockable.getControl() == null ){
-                		control.addDockable( (MultipleCDockable)dockable );
-                	}
+                    if( dockable.getControl() == null ){
+                        control.addDockable( (MultipleCDockable)dockable );
+                    }
                 }
             }
-            
+
             intern[i] = dockable.intern();
         }
-        
+
         grid.addDockable( x, y, width, height, intern );
     }
-    
+
     /**
      * Adds some placeholders for {@link SingleCDockable}s to this {@link CGrid}. This method does not make any checks concerning
      * the validity of the placeholders, the placeholders will however be checked once the {@link CGrid} is deployed.<br>
      * This method will assume that the {@link CPlaceholderStrategy} is installed and use the method {@link CPlaceholderStrategy#getSingleDockablePlaceholder(String)}<br>
-     * Please note that placeholders are always placed after the real existing {@link CDockable}s, if 
+     * Please note that placeholders are always placed after the real existing {@link CDockable}s, if
      * order is important then clients must use a {@link CControlPerspective} to create the layout.
      * to convert the identifiers into placeholders.
      * @param x the x-coordinate of the dockables
@@ -145,14 +145,14 @@ public class CGrid {
      * @throws IllegalStateException if this {@link CGrid} does not have access to the a {@link CControl}
      */
     public void addSingle( double x, double y, double width, double height, String... identifiers ){
-    	if( control == null ){
-    		throw new IllegalStateException( "This method is only available if the CGrid was constructed with a CControl" );
-    	}
-    	
-    	Path[] placeholders = new Path[ identifiers.length ];
-    	for( int i = 0; i < placeholders.length; i++ ){
-    		placeholders[i] = CPlaceholderStrategy.getSingleDockablePlaceholder( control.getRegister().toSingleId( identifiers[i] ) );
-    	}
+        if( control == null ){
+            throw new IllegalStateException( "This method is only available if the CGrid was constructed with a CControl" );
+        }
+
+        Path[] placeholders = new Path[ identifiers.length ];
+        for( int i = 0; i < placeholders.length; i++ ){
+            placeholders[i] = CPlaceholderStrategy.getSingleDockablePlaceholder( control.getRegister().toSingleId( identifiers[i] ) );
+        }
     }
 
     /**
@@ -160,7 +160,7 @@ public class CGrid {
      * the validity of the placeholders, the placeholders will however be checked once the {@link CGrid} is deployed.<br>
      * This method will assume that the {@link CPlaceholderStrategy} is installed and use the method {@link CPlaceholderStrategy#getMultipleDockablePlaceholder(String)}
      * to convert the identifiers into placeholders.<br>
-     * Please note that placeholders are always placed after the real existing {@link CDockable}s, if 
+     * Please note that placeholders are always placed after the real existing {@link CDockable}s, if
      * order is important then clients must use a {@link CControlPerspective} to create the layout.
      * @param x the x-coordinate of the dockables
      * @param y the y-coordinate of the dockables
@@ -170,21 +170,21 @@ public class CGrid {
      * @throws IllegalStateException if this {@link CGrid} does not have access to the a {@link CControl}
      */
     public void addMulti( double x, double y, double width, double height, String... identifiers ){
-    	if( control == null ){
-    		throw new IllegalStateException( "This method is only available if the CGrid was constructed with a CControl" );
-    	}
-    	
-    	Path[] placeholders = new Path[ identifiers.length ];
-    	for( int i = 0; i < placeholders.length; i++ ){
-    		placeholders[i] = CPlaceholderStrategy.getMultipleDockablePlaceholder( control.getRegister().toMultiId( identifiers[i] ) );
-    	}
+        if( control == null ){
+            throw new IllegalStateException( "This method is only available if the CGrid was constructed with a CControl" );
+        }
+
+        Path[] placeholders = new Path[ identifiers.length ];
+        for( int i = 0; i < placeholders.length; i++ ){
+            placeholders[i] = CPlaceholderStrategy.getMultipleDockablePlaceholder( control.getRegister().toMultiId( identifiers[i] ) );
+        }
     }
-    
+
     /**
      * Adds some placeholders to this {@link CGrid}. This method does not make any checks concerning
-     * the validity of the placeholders, the placeholders will however be checked once the {@link CGrid} 
+     * the validity of the placeholders, the placeholders will however be checked once the {@link CGrid}
      * is deployed.<br>
-     * Please note that placeholders are always placed after the real existing {@link CDockable}s, if 
+     * Please note that placeholders are always placed after the real existing {@link CDockable}s, if
      * order is important then clients must use a {@link CControlPerspective} to create the layout.
      * @param x the x-coordinate of the dockables
      * @param y the y-coordinate of the dockables
@@ -193,9 +193,9 @@ public class CGrid {
      * @param placeholders the list of new placeholders
      */
     public void addPlaceholders( double x, double y, double width, double height, Path... placeholders ){
-    	grid.addPlaceholders( x, y, width, height, placeholders );
+        grid.addPlaceholders( x, y, width, height, placeholders );
     }
-    
+
     /**
      * Marks <code>dockable</code> as beeing selected in the stack that
      * has the boundaries of <code>x, y, width, height</code>.
@@ -207,9 +207,9 @@ public class CGrid {
      * @throws IllegalArgumentException if <code>dockable</code> is not registered at location <code>x/y/width/height</code>
      */
     public void select( double x, double y, double width, double height, CDockable dockable ){
-    	grid.setSelected( x, y, width, height, dockable.intern() );
+        grid.setSelected( x, y, width, height, dockable.intern() );
     }
-    
+
     /**
      * Informs this grid about a horizontal divider that should be inserted
      * into the layout. There are no guarantees that the divider really is inserted.

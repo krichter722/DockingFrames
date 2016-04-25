@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -50,9 +50,9 @@ public class EclipseTabTransmitter extends TabColorTransmitter {
     };
 
     private static final String KEYS[] = new String[]{
-        "stack.tab.border", 
-        "stack.tab.border.selected", 
-        "stack.tab.border.selected.focused", 
+        "stack.tab.border",
+        "stack.tab.border.selected",
+        "stack.tab.border.selected.focused",
         "stack.tab.border.selected.focuslost",
 
         "stack.tab.top",
@@ -67,7 +67,7 @@ public class EclipseTabTransmitter extends TabColorTransmitter {
 
         "stack.tab.text",
         "stack.tab.text.selected",
-        "stack.tab.text.selected.focused", 
+        "stack.tab.text.selected.focused",
         "stack.tab.text.selected.focuslost"
     };
 
@@ -92,68 +92,87 @@ public class EclipseTabTransmitter extends TabColorTransmitter {
 
     @Override
     protected Color convert( Color source, String key ) {
-        if( isSelected( key ))
+        if( isSelected( key )) {
             return convertSelected( source, key );
+        }
 
-        if( isFocused( key ))
+        if( isFocused( key )) {
             return convertFocused( source, key );
+        }
 
-        if( "stack.tab.border".equals( key ))
+        if( "stack.tab.border".equals( key )) {
             return source;
+        }
 
-        if(  "stack.tab.top".equals( key ))
+        if(  "stack.tab.top".equals( key )) {
             return Colors.undiffMirror( source, 0.5 );
+        }
 
-        if( "stack.tab.bottom".equals( key ))
+        if( "stack.tab.bottom".equals( key )) {
             return source;
+        }
 
-        if( "stack.tab.text".equals( key ))
+        if( "stack.tab.text".equals( key )) {
             return Colors.diffMirror( source, 1.0 );
+        }
 
         return null;
     }
 
     @Override
     protected Color convertSelected( Color source, String key ) {
-        if( isFocused( key ))
+        if( isFocused( key )) {
             return convertFocused( source, key );
+        }
 
-        if( "stack.tab.border.selected".equals( key ))
+        if( "stack.tab.border.selected".equals( key )) {
             return source;
+        }
 
-        if(  "stack.tab.top.selected".equals( key ))
+        if(  "stack.tab.top.selected".equals( key )) {
             return Colors.undiffMirror( source, 0.5 );
+        }
 
-        if( "stack.tab.bottom.selected".equals( key ))
+        if( "stack.tab.bottom.selected".equals( key )) {
             return source;
+        }
 
-        if( "stack.tab.text.selected".equals( key ))
+        if( "stack.tab.text.selected".equals( key )) {
             return Colors.diffMirror( source, 1.0 );
+        }
 
         return null;
     }
 
     @Override
     protected Color convertFocused( Color source, String key ) {
-        if( "stack.tab.border.selected.focused".equals( key ))
+        if( "stack.tab.border.selected.focused".equals( key )) {
             return source;
-        if( "stack.tab.border.selected.focuslost".equals( key ))
+        }
+        if( "stack.tab.border.selected.focuslost".equals( key )) {
             return source;
+        }
 
-        if( "stack.tab.top.selected.focused".equals( key ))
+        if( "stack.tab.top.selected.focused".equals( key )) {
             return Colors.undiffMirror( source, 0.5 );
-        if( "stack.tab.top.selected.focuslost".equals( key ))
+        }
+        if( "stack.tab.top.selected.focuslost".equals( key )) {
             return Colors.undiffMirror( source, 0.5 );
+        }
 
-        if( "stack.tab.bottom.selected.focused".equals( key ))
+        if( "stack.tab.bottom.selected.focused".equals( key )) {
             return source;
-        if( "stack.tab.bottom.selected.focuslost".equals( key ))
+        }
+        if( "stack.tab.bottom.selected.focuslost".equals( key )) {
             return source;
+        }
 
-        if( "stack.tab.text.selected.focused".equals( key ))
-            return Colors.diffMirror( source, 1.0 ); 
-        if( "stack.tab.text.selected.focuslost".equals( key ))
+        if( "stack.tab.text.selected.focused".equals( key )) {
             return Colors.diffMirror( source, 1.0 );
+        }
+        if( "stack.tab.text.selected.focuslost".equals( key )) {
+            return Colors.diffMirror( source, 1.0 );
+        }
 
         return null;
     }

@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -35,19 +35,20 @@ import java.util.Set;
 public class CRadioGroup {
     /** the buttons in this group */
     private Set<CRadioButton> buttons = new HashSet<CRadioButton>();
-    
+
     /**
      * Adds a new button to the group
      * @param button the new button
      */
     public void add( CRadioButton button ){
-        if( button == null )
+        if( button == null ) {
             throw new NullPointerException( "button must not be null" );
+        }
         buttons.add( button );
         button.setGroup( this );
         selected( button );
     }
-    
+
     /**
      * Removes a button from this group
      * @param button the button to remove
@@ -57,7 +58,7 @@ public class CRadioGroup {
             button.setGroup( null );
         }
     }
-    
+
     /**
      * Invoked by a {@link CRadioButton} which got selected.
      * @param button the newly selected button
@@ -65,8 +66,9 @@ public class CRadioGroup {
     void selected( CRadioButton button ){
         if( button.isSelected() ){
             for( CRadioButton b : buttons ){
-                if( b != button && b.isSelected() )
+                if( b != button && b.isSelected() ) {
                     b.setSelected( false );
+                }
             }
         }
     }

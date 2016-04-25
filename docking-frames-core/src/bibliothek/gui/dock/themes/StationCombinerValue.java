@@ -2,9 +2,9 @@
  * Bibliothek - DockingFrames
  * Library built on Java/Swing, allows the user to "drag and drop"
  * panels containing any Swing-Component the developer likes to add.
- * 
+ *
  * Copyright (C) 2007 Benjamin Sigg
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * Benjamin Sigg
  * benjamin_sigg@gmx.ch
  * CH - Switzerland
@@ -47,46 +47,46 @@ import bibliothek.util.Path;
  *
  */
 public class StationCombinerValue extends StationThemeItemValue<Combiner> implements CombinerValue, Combiner {
-	/** What kind of {@link UIValue} this is */
-	public static final Path KIND_STATION = CombinerValue.KIND_COMBINER.append( "station" );
-	
-	/**
-	 * Creates a new value.
-	 * @param id the identifier of this value, used to read a resource from the {@link ThemeManager}
-	 * @param station the owner of this object
-	 */
+    /** What kind of {@link UIValue} this is */
+    public static final Path KIND_STATION = CombinerValue.KIND_COMBINER.append( "station" );
+
+    /**
+     * Creates a new value.
+     * @param id the identifier of this value, used to read a resource from the {@link ThemeManager}
+     * @param station the owner of this object
+     */
     public StationCombinerValue( String id, DockStation station ){
-    	super( id, KIND_STATION, ThemeManager.COMBINER_TYPE, station );
+        super( id, KIND_STATION, ThemeManager.COMBINER_TYPE, station );
     }
 
     public CombinerTarget prepare( CombinerSource source, Enforcement force ){
-    	Combiner combiner = get();
-    	if( combiner == null ){
-    		if( force.getForce() > 0.5f ){
-    			combiner = new BasicCombiner();
-    		}
-    		else{
-    			return null;
-    		}
-    	}
-    	
-    	return combiner.prepare( source, force );
+        Combiner combiner = get();
+        if( combiner == null ){
+            if( force.getForce() > 0.5f ){
+                combiner = new BasicCombiner();
+            }
+            else{
+                return null;
+            }
+        }
+
+        return combiner.prepare( source, force );
     }
 
     public Dockable combine( CombinerSource source, CombinerTarget target ){
-    	Combiner combiner = get();
-    	if( combiner == null ){
-   			combiner = new BasicCombiner();
-    	}
+        Combiner combiner = get();
+        if( combiner == null ){
+            combiner = new BasicCombiner();
+        }
 
         return combiner.combine( source, target );
     }
-    
+
     public void aside( AsideRequest request ){
-    	Combiner combiner = get();
-    	if( combiner == null ){
-    		combiner = new BasicCombiner();
-    	}
-    	combiner.aside( request );
+        Combiner combiner = get();
+        if( combiner == null ){
+            combiner = new BasicCombiner();
+        }
+        combiner.aside( request );
     }
 }

@@ -15,14 +15,14 @@ import com.sun.javadoc.Type;
 public class EntryableMethod extends AbstractEntryable {
     /** The method that is analyzed */
     private MethodDoc doc;
-    
+
     /**
      * Collects detailed information about the method <code>doc</code>.
      * @param doc the method to analyze
      */
     public EntryableMethod( MethodDoc doc ){
         this.doc = doc;
-        
+
         bold( true );
         println( "Containing: " );
         bold( false );
@@ -46,7 +46,7 @@ public class EntryableMethod extends AbstractEntryable {
             print( args[i].name() );
         }
         println( ")" );
-        
+
         if( doc.thrownExceptionTypes().length > 0 ){
             println();
             bold( true );
@@ -57,7 +57,7 @@ public class EntryableMethod extends AbstractEntryable {
                 println();
             }
         }
-        
+
         if( doc.commentText() != null ){
             println();
             bold( true );
@@ -66,10 +66,10 @@ public class EntryableMethod extends AbstractEntryable {
             println( doc.commentText() );
         }
     }
-    
+
     public Entry toEntry() {
-        return new Entry( "method", doc.qualifiedName() + doc.signature(), 
-        		"Method " + doc.qualifiedName() + doc.signature(), content(), 
+        return new Entry( "method", doc.qualifiedName() + doc.signature(),
+                "Method " + doc.qualifiedName() + doc.signature(), content(),
                 "class:" + doc.containingClass().qualifiedName());
     }
 }

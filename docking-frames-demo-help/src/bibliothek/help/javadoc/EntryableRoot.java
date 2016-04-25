@@ -18,11 +18,11 @@ public class EntryableRoot extends AbstractEntryable {
      * Creates a new root.
      * @param doc the javadoc of a java-project
      */
-	public EntryableRoot( RootDoc doc ){
-		add( new EntryablePackageList( doc ));
-	}
-	
-	public Entry toEntry(){
-		return new Entry( "empty", "", "", "" );
-	}
+    public EntryableRoot( RootDoc doc ){
+        add( new EntryablePackageList( doc ));
+    }
+
+    public Entry toEntry(){
+        return new Entry( "empty", "", "", "" );
+    }
 }
